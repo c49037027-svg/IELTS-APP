@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>IELTS 學習助手</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#A0522D">
+<meta name="description" content="雅思單字、閱讀、聽力一站式學習，含 AI 解析與每日推送">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="IELTS">
+<link rel="apple-touch-icon" href="./icon.svg">
+<link rel="icon" type="image/svg+xml" href="./icon.svg">
+<style>
+  :root {
+    --bg: #FAF6F0;
+    --card: #FFFFFF;
+    --primary: #A0522D;
+    --primary-light: #C9785A;
+    --accent: #C9A961;
+    --text: #3E2723;
+    --text-light: #7A6258;
+    --border: #E8DFD3;
+    --success: #6B8E5A;
+    --error: #B85450;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Noto Sans TC", "PingFang TC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  header {
+    background: var(--primary);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  header h1 { font-size: 22px; font-weight: 500; letter-spacing: 1px; }
+  header .subtitle { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  nav {
+    display: flex;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  nav button {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--text-light);
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    font-family: inherit;
+  }
+  nav button.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    font-weight: 600;
+  }
+  nav button:hover { background: var(--bg); }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+  .module { display: none; }
+  .module.active { display: block; }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(160,82,45,0.06);
+  }
+  .stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat {
+    flex: 1;
+    background: var(--card);
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .stat-num { font-size: 22px; font-weight: 600; color: var(--primary); }
+  .stat-label { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+  /* Vocabulary */
+  .flashcard {
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 32px 24px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s;
+  }
+  .flashcard:active { transform: scale(0.98); }
+  .word-en {
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .phonetic {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .level-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    background: var(--accent);
+    color: white;
+    margin-bottom: 12px;
+  }
+  .word-zh {
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .example {
+    font-size: 15px;
+    color: var(--text-light);
+    font-style: italic;
+    padding: 12px 16px;
+    background: var(--bg);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+    text-align: left;
+    max-width: 100%;
+  }
+  .example .highlight { color: var(--primary); font-weight: 600; font-style: normal; }
+  .example-toggle {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 4px 0;
+    font-family: inherit;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+  .example-toggle:hover { color: var(--primary); }
+  .example-zh {
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: rgba(201,169,97,0.12);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--text);
+    display: none;
+    text-align: left;
+    line-height: 1.7;
+  }
+  .example-zh.show { display: block; }
+  .collocations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+    justify-content: center;
+  }
+  .collocation-chip {
+    font-size: 12px;
+    padding: 4px 10px;
+    background: rgba(160,82,45,0.08);
+    color: var(--primary);
+    border-radius: 12px;
+    border: 1px solid rgba(160,82,45,0.18);
+    font-weight: 500;
+  }
+  .topic-filter {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .topic-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 16px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    color: var(--text-light);
+    font-family: inherit;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .topic-btn:hover { border-color: var(--primary-light); }
+  .topic-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  /* Progress page */
+  .progress-overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .overview-card {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .overview-num {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  .overview-label {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+  .section-title {
+    font-size: 14px;
+    color: var(--primary);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  .topic-progress-row {
+    margin-bottom: 14px;
+  }
+  .topic-progress-row:last-child { margin-bottom: 0; }
+  .topic-progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .topic-progress-name { color: var(--text); font-weight: 500; }
+  .topic-progress-stat { color: var(--text-light); }
+  .progress-bar {
+    height: 8px;
+    background: var(--bg);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--primary));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+  .heatmap {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .heatmap-day {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    background: var(--bg);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-light);
+  }
+  .heatmap-day.lvl-1 { background: rgba(160,82,45,0.15); color: var(--text); }
+  .heatmap-day.lvl-2 { background: rgba(160,82,45,0.35); color: var(--text); }
+  .heatmap-day.lvl-3 { background: rgba(160,82,45,0.6); color: white; }
+  .heatmap-day.lvl-4 { background: var(--primary); color: white; }
+  .heatmap-date { font-size: 10px; opacity: 0.85; }
+  .heatmap-count { font-size: 13px; font-weight: 600; margin-top: 2px; }
+  .score-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .score-row:last-child { border-bottom: none; }
+  .score-row .title { color: var(--text); }
+  .score-row .score {
+    font-weight: 600;
+    color: var(--success);
+  }
+  .score-row .score.poor { color: var(--error); }
+  .empty-state {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-light);
+    font-size: 13px;
+  }
+
+  /* Daily plan */
+  .daily-plan-card {
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(135deg, var(--card), rgba(201,169,97,0.06));
+  }
+  .plan-date {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 14px;
+  }
+  .plan-tier { margin-bottom: 14px; }
+  .plan-tier:last-child { margin-bottom: 0; }
+  .plan-tier-title {
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  .plan-task {
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 7px;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.55;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .plan-task:last-child { margin-bottom: 0; }
+  .plan-task-icon { flex-shrink: 0; font-size: 16px; }
+  .plan-task-action {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--primary);
+    background: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    align-self: center;
+  }
+  .plan-task-action:hover { background: var(--primary); color: white; border-color: var(--primary); }
+  .plan-footer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-light);
+    text-align: center;
+  }
+  .plan-encouragement {
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: rgba(107,142,90,0.1);
+    color: var(--success);
+    border-radius: 6px;
+    font-size: 13px;
+    text-align: center;
+  }
+  .hint {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    font-weight: 500;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: #8B4513; }
+  .btn-success { background: var(--success); color: white; }
+  .btn-error { background: var(--error); color: white; }
+  .btn-secondary {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Reading */
+  .passage-list .passage-item {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--card);
+  }
+  .passage-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-1px);
+  }
+  .passage-item .title { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+  .passage-item .meta { font-size: 12px; color: var(--text-light); }
+  .passage-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--bg);
+    border-radius: 8px;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+  .passage-text p { margin-bottom: 12px; }
+  .question {
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .question:last-child { border-bottom: none; }
+  .question-text {
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 14px;
+  }
+  .option:hover { border-color: var(--primary-light); background: var(--bg); }
+  .option.selected {
+    border-color: var(--primary);
+    background: rgba(160,82,45,0.08);
+  }
+  .option.correct {
+    border-color: var(--success);
+    background: rgba(107,142,90,0.1);
+  }
+  .option.wrong {
+    border-color: var(--error);
+    background: rgba(184,84,80,0.1);
+  }
+  .explanation {
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text-light);
+    display: none;
+  }
+  .explanation.show { display: block; }
+
+  /* Listening */
+  .audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg);
+    border-radius: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .play-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-btn:hover { background: #8B4513; }
+  .speed-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-light);
+  }
+  .speed-control select {
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: white;
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .fill-blank {
+    border: none;
+    border-bottom: 2px solid var(--primary);
+    background: transparent;
+    padding: 4px 8px;
+    font-size: 15px;
+    width: 140px;
+    font-family: inherit;
+    color: var(--text);
+  }
+  .fill-blank:focus { outline: none; border-bottom-color: var(--accent); }
+  .fill-blank.correct { color: var(--success); }
+  .fill-blank.wrong { color: var(--error); text-decoration: line-through; }
+  .transcript {
+    margin-top: 16px;
+    padding: 16px;
+    background: var(--bg);
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-light);
+    display: none;
+  }
+  .transcript.show { display: block; }
+  .transcript .answer { color: var(--success); font-weight: 600; }
+
+  .result-banner {
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    text-align: center;
+    font-weight: 500;
+  }
+  .result-banner.good { background: rgba(107,142,90,0.15); color: var(--success); }
+  .result-banner.bad { background: rgba(184,84,80,0.1); color: var(--error); }
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 0;
+    margin-bottom: 12px;
+    font-family: inherit;
+  }
+  .back-btn::before { content: "← "; }
+
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-light);
+  }
+  .empty .icon { font-size: 48px; margin-bottom: 12px; }
+
+  /* Settings & Modal */
+  header { position: relative; }
+  .settings-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.2s;
+  }
+  .settings-btn:hover { background: rgba(255,255,255,0.3); }
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 16px;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--card);
+    border-radius: 16px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-header h2 { font-size: 18px; color: var(--primary); }
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 0 6px;
+  }
+  .modal-body { padding: 20px; }
+  .setting-section { margin-bottom: 24px; }
+  .setting-section h3 {
+    font-size: 14px;
+    color: var(--primary);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    gap: 12px;
+  }
+  .setting-row.vertical {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .setting-row input[type="time"],
+  .setting-row input[type="password"],
+  .setting-row input[type="text"] {
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    background: white;
+  }
+  .setting-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+  }
+  .setting-note {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 8px;
+    line-height: 1.7;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 6px;
+  }
+  .setting-note a { color: var(--primary); text-decoration: none; }
+  .setting-note a:hover { text-decoration: underline; }
+
+  /* AI button & response */
+  .ai-btn {
+    background: linear-gradient(135deg, #C9A961, #A0522D);
+    color: white;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 500;
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.15s;
+  }
+  .ai-btn:hover:not(:disabled) { transform: translateY(-1px); }
+  .ai-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .ai-response {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, rgba(201,169,97,0.08), rgba(160,82,45,0.05));
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.75;
+    border-left: 3px solid var(--accent);
+    white-space: pre-wrap;
+    color: var(--text);
+    display: none;
+  }
+  .ai-response.show { display: block; }
+  .ai-loading {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,0.35);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Streak banner */
+  .streak-banner {
+    background: linear-gradient(135deg, #C9A961, #A0522D);
+    color: white;
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    display: none;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 12px rgba(160,82,45,0.15);
+  }
+  .streak-banner.show { display: flex; }
+  .streak-fire { font-size: 28px; }
+  .streak-text { font-size: 14px; }
+  .streak-text strong { font-size: 18px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🪷 IELTS 學習助手</h1>
+  <div class="subtitle">Vocabulary · Reading · Listening</div>
+  <button class="settings-btn" onclick="openSettings()" title="設定">⚙️</button>
+</header>
+
+<nav>
+  <button class="tab-btn active" data-tab="vocab">📚 單字</button>
+  <button class="tab-btn" data-tab="reading">📖 閱讀</button>
+  <button class="tab-btn" data-tab="listening">👂 聽力</button>
+  <button class="tab-btn" data-tab="progress">📊 進度</button>
+</nav>
+
+<main>
+  <div class="streak-banner" id="streak-banner">
+    <span class="streak-fire">🔥</span>
+    <div class="streak-text">連續學習 <strong id="streak-num">0</strong> 天</div>
+  </div>
+
+  <!-- 單字模組 -->
+  <section class="module active" id="vocab">
+    <div class="topic-filter" id="topic-filter">
+      <button class="topic-btn active" data-topic="all">全部</button>
+      <button class="topic-btn" data-topic="AWL">AWL 學術</button>
+      <button class="topic-btn" data-topic="Education">📚 教育</button>
+      <button class="topic-btn" data-topic="Environment">🌱 環境</button>
+      <button class="topic-btn" data-topic="Technology">💻 科技</button>
+      <button class="topic-btn" data-topic="Health">🏥 健康</button>
+      <button class="topic-btn" data-topic="Work">💼 工作</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="vocab-known">0</div><div class="stat-label">已認識</div></div>
+      <div class="stat"><div class="stat-num" id="vocab-learning">0</div><div class="stat-label">複習中</div></div>
+      <div class="stat"><div class="stat-num" id="vocab-total">0</div><div class="stat-label">總字數</div></div>
+    </div>
+    <div class="card flashcard" id="flashcard" onclick="flipCard()">
+      <div id="card-front">
+        <div class="word-en" id="word-en">Click to start</div>
+        <div class="phonetic" id="phonetic"></div>
+        <div class="hint">點擊卡片看中文 / 例句</div>
+      </div>
+      <div id="card-back" style="display:none;">
+        <span class="level-badge" id="level-badge"></span>
+        <div class="word-en" id="word-en-back"></div>
+        <div class="phonetic" id="phonetic-back"></div>
+        <div class="word-zh" id="word-zh"></div>
+        <div class="example" id="example"></div>
+        <button class="example-toggle" id="example-toggle" onclick="event.stopPropagation(); toggleExampleZh()">💡 點此看中文翻譯</button>
+        <div class="example-zh" id="example-zh"></div>
+        <div class="collocations" id="collocations"></div>
+        <button class="ai-btn" id="ai-vocab-btn" onclick="event.stopPropagation(); getVocabAI()">🤖 AI 深度解析</button>
+        <div class="ai-response" id="ai-vocab-response"></div>
+      </div>
+    </div>
+    <div class="actions" id="vocab-actions" style="display:none;">
+      <button class="btn btn-error" onclick="rateWordAndMark('hard')">不認識</button>
+      <button class="btn btn-secondary" onclick="rateWordAndMark('medium')">有印象</button>
+      <button class="btn btn-success" onclick="rateWordAndMark('easy')">認識</button>
+    </div>
+    <div class="actions" id="vocab-start">
+      <button class="btn btn-primary" onclick="startVocab()">開始今天的單字</button>
+    </div>
+  </section>
+
+  <!-- 閱讀模組 -->
+  <section class="module" id="reading">
+    <div id="reading-list">
+      <div class="card">
+        <h3 style="margin-bottom:12px;color:var(--primary);">選擇文章</h3>
+        <div class="passage-list" id="passage-list"></div>
+      </div>
+    </div>
+    <div id="reading-detail" style="display:none;">
+      <button class="back-btn" onclick="backToReadingListAndReset()">回文章列表</button>
+      <div class="card">
+        <h3 id="passage-title" style="color:var(--primary);margin-bottom:8px;"></h3>
+        <div class="meta" id="passage-meta" style="font-size:12px;color:var(--text-light);margin-bottom:12px;"></div>
+        <div class="passage-text" id="passage-text"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:16px;color:var(--primary);">題目</h3>
+        <div id="questions-container"></div>
+        <div id="reading-result"></div>
+        <button class="btn btn-primary" id="submit-reading" onclick="submitReadingAndMark()" style="margin-top:12px;">提交答案</button>
+        <button class="ai-btn" id="ai-reading-btn" onclick="getReadingAI()" style="display:none;">🤖 AI 解析錯題與技巧</button>
+        <div class="ai-response" id="ai-reading-response"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 進度模組 -->
+  <section class="module" id="progress">
+    <div class="card daily-plan-card">
+      <div class="section-title">📋 今日學習計畫</div>
+      <div class="plan-date" id="plan-date"></div>
+      <div id="daily-plan"></div>
+    </div>
+
+    <div class="progress-overview">
+      <div class="overview-card"><div class="overview-num" id="ov-known">0</div><div class="overview-label">✓ 認識</div></div>
+      <div class="overview-card"><div class="overview-num" id="ov-learning">0</div><div class="overview-label">⟳ 複習中</div></div>
+      <div class="overview-card"><div class="overview-num" id="ov-untouched">0</div><div class="overview-label">▢ 未學</div></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">各主題進度</div>
+      <div id="topic-progress"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">近 7 天活動</div>
+      <div class="heatmap" id="heatmap"></div>
+      <div style="font-size:12px;color:var(--text-light);margin-top:10px;text-align:center;">
+        數字 = 當天完成的練習次數
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">📖 閱讀紀錄</div>
+      <div id="reading-history"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">👂 聽力紀錄</div>
+      <div id="listening-history"></div>
+    </div>
+  </section>
+
+  <!-- 聽力模組 -->
+  <section class="module" id="listening">
+    <div id="listening-list">
+      <div class="card">
+        <h3 style="margin-bottom:12px;color:var(--primary);">選擇聽力</h3>
+        <div class="passage-list" id="listening-passage-list"></div>
+      </div>
+    </div>
+    <div id="listening-detail" style="display:none;">
+      <button class="back-btn" onclick="backToListeningList()">回聽力列表</button>
+      <div class="card">
+        <h3 id="listening-title" style="color:var(--primary);margin-bottom:8px;"></h3>
+        <div class="meta" id="listening-meta" style="font-size:12px;color:var(--text-light);margin-bottom:12px;"></div>
+        <div class="audio-controls">
+          <button class="play-btn" id="play-btn" onclick="toggleAudio()">▶</button>
+          <div class="speed-control">
+            <span>語速</span>
+            <select id="speed-select" onchange="changeSpeed()">
+              <option value="0.7">0.7x（慢）</option>
+              <option value="0.85">0.85x</option>
+              <option value="1.0" selected>1.0x（正常）</option>
+              <option value="1.15">1.15x</option>
+            </select>
+          </div>
+          <div style="font-size:13px;color:var(--text-light);">瀏覽器朗讀（免費）</div>
+        </div>
+        <div id="listening-questions"></div>
+        <div id="listening-result"></div>
+        <button class="btn btn-primary" id="submit-listening" onclick="submitListeningAndMark()" style="margin-top:12px;">提交答案</button>
+        <button class="btn btn-secondary" onclick="toggleTranscript()" style="margin-top:8px;">顯示/隱藏逐字稿</button>
+        <div class="transcript" id="transcript"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 設定 Modal -->
+<div class="modal-overlay" id="settings-modal" onclick="closeSettings(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>⚙️ 設定</h2>
+      <button class="close-btn" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="setting-section">
+        <h3>🔔 每日提醒</h3>
+        <div class="setting-row">
+          <span>開啟每日推送</span>
+          <input type="checkbox" id="notif-enabled" onchange="toggleNotification()">
+        </div>
+        <div class="setting-row">
+          <span>提醒時間</span>
+          <input type="time" id="notif-time" value="08:00" onchange="saveSettings()">
+        </div>
+        <div class="setting-note" id="notif-status">
+          開啟後，瀏覽器會在指定時間提醒你來練習。<br>
+          📌 注意：頁面需保持開啟（可置於背景分頁）才能收到提醒。
+        </div>
+      </div>
+
+      <div class="setting-section">
+        <h3>🤖 AI 深度解析</h3>
+        <div class="setting-row vertical">
+          <span>Google Gemini API Key</span>
+          <input type="password" id="api-key" placeholder="AIza..." onchange="saveSettings()">
+        </div>
+        <div class="setting-note">
+          AI 解析會呼叫 Google Gemini（gemini-2.5-flash），免費額度每天 1500 次。<br>
+          🔒 API key 只存在你的瀏覽器，不會傳送到第三方伺服器。<br>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank">取得免費 API key →</a>
+        </div>
+      </div>
+
+      <div class="setting-section">
+        <h3>📊 學習數據</h3>
+        <div class="setting-note">
+          🔥 連續學習：<strong id="stat-streak">0</strong> 天<br>
+          📅 上次學習：<span id="stat-last">尚未開始</span>
+        </div>
+        <button class="btn btn-secondary" onclick="resetAllData()" style="margin-top:12px;">重置所有資料</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ 資料 ============
+const VOCABULARY = [
+  // ========== AWL Sublist 1（學術高頻詞）50 字 ==========
+  { en: "analyze", phonetic: "/ˈæn.ə.laɪz/", zh: "分析", level: "B2", topic: "AWL", example: "Researchers {analyze} survey data to identify trends.", exampleZh: "研究人員分析調查數據以找出趨勢。", collocations: ["analyze data", "analyze the situation", "critically analyze"] },
+  { en: "approach", phonetic: "/əˈprəʊtʃ/", zh: "方法；接近", level: "B2", topic: "AWL", example: "We need a new {approach} to solve this problem.", exampleZh: "我們需要新方法來解決這個問題。", collocations: ["take an approach", "a holistic approach", "approach a problem"] },
+  { en: "assess", phonetic: "/əˈses/", zh: "評估", level: "B2", topic: "AWL", example: "The teacher will {assess} the students' progress next week.", exampleZh: "老師下週會評估學生的進度。", collocations: ["assess the impact", "critically assess", "assess the situation"] },
+  { en: "assume", phonetic: "/əˈsjuːm/", zh: "假設；承擔", level: "B2", topic: "AWL", example: "Don't {assume} the meeting starts at 9 — check first.", exampleZh: "別假設會議是九點開始，先確認一下。", collocations: ["it is widely assumed", "safely assume", "assume responsibility"] },
+  { en: "authority", phonetic: "/ɔːˈθɒr.ə.ti/", zh: "權威；當局", level: "B2", topic: "AWL", example: "The local {authority} approved the new park.", exampleZh: "地方當局批准了新公園的興建。", collocations: ["in authority", "the authorities", "an authority on"] },
+  { en: "available", phonetic: "/əˈveɪ.lə.bəl/", zh: "可獲得的", level: "B1", topic: "AWL", example: "Free Wi-Fi is {available} throughout the building.", exampleZh: "整棟建築都有免費 Wi-Fi。", collocations: ["readily available", "become available", "widely available"] },
+  { en: "benefit", phonetic: "/ˈben.ɪ.fɪt/", zh: "益處；受益", level: "B1", topic: "AWL", example: "Regular exercise has many health {benefits}.", exampleZh: "規律運動有許多健康上的好處。", collocations: ["derive benefit from", "mutual benefit", "benefit greatly"] },
+  { en: "concept", phonetic: "/ˈkɒn.sept/", zh: "概念", level: "B2", topic: "AWL", example: "The {concept} of artificial intelligence is fascinating.", exampleZh: "人工智慧的概念令人著迷。", collocations: ["grasp a concept", "the concept of", "abstract concept"] },
+  { en: "consist", phonetic: "/kənˈsɪst/", zh: "由...組成", level: "B2", topic: "AWL", example: "The team {consists} of five members.", exampleZh: "這個團隊由五名成員組成。", collocations: ["consist of", "consist mainly of", "consist largely of"] },
+  { en: "context", phonetic: "/ˈkɒn.tekst/", zh: "背景；語境", level: "B2", topic: "AWL", example: "You can guess the meaning from the {context}.", exampleZh: "你可以從上下文猜出意思。", collocations: ["in context", "social context", "historical context"] },
+  { en: "create", phonetic: "/kriˈeɪt/", zh: "創造", level: "B1", topic: "AWL", example: "The new policy {created} many job opportunities.", exampleZh: "這項新政策創造了許多工作機會。", collocations: ["create opportunities", "create awareness", "create jobs"] },
+  { en: "data", phonetic: "/ˈdeɪ.tə/", zh: "資料；數據", level: "B1", topic: "AWL", example: "The {data} clearly shows an upward trend.", exampleZh: "數據明顯顯示上升趨勢。", collocations: ["collect data", "analyze data", "raw data"] },
+  { en: "define", phonetic: "/dɪˈfaɪn/", zh: "定義", level: "B2", topic: "AWL", example: "It's hard to {define} 'success' — it means different things to different people.", exampleZh: "「成功」很難定義——每個人的定義都不一樣。", collocations: ["clearly defined", "define a term", "well-defined"] },
+  { en: "derive", phonetic: "/dɪˈraɪv/", zh: "衍生；得到", level: "C1", topic: "AWL", example: "Many English words are {derived} from Latin.", exampleZh: "許多英文字源自於拉丁文。", collocations: ["derive from", "derive pleasure from", "derive meaning"] },
+  { en: "distribute", phonetic: "/dɪˈstrɪb.juːt/", zh: "分配；分發", level: "B2", topic: "AWL", example: "Volunteers {distributed} food to the homeless.", exampleZh: "志工把食物分發給無家可歸的人。", collocations: ["evenly distributed", "distribute among", "distribute resources"] },
+  { en: "economy", phonetic: "/ɪˈkɒn.ə.mi/", zh: "經濟", level: "B1", topic: "AWL", example: "The country's {economy} grew by 3% last year.", exampleZh: "該國經濟去年成長了 3%。", collocations: ["a strong economy", "the global economy", "boost the economy"] },
+  { en: "establish", phonetic: "/ɪˈstæb.lɪʃ/", zh: "建立", level: "B2", topic: "AWL", example: "The company was {established} in 1985.", exampleZh: "這間公司成立於 1985 年。", collocations: ["establish a relationship", "well-established", "firmly established"] },
+  { en: "estimate", phonetic: "/ˈes.tɪ.meɪt/", zh: "估計", level: "B2", topic: "AWL", example: "Experts {estimate} that 70% of citizens will be vaccinated by June.", exampleZh: "專家估計到六月時將有 70% 民眾接種疫苗。", collocations: ["a rough estimate", "conservative estimate", "estimate that"] },
+  { en: "evidence", phonetic: "/ˈev.ɪ.dəns/", zh: "證據", level: "B2", topic: "AWL", example: "There is little {evidence} to support this theory.", exampleZh: "幾乎沒有證據支持這個理論。", collocations: ["provide evidence", "strong evidence", "scientific evidence"] },
+  { en: "factor", phonetic: "/ˈfæk.tər/", zh: "因素", level: "B2", topic: "AWL", example: "Cost is an important {factor} when choosing a university.", exampleZh: "選擇大學時，費用是重要的考量因素。", collocations: ["a key factor", "contributing factor", "decisive factor"] },
+  { en: "finance", phonetic: "/ˈfaɪ.næns/", zh: "財務；資助", level: "B2", topic: "AWL", example: "The project was {financed} by the government.", exampleZh: "這個專案由政府資助。", collocations: ["personal finance", "finance a project", "public finance"] },
+  { en: "function", phonetic: "/ˈfʌŋk.ʃən/", zh: "功能；運作", level: "B1", topic: "AWL", example: "The main {function} of schools is to educate.", exampleZh: "學校的主要功能是教育。", collocations: ["serve a function", "function properly", "primary function"] },
+  { en: "identify", phonetic: "/aɪˈden.tɪ.faɪ/", zh: "識別；確認", level: "B2", topic: "AWL", example: "Police were unable to {identify} the suspect.", exampleZh: "警方無法確認嫌犯身分。", collocations: ["correctly identify", "identify the cause", "identify with"] },
+  { en: "income", phonetic: "/ˈɪn.kʌm/", zh: "收入", level: "B1", topic: "AWL", example: "Many families struggle to live on a low {income}.", exampleZh: "許多家庭難以靠低收入生活。", collocations: ["disposable income", "annual income", "low income"] },
+  { en: "indicate", phonetic: "/ˈɪn.dɪ.keɪt/", zh: "顯示；表明", level: "B2", topic: "AWL", example: "The survey {indicates} that most people are satisfied.", exampleZh: "調查顯示大多數人感到滿意。", collocations: ["indicate that", "strongly indicate", "indicate a trend"] },
+  { en: "individual", phonetic: "/ˌɪn.dɪˈvɪdʒ.u.əl/", zh: "個人；個別的", level: "B2", topic: "AWL", example: "Each {individual} has different needs.", exampleZh: "每個人都有不同的需求。", collocations: ["an individual approach", "individual rights", "talented individual"] },
+  { en: "interpret", phonetic: "/ɪnˈtɜː.prɪt/", zh: "詮釋；口譯", level: "B2", topic: "AWL", example: "How you {interpret} the data depends on your assumptions.", exampleZh: "你如何詮釋這些資料取決於你的假設。", collocations: ["interpret data", "freely interpret", "interpret as"] },
+  { en: "involve", phonetic: "/ɪnˈvɒlv/", zh: "涉及；參與", level: "B1", topic: "AWL", example: "The job {involves} a lot of travelling.", exampleZh: "這份工作需要經常出差。", collocations: ["deeply involved", "involve in", "get involved"] },
+  { en: "issue", phonetic: "/ˈɪʃ.uː/", zh: "議題；發行", level: "B1", topic: "AWL", example: "Climate change is a serious global {issue}.", exampleZh: "氣候變遷是個嚴重的全球議題。", collocations: ["address an issue", "key issue", "raise an issue"] },
+  { en: "major", phonetic: "/ˈmeɪ.dʒər/", zh: "主要的；重大的", level: "B1", topic: "AWL", example: "A {major} factor in his success was hard work.", exampleZh: "他成功的主要因素是努力。", collocations: ["major issue", "major impact", "play a major role"] },
+  { en: "method", phonetic: "/ˈmeθ.əd/", zh: "方法", level: "B1", topic: "AWL", example: "Traditional teaching {methods} are still effective.", exampleZh: "傳統的教學方法依然有效。", collocations: ["an effective method", "method of", "traditional methods"] },
+  { en: "occur", phonetic: "/əˈkɜːr/", zh: "發生", level: "B2", topic: "AWL", example: "Earthquakes {occur} frequently in this region.", exampleZh: "這個地區經常發生地震。", collocations: ["occur frequently", "naturally occurring", "occur to me"] },
+  { en: "percent", phonetic: "/pəˈsent/", zh: "百分比", level: "B1", topic: "AWL", example: "Around 60 {percent} of students passed the exam.", exampleZh: "大約有六成學生通過了考試。", collocations: ["by X percent", "percent of", "a high percent"] },
+  { en: "period", phonetic: "/ˈpɪə.ri.əd/", zh: "時期", level: "B1", topic: "AWL", example: "The Roman {period} lasted for centuries.", exampleZh: "羅馬時期延續了好幾個世紀。", collocations: ["over a period of", "a long period", "time period"] },
+  { en: "policy", phonetic: "/ˈpɒl.ə.si/", zh: "政策", level: "B2", topic: "AWL", example: "The government introduced a new health {policy}.", exampleZh: "政府推出了新的衛生政策。", collocations: ["foreign policy", "policy makers", "public policy"] },
+  { en: "principle", phonetic: "/ˈprɪn.sə.pəl/", zh: "原則", level: "B2", topic: "AWL", example: "Honesty is an important {principle} in business.", exampleZh: "誠信是商業中的重要原則。", collocations: ["in principle", "basic principles", "guiding principle"] },
+  { en: "process", phonetic: "/ˈprəʊ.ses/", zh: "過程", level: "B1", topic: "AWL", example: "Learning a language is a slow {process}.", exampleZh: "學習語言是一個緩慢的過程。", collocations: ["a lengthy process", "in the process of", "process of elimination"] },
+  { en: "require", phonetic: "/rɪˈkwaɪər/", zh: "需要；要求", level: "B1", topic: "AWL", example: "This job {requires} fluent English.", exampleZh: "這份工作需要流利的英文。", collocations: ["as required", "require attention", "legally required"] },
+  { en: "research", phonetic: "/rɪˈsɜːtʃ/", zh: "研究", level: "B1", topic: "AWL", example: "Recent {research} suggests that sleep affects memory.", exampleZh: "近期研究顯示睡眠會影響記憶。", collocations: ["conduct research", "research shows", "in-depth research"] },
+  { en: "respond", phonetic: "/rɪˈspɒnd/", zh: "回應", level: "B1", topic: "AWL", example: "She didn't {respond} to my email for three days.", exampleZh: "她三天都沒回覆我的電子郵件。", collocations: ["respond to", "quickly respond", "respond positively"] },
+  { en: "role", phonetic: "/rəʊl/", zh: "角色", level: "B1", topic: "AWL", example: "Teachers play a vital {role} in society.", exampleZh: "老師在社會中扮演重要的角色。", collocations: ["play a role", "key role", "role model"] },
+  { en: "section", phonetic: "/ˈsek.ʃən/", zh: "部分；區段", level: "B1", topic: "AWL", example: "The first {section} of the book introduces the characters.", exampleZh: "本書第一部分介紹了角色。", collocations: ["a section of", "cross section", "section by section"] },
+  { en: "significant", phonetic: "/sɪɡˈnɪf.ɪ.kənt/", zh: "重大的；顯著的", level: "B2", topic: "AWL", example: "There has been a {significant} improvement in air quality.", exampleZh: "空氣品質有顯著的改善。", collocations: ["statistically significant", "significant change", "highly significant"] },
+  { en: "similar", phonetic: "/ˈsɪm.ɪ.lər/", zh: "相似的", level: "A2", topic: "AWL", example: "My sister and I have {similar} interests.", exampleZh: "我和我妹妹有相似的興趣。", collocations: ["similar to", "broadly similar", "strikingly similar"] },
+  { en: "source", phonetic: "/sɔːs/", zh: "來源", level: "B1", topic: "AWL", example: "Sunlight is the main {source} of vitamin D.", exampleZh: "陽光是維他命 D 的主要來源。", collocations: ["a source of", "primary source", "reliable source"] },
+  { en: "specific", phonetic: "/spəˈsɪf.ɪk/", zh: "特定的；具體的", level: "B1", topic: "AWL", example: "Could you give a {specific} example?", exampleZh: "你可以舉一個具體的例子嗎？", collocations: ["very specific", "specific to", "gender-specific"] },
+  { en: "structure", phonetic: "/ˈstrʌk.tʃər/", zh: "結構", level: "B2", topic: "AWL", example: "The essay has a clear {structure}: introduction, body, conclusion.", exampleZh: "這篇文章結構清晰：引言、主體、結論。", collocations: ["rigid structure", "organisational structure", "lacks structure"] },
+  { en: "theory", phonetic: "/ˈθɪə.ri/", zh: "理論", level: "B1", topic: "AWL", example: "In {theory}, this should work — but in practice, it's harder.", exampleZh: "理論上這應該行得通——但實際上更困難。", collocations: ["in theory", "support a theory", "conspiracy theory"] },
+  { en: "vary", phonetic: "/ˈveə.ri/", zh: "變化；不同", level: "B1", topic: "AWL", example: "Prices {vary} from store to store.", exampleZh: "不同店家的價格各有不同。", collocations: ["vary widely", "vary greatly", "vary from X to Y"] },
+  { en: "consequence", phonetic: "/ˈkɒn.sɪ.kwəns/", zh: "後果；結果", level: "B2", topic: "AWL", example: "Skipping breakfast can have negative {consequences}.", exampleZh: "不吃早餐可能有負面後果。", collocations: ["serious consequences", "as a consequence", "face the consequences"] },
+
+  // ========== Education 教育 10 字 ==========
+  { en: "curriculum", phonetic: "/kəˈrɪk.jə.ləm/", zh: "課程", level: "C1", topic: "Education", example: "The school is updating its {curriculum} for next year.", exampleZh: "學校正在更新明年的課程。", collocations: ["school curriculum", "national curriculum", "core curriculum"] },
+  { en: "literacy", phonetic: "/ˈlɪt.ər.ə.si/", zh: "識字能力", level: "B2", topic: "Education", example: "Improving {literacy} is a national priority.", exampleZh: "提升識字率是國家的優先事項。", collocations: ["literacy rate", "computer literacy", "financial literacy"] },
+  { en: "tuition", phonetic: "/tjuˈɪʃ.ən/", zh: "學費；個別教學", level: "B2", topic: "Education", example: "University {tuition} fees have risen sharply.", exampleZh: "大學學費大幅上漲。", collocations: ["tuition fees", "private tuition", "free tuition"] },
+  { en: "scholarship", phonetic: "/ˈskɒl.ə.ʃɪp/", zh: "獎學金", level: "B1", topic: "Education", example: "She won a {scholarship} to study abroad.", exampleZh: "她贏得獎學金到國外留學。", collocations: ["win a scholarship", "full scholarship", "scholarship program"] },
+  { en: "discipline", phonetic: "/ˈdɪs.ə.plɪn/", zh: "紀律；學科", level: "B2", topic: "Education", example: "Strict {discipline} is enforced in the school.", exampleZh: "學校嚴格執行紀律。", collocations: ["strict discipline", "self-discipline", "academic discipline"] },
+  { en: "mandatory", phonetic: "/ˈmæn.də.tər.i/", zh: "強制的", level: "C1", topic: "Education", example: "Wearing a seatbelt is {mandatory} in most countries.", exampleZh: "在大部分國家繫安全帶是強制規定。", collocations: ["mandatory requirement", "make X mandatory", "mandatory training"] },
+  { en: "extracurricular", phonetic: "/ˌek.strə.kəˈrɪk.jə.lər/", zh: "課外的", level: "C1", topic: "Education", example: "She enjoys {extracurricular} activities like drama and debate.", exampleZh: "她喜歡參加戲劇和辯論等課外活動。", collocations: ["extracurricular activities", "extracurricular interests"] },
+  { en: "enrol", phonetic: "/ɪnˈrəʊl/", zh: "註冊；報名", level: "B2", topic: "Education", example: "Over 200 students {enrolled} in the course this year.", exampleZh: "今年有超過 200 名學生報名這門課。", collocations: ["enrol in", "enrol on a course", "enrol students"] },
+  { en: "plagiarism", phonetic: "/ˈpleɪ.dʒər.ɪ.zəm/", zh: "抄襲", level: "C1", topic: "Education", example: "Universities take {plagiarism} very seriously.", exampleZh: "大學非常嚴肅地看待抄襲行為。", collocations: ["commit plagiarism", "accused of plagiarism", "plagiarism detection"] },
+  { en: "vocational", phonetic: "/vəʊˈkeɪ.ʃən.əl/", zh: "職業的", level: "B2", topic: "Education", example: "{Vocational} training prepares students for specific jobs.", exampleZh: "職業訓練讓學生為特定工作做準備。", collocations: ["vocational training", "vocational school", "vocational qualifications"] },
+
+  // ========== Environment 環境 10 字 ==========
+  { en: "sustainability", phonetic: "/səˌsteɪ.nəˈbɪl.ə.ti/", zh: "永續性", level: "C1", topic: "Environment", example: "Environmental {sustainability} is a growing concern.", exampleZh: "環境永續是日益重要的議題。", collocations: ["environmental sustainability", "long-term sustainability", "sustainability goals"] },
+  { en: "deforestation", phonetic: "/diːˌfɒr.ɪˈsteɪ.ʃən/", zh: "森林砍伐", level: "C1", topic: "Environment", example: "{Deforestation} threatens countless species.", exampleZh: "森林砍伐威脅著無數物種。", collocations: ["rapid deforestation", "prevent deforestation", "deforestation rate"] },
+  { en: "emission", phonetic: "/ɪˈmɪʃ.ən/", zh: "排放", level: "B2", topic: "Environment", example: "Cars produce harmful {emissions}.", exampleZh: "汽車會產生有害的排放物。", collocations: ["carbon emissions", "reduce emissions", "greenhouse gas emissions"] },
+  { en: "renewable", phonetic: "/rɪˈnjuː.ə.bəl/", zh: "可再生的", level: "B2", topic: "Environment", example: "Solar power is a {renewable} energy source.", exampleZh: "太陽能是可再生的能源。", collocations: ["renewable energy", "renewable resources", "fully renewable"] },
+  { en: "biodiversity", phonetic: "/ˌbaɪ.əʊ.daɪˈvɜː.sə.ti/", zh: "生物多樣性", level: "C1", topic: "Environment", example: "Rainforests are home to incredible {biodiversity}.", exampleZh: "雨林孕育了無比豐富的生物多樣性。", collocations: ["rich biodiversity", "biodiversity loss", "protect biodiversity"] },
+  { en: "ecosystem", phonetic: "/ˈiː.kəʊˌsɪs.təm/", zh: "生態系統", level: "B2", topic: "Environment", example: "Pollution damages fragile {ecosystems}.", exampleZh: "污染破壞了脆弱的生態系統。", collocations: ["fragile ecosystem", "marine ecosystem", "balance an ecosystem"] },
+  { en: "conservation", phonetic: "/ˌkɒn.səˈveɪ.ʃən/", zh: "保育", level: "B2", topic: "Environment", example: "Wildlife {conservation} requires international cooperation.", exampleZh: "野生動物保育需要國際合作。", collocations: ["wildlife conservation", "conservation efforts", "energy conservation"] },
+  { en: "pollution", phonetic: "/pəˈluː.ʃən/", zh: "污染", level: "B1", topic: "Environment", example: "Air {pollution} is a major health risk in cities.", exampleZh: "空氣污染是城市的主要健康風險。", collocations: ["air pollution", "reduce pollution", "water pollution"] },
+  { en: "habitat", phonetic: "/ˈhæb.ɪ.tæt/", zh: "棲息地", level: "B2", topic: "Environment", example: "Urban development destroys natural {habitats}.", exampleZh: "都市開發破壞了自然棲息地。", collocations: ["natural habitat", "destroy habitat", "habitat loss"] },
+  { en: "depletion", phonetic: "/dɪˈpliː.ʃən/", zh: "枯竭", level: "C1", topic: "Environment", example: "The {depletion} of natural resources is a global concern.", exampleZh: "自然資源的枯竭是全球性問題。", collocations: ["resource depletion", "ozone depletion", "rapid depletion"] },
+
+  // ========== Technology 科技 10 字 ==========
+  { en: "innovation", phonetic: "/ˌɪn.əˈveɪ.ʃən/", zh: "創新", level: "B2", topic: "Technology", example: "Technological {innovation} drives economic growth.", exampleZh: "科技創新推動經濟成長。", collocations: ["technological innovation", "foster innovation", "innovation hub"] },
+  { en: "automation", phonetic: "/ˌɔː.təˈmeɪ.ʃən/", zh: "自動化", level: "C1", topic: "Technology", example: "{Automation} may replace many traditional jobs.", exampleZh: "自動化可能取代許多傳統工作。", collocations: ["industrial automation", "full automation", "threat of automation"] },
+  { en: "cybersecurity", phonetic: "/ˌsaɪ.bə.sɪˈkjʊə.rə.ti/", zh: "網路安全", level: "C1", topic: "Technology", example: "{Cybersecurity} threats are increasing every year.", exampleZh: "網路安全威脅每年都在增加。", collocations: ["cybersecurity threat", "cybersecurity expert", "strengthen cybersecurity"] },
+  { en: "surveillance", phonetic: "/səˈveɪ.ləns/", zh: "監視", level: "C1", topic: "Technology", example: "CCTV {surveillance} raises privacy concerns.", exampleZh: "閉路電視監視引發隱私疑慮。", collocations: ["under surveillance", "mass surveillance", "surveillance camera"] },
+  { en: "algorithm", phonetic: "/ˈæl.ɡə.rɪ.ðəm/", zh: "演算法", level: "C1", topic: "Technology", example: "Search engines use complex {algorithms}.", exampleZh: "搜尋引擎使用複雜的演算法。", collocations: ["complex algorithm", "ranking algorithm", "machine learning algorithm"] },
+  { en: "obsolete", phonetic: "/ˈɒb.səl.iːt/", zh: "過時的", level: "C1", topic: "Technology", example: "Cassette tapes are now {obsolete}.", exampleZh: "卡式錄音帶現在已經過時。", collocations: ["become obsolete", "technologically obsolete", "render obsolete"] },
+  { en: "integration", phonetic: "/ˌɪn.tɪˈɡreɪ.ʃən/", zh: "整合", level: "B2", topic: "Technology", example: "The {integration} of AI into education is happening fast.", exampleZh: "AI 與教育的整合正在快速發生。", collocations: ["seamless integration", "social integration", "integration with"] },
+  { en: "dependency", phonetic: "/dɪˈpen.dən.si/", zh: "依賴", level: "C1", topic: "Technology", example: "Our growing {dependency} on smartphones is worrying.", exampleZh: "我們對智慧型手機日益增加的依賴令人擔憂。", collocations: ["heavy dependency", "reduce dependency", "dependency on"] },
+  { en: "breakthrough", phonetic: "/ˈbreɪk.θruː/", zh: "突破", level: "B2", topic: "Technology", example: "Scientists made a major {breakthrough} in cancer research.", exampleZh: "科學家在癌症研究上取得重大突破。", collocations: ["major breakthrough", "scientific breakthrough", "achieve a breakthrough"] },
+  { en: "accessibility", phonetic: "/əkˌses.əˈbɪl.ə.ti/", zh: "可及性；無障礙", level: "C1", topic: "Technology", example: "The website improved its {accessibility} for blind users.", exampleZh: "該網站改善了視障使用者的無障礙功能。", collocations: ["ease of accessibility", "improve accessibility", "accessibility features"] },
+
+  // ========== Health 健康 10 字 ==========
+  { en: "obesity", phonetic: "/əʊˈbiː.sə.ti/", zh: "肥胖", level: "B2", topic: "Health", example: "Childhood {obesity} is rising worldwide.", exampleZh: "兒童肥胖在全球都在上升。", collocations: ["childhood obesity", "tackle obesity", "obesity rate"] },
+  { en: "sedentary", phonetic: "/ˈsed.ən.tər.i/", zh: "久坐的", level: "C1", topic: "Health", example: "A {sedentary} lifestyle increases health risks.", exampleZh: "久坐不動的生活型態會增加健康風險。", collocations: ["sedentary lifestyle", "sedentary work", "become sedentary"] },
+  { en: "nutrition", phonetic: "/njuːˈtrɪʃ.ən/", zh: "營養", level: "B2", topic: "Health", example: "Good {nutrition} is essential for children's development.", exampleZh: "良好的營養對兒童發展至關重要。", collocations: ["good nutrition", "poor nutrition", "nutrition advice"] },
+  { en: "epidemic", phonetic: "/ˌep.ɪˈdem.ɪk/", zh: "流行病", level: "B2", topic: "Health", example: "The flu {epidemic} affected thousands.", exampleZh: "這場流感疫情影響了數千人。", collocations: ["flu epidemic", "obesity epidemic", "contain an epidemic"] },
+  { en: "immunity", phonetic: "/ɪˈmjuː.nə.ti/", zh: "免疫力", level: "B2", topic: "Health", example: "Vaccines build {immunity} against disease.", exampleZh: "疫苗能建立對疾病的免疫力。", collocations: ["build immunity", "natural immunity", "herd immunity"] },
+  { en: "hygiene", phonetic: "/ˈhaɪ.dʒiːn/", zh: "衛生", level: "B2", topic: "Health", example: "Good personal {hygiene} prevents illness.", exampleZh: "良好的個人衛生可預防疾病。", collocations: ["personal hygiene", "dental hygiene", "oral hygiene"] },
+  { en: "longevity", phonetic: "/lɒnˈdʒev.ə.ti/", zh: "長壽", level: "C1", topic: "Health", example: "Diet plays a key role in {longevity}.", exampleZh: "飲食在長壽中扮演關鍵角色。", collocations: ["increase longevity", "human longevity", "factors of longevity"] },
+  { en: "pharmaceutical", phonetic: "/ˌfɑː.məˈsuː.tɪ.kəl/", zh: "製藥的", level: "C1", topic: "Health", example: "The {pharmaceutical} industry invests heavily in research.", exampleZh: "製藥業在研究上投入大量資金。", collocations: ["pharmaceutical company", "pharmaceutical industry", "pharmaceutical research"] },
+  { en: "preventive", phonetic: "/prɪˈven.tɪv/", zh: "預防性的", level: "B2", topic: "Health", example: "Regular check-ups are part of {preventive} healthcare.", exampleZh: "定期健檢是預防性醫療的一部分。", collocations: ["preventive measures", "preventive medicine", "preventive care"] },
+  { en: "chronic", phonetic: "/ˈkrɒn.ɪk/", zh: "慢性的", level: "B2", topic: "Health", example: "She suffers from {chronic} back pain.", exampleZh: "她長期受慢性背痛所苦。", collocations: ["chronic illness", "chronic pain", "chronic shortage"] },
+
+  // ========== Work 工作 10 字 ==========
+  { en: "workforce", phonetic: "/ˈwɜːk.fɔːs/", zh: "勞動力", level: "B2", topic: "Work", example: "Women now make up nearly half of the {workforce}.", exampleZh: "女性現在占了將近一半的勞動力。", collocations: ["skilled workforce", "the global workforce", "enter the workforce"] },
+  { en: "burnout", phonetic: "/ˈbɜːn.aʊt/", zh: "職業倦怠", level: "C1", topic: "Work", example: "Long working hours can lead to {burnout}.", exampleZh: "長工時可能導致職業倦怠。", collocations: ["suffer burnout", "workplace burnout", "avoid burnout"] },
+  { en: "flexibility", phonetic: "/ˌflek.səˈbɪl.ə.ti/", zh: "彈性", level: "B2", topic: "Work", example: "Employees value {flexibility} in their schedule.", exampleZh: "員工重視工作時間的彈性。", collocations: ["greater flexibility", "flexibility in", "allow flexibility"] },
+  { en: "productivity", phonetic: "/ˌprɒd.ʌkˈtɪv.ə.ti/", zh: "生產力", level: "B2", topic: "Work", example: "Remote work has boosted {productivity} for many.", exampleZh: "遠距工作為許多人提升了生產力。", collocations: ["increase productivity", "boost productivity", "low productivity"] },
+  { en: "retention", phonetic: "/rɪˈten.ʃən/", zh: "留任；保留", level: "C1", topic: "Work", example: "Employee {retention} is a major challenge for the company.", exampleZh: "員工留任率是公司的一大挑戰。", collocations: ["employee retention", "customer retention", "improve retention"] },
+  { en: "recruitment", phonetic: "/rɪˈkruːt.mənt/", zh: "招聘", level: "B2", topic: "Work", example: "The company is improving its {recruitment} process.", exampleZh: "公司正在改善招聘流程。", collocations: ["recruitment process", "online recruitment", "recruitment drive"] },
+  { en: "promotion", phonetic: "/prəˈməʊ.ʃən/", zh: "升遷", level: "B1", topic: "Work", example: "She earned a {promotion} after just one year.", exampleZh: "她任職僅一年就獲得升遷。", collocations: ["get a promotion", "earn a promotion", "well-deserved promotion"] },
+  { en: "unemployment", phonetic: "/ˌʌn.ɪmˈplɔɪ.mənt/", zh: "失業", level: "B1", topic: "Work", example: "{Unemployment} rose during the recession.", exampleZh: "經濟衰退期間失業率上升。", collocations: ["unemployment rate", "high unemployment", "mass unemployment"] },
+  { en: "workload", phonetic: "/ˈwɜːk.ləʊd/", zh: "工作量", level: "B2", topic: "Work", example: "Teachers complain of an excessive {workload}.", exampleZh: "老師抱怨工作量過重。", collocations: ["heavy workload", "reduce workload", "manageable workload"] },
+  { en: "expertise", phonetic: "/ˌek.spɜːˈtiːz/", zh: "專業", level: "C1", topic: "Work", example: "She has 20 years of {expertise} in marketing.", exampleZh: "她在行銷領域有 20 年的專業經驗。", collocations: ["technical expertise", "draw on expertise", "area of expertise"] },
+];
+
+const READINGS = [
+  {
+    id: "r1",
+    title: "Why We Sleep",
+    level: "B1 入門",
+    minutes: 5,
+    text: `Sleep is something we all need, but for many years scientists did not fully understand why. Today, we know that sleep is essential for our health, both physical and mental.
+
+When we sleep, our body repairs itself. Cells grow and damaged tissue is restored. The brain also uses this time to process the information we have learned during the day. This is why students who sleep well usually perform better in school than those who do not.
+
+Most adults need between seven and nine hours of sleep each night. However, in modern society, many people sleep less than this. They use phones late at night, work long hours, or worry about problems. Over time, this lack of sleep can lead to serious health issues such as heart disease, weight gain, and depression.
+
+Experts recommend creating a regular sleep schedule, avoiding screens before bed, and keeping the bedroom cool and dark. Small changes like these can make a big difference to how we feel each day.`,
+    questions: [
+      {
+        q: "According to the passage, why is sleep important?",
+        options: [
+          "It helps us avoid working long hours",
+          "It allows the body and brain to recover and process information",
+          "It prevents us from using our phones",
+          "It is required by law"
+        ],
+        answer: 1,
+        explanation: "文章第二段提到睡眠時身體會修復、大腦會處理白天的資訊。"
+      },
+      {
+        q: "How many hours of sleep do most adults need?",
+        options: ["5-6 hours", "6-7 hours", "7-9 hours", "9-10 hours"],
+        answer: 2,
+        explanation: "第三段第一句明確提到 'between seven and nine hours'。"
+      },
+      {
+        q: "Which of the following is NOT mentioned as a cause of poor sleep?",
+        options: [
+          "Using phones late at night",
+          "Working long hours",
+          "Drinking too much coffee",
+          "Worrying about problems"
+        ],
+        answer: 2,
+        explanation: "文章提到手機、工時長、煩惱，但沒提到咖啡。"
+      },
+      {
+        q: "What is the main purpose of the last paragraph?",
+        options: [
+          "To list serious diseases",
+          "To give advice on improving sleep",
+          "To explain how the brain works",
+          "To criticize modern society"
+        ],
+        answer: 1,
+        explanation: "最後一段給出規律作息、避免螢幕等建議。"
+      }
+    ]
+  },
+  {
+    id: "r2",
+    title: "The Rise of Remote Work",
+    level: "B2 中階",
+    minutes: 8,
+    text: `The concept of remote work, once considered a niche arrangement reserved for freelancers and tech specialists, has undergone a dramatic transformation in recent years. The global pandemic accelerated a trend that had been quietly developing for over a decade, forcing companies of all sizes to reconsider how, where, and when work gets done.
+
+Proponents of remote work cite numerous advantages. Employees often report higher productivity when freed from the distractions of an open-plan office and the exhaustion of daily commutes. Companies, in turn, have discovered that they can dramatically reduce overhead costs by downsizing physical offices. Moreover, the talent pool expands significantly when geographical boundaries no longer dictate hiring decisions.
+
+However, the picture is far from uniformly positive. Critics point out that remote work can blur the boundary between professional and personal life, leading to longer hours and increased burnout. Junior employees, in particular, may struggle without the informal mentorship that naturally occurs in physical workplaces. Some studies also suggest that innovation, which often springs from spontaneous in-person conversations, may suffer in fully remote environments.
+
+In response, many organizations have adopted hybrid models, combining in-office and remote days. Yet implementing such models is rarely straightforward — questions of scheduling, equity, and team cohesion continue to challenge managers. The future of work, it seems, will not be defined by a single answer but by an ongoing negotiation between flexibility and connection.`,
+    questions: [
+      {
+        q: "What caused remote work to grow rapidly?",
+        options: [
+          "Government regulations",
+          "The global pandemic",
+          "Demands from freelancers",
+          "New office technology"
+        ],
+        answer: 1,
+        explanation: "第一段提到 'The global pandemic accelerated a trend'。"
+      },
+      {
+        q: "Which is NOT mentioned as a benefit of remote work?",
+        options: [
+          "Higher productivity",
+          "Lower office costs",
+          "Access to a wider talent pool",
+          "Better health insurance"
+        ],
+        answer: 3,
+        explanation: "第二段提到生產力、成本、人才池，沒提到健康保險。"
+      },
+      {
+        q: "According to the passage, junior employees may suffer because:",
+        options: [
+          "They cannot use technology well",
+          "They lose informal mentorship from senior staff",
+          "They are paid less",
+          "They prefer working in offices"
+        ],
+        answer: 1,
+        explanation: "第三段明確提到 'informal mentorship that naturally occurs'。"
+      },
+      {
+        q: "The author's overall attitude toward remote work is:",
+        options: [
+          "Strongly supportive",
+          "Strongly opposed",
+          "Balanced, showing both sides",
+          "Indifferent"
+        ],
+        answer: 2,
+        explanation: "文章呈現優點與缺點，並以「持續協商」結尾，屬於平衡論述。"
+      },
+      {
+        q: "What does the word 'blur' in paragraph 3 most likely mean?",
+        options: ["Make clearer", "Make less distinct", "Strengthen", "Eliminate"],
+        answer: 1,
+        explanation: "'blur the boundary' 意思是讓界線變模糊。"
+      }
+    ]
+  }
+];
+
+const LISTENINGS = [
+  {
+    id: "l1",
+    title: "Booking a Hotel Room",
+    level: "B1 入門",
+    minutes: 3,
+    transcript: "Good afternoon, Riverside Hotel. How may I help you? Hi, I'd like to book a room for next Saturday, please. Certainly. How many nights will you be staying? Just two nights — Saturday and Sunday. And how many guests? It will be two adults and one child. We have a family room available for one hundred and twenty pounds per night, including breakfast. That sounds good. Can I pay when I arrive? Yes, of course. Could I have your name and phone number for the booking?",
+    questions: [
+      { q: "How many nights will the guest stay? ___ nights", answer: "two", hint: "數字寫英文" },
+      { q: "How many adults will stay? ___ adults", answer: "two", hint: "數字寫英文" },
+      { q: "The price per night is ___ pounds.", answer: "120", hint: "寫數字" },
+      { q: "Breakfast is ___ in the price.", answer: "included", hint: "動詞過去分詞" }
+    ]
+  },
+  {
+    id: "l2",
+    title: "A Talk on Healthy Eating",
+    level: "B2 中階",
+    minutes: 4,
+    transcript: "Good morning everyone. Today I'd like to talk about healthy eating habits. Many people think that being healthy means following a strict diet, but research shows that balance is far more important than restriction. The first principle is variety. Your body needs different nutrients, so try to include vegetables, fruits, whole grains, and protein in every meal. The second principle is portion control. Even healthy foods can cause weight gain if you eat too much. A simple trick is to use smaller plates. Finally, don't forget to drink enough water. Most adults should aim for around two litres per day. Remember, small daily changes are more sustainable than dramatic short-term diets.",
+    questions: [
+      { q: "The speaker says ___ is more important than restriction.", answer: "balance", hint: "名詞" },
+      { q: "The first principle is ___.", answer: "variety", hint: "名詞" },
+      { q: "Use ___ plates to control portion size.", answer: "smaller", hint: "形容詞比較級" },
+      { q: "Adults should drink around ___ litres of water per day.", answer: "two", hint: "數字英文" },
+      { q: "Small daily changes are more ___ than short-term diets.", answer: "sustainable", hint: "形容詞" }
+    ]
+  }
+];
+
+// ============ 狀態 ============
+let state = JSON.parse(localStorage.getItem('ielts-state') || '{}');
+if (!state.vocab) state.vocab = {}; // { word: { status: 'known'|'learning', lastSeen, ease } }
+if (!state.scores) state.scores = { reading: {}, listening: {} };
+
+let currentVocabIndex = 0;
+let cardFlipped = false;
+let todayQueue = [];
+
+function saveState() {
+  localStorage.setItem('ielts-state', JSON.stringify(state));
+}
+
+// ============ Tab 切換 ============
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ============ 單字 ============
+function updateVocabStats() {
+  const known = Object.values(state.vocab).filter(v => v.status === 'known').length;
+  const learning = Object.values(state.vocab).filter(v => v.status === 'learning').length;
+  document.getElementById('vocab-known').textContent = known;
+  document.getElementById('vocab-learning').textContent = learning;
+  document.getElementById('vocab-total').textContent = VOCABULARY.length;
+}
+
+let currentTopic = 'all';
+function buildTodayQueue() {
+  const pool = currentTopic === 'all' ? VOCABULARY : VOCABULARY.filter(w => w.topic === currentTopic);
+  // 優先：複習中的字 > 沒見過的字
+  const review = pool.filter(w => state.vocab[w.en]?.status === 'learning');
+  const fresh = pool.filter(w => !state.vocab[w.en]);
+  todayQueue = [...review, ...fresh].slice(0, 15); // 一天最多 15 字
+  // 洗牌
+  todayQueue.sort(() => Math.random() - 0.5);
+}
+
+document.querySelectorAll('.topic-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTopic = btn.dataset.topic;
+    // 重置卡片狀態
+    document.getElementById('vocab-actions').style.display = 'none';
+    document.getElementById('vocab-start').style.display = 'flex';
+    document.getElementById('vocab-start').innerHTML = '<button class="btn btn-primary" onclick="startVocab()">開始今天的單字</button>';
+    document.getElementById('card-front').innerHTML = '<div class="word-en">準備好了嗎？</div><div class="hint" style="margin-top:16px;">點擊下方按鈕開始</div>';
+    document.getElementById('card-back').style.display = 'none';
+    todayQueue = [];
+    currentVocabIndex = 0;
+  });
+});
+
+function startVocab() {
+  buildTodayQueue();
+  if (todayQueue.length === 0) {
+    document.getElementById('card-front').innerHTML = '<div class="word-en">🎉 太棒了！</div><div class="hint" style="margin-top:16px;">今天的單字都複習完了</div>';
+    return;
+  }
+  currentVocabIndex = 0;
+  document.getElementById('vocab-start').style.display = 'none';
+  document.getElementById('vocab-actions').style.display = 'flex';
+  showCurrentWord();
+}
+
+function showCurrentWord() {
+  if (currentVocabIndex >= todayQueue.length) {
+    document.getElementById('card-front').innerHTML = '<div class="word-en">🎉 完成！</div><div class="hint" style="margin-top:16px;">今天的單字都複習完了</div>';
+    document.getElementById('card-back').style.display = 'none';
+    document.getElementById('vocab-actions').style.display = 'none';
+    document.getElementById('vocab-start').style.display = 'flex';
+    document.getElementById('vocab-start').innerHTML = '<button class="btn btn-primary" onclick="startVocab()">再來一輪</button>';
+    return;
+  }
+  const word = todayQueue[currentVocabIndex];
+  const topicLabels = { AWL: 'AWL', Education: '教育', Environment: '環境', Technology: '科技', Health: '健康', Work: '工作' };
+  document.getElementById('word-en').textContent = word.en;
+  document.getElementById('phonetic').textContent = word.phonetic;
+  document.getElementById('word-en-back').textContent = word.en;
+  document.getElementById('phonetic-back').textContent = word.phonetic;
+  document.getElementById('word-zh').textContent = word.zh;
+  document.getElementById('level-badge').textContent = `${word.level} · ${topicLabels[word.topic] || word.topic}`;
+  const exampleHtml = word.example.replace(/\{([^}]+)\}/g, '<span class="highlight">$1</span>');
+  document.getElementById('example').innerHTML = exampleHtml;
+  document.getElementById('example-zh').textContent = word.exampleZh || '';
+  document.getElementById('example-zh').classList.remove('show');
+  document.getElementById('example-toggle').textContent = '💡 點此看中文翻譯';
+  document.getElementById('example-toggle').style.display = word.exampleZh ? 'inline-block' : 'none';
+  const colloHtml = (word.collocations || []).map(c => `<span class="collocation-chip">${c}</span>`).join('');
+  document.getElementById('collocations').innerHTML = colloHtml;
+  document.getElementById('card-front').style.display = 'block';
+  document.getElementById('card-back').style.display = 'none';
+  cardFlipped = false;
+}
+
+function toggleExampleZh() {
+  const zh = document.getElementById('example-zh');
+  const btn = document.getElementById('example-toggle');
+  if (zh.classList.contains('show')) {
+    zh.classList.remove('show');
+    btn.textContent = '💡 點此看中文翻譯';
+  } else {
+    zh.classList.add('show');
+    btn.textContent = '🔼 收起中文翻譯';
+  }
+}
+
+function flipCard() {
+  if (todayQueue.length === 0 || currentVocabIndex >= todayQueue.length) return;
+  cardFlipped = !cardFlipped;
+  document.getElementById('card-front').style.display = cardFlipped ? 'none' : 'block';
+  document.getElementById('card-back').style.display = cardFlipped ? 'block' : 'none';
+}
+
+function rateWord(rating) {
+  const word = todayQueue[currentVocabIndex];
+  if (!word) return;
+  if (!state.vocab[word.en]) state.vocab[word.en] = {};
+  state.vocab[word.en].lastSeen = Date.now();
+  if (rating === 'easy') {
+    state.vocab[word.en].status = 'known';
+  } else if (rating === 'hard') {
+    state.vocab[word.en].status = 'learning';
+    // 放回隊列後半，再見一次
+    todayQueue.push(word);
+  } else {
+    state.vocab[word.en].status = 'learning';
+  }
+  saveState();
+  updateVocabStats();
+  currentVocabIndex++;
+  showCurrentWord();
+}
+
+// ============ 閱讀 ============
+function renderReadingList() {
+  const list = document.getElementById('passage-list');
+  list.innerHTML = READINGS.map(r => {
+    const score = state.scores.reading[r.id];
+    const scoreText = score ? `<span style="color:var(--success);">✓ ${score.correct}/${score.total}</span>` : '';
+    return `<div class="passage-item" onclick="openReading('${r.id}')">
+      <div class="title">${r.title}</div>
+      <div class="meta">${r.level} · 約 ${r.minutes} 分鐘 · ${r.questions.length} 題 ${scoreText}</div>
+    </div>`;
+  }).join('');
+}
+
+let currentReading = null;
+let readingAnswers = {};
+
+function openReading(id) {
+  currentReading = READINGS.find(r => r.id === id);
+  readingAnswers = {};
+  document.getElementById('reading-list').style.display = 'none';
+  document.getElementById('reading-detail').style.display = 'block';
+  document.getElementById('passage-title').textContent = currentReading.title;
+  document.getElementById('passage-meta').textContent = `${currentReading.level} · 約 ${currentReading.minutes} 分鐘`;
+  document.getElementById('passage-text').innerHTML = currentReading.text.split('\n\n').map(p => `<p>${p}</p>`).join('');
+  renderQuestions();
+  document.getElementById('reading-result').innerHTML = '';
+  document.getElementById('submit-reading').style.display = 'block';
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = currentReading.questions.map((q, qi) => `
+    <div class="question">
+      <div class="question-text">${qi + 1}. ${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt, oi) => `
+          <div class="option" data-q="${qi}" data-o="${oi}" onclick="selectOption(${qi}, ${oi})">${String.fromCharCode(65+oi)}. ${opt}</div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${qi}"></div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qi, oi) {
+  readingAnswers[qi] = oi;
+  document.querySelectorAll(`.option[data-q="${qi}"]`).forEach(el => el.classList.remove('selected'));
+  document.querySelector(`.option[data-q="${qi}"][data-o="${oi}"]`).classList.add('selected');
+}
+
+function submitReading() {
+  let correct = 0;
+  currentReading.questions.forEach((q, qi) => {
+    const ans = readingAnswers[qi];
+    document.querySelectorAll(`.option[data-q="${qi}"]`).forEach(el => {
+      el.style.pointerEvents = 'none';
+      const oi = parseInt(el.dataset.o);
+      if (oi === q.answer) el.classList.add('correct');
+      else if (oi === ans) el.classList.add('wrong');
+    });
+    const exp = document.getElementById(`exp-${qi}`);
+    exp.textContent = `✓ 正解：${String.fromCharCode(65+q.answer)} — ${q.explanation}`;
+    exp.classList.add('show');
+    if (ans === q.answer) correct++;
+  });
+  const total = currentReading.questions.length;
+  state.scores.reading[currentReading.id] = { correct, total, date: Date.now() };
+  saveState();
+  const pct = Math.round(correct / total * 100);
+  const banner = document.getElementById('reading-result');
+  const cls = pct >= 70 ? 'good' : 'bad';
+  banner.innerHTML = `<div class="result-banner ${cls}">答對 ${correct} / ${total} 題（${pct}%）${pct >= 70 ? ' 表現不錯！' : ' 再加油！'}</div>`;
+  document.getElementById('submit-reading').style.display = 'none';
+}
+
+function backToReadingList() {
+  document.getElementById('reading-list').style.display = 'block';
+  document.getElementById('reading-detail').style.display = 'none';
+  renderReadingList();
+}
+
+// ============ 聽力 ============
+function renderListeningList() {
+  const list = document.getElementById('listening-passage-list');
+  list.innerHTML = LISTENINGS.map(l => {
+    const score = state.scores.listening[l.id];
+    const scoreText = score ? `<span style="color:var(--success);">✓ ${score.correct}/${score.total}</span>` : '';
+    return `<div class="passage-item" onclick="openListening('${l.id}')">
+      <div class="title">${l.title}</div>
+      <div class="meta">${l.level} · 約 ${l.minutes} 分鐘 · ${l.questions.length} 題 ${scoreText}</div>
+    </div>`;
+  }).join('');
+}
+
+let currentListening = null;
+let listeningPlaying = false;
+let currentUtterance = null;
+
+function openListening(id) {
+  currentListening = LISTENINGS.find(l => l.id === id);
+  document.getElementById('listening-list').style.display = 'none';
+  document.getElementById('listening-detail').style.display = 'block';
+  document.getElementById('listening-title').textContent = currentListening.title;
+  document.getElementById('listening-meta').textContent = `${currentListening.level} · 約 ${currentListening.minutes} 分鐘`;
+  renderListeningQuestions();
+  document.getElementById('transcript').classList.remove('show');
+  document.getElementById('listening-result').innerHTML = '';
+  document.getElementById('submit-listening').style.display = 'block';
+  document.getElementById('play-btn').textContent = '▶';
+  listeningPlaying = false;
+}
+
+function renderListeningQuestions() {
+  const container = document.getElementById('listening-questions');
+  container.innerHTML = currentListening.questions.map((q, i) => `
+    <div class="question">
+      <div class="question-text">${i + 1}. ${q.q.replace('___', `<input type="text" class="fill-blank" id="blank-${i}" placeholder="${q.hint||'填空'}" autocomplete="off">`)}</div>
+    </div>
+  `).join('');
+}
+
+function toggleAudio() {
+  if (listeningPlaying) {
+    window.speechSynthesis.cancel();
+    document.getElementById('play-btn').textContent = '▶';
+    listeningPlaying = false;
+  } else {
+    currentUtterance = new SpeechSynthesisUtterance(currentListening.transcript);
+    currentUtterance.lang = 'en-US';
+    currentUtterance.rate = parseFloat(document.getElementById('speed-select').value);
+    currentUtterance.onend = () => {
+      document.getElementById('play-btn').textContent = '▶';
+      listeningPlaying = false;
+    };
+    window.speechSynthesis.speak(currentUtterance);
+    document.getElementById('play-btn').textContent = '⏸';
+    listeningPlaying = true;
+  }
+}
+
+function changeSpeed() {
+  if (listeningPlaying) {
+    window.speechSynthesis.cancel();
+    listeningPlaying = false;
+    document.getElementById('play-btn').textContent = '▶';
+  }
+}
+
+function submitListening() {
+  let correct = 0;
+  let transcriptHtml = currentListening.transcript;
+  currentListening.questions.forEach((q, i) => {
+    const input = document.getElementById(`blank-${i}`);
+    const userAns = (input.value || '').trim().toLowerCase();
+    const rightAns = q.answer.toLowerCase();
+    input.disabled = true;
+    if (userAns === rightAns) {
+      input.classList.add('correct');
+      correct++;
+    } else {
+      input.classList.add('wrong');
+      input.value = `${input.value} → ${q.answer}`;
+    }
+  });
+  const total = currentListening.questions.length;
+  state.scores.listening[currentListening.id] = { correct, total, date: Date.now() };
+  saveState();
+  const pct = Math.round(correct / total * 100);
+  const banner = document.getElementById('listening-result');
+  const cls = pct >= 70 ? 'good' : 'bad';
+  banner.innerHTML = `<div class="result-banner ${cls}">答對 ${correct} / ${total} 題（${pct}%）${pct >= 70 ? ' 表現不錯！' : ' 再聽一次再試試'}</div>`;
+  document.getElementById('submit-listening').style.display = 'none';
+  document.getElementById('transcript').innerHTML = `<strong>逐字稿：</strong><br>${currentListening.transcript}`;
+  document.getElementById('transcript').classList.add('show');
+}
+
+function toggleTranscript() {
+  const t = document.getElementById('transcript');
+  if (!t.innerHTML) {
+    t.innerHTML = `<strong>逐字稿：</strong><br>${currentListening.transcript}`;
+  }
+  t.classList.toggle('show');
+}
+
+function backToListeningList() {
+  if (listeningPlaying) {
+    window.speechSynthesis.cancel();
+    listeningPlaying = false;
+  }
+  document.getElementById('listening-list').style.display = 'block';
+  document.getElementById('listening-detail').style.display = 'none';
+  renderListeningList();
+}
+
+// ============ 設定 ============
+if (!state.settings) state.settings = { notifEnabled: false, notifTime: '08:00', apiKey: '' };
+if (!state.streak) state.streak = 0;
+if (!state.lastStudyDate) state.lastStudyDate = null;
+
+function openSettings() {
+  document.getElementById('notif-enabled').checked = state.settings.notifEnabled;
+  document.getElementById('notif-time').value = state.settings.notifTime;
+  document.getElementById('api-key').value = state.settings.apiKey || '';
+  document.getElementById('stat-streak').textContent = state.streak;
+  document.getElementById('stat-last').textContent = state.lastStudyDate || '尚未開始';
+  document.getElementById('settings-modal').classList.add('show');
+}
+function closeSettings(e) {
+  if (e && e.target.id !== 'settings-modal' && e.type !== 'click') return;
+  document.getElementById('settings-modal').classList.remove('show');
+}
+function saveSettings() {
+  state.settings.notifEnabled = document.getElementById('notif-enabled').checked;
+  state.settings.notifTime = document.getElementById('notif-time').value;
+  state.settings.apiKey = document.getElementById('api-key').value.trim();
+  saveState();
+}
+async function toggleNotification() {
+  const enabled = document.getElementById('notif-enabled').checked;
+  if (enabled) {
+    if (!('Notification' in window)) {
+      alert('你的瀏覽器不支援通知');
+      document.getElementById('notif-enabled').checked = false;
+      return;
+    }
+    if (Notification.permission === 'denied') {
+      alert('瀏覽器已封鎖通知，請到瀏覽器設定中重新允許');
+      document.getElementById('notif-enabled').checked = false;
+      return;
+    }
+    if (Notification.permission !== 'granted') {
+      const result = await Notification.requestPermission();
+      if (result !== 'granted') {
+        document.getElementById('notif-enabled').checked = false;
+        return;
+      }
+    }
+    new Notification('IELTS 學習助手', { body: '✓ 每日提醒已開啟' });
+  }
+  saveSettings();
+}
+
+// ============ 每日推送 ============
+function checkNotificationTime() {
+  if (!state.settings.notifEnabled) return;
+  if (Notification.permission !== 'granted') return;
+  const now = new Date();
+  const today = now.toDateString();
+  const [hh, mm] = (state.settings.notifTime || '08:00').split(':').map(Number);
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const targetMin = hh * 60 + mm;
+  if (nowMin === targetMin && state.lastNotifDate !== today) {
+    fireDailyNotification();
+    state.lastNotifDate = today;
+    saveState();
+  } else if (nowMin > targetMin && state.lastStudyDate !== today && state.lastNotifDate !== today) {
+    fireDailyNotification();
+    state.lastNotifDate = today;
+    saveState();
+  }
+}
+function fireDailyNotification() {
+  const messages = [
+    '今天還沒讀雅思喔 🪷',
+    '5 分鐘也好，打開來看看 📚',
+    '今天的單字在等你 ✨',
+    '一日不練，三日生疏 🌱',
+    '土星坐命的你，貴在堅持 🔥'
+  ];
+  new Notification('IELTS 學習提醒', {
+    body: messages[Math.floor(Math.random() * messages.length)],
+    silent: false
+  });
+}
+setInterval(checkNotificationTime, 60000);
+setTimeout(checkNotificationTime, 2000);
+
+// ============ 連續學習 ============
+function markStudiedToday() {
+  const today = new Date().toDateString();
+  if (state.lastStudyDate === today) return;
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (state.lastStudyDate === yesterday.toDateString()) {
+    state.streak += 1;
+  } else {
+    state.streak = 1;
+  }
+  state.lastStudyDate = today;
+  saveState();
+  updateStreakDisplay();
+}
+function updateStreakDisplay() {
+  const today = new Date().toDateString();
+  if (state.streak >= 1) {
+    document.getElementById('streak-banner').classList.add('show');
+    document.getElementById('streak-num').textContent = state.streak;
+    if (state.lastStudyDate !== today) {
+      document.querySelector('.streak-banner .streak-text').innerHTML =
+        `已連續 <strong>${state.streak}</strong> 天 · 今天還沒練習`;
+    } else {
+      document.querySelector('.streak-banner .streak-text').innerHTML =
+        `連續學習 <strong>${state.streak}</strong> 天 ${state.streak >= 7 ? '🎉' : ''}`;
+    }
+  }
+}
+
+// ============ AI 呼叫（Google Gemini） ============
+async function callAI(prompt) {
+  const apiKey = state.settings.apiKey;
+  if (!apiKey) {
+    if (confirm('需要先設定 Gemini API key 才能用 AI 解析。\n要現在去設定嗎？')) {
+      openSettings();
+    }
+    return null;
+  }
+  try {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
+      })
+    });
+    const data = await res.json();
+    if (data.error) return `❌ ${data.error.message}`;
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    return text || '❌ 沒有收到回應內容';
+  } catch (e) {
+    return `❌ 呼叫失敗：${e.message}`;
+  }
+}
+
+async function getVocabAI() {
+  const word = todayQueue[currentVocabIndex];
+  if (!word) return;
+  const btn = document.getElementById('ai-vocab-btn');
+  const target = document.getElementById('ai-vocab-response');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="ai-loading"></span> 解析中...';
+  target.classList.remove('show');
+  const prompt = `你是一位專業的雅思教師。請用繁體中文，為雅思考生深入解析這個英文單字：
+
+單字：${word.en}
+基本意思：${word.zh}
+雅思程度：${word.level}
+
+請依下列格式簡潔回答（每段不超過 3 行）：
+
+【字源/記憶法】
+（拆解字根字首，或提供有效記憶聯想）
+
+【三種情境例句】
+1. 雅思閱讀風格：
+2. 雅思寫作 Task 2 風格：
+3. 口說 Part 2/3 風格：
+
+【近義字辨析】
+（列 2 個容易混淆的字，說明差異）
+
+【高分用法】
+（一個能在雅思拿高分的搭配/句型）
+
+請務必簡潔，避免冗長解釋。`;
+  const result = await callAI(prompt);
+  if (result) {
+    target.textContent = result;
+    target.classList.add('show');
+  }
+  btn.disabled = false;
+  btn.innerHTML = '🤖 AI 深度解析';
+}
+
+async function getReadingAI() {
+  if (!currentReading) return;
+  const btn = document.getElementById('ai-reading-btn');
+  const target = document.getElementById('ai-reading-response');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="ai-loading"></span> 分析中...';
+  target.classList.remove('show');
+
+  const wrongQs = currentReading.questions
+    .map((q, i) => ({ q, userAns: readingAnswers[i], correct: q.answer, i }))
+    .filter(item => item.userAns !== item.correct);
+
+  let prompt;
+  if (wrongQs.length === 0) {
+    prompt = `你是雅思閱讀老師。學生剛剛在這篇文章全對，但想更深入理解。請用繁體中文簡潔回答（300 字內）：
+
+文章標題：${currentReading.title}
+程度：${currentReading.level}
+文章前段：${currentReading.text.substring(0, 800)}
+
+請列出：
+1. 這篇文章的 3 個雅思高分詞彙（含中文意思 + 用法）
+2. 一個值得背的句型結構
+3. 同類題型的解題技巧提醒`;
+  } else {
+    prompt = `你是雅思閱讀老師。學生在以下題目答錯，請用繁體中文針對每題分析（每題 100 字內）：
+
+文章內容：
+${currentReading.text}
+
+錯題：
+${wrongQs.map((w, idx) => `題 ${w.i + 1}：${w.q.q}\n學生選：${w.q.options[w.userAns ?? 0] || '(未作答)'}\n正解：${w.q.options[w.correct]}`).join('\n\n')}
+
+請針對每題：
+1. 找出文章中的「定位句」（關鍵證據句）
+2. 解釋學生為什麼會被誤導
+3. 給一個解題技巧
+
+格式簡潔，重點為主。`;
+  }
+  const result = await callAI(prompt);
+  if (result) {
+    target.textContent = result;
+    target.classList.add('show');
+  }
+  btn.disabled = false;
+  btn.innerHTML = '🤖 AI 解析錯題與技巧';
+}
+
+function resetAllData() {
+  if (!confirm('確定要重置所有學習資料嗎？此動作無法復原。')) return;
+  localStorage.removeItem('ielts-state');
+  location.reload();
+}
+
+// ============ 活動紀錄 ============
+if (!state.activityLog) state.activityLog = {};
+function logActivity(type) {
+  const today = new Date().toDateString();
+  if (!state.activityLog[today]) state.activityLog[today] = { vocab: 0, reading: 0, listening: 0 };
+  state.activityLog[today][type] = (state.activityLog[today][type] || 0) + 1;
+  saveState();
+}
+
+// ============ 包裝函式：完成活動 + AI 按鈕顯示 + 活動紀錄 ============
+function rateWordAndMark(rating) {
+  rateWord(rating);
+  markStudiedToday();
+  logActivity('vocab');
+  const r = document.getElementById('ai-vocab-response');
+  if (r) { r.classList.remove('show'); r.textContent = ''; }
+}
+function submitReadingAndMark() {
+  submitReading();
+  markStudiedToday();
+  logActivity('reading');
+  const b = document.getElementById('ai-reading-btn');
+  if (b) b.style.display = 'inline-flex';
+}
+function backToReadingListAndReset() {
+  backToReadingList();
+  const b = document.getElementById('ai-reading-btn');
+  if (b) b.style.display = 'none';
+  const r = document.getElementById('ai-reading-response');
+  if (r) { r.classList.remove('show'); r.textContent = ''; }
+}
+function submitListeningAndMark() {
+  submitListening();
+  markStudiedToday();
+  logActivity('listening');
+}
+
+// ============ 進度頁渲染 ============
+function renderProgress() {
+  // 總覽
+  const known = Object.values(state.vocab).filter(v => v.status === 'known').length;
+  const learning = Object.values(state.vocab).filter(v => v.status === 'learning').length;
+  const untouched = VOCABULARY.length - known - learning;
+  document.getElementById('ov-known').textContent = known;
+  document.getElementById('ov-learning').textContent = learning;
+  document.getElementById('ov-untouched').textContent = untouched;
+
+  // 各主題進度
+  const topicLabels = {
+    AWL: 'AWL 學術', Education: '📚 教育', Environment: '🌱 環境',
+    Technology: '💻 科技', Health: '🏥 健康', Work: '💼 工作'
+  };
+  const topics = ['AWL', 'Education', 'Environment', 'Technology', 'Health', 'Work'];
+  const topicHtml = topics.map(t => {
+    const wordsInTopic = VOCABULARY.filter(w => w.topic === t);
+    const total = wordsInTopic.length;
+    const learned = wordsInTopic.filter(w => state.vocab[w.en]?.status === 'known').length;
+    const pct = total > 0 ? Math.round(learned / total * 100) : 0;
+    return `<div class="topic-progress-row">
+      <div class="topic-progress-header">
+        <span class="topic-progress-name">${topicLabels[t]}</span>
+        <span class="topic-progress-stat">${learned}/${total} · ${pct}%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+  document.getElementById('topic-progress').innerHTML = topicHtml;
+
+  // 近 7 天熱圖
+  const heatmap = document.getElementById('heatmap');
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    days.push(d);
+  }
+  heatmap.innerHTML = days.map(d => {
+    const key = d.toDateString();
+    const log = state.activityLog[key] || {};
+    const count = (log.vocab || 0) + (log.reading || 0) + (log.listening || 0);
+    let lvl = 0;
+    if (count >= 1 && count < 5) lvl = 1;
+    else if (count >= 5 && count < 10) lvl = 2;
+    else if (count >= 10 && count < 20) lvl = 3;
+    else if (count >= 20) lvl = 4;
+    const dateLabel = `${d.getMonth() + 1}/${d.getDate()}`;
+    return `<div class="heatmap-day lvl-${lvl}" title="${count} 次練習">
+      <div class="heatmap-date">${dateLabel}</div>
+      <div class="heatmap-count">${count || ''}</div>
+    </div>`;
+  }).join('');
+
+  // 閱讀紀錄
+  const readingHtml = READINGS.map(r => {
+    const score = state.scores.reading[r.id];
+    if (!score) return `<div class="score-row"><span class="title">${r.title}</span><span class="score" style="color:var(--text-light);">未練習</span></div>`;
+    const pct = Math.round(score.correct / score.total * 100);
+    return `<div class="score-row">
+      <span class="title">${r.title}</span>
+      <span class="score ${pct < 70 ? 'poor' : ''}">${score.correct}/${score.total} · ${pct}%</span>
+    </div>`;
+  }).join('');
+  document.getElementById('reading-history').innerHTML = readingHtml || '<div class="empty-state">尚無紀錄</div>';
+
+  // 聽力紀錄
+  const listeningHtml = LISTENINGS.map(l => {
+    const score = state.scores.listening[l.id];
+    if (!score) return `<div class="score-row"><span class="title">${l.title}</span><span class="score" style="color:var(--text-light);">未練習</span></div>`;
+    const pct = Math.round(score.correct / score.total * 100);
+    return `<div class="score-row">
+      <span class="title">${l.title}</span>
+      <span class="score ${pct < 70 ? 'poor' : ''}">${score.correct}/${score.total} · ${pct}%</span>
+    </div>`;
+  }).join('');
+  document.getElementById('listening-history').innerHTML = listeningHtml || '<div class="empty-state">尚無紀錄</div>';
+}
+
+// ============ 學習計畫產生器 ============
+function generateDailyPlan() {
+  const today = new Date().toDateString();
+  const tasks = { high: [], medium: [], low: [] };
+  const topicLabels = {
+    AWL: 'AWL 學術', Education: '教育', Environment: '環境',
+    Technology: '科技', Health: '健康', Work: '工作'
+  };
+
+  // 1. 連續紀錄即將斷
+  if (state.lastStudyDate !== today && state.streak >= 1) {
+    tasks.high.push({
+      icon: '🔥',
+      text: `保住 ${state.streak} 天連續紀錄（5 分鐘就行）`,
+      minutes: 5,
+      action: { tab: 'vocab', label: '去單字' }
+    });
+  }
+
+  // 2. 複習中字數過多
+  const learningCount = Object.values(state.vocab).filter(v => v.status === 'learning').length;
+  if (learningCount >= 5) {
+    tasks.high.push({
+      icon: '⟳',
+      text: `複習 ${Math.min(learningCount, 10)} 個還沒記熟的字（佇列堆積中）`,
+      minutes: Math.ceil(Math.min(learningCount, 10) * 0.7),
+      action: { tab: 'vocab', label: '去複習' }
+    });
+  }
+
+  // 3. 低分閱讀題重做
+  const lowReadings = READINGS.filter(r => {
+    const s = state.scores.reading[r.id];
+    return s && (s.correct / s.total) < 0.7;
+  });
+  if (lowReadings.length > 0) {
+    const r = lowReadings[0];
+    const s = state.scores.reading[r.id];
+    const pct = Math.round(s.correct / s.total * 100);
+    tasks.high.push({
+      icon: '📖',
+      text: `重做「${r.title}」（上次 ${pct}%，這次拚 80%）`,
+      minutes: r.minutes,
+      action: { tab: 'reading', label: '去閱讀' }
+    });
+  }
+
+  // 4. 最弱主題補強
+  const topics = ['AWL', 'Education', 'Environment', 'Technology', 'Health', 'Work'];
+  const topicProgress = topics.map(t => {
+    const inTopic = VOCABULARY.filter(w => w.topic === t);
+    const learned = inTopic.filter(w => state.vocab[w.en]?.status === 'known').length;
+    return { topic: t, learned, total: inTopic.length, pct: inTopic.length > 0 ? learned / inTopic.length : 1 };
+  }).filter(p => p.pct < 1).sort((a, b) => a.pct - b.pct);
+
+  if (topicProgress.length > 0 && topicProgress[0].pct < 0.5) {
+    const weak = topicProgress[0];
+    tasks.medium.push({
+      icon: '📚',
+      text: `學 5 個${topicLabels[weak.topic]}新字（進度 ${Math.round(weak.pct * 100)}%）`,
+      minutes: 5,
+      action: { tab: 'vocab', topic: weak.topic, label: `去${topicLabels[weak.topic]}` }
+    });
+  }
+
+  // 5. 七天沒練的模組
+  const sevenDayLog = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    sevenDayLog.push(state.activityLog[d.toDateString()] || {});
+  }
+  const readingActivity = sevenDayLog.reduce((s, l) => s + (l.reading || 0), 0);
+  const listeningActivity = sevenDayLog.reduce((s, l) => s + (l.listening || 0), 0);
+
+  if (listeningActivity === 0) {
+    const next = LISTENINGS.find(l => !state.scores.listening[l.id]) || LISTENINGS[0];
+    if (next) {
+      tasks.low.push({
+        icon: '👂',
+        text: `做 1 篇聽力「${next.title}」（7 天沒練）`,
+        minutes: next.minutes,
+        action: { tab: 'listening', label: '去聽力' }
+      });
+    }
+  }
+  if (readingActivity === 0) {
+    const next = READINGS.find(r => !state.scores.reading[r.id]);
+    if (next) {
+      tasks.low.push({
+        icon: '📖',
+        text: `做 1 篇閱讀「${next.title}」（7 天沒練）`,
+        minutes: next.minutes,
+        action: { tab: 'reading', label: '去閱讀' }
+      });
+    }
+  }
+
+  // 6. 鼓勵語
+  let encouragement = '';
+  if (state.streak >= 7) encouragement = `🎉 連續 ${state.streak} 天了，土星坐命的你正在發揮優勢`;
+  else if (state.streak >= 3) encouragement = `🌱 連續 ${state.streak} 天——習慣正在形成`;
+  else if (state.lastStudyDate === today) encouragement = `✓ 今天已經練過，現在的任何學習都是賺到的`;
+
+  const totalMinutes = [...tasks.high, ...tasks.medium, ...tasks.low].reduce((s, t) => s + t.minutes, 0);
+  return { tasks, totalMinutes, encouragement };
+}
+
+function renderDailyPlan() {
+  const today = new Date();
+  const weekdays = ['週日', '週一', '週二', '週三', '週四', '週五', '週六'];
+  document.getElementById('plan-date').textContent =
+    `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()} · ${weekdays[today.getDay()]}`;
+
+  const plan = generateDailyPlan();
+  const container = document.getElementById('daily-plan');
+
+  if (plan.tasks.high.length === 0 && plan.tasks.medium.length === 0 && plan.tasks.low.length === 0) {
+    container.innerHTML = `<div class="plan-empty" style="text-align:center;padding:20px;color:var(--success);font-size:15px;">🎉 今天都做完了，去散步吧</div>`;
+    return;
+  }
+
+  const tierHtml = (title, tasks) => {
+    if (tasks.length === 0) return '';
+    return `<div class="plan-tier">
+      <div class="plan-tier-title">${title}</div>
+      ${tasks.map(t => `
+        <div class="plan-task">
+          <span class="plan-task-icon">${t.icon}</span>
+          <span>${t.text}</span>
+          <button class="plan-task-action" onclick="goToTab('${t.action.tab}'${t.action.topic ? `, '${t.action.topic}'` : ''})">${t.action.label} →</button>
+        </div>
+      `).join('')}
+    </div>`;
+  };
+
+  let html = '';
+  html += tierHtml('🔴 高優先', plan.tasks.high);
+  html += tierHtml('🟡 進度補強', plan.tasks.medium);
+  html += tierHtml('🟢 維持節奏', plan.tasks.low);
+  html += `<div class="plan-footer">預計總時長：~${plan.totalMinutes} 分鐘</div>`;
+  if (plan.encouragement) html += `<div class="plan-encouragement">${plan.encouragement}</div>`;
+
+  container.innerHTML = html;
+}
+
+function goToTab(tab, topic) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-tab="${tab}"]`).classList.add('active');
+  document.getElementById(tab).classList.add('active');
+  if (tab === 'vocab' && topic) {
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+    const tBtn = document.querySelector(`.topic-btn[data-topic="${topic}"]`);
+    if (tBtn) { tBtn.classList.add('active'); tBtn.click(); }
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 切換到進度頁時，刷新進度 + 學習計畫
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.tab === 'progress') {
+      renderProgress();
+      renderDailyPlan();
+    }
+  });
+});
+
+// ============ 初始化 ============
+updateVocabStats();
+renderReadingList();
+renderListeningList();
+updateStreakDisplay();
+
+// ============ PWA Service Worker ============
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[PWA] Service Worker 已註冊', reg.scope))
+      .catch(err => console.warn('[PWA] 註冊失敗（本機檔案模式不支援，需透過 http/https 開啟）', err));
+  });
+}
+</script>
+</body>
+</html>

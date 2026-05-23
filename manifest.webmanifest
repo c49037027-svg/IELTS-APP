@@ -1,0 +1,21 @@
+{
+  "name": "IELTS 學習助手",
+  "short_name": "IELTS",
+  "description": "雅思單字、閱讀、聽力一站式學習，含 AI 解析與每日推送",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAF6F0",
+  "theme_color": "#A0522D",
+  "orientation": "portrait",
+  "lang": "zh-Hant",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
