@@ -603,37 +603,7 @@ const Vocab = (() => {
       </div>`).join('') : '<div class="empty-state">還沒有造句紀錄</div>';
     showStage(modeHeader('造句紀錄', `${rows.length} 句`) + `
       <div class="card">${body}</div>
-      ${rows.length ? `<button class="ai-btn" id="ai-prod-btn" onclick="Vocab.requestAiFeedback()">🤖 請 AI 批改最近 10 句</button>
-      <div class="ai-response" id="ai-prod-response"></div>` : ''}
-      <button class="btn btn-primary wide-btn" onclick="Vocab.downloadProductions()">匯出成 markdown（自己貼給 AI）</button>`);
-  }
-
-  // 直接在 App 裡批改：用設定裡的 Gemini key（callAI 在 js/app.js）。
-  // 沒設 key 時 callAI 會自己引導去設定頁。
-  async function requestAiFeedback() {
-    const rows = Store.listProductions(10);
-    if (!rows.length) return;
-    if (typeof callAI !== 'function') return;
-    const btn = el('ai-prod-btn');
-    const target = el('ai-prod-response');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="ai-loading"></span> 批改中...';
-    target.classList.remove('show');
-
-    const list = rows.map((p, i) =>
-      `${i + 1}. [${p.card.word}] ${p.sentence}`).join('\n');
-    const prompt = `你是雅思寫作與口說老師。請用繁體中文批改以下句子，`
-      + `每句都要指出：(1) 文法或搭配詞問題（沒問題就說沒問題）、`
-      + `(2) 是否符合雅思學術語域、(3) 一個更自然的改寫版本。\n`
-      + `每句的回覆控制在 3 行以內，不要寫開場白。\n\n${list}`;
-
-    const result = await callAI(prompt);
-    if (result) {
-      target.textContent = result;
-      target.classList.add('show');
-    }
-    btn.disabled = false;
-    btn.innerHTML = '🤖 請 AI 批改最近 10 句';
+      <button class="btn btn-primary wide-btn" onclick="Vocab.downloadProductions()">匯出成 markdown（貼給 AI 批改）</button>`);
   }
 
   // ---------------------------------------------------------- 升級 active
@@ -981,7 +951,7 @@ const Vocab = (() => {
     startReview, reveal, skip, rate,
     startSpell, submitSpell, nextSpell, spellHint, spellSkip,
     startSyn, submitSyn, nextSyn, synSkip,
-    startProduce, submitProduce, nextProduce, produceSkip, showProductions, requestAiFeedback,
+    startProduce, submitProduce, nextProduce, produceSkip, showProductions,
     showPromote, showPromoteLoose, confirmPromote,
     startComplete, saveComplete, skipComplete,
     showLibrary, showCard, toggleType, showAddCard, saveNewCard,

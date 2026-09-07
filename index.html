@@ -425,49 +425,6 @@
   .setting-note a { color: var(--primary); text-decoration: none; }
   .setting-note a:hover { text-decoration: underline; }
 
-  /* AI button & response */
-  .ai-btn {
-    background: linear-gradient(135deg, #C9A961, #A0522D);
-    color: white;
-    border: none;
-    padding: 9px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-    font-family: inherit;
-    font-weight: 500;
-    margin-top: 12px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: transform 0.15s;
-  }
-  .ai-btn:hover:not(:disabled) { transform: translateY(-1px); }
-  .ai-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-  .ai-response {
-    margin-top: 14px;
-    padding: 14px 16px;
-    background: linear-gradient(135deg, rgba(201,169,97,0.08), rgba(160,82,45,0.05));
-    border-radius: 8px;
-    font-size: 14px;
-    line-height: 1.75;
-    border-left: 3px solid var(--accent);
-    white-space: pre-wrap;
-    color: var(--text);
-    display: none;
-  }
-  .ai-response.show { display: block; }
-  .ai-loading {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 2px solid rgba(255,255,255,0.35);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
   /* Streak banner */
   .streak-banner {
     background: linear-gradient(135deg, #C9A961, #A0522D);
@@ -565,19 +522,6 @@
         <div class="setting-note" id="notif-status">
           開啟後，瀏覽器會在指定時間提醒你來練習。<br>
           📌 注意：頁面需保持開啟（可置於背景分頁）才能收到提醒。
-        </div>
-      </div>
-
-      <div class="setting-section">
-        <h3>🤖 AI 批改造句</h3>
-        <div class="setting-row vertical">
-          <span>Google Gemini API Key</span>
-          <input type="password" id="api-key" placeholder="AIza..." onchange="saveSettings()">
-        </div>
-        <div class="setting-note">
-          在「造句紀錄」頁可以請 AI 批改你寫的句子，呼叫 Google Gemini（gemini-2.5-flash），免費額度每天 1500 次。<br>
-          🔒 API key 只存在你的瀏覽器，不會傳送到第三方伺服器。<br>
-          <a href="https://aistudio.google.com/app/apikey" target="_blank">取得免費 API key →</a>
         </div>
       </div>
 

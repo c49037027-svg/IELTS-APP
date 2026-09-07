@@ -1,4 +1,4 @@
-// 設定 / 每日推送 / 連續學習 / 進度頁 / 學習計畫 / AI 呼叫。
+// 設定 / 每日推送 / 連續學習 / 進度頁 / 學習計畫。
 // 單字本身的邏輯在 js/store.js + js/vocab.js。
 // ============ 狀態 ============
 let state = JSON.parse(localStorage.getItem('ielts-state') || '{}');
@@ -19,14 +19,13 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 
 // ============ 設定 ============
-if (!state.settings) state.settings = { notifEnabled: false, notifTime: '08:00', apiKey: '' };
+if (!state.settings) state.settings = { notifEnabled: false, notifTime: '08:00' };
 if (!state.streak) state.streak = 0;
 if (!state.lastStudyDate) state.lastStudyDate = null;
 
 function openSettings() {
   document.getElementById('notif-enabled').checked = state.settings.notifEnabled;
   document.getElementById('notif-time').value = state.settings.notifTime;
-  document.getElementById('api-key').value = state.settings.apiKey || '';
   document.getElementById('stat-streak').textContent = state.streak;
   document.getElementById('stat-last').textContent = state.lastStudyDate || '尚未開始';
   document.getElementById('settings-modal').classList.add('show');
@@ -38,7 +37,6 @@ function closeSettings(e) {
 function saveSettings() {
   state.settings.notifEnabled = document.getElementById('notif-enabled').checked;
   state.settings.notifTime = document.getElementById('notif-time').value;
-  state.settings.apiKey = document.getElementById('api-key').value.trim();
   saveState();
 }
 async function toggleNotification() {
@@ -128,34 +126,6 @@ function updateStreakDisplay() {
       document.querySelector('.streak-banner .streak-text').innerHTML =
         `連續學習 <strong>${state.streak}</strong> 天 ${state.streak >= 7 ? '🎉' : ''}`;
     }
-  }
-}
-
-// ============ AI 呼叫（Google Gemini） ============
-async function callAI(prompt) {
-  const apiKey = state.settings.apiKey;
-  if (!apiKey) {
-    if (confirm('需要先設定 Gemini API key 才能用 AI 解析。\n要現在去設定嗎？')) {
-      openSettings();
-    }
-    return null;
-  }
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
-      })
-    });
-    const data = await res.json();
-    if (data.error) return `❌ ${data.error.message}`;
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    return text || '❌ 沒有收到回應內容';
-  } catch (e) {
-    return `❌ 呼叫失敗：${e.message}`;
   }
 }
 
