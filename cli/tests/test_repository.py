@@ -153,6 +153,37 @@ class TestScheduling(RepositoryTestCase):
         self.assertEqual(items, [])
 
 
+class TestDailyNewCardLimit(RepositoryTestCase):
+    def test_new_cards_are_capped_per_day(self):
+        for i in range(repo.NEW_PER_DAY + 15):
+            repo.add_card(self.conn, full_card(f"word{i}"), today=TODAY)
+        items = repo.due_items(self.conn, TRACK_RECALL, today=TODAY, limit=1000)
+        self.assertEqual(len(items), repo.NEW_PER_DAY)
+
+    def test_allowance_shrinks_as_new_cards_are_introduced(self):
+        for i in range(repo.NEW_PER_DAY + 15):
+            repo.add_card(self.conn, full_card(f"word{i}"), today=TODAY)
+        for item in repo.due_items(self.conn, TRACK_RECALL, today=TODAY, limit=5):
+            repo.grade(self.conn, item, srs.AGAIN, today=TODAY)
+        self.assertEqual(repo.new_introduced_today(self.conn, TRACK_RECALL, TODAY), 5)
+        remaining = repo.due_items(self.conn, TRACK_RECALL, today=TODAY, limit=1000)
+        new_ones = [i for i in remaining if i.state.review_count == 0]
+        self.assertEqual(len(new_ones), repo.NEW_PER_DAY - 5)
+
+    def test_due_old_cards_are_never_held_back(self):
+        """到期的舊卡不受新卡上限限制，否則複習會越積越多。"""
+        ids = [repo.add_card(self.conn, full_card(f"word{i}"), today=TODAY) for i in range(30)]
+        later = TODAY + timedelta(days=1)
+        for card_id in ids:
+            state = repo.get_srs(self.conn, card_id, TRACK_RECALL)
+            state.review_count = 3
+            state.interval = 1.0
+            state.due_date = later.isoformat()
+            repo.save_srs(self.conn, state)
+        items = repo.due_items(self.conn, TRACK_RECALL, today=later, limit=1000)
+        self.assertEqual(len(items), 30)
+
+
 class TestSpellingQueue(RepositoryTestCase):
     def test_wrong_words_come_first(self):
         repo.add_card(self.conn, full_card("mitigate"), today=TODAY)

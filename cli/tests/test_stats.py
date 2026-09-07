@@ -53,9 +53,9 @@ class TestDashboard(unittest.TestCase):
 
     def test_collect_reports_the_seeded_library(self):
         data = stats.collect(self.ctx)
-        self.assertEqual(data["total_cards"], 30)
-        self.assertEqual(sum(data["types"].values()), 30)
-        self.assertEqual(data["incomplete"], 0)
+        self.assertGreater(data["total_cards"], 700)
+        self.assertEqual(sum(data["types"].values()), data["total_cards"])
+        self.assertGreater(data["incomplete"], 0, "AWL 字頭是刻意留白的")
         self.assertGreater(data["due"][TRACK_RECALL], 0)
 
     def test_reviews_move_the_numbers(self):

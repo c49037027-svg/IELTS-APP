@@ -64,7 +64,21 @@ const Vocab = (() => {
     const types = Store.cardTypeCounts();
     const incomplete = Store.incompleteCount();
 
-    const topics = ['', ...Store.coverage('topic').map(r => r.name).filter(n => n !== '(未分類)')];
+    // 篩選順序：全部 → 七個雅思話題 → Task 1 / 口說的功能分組 → AWL Sublist 1..10
+    const TOPIC_ORDER = ['環境', '教育', '科技', '健康', '都市化', '犯罪', '媒體'];
+    const rank = name => {
+      const idx = TOPIC_ORDER.indexOf(name);
+      if (idx >= 0) return [0, idx, name];
+      const sublist = /^Sublist (\d+)$/.exec(name);
+      if (sublist) return [2, Number(sublist[1]), name];
+      return [1, 0, name];
+    };
+    const names = Store.coverage('topic').map(r => r.name).filter(n => n !== '(未分類)');
+    names.sort((a, b) => {
+      const ra = rank(a), rb = rank(b);
+      return ra[0] - rb[0] || ra[1] - rb[1] || ra[2].localeCompare(rb[2]);
+    });
+    const topics = ['', ...names];
     const topicBtns = topics.map(name => {
       const active = (topicFilter === name) ? ' active' : '';
       const label = name === '' ? '全部' : name;
@@ -239,6 +253,8 @@ const Vocab = (() => {
     if (card.pos) rows.push(['詞性', esc(card.pos)]);
     if (card.collocations.length) rows.push(['搭配', esc(TextUtil.maskAll(card.collocations, card.word).join(' · '))]);
     if (card.root) rows.push(['字根', esc(TextUtil.maskSentence(card.root, card.word).text)]);
+    // AWL 字頭卡還沒補完時，英文定義就是唯一的線索（一樣要遮掉目標字）
+    if (!card.example && card.notes) rows.push(['定義', esc(TextUtil.maskSentence(card.notes, card.word).text)]);
     if (s.hinted) rows.push(['提示', esc(TextUtil.letterSkeleton(card.word))]);
 
     showStage(modeHeader('拼字練習', `${s.index + 1} / ${s.items.length}`) + `

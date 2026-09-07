@@ -21,7 +21,46 @@ from .models import (
     SrsState,
     join_multi,
     now_iso,
+    stamp_for,
 )
+
+#: 每天最多放幾張「沒學過的新卡」進來。到期的舊卡不受限制 ——
+#: 沒有這個上限，整份 AWL 會在第一天全部到期，等於沒有排程。
+NEW_PER_DAY = 20
+
+
+def new_introduced_today(
+    conn: sqlite3.Connection, track: str, today: date | None = None
+) -> int:
+    """今天已經放行幾張新卡（某張卡在這個 track 的第一次複習發生在今天）。"""
+    today = today or date.today()
+    row = conn.execute(
+        """
+        SELECT COUNT(*) AS n FROM (
+            SELECT card_id, MIN(reviewed_at) AS first_seen
+            FROM review_log WHERE track = ? GROUP BY card_id
+        ) WHERE substr(first_seen, 1, 10) = ?
+        """,
+        (track, today.isoformat()),
+    ).fetchone()
+    return int(row["n"] or 0)
+
+
+def _apply_daily_limit(
+    conn: sqlite3.Connection, items: list[ReviewItem], track: str, today: date
+) -> list[ReviewItem]:
+    """舊卡全放行；新卡受每日上限。"""
+    allowance = max(0, NEW_PER_DAY - new_introduced_today(conn, track, today))
+    kept: list[ReviewItem] = []
+    taken = 0
+    for item in items:
+        if item.state.review_count > 0:
+            kept.append(item)
+        elif taken < allowance:
+            kept.append(item)
+            taken += 1
+    return kept
+
 
 # ---------------------------------------------------------------- cards
 
@@ -227,6 +266,7 @@ def due_items(
     card_type: str | None = None,
     require_fields: Sequence[str] = (),
     include_new: bool = True,
+    ignore_daily_limit: bool = False,
 ) -> list[ReviewItem]:
     """撈出某個 track 今天（含逾期）該複習的卡片。
 
@@ -258,8 +298,7 @@ def due_items(
         if field_name not in CARD_TEXT_FIELDS:
             continue
         sql.append(f"AND TRIM(c.{field_name}) <> ''")
-    sql.append("ORDER BY s.due_date ASC, RANDOM() LIMIT ?")
-    args.append(max(1, int(limit)))
+    sql.append("ORDER BY s.due_date ASC, RANDOM()")
 
     rows = conn.execute(" ".join(sql), args).fetchall()
     items: list[ReviewItem] = []
@@ -267,7 +306,9 @@ def due_items(
         data = dict(row)
         state = SrsState.from_row({**data, "card_id": data["id"]})
         items.append(ReviewItem(card=Card.from_row(data), state=state))
-    return items
+    if not ignore_daily_limit:
+        items = _apply_daily_limit(conn, items, track, today)
+    return items[: max(1, int(limit))]
 
 
 def due_count(
@@ -276,17 +317,19 @@ def due_count(
     *,
     today: date | None = None,
     card_type: str | None = None,
+    require_fields: Sequence[str] = (),
 ) -> int:
-    today = today or date.today()
-    sql = [
-        "SELECT COUNT(*) AS n FROM srs_state s JOIN cards c ON c.id = s.card_id "
-        "WHERE s.track = ? AND s.due_date <= ?"
-    ]
-    args: list[Any] = [track, today.isoformat()]
-    if card_type:
-        sql.append("AND c.card_type = ?")
-        args.append(card_type)
-    return int(conn.execute(" ".join(sql), args).fetchone()["n"])
+    """今天實際會出幾題（已套用每日新卡上限，跟真的練起來的量一致）。"""
+    return len(
+        due_items(
+            conn,
+            track,
+            today=today,
+            limit=10_000,
+            card_type=card_type,
+            require_fields=require_fields,
+        )
+    )
 
 
 # ------------------------------------------------------------ 複習紀錄
@@ -321,11 +364,13 @@ def grade(
 ) -> SrsState:
     """評分：更新排程 + 寫入紀錄，兩件事在同一個交易裡。"""
     before = item.state.interval
-    new_state = srs.schedule(item.state, rating, today=today, rng=rng)
+    stamp = stamp_for(today)
+    new_state = srs.schedule(item.state, rating, today=today, rng=rng, reviewed_at=stamp)
     with dbmod.transaction(conn):
         save_srs(conn, new_state)
         log_review(
-            conn, item.card.id or 0, item.state.track, rating, before, new_state.interval
+            conn, item.card.id or 0, item.state.track, rating, before,
+            new_state.interval, reviewed_at=stamp,
         )
     item.state = new_state
     return new_state
@@ -335,12 +380,16 @@ def grade(
 
 
 def record_spelling(
-    conn: sqlite3.Connection, card_id: int, user_input: str, is_correct: bool
+    conn: sqlite3.Connection,
+    card_id: int,
+    user_input: str,
+    is_correct: bool,
+    today: date | None = None,
 ) -> None:
     conn.execute(
         "INSERT INTO spelling_attempts (card_id, user_input, is_correct, attempted_at) "
         "VALUES (?, ?, ?, ?)",
-        (card_id, user_input[:200], 1 if is_correct else 0, now_iso()),
+        (card_id, user_input[:200], 1 if is_correct else 0, stamp_for(today)),
     )
 
 
@@ -379,14 +428,24 @@ def spelling_queue(
     else:
         sql.append("AND s.due_date <= ?")
         args.append(today.isoformat())
+        # 至少要有一個線索（例句／中文／英文定義），否則題目無解
+        sql.append(
+            "AND (TRIM(c.example_sentence) <> '' OR TRIM(c.zh_hint) <> '' "
+            "OR TRIM(c.notes) <> '')"
+        )
     if topic:
         sql.append("AND c.topic LIKE ?")
         args.append(f"%{topic}%")
+    # 排序：拼錯的最優先 → 有「挖空例句 + 中文提示」的完整題目 → 其餘按到期日。
+    # 只有英文定義可用的 AWL 字頭卡排最後，不要淹掉設計好的題型。
     sql.append(
         "ORDER BY CASE WHEN last_result = 0 THEN 0 ELSE 1 END, "
+        "CASE WHEN TRIM(c.example_sentence) <> '' AND TRIM(c.zh_hint) <> '' THEN 0 "
+        "     WHEN TRIM(c.example_sentence) <> '' OR TRIM(c.zh_hint) <> '' THEN 1 "
+        "     ELSE 2 END, "
         "s.due_date ASC, RANDOM() LIMIT ?"
     )
-    args.append(max(1, int(limit)))
+    args.append(max(1, int(limit)) * 40)
 
     rows = conn.execute(" ".join(sql), args).fetchall()
     items: list[ReviewItem] = []
@@ -394,7 +453,9 @@ def spelling_queue(
         data = dict(row)
         state = SrsState.from_row({**data, "card_id": data["id"]})
         items.append(ReviewItem(card=Card.from_row(data), state=state))
-    return items
+    if not only_wrong:
+        items = _apply_daily_limit(conn, items, TRACK_SPELLING, today)
+    return items[: max(1, int(limit))]
 
 
 def spelling_error_list(conn: sqlite3.Connection, limit: int = 20) -> list[dict[str, Any]]:
@@ -437,12 +498,17 @@ def spelling_accuracy(conn: sqlite3.Connection, days: int | None = None) -> dict
 
 
 def add_production(
-    conn: sqlite3.Connection, card_id: int, topic: str, prompt: str, sentence: str
+    conn: sqlite3.Connection,
+    card_id: int,
+    topic: str,
+    prompt: str,
+    sentence: str,
+    today: date | None = None,
 ) -> int:
     cur = conn.execute(
         "INSERT INTO productions (card_id, topic, prompt, sentence, created_at) "
         "VALUES (?, ?, ?, ?, ?)",
-        (card_id, topic, prompt, sentence.strip(), now_iso()),
+        (card_id, topic, prompt, sentence.strip(), stamp_for(today)),
     )
     return int(cur.lastrowid)
 

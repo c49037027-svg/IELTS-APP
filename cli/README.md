@@ -34,8 +34,23 @@ ielts init
 pip install rich
 ```
 
-`ielts init` 會建立資料庫並灌入 30 個雅思常用字（四個維度都填好的範例資料），
-然後印出儀表板。資料庫預設在 `cli/ielts.db`，可用 `--db 路徑` 或環境變數 `IELTS_DB` 覆寫。
+`ielts init` 會建立資料庫並灌入 779 張卡片，然後印出儀表板。
+資料庫預設在 `cli/ielts.db`，可用 `--db 路徑` 或環境變數 `IELTS_DB` 覆寫。
+
+單字庫內容：
+
+| 分類 | 張數 | 四維度齊全 |
+|---|---:|---:|
+| AWL 學術詞彙（570 字頭全收，`topic` = Sublist 1–10） | 564 | 14 |
+| 高頻話題字（7 個主題 × 20） | 140 | 140 |
+| Task 1 圖表用語（依功能分組） | 39 | 39 |
+| 口說表達（依功能分組） | 36 | 36 |
+
+AWL 字頭卡只帶詞性與英文定義進來，四個維度留白，由 `ielts complete` 逐一補上。
+資料的唯一來源在專案根目錄的 `tools/`，改完跑 `python3 tools/build_seed.py` 重新產生。
+
+**每天最多放 20 張新卡**（每軌各 20），到期的舊卡不受限制 ——
+沒有這個上限，整份 AWL 會在第一天全部到期。
 
 ---
 
@@ -49,6 +64,7 @@ pip install rich
 ielts review                 # 預設 30 張
 ielts review --limit 50      # 一次跑 50 張
 ielts review --topic 環境    # 只複習某個主題
+ielts review --topic "Sublist 1"   # 只練 AWL 第一組（最高頻的 60 字）
 ielts review --all           # 連 active 卡片也一起複習
 ielts review --zh            # 背面也顯示中文（預設不顯示）
 ```
@@ -239,11 +255,12 @@ cli/
 
 ```bash
 cd cli
-python3 -m unittest discover -s tests -t .   # 127 個測試
+python3 -m unittest discover -s tests -t .   # 137 個測試
 ```
 
-涵蓋 SM-2 排程數學、挖空與拼字比對、同義詞寬鬆比對、資料層查詢與三軌獨立性、
-CSV 匯入的各種髒資料、streak 計算，以及五種模式的端到端流程（用假的 UI 餵入按鍵）。
+涵蓋 SM-2 排程數學、挖空與拼字比對（含不規則動詞）、同義詞寬鬆比對、資料層查詢與三軌獨立性、
+每日新卡上限、CSV 匯入的各種髒資料、streak 計算、種子資料內容驗證，
+以及五種模式的端到端流程（用假的 UI 餵入按鍵）。
 
 ---
 

@@ -75,6 +75,23 @@ check('挖掉變化形', () => {
   ok(run('TextUtil.maskSentence("Researchers conducted a survey.","conduct").hits') >= 1);
   ok(run('TextUtil.maskSentence("The council allocates a budget.","allocate").hits') >= 1);
 });
+check('挖掉不規則過去式', () => {
+  const cases = [
+    ['Online sales overtook high-street sales in 2019.', 'overtake'],
+    ['Prices rose sharply after the subsidy ended.', 'rise'],
+    ['The figure fell to just 20 per cent.', 'fall'],
+    ['Enrolment grew steadily throughout the decade.', 'grow'],
+    ['The council withdrew the proposal last month.', 'withdraw'],
+  ];
+  for (const [s, w] of cases) {
+    const r = run(`TextUtil.maskSentence(${JSON.stringify(s)}, ${JSON.stringify(w)})`);
+    eq(r.hits, 1, `${w}: ${s}`);
+  }
+});
+check('挖掉短字的重複字尾', () => {
+  const r = run('TextUtil.maskSentence("Sales dipped briefly in 2012.","dip")');
+  eq(r.hits, 1); ok(!r.text.includes('dipped'));
+});
 check('不誤挖相似字', () => {
   const t = run('TextUtil.maskSentence("That position is possible and posts are open.","pose").text');
   ok(t.includes('position') && t.includes('possible'), t);
@@ -135,19 +152,58 @@ console.log('--- 資料層 ---');
 run('Store.init()');
 check('種子 + 舊資料都進來了', () => {
   const n = run('Store.cardCount()');
-  ok(n >= 30 + 90, `cardCount=${n}`);
+  ok(n >= 780, `cardCount=${n}`);
 });
-check('種子卡片四維度齊全', () => {
-  const bad = run('SEED_CARDS.filter(c => !c.example || !c.collocations.length || !c.root || !c.synonyms.length).length');
-  eq(bad, 0);
+check('AWL 570 個字頭都在', () => {
+  for (const w of ['abandon', 'analyse', 'constrain', 'sustain', 'widespread']) {
+    ok(run(`!!Store.findByWord(${JSON.stringify(w)})`), `缺 ${w}`);
+  }
 });
-check('舊單字缺字根同義詞 → 標記不完整', () => {
+check('種子的話題字每個主題剛好 20 個', () => {
+  const counts = run(`(() => {
+    const c = {};
+    SEED_CARDS.filter(x => x.category === '高頻話題字')
+      .forEach(x => { c[x.topic] = (c[x.topic] || 0) + 1; });
+    return c;
+  })()`);
+  for (const topic of ['環境', '教育', '科技', '健康', '都市化', '犯罪', '媒體']) {
+    eq(counts[topic], 20, topic);
+  }
+});
+check('舊資料的話題字併進同一個主題，不另立分類', () => {
+  // 舊版的 Environment / Education 等會對應到中文主題，所以庫裡會比種子多
+  const rows = run('Store.coverage("topic")');
+  const byName = Object.fromEntries(rows.map(r => [r.name, r.total]));
+  for (const topic of ['環境', '教育', '科技', '健康', '都市化', '犯罪', '媒體']) {
+    ok(byName[topic] >= 20, `${topic} = ${byName[topic]}`);
+  }
+});
+check('AWL 依 sublist 分組，可以只練 Sublist 1', () => {
+  const names = run('Store.coverage("topic").map(r => r.name)');
+  for (let n = 1; n <= 10; n++) ok(names.includes(`Sublist ${n}`), `缺 Sublist ${n}`);
+});
+check('寫好的例句一定含目標字', () => {
+  const bad = run(`Store.listCards().filter(c => c.example &&
+    TextUtil.maskSentence(c.example, c.word).hits === 0).map(c => c.word)`);
+  eq(bad, [], '這些卡的例句挖不到空');
+});
+check('舊資料的例句補進了 AWL 空卡，沒有被丟掉', () => {
+  const card = run('Store.findByWord("approach")');
+  ok(card && card.example.length > 0, 'approach 應該從舊資料拿到例句');
+  ok(card.collocations.length > 0, 'approach 應該從舊資料拿到搭配詞');
+});
+check('寫完的卡片四維度齊全', () => {
+  const complete = run(`SEED_CARDS.filter(c => c.example || c.root || c.collocations.length || c.synonyms.length)`);
+  ok(complete.length > 200, `只有 ${complete.length} 張`);
+  const bad = complete.filter(c => !c.example || !c.collocations.length || !c.root || c.synonyms.length < 2);
+  eq(bad.map(c => c.word), [], '這些卡缺維度');
+});
+check('沒寫完的卡片標記為不完整，交給補完模式', () => {
   const n = run('Store.incompleteCount()');
-  ok(n >= 90, `incomplete=${n}`);
-  const card = run('Store.findByWord("analyze")');
-  ok(card, '找不到 analyze');
-  eq(run('Store.missingCore(Store.findByWord("analyze")).sort()'), ['root', 'synonyms']);
-  ok(run('Store.findByWord("analyze").example.length > 0'), '例句應該有保留');
+  ok(n > 400, `incomplete=${n}`);
+  const card = run('Store.findByWord("approach")');
+  ok(card, '找不到 approach');
+  eq(run('Store.missingCore(Store.findByWord("approach")).sort()'), ['root', 'synonyms']);
 });
 check('種子字四個分類都在', () => {
   const names = run('Store.coverage("category").map(r => r.name)');
@@ -158,6 +214,22 @@ check('每張卡都有三軌排程', () => {
   ok(r);
 });
 check('新卡今天到期', () => ok(run('Store.dueCount("recall") > 0')));
+check('每天的新卡有上限，不會一次爆 800 張', () => {
+  const n = run('Store.dueCount("recall")');
+  eq(n, run('Store.NEW_PER_DAY'), `今日到期 ${n} 張`);
+  eq(run('Store.spellingQueue({}).length'), run('Store.NEW_PER_DAY'));
+});
+check('複習過的舊卡不受新卡上限影響', () => {
+  const r = run(`(() => {
+    const before = Store.dueCount('recall');
+    const items = Store.dueItems('recall', { limit: 5 });
+    items.forEach(c => Store.grade(c.id, 'recall', 1));
+    return { before, after: Store.dueCount('recall'),
+             introduced: Store.newIntroducedToday('recall') };
+  })()`);
+  eq(r.introduced, 5, '今天放行了 5 張新卡');
+  eq(r.after, r.before - 5, '額度應該扣掉已放行的張數');
+});
 check('評分後今天就不再出現', () => {
   const r = run(`(() => {
     const card = Store.dueItems('recall', {limit:1})[0];

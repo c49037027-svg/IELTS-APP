@@ -6,6 +6,10 @@ const Store = (() => {
   const SCHEMA_VERSION = 1;
 
   const TRACKS = ['recall', 'spelling', 'synonym'];
+
+  //: 每天最多放幾張「沒學過的新卡」進來。複習到期的舊卡不受限制 ——
+  //  沒有這個上限，800 張卡會在第一天全部到期，等於沒有排程。
+  const NEW_PER_DAY = 20;
   const TRACK_LABELS = { recall: '認讀', spelling: '拼字', synonym: '同義詞' };
   const CORE_FIELDS = ['example', 'collocations', 'root', 'synonyms'];
   const CORE_LABELS = {
@@ -178,6 +182,21 @@ const Store = (() => {
   }
 
   const isDue = (cardId, track) => getSrs(cardId, track).due <= today();
+  const isNew = (cardId, track) => getSrs(cardId, track).reviews === 0;
+
+  //: 今天已經放行了幾張新卡（某張卡在這個 track 的第一次複習發生在今天）
+  function newIntroducedToday(track) {
+    const day = today();
+    const first = new Map();
+    db.reviewLog.forEach(r => {
+      if (r.track !== track) return;
+      const at = r.at.slice(0, 10);
+      if (!first.has(r.cardId) || at < first.get(r.cardId)) first.set(r.cardId, at);
+    });
+    let n = 0;
+    first.forEach(at => { if (at === day) n += 1; });
+    return n;
+  }
 
   function shuffle(list) {
     for (let i = list.length - 1; i > 0; i--) {
@@ -205,6 +224,18 @@ const Store = (() => {
       }
       return getSrs(a.id, track).due.localeCompare(getSrs(b.id, track).due);
     });
+
+    // 舊卡（複習過的）全部放行；新卡每天有上限，才不會第一天就爆量。
+    if (!opts.ignoreDailyLimit) {
+      const allowance = Math.max(0, NEW_PER_DAY - newIntroducedToday(track));
+      let taken = 0;
+      rows = rows.filter(card => {
+        if (!isNew(card.id, track)) return true;
+        if (taken >= allowance) return false;
+        taken += 1;
+        return true;
+      });
+    }
     return opts.limit ? rows.slice(0, opts.limit) : rows;
   }
 
@@ -225,22 +256,43 @@ const Store = (() => {
     return null;
   };
 
+  //: 拼字題至少要有一個線索（挖空例句／中文提示／英文定義），
+  //  否則就是「憑空拼一個字」，答不出來也學不到東西。
+  const hasSpellingClue = card => !!(card.example || card.zh || card.notes);
+
   // onlyWrong 不看到期日：今天剛拼錯的字，當下就要能再練一次。
   function spellingQueue(opts = {}) {
     let rows;
     if (opts.onlyWrong) {
       rows = db.cards.filter(c => lastSpellingResult(c.id) === false);
     } else {
-      rows = db.cards.filter(c => c.word && isDue(c.id, 'spelling'));
+      rows = db.cards.filter(c => c.word && isDue(c.id, 'spelling') && hasSpellingClue(c));
     }
+    const spellingAllowance = opts.onlyWrong || opts.ignoreDailyLimit
+      ? Infinity
+      : Math.max(0, NEW_PER_DAY - newIntroducedToday('spelling'));
     if (opts.topic) rows = rows.filter(c => c.topic.includes(opts.topic));
     shuffle(rows);
+    // 排序：拼錯的最優先 → 有「挖空例句 + 中文提示」的完整題目 → 其餘按到期日。
+    // 只有英文定義可用的字頭卡排最後，不要淹掉設計好的題型。
+    const quality = card => (card.example && card.zh ? 0 : card.example || card.zh ? 1 : 2);
     rows.sort((a, b) => {
       const wrongA = lastSpellingResult(a.id) === false ? 0 : 1;
       const wrongB = lastSpellingResult(b.id) === false ? 0 : 1;
       if (wrongA !== wrongB) return wrongA - wrongB;
+      const qa = quality(a), qb = quality(b);
+      if (qa !== qb) return qa - qb;
       return getSrs(a.id, 'spelling').due.localeCompare(getSrs(b.id, 'spelling').due);
     });
+    if (spellingAllowance !== Infinity) {
+      let taken = 0;
+      rows = rows.filter(card => {
+        if (!isNew(card.id, 'spelling')) return true;
+        if (taken >= spellingAllowance) return false;
+        taken += 1;
+        return true;
+      });
+    }
     return opts.limit ? rows.slice(0, opts.limit) : rows;
   }
 
@@ -526,11 +578,34 @@ const Store = (() => {
   // ---------------------------------------------------------- 初始化
   // 舊版的 100 個單字只有中文與例句，沒有字根與同義詞 ——
   // 匯入後會自動變成 incomplete，正好給補完模式處理，資料不會白白丟掉。
+  // -ize / -ise 兩種拼法視為同一個字（analyze ↔ analyse）
+  function findLoosely(word) {
+    const direct = findByWord(word);
+    if (direct) return direct;
+    const swapped = String(word).replace(/ize\b/i, 'ise').replace(/izing\b/i, 'ising');
+    return swapped === word ? null : findByWord(swapped);
+  }
+
   function importLegacyWords() {
-    if (typeof LEGACY_VOCABULARY === 'undefined') return 0;
-    let n = 0;
+    if (typeof LEGACY_VOCABULARY === 'undefined') return { added: 0, merged: 0 };
+    let added = 0, merged = 0;
     LEGACY_VOCABULARY.forEach(w => {
-      if (findByWord(w.en)) return;
+      const existing = findLoosely(w.en);
+      if (existing) {
+        // AWL 只帶了字頭進來，舊資料剛好有例句與搭配詞 —— 補進去，不要浪費
+        const fill = {};
+        if (!existing.example && w.example) fill.example = String(w.example).replace(/[{}]/g, '');
+        if (!existing.collocations.length && (w.collocations || []).length) fill.collocations = w.collocations;
+        if (!existing.zh && w.zh) fill.zh = w.zh;
+        if (!existing.phonetic && w.phonetic) fill.phonetic = w.phonetic;
+        if (!existing.exampleZh && w.exampleZh) fill.exampleZh = w.exampleZh;
+        if (Object.keys(fill).length) {
+          updateCard(existing.id, fill);
+          merged += 1;
+        }
+        return;
+      }
+      added += 1;
       addCard({
         word: w.en,
         pos: '',
@@ -546,9 +621,8 @@ const Store = (() => {
         phonetic: w.phonetic || '',
         notes: ''
       });
-      n += 1;
     });
-    return n;
+    return { added, merged };
   }
 
   // 舊版已經學過的字不該從零開始，把進度換算成認讀軌的起點。
@@ -558,7 +632,7 @@ const Store = (() => {
       const old = JSON.parse(localStorage.getItem(LEGACY_KEY) || '{}');
       const vocab = old.vocab || {};
       Object.keys(vocab).forEach(word => {
-        const card = findByWord(word);
+        const card = findLoosely(word);
         if (!card) return;
         const status = vocab[word].status;
         const s = getSrs(card.id, 'recall');
@@ -591,7 +665,8 @@ const Store = (() => {
       const migrated = migrateLegacyProgress();
       db.seeded = true;
       save();
-      console.log(`[store] 初始化：種子 ${SEED_CARDS.length} 字、舊資料 ${legacy} 字、轉換進度 ${migrated} 筆`);
+      console.log(`[store] 初始化：種子 ${SEED_CARDS.length} 字、舊資料新增 ${legacy.added} 字`
+        + `、補進既有卡片 ${legacy.merged} 字、轉換進度 ${migrated} 筆`);
     }
     db.cards.forEach(c => ensureSrs(c.id));
     return db;
@@ -603,12 +678,14 @@ const Store = (() => {
   }
 
   return {
-    TRACKS, TRACK_LABELS, CORE_FIELDS, CORE_LABELS, CSV_COLUMNS,
+    TRACKS, TRACK_LABELS, CORE_FIELDS, CORE_LABELS, CSV_COLUMNS, NEW_PER_DAY,
+    newIntroducedToday,
     init, save, resetAll, today, daysAgo,
     addCard, updateCard, getCard, findCard, findByWord, listCards, setCardType,
     missingCore, isIncomplete, cardLabel, cardCount, incompleteCount,
     getSrs, grade, dueItems, dueCount,
     recordSpelling, spellingQueue, spellingErrorList, spellingAccuracy, lastSpellingResult,
+    hasSpellingClue,
     addProduction, listProductions, setProductionFeedback, productionCandidates, promotionCandidates,
     coverage, cardTypeCounts, activityDays, streak, longestStreak,
     reviewsSince, reviewsOn, productionsSince, cardsAddedSince, distinctWordsUsed,

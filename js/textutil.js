@@ -13,6 +13,35 @@ const TextUtil = (() => {
   const TOKEN_RE = /[A-Za-z][A-Za-z'\-]*/g;
   const VOWELS = 'aeiou';
 
+  // 不規則動詞的過去式與過去分詞。規則式推不出這些形，但例句常用到，
+  // 少了就會挖不到空。複合字（overtake → over + took）會自動沿用字尾的變化。
+  const IRREGULAR = {
+    arise: ['arose', 'arisen'], become: ['became', 'become'],
+    begin: ['began', 'begun'], break: ['broke', 'broken'],
+    bring: ['brought', 'brought'], build: ['built', 'built'],
+    buy: ['bought', 'bought'], choose: ['chose', 'chosen'],
+    come: ['came', 'come'], deal: ['dealt', 'dealt'],
+    draw: ['drew', 'drawn'], drive: ['drove', 'driven'],
+    fall: ['fell', 'fallen'], feel: ['felt', 'felt'],
+    find: ['found', 'found'], get: ['got', 'gotten'],
+    give: ['gave', 'given'], go: ['went', 'gone'],
+    grow: ['grew', 'grown'], hold: ['held', 'held'],
+    keep: ['kept', 'kept'], know: ['knew', 'known'],
+    lead: ['led', 'led'], leave: ['left', 'left'],
+    lose: ['lost', 'lost'], make: ['made', 'made'],
+    mean: ['meant', 'meant'], meet: ['met', 'met'],
+    pay: ['paid', 'paid'], rise: ['rose', 'risen'],
+    run: ['ran', 'run'], see: ['saw', 'seen'],
+    seek: ['sought', 'sought'], sell: ['sold', 'sold'],
+    send: ['sent', 'sent'], speak: ['spoke', 'spoken'],
+    spend: ['spent', 'spent'], stand: ['stood', 'stood'],
+    strike: ['struck', 'struck'], take: ['took', 'taken'],
+    teach: ['taught', 'taught'], tell: ['told', 'told'],
+    think: ['thought', 'thought'], wear: ['wore', 'worn'],
+    win: ['won', 'won'], withdraw: ['withdrew', 'withdrawn'],
+    write: ['wrote', 'written']
+  };
+
   const tokensOf = text => String(text || '').match(TOKEN_RE) || [];
 
   function normalise(text) {
@@ -41,7 +70,8 @@ const TextUtil = (() => {
       ['ies', 'ied', 'ier', 'iest'].forEach(s => forms.add(stem + s));
     }
     const last = word[word.length - 1], prev = word[word.length - 2], prev2 = word[word.length - 3];
-    if (word.length > 3 && !'aeiouwxy'.includes(last) && VOWELS.includes(prev) && !VOWELS.includes(prev2)) {
+    if (word.length >= 3 && !'aeiouwxy'.includes(last) && VOWELS.includes(prev) && !VOWELS.includes(prev2)) {
+      // 重複字尾：plan → planned / planning；dip → dipped / dipping
       forms.add(word + last + 'ed');
       forms.add(word + last + 'ing');
     }
@@ -50,6 +80,15 @@ const TextUtil = (() => {
       ['ion', 'ions', 'ing', 'ed'].forEach(s => forms.add(stem + s));
     }
     if (word.endsWith('t')) forms.add(word + 'ion');
+
+    // 不規則動詞（含 overtake / withdraw 這類複合字）
+    for (const base of Object.keys(IRREGULAR)) {
+      if (word === base || (word.endsWith(base) && word.length > base.length)) {
+        const prefix = word.slice(0, word.length - base.length);
+        IRREGULAR[base].forEach(f => forms.add(prefix + f));
+        break;
+      }
+    }
 
     return new Set([...forms].filter(f => f.length >= 2));
   }

@@ -146,8 +146,39 @@ class TestSeed(ImporterTestCase):
     def test_seed_file_exists_and_loads(self):
         self.assertTrue(seed.seed_path().exists())
         result = seed.load_seed(self.conn)
-        self.assertEqual(result.added, 30)
-        self.assertEqual(result.incomplete, 0, "種子資料的四個維度都應該齊全")
+        # AWL 570 字頭 + 話題字 + Task 1 用語 + 口說表達
+        self.assertGreater(result.added, 700)
+        self.assertEqual(result.skipped, 0)
+
+    def test_seed_contains_the_whole_awl(self):
+        """AWL 570 個字頭一個都不能少（有些歸在功能分類，靠備註標記）。"""
+        seed.load_seed(self.conn)
+        words = {c.word.lower() for c in repo.list_cards(self.conn)}
+        for headword in ("abandon", "analyse", "constrain", "sustain", "widespread"):
+            self.assertIn(headword, words, headword)
+        awl = repo.list_cards(self.conn, category="AWL")
+        self.assertGreater(len(awl), 550)
+
+    def test_fully_written_cards_have_all_four_dimensions(self):
+        seed.load_seed(self.conn)
+        complete = [c for c in repo.list_cards(self.conn) if not c.missing_core_fields()]
+        self.assertGreater(len(complete), 200)
+        for card in complete:
+            self.assertTrue(card.example_sentence, card.word)
+            self.assertTrue(card.collocation_list, card.word)
+            self.assertTrue(card.root_analysis, card.word)
+            self.assertGreaterEqual(len(card.synonym_list), 2, card.word)
+
+    def test_every_written_example_contains_its_word(self):
+        """例句裡沒有目標字的話，拼字模式就出不了題。"""
+        from ielts import textutil
+
+        seed.load_seed(self.conn)
+        for card in repo.list_cards(self.conn):
+            if not card.example_sentence:
+                continue
+            hits = textutil.mask_sentence(card.example_sentence, card.word)[1]
+            self.assertGreater(hits, 0, f"{card.word}: {card.example_sentence}")
 
     def test_seed_covers_every_category(self):
         seed.load_seed(self.conn)
@@ -158,13 +189,25 @@ class TestSeed(ImporterTestCase):
 
     def test_seed_has_active_cards_ready_for_production(self):
         seed.load_seed(self.conn)
-        self.assertGreaterEqual(len(repo.production_candidates(self.conn, limit=50)), 5)
+        self.assertGreaterEqual(len(repo.production_candidates(self.conn, limit=100)), 50)
+
+    def test_topic_words_are_evenly_spread(self):
+        seed.load_seed(self.conn)
+        rows = {r["name"]: r["total"] for r in repo.counts_by(self.conn, "topic")}
+        for topic in ("環境", "教育", "科技", "健康", "都市化", "犯罪", "媒體"):
+            self.assertEqual(rows.get(topic), 20, topic)
+
+    def test_awl_cards_are_grouped_by_sublist(self):
+        seed.load_seed(self.conn)
+        rows = {r["name"]: r["total"] for r in repo.counts_by(self.conn, "topic")}
+        for n in range(1, 11):
+            self.assertIn(f"Sublist {n}", rows)
 
     def test_seed_is_idempotent(self):
-        seed.load_seed(self.conn)
+        first = seed.load_seed(self.conn)
         again = seed.load_seed(self.conn)
         self.assertEqual(again.added, 0)
-        self.assertEqual(dbmod.card_count(self.conn), 30)
+        self.assertEqual(dbmod.card_count(self.conn), first.added)
 
 
 if __name__ == "__main__":

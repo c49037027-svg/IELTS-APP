@@ -21,6 +21,35 @@ STOPWORDS = {
 _TOKEN_RE = re.compile(r"[A-Za-z][A-Za-z'\-]*")
 _WS_RE = re.compile(r"\s+")
 
+#: 不規則動詞的過去式與過去分詞。規則式推不出這些形，但例句常用到，
+#: 少了就會挖不到空。複合字（overtake → over + took）會自動沿用字尾的變化。
+IRREGULAR = {
+    "arise": ("arose", "arisen"), "become": ("became", "become"),
+    "begin": ("began", "begun"), "break": ("broke", "broken"),
+    "bring": ("brought", "brought"), "build": ("built", "built"),
+    "buy": ("bought", "bought"), "choose": ("chose", "chosen"),
+    "come": ("came", "come"), "deal": ("dealt", "dealt"),
+    "draw": ("drew", "drawn"), "drive": ("drove", "driven"),
+    "fall": ("fell", "fallen"), "feel": ("felt", "felt"),
+    "find": ("found", "found"), "get": ("got", "gotten"),
+    "give": ("gave", "given"), "go": ("went", "gone"),
+    "grow": ("grew", "grown"), "hold": ("held", "held"),
+    "keep": ("kept", "kept"), "know": ("knew", "known"),
+    "lead": ("led", "led"), "leave": ("left", "left"),
+    "lose": ("lost", "lost"), "make": ("made", "made"),
+    "mean": ("meant", "meant"), "meet": ("met", "met"),
+    "pay": ("paid", "paid"), "rise": ("rose", "risen"),
+    "run": ("ran", "run"), "see": ("saw", "seen"),
+    "seek": ("sought", "sought"), "sell": ("sold", "sold"),
+    "send": ("sent", "sent"), "speak": ("spoke", "spoken"),
+    "spend": ("spent", "spent"), "stand": ("stood", "stood"),
+    "strike": ("struck", "struck"), "take": ("took", "taken"),
+    "teach": ("taught", "taught"), "tell": ("told", "told"),
+    "think": ("thought", "thought"), "wear": ("wore", "worn"),
+    "win": ("won", "won"), "withdraw": ("withdrew", "withdrawn"),
+    "write": ("wrote", "written"),
+}
+
 
 def tokens_of(text: str) -> list[str]:
     return _TOKEN_RE.findall(text or "")
@@ -55,14 +84,22 @@ def inflections(token: str) -> set[str]:
     if word.endswith("y") and len(word) > 2 and word[-2] not in "aeiou":
         stem = word[:-1]
         forms.update({stem + "ies", stem + "ied", stem + "ier", stem + "iest"})
-    if len(word) > 3 and word[-1] not in "aeiouwxy" and word[-2] in "aeiou" and word[-3] not in "aeiou":
-        # 重複字尾：plan → planned / planning
+    if len(word) >= 3 and word[-1] not in "aeiouwxy" and word[-2] in "aeiou" and word[-3] not in "aeiou":
+        # 重複字尾：plan → planned / planning；dip → dipped / dipping
         forms.update({word + word[-1] + "ed", word + word[-1] + "ing"})
     if word.endswith("ate"):
         stem = word[:-1]
         forms.update({stem + "ion", stem + "ions", stem + "ing", stem + "ed"})
     if word.endswith("t"):
         forms.add(word + "ion")
+
+    # 不規則動詞（含 overtake / withdraw 這類複合字）
+    for base, irregular_forms in IRREGULAR.items():
+        if word == base or (word.endswith(base) and len(word) > len(base)):
+            prefix = word[: len(word) - len(base)]
+            forms.update(prefix + f for f in irregular_forms)
+            break
+
     return {f for f in forms if len(f) >= 2}
 
 

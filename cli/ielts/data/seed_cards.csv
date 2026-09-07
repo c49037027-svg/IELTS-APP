@@ -1,31 +1,780 @@
 word,pos,example_sentence,collocations,root_analysis,synonyms,category,topic,card_type,zh_hint,notes
-mitigate,v.,Governments must act now to mitigate the effects of climate change.,mitigate the effects; mitigate the impact; mitigate risk,mit-(緩和、變柔軟) + -igate(使…) → 使變柔和,alleviate; reduce; ease; lessen,AWL,環境,passive,減輕、緩和,
-substantial,adj.,There has been a substantial increase in tuition fees over the past decade.,a substantial increase; substantial evidence; a substantial amount of,"sub-(在下) + stant(站立, 同 stand) + -ial → 站得住腳的 → 有實質分量的",considerable; significant; sizeable; marked,AWL,經濟,passive,大量的、實質的,寫作 Task 2 講程度時的高分替換字
-conduct,v.,Researchers conducted a survey of two thousand university students.,conduct research; conduct a survey; conduct an experiment,"con-(一起) + duct(引導, 同 conduct 電導) → 引導著進行",carry out; perform; undertake,AWL,教育,passive,進行、執行,
-constitute,v.,Migrant workers constitute nearly a third of the city's workforce.,constitute a threat; constitute a majority; constitute evidence,"con-(一起) + stitut(建立, 同 institute) → 一起建立成 → 組成",make up; form; comprise; account for,AWL,都市化,passive,構成、組成,
-undermine,v.,The spread of misinformation undermines public trust in journalism.,undermine confidence; undermine authority; undermine efforts,under-(下面) + mine(挖礦) → 在底下挖 → 動搖根基,weaken; erode; damage; compromise,AWL,媒體,passive,逐漸削弱、動搖,
-advocate,v.,Many educators advocate replacing final exams with continuous assessment.,advocate a policy; advocate for reform; strongly advocate,"ad-(朝向) + voc(聲音, 同 voice/vocal) + -ate → 為某事發聲",support; champion; promote; call for,AWL,教育,active,提倡、主張,Task 2 表達立場好用
-allocate,v.,The council allocates a fixed budget to each district every year.,allocate resources; allocate funding; allocate time,"ad-(朝向) + loc(地方, 同 location) + -ate → 放到該去的位置",distribute; assign; apportion; earmark,AWL,經濟,passive,分配、撥出,
-implement,v.,The government implemented stricter penalties for repeat offenders.,implement a policy; implement measures; implement reforms,"im-(進入) + ple(填滿, 同 complete) + -ment → 填滿內容 → 付諸實行",carry out; enforce; put into practice; execute,AWL,犯罪,active,實施、執行,
-sustainable,adj.,Cities need sustainable transport systems that do not rely on private cars.,sustainable development; sustainable growth; environmentally sustainable,"sus-(在下) + tain(持有, 同 contain/retain) + -able → 在底下撐得住的",viable; enduring; long-term; renewable,AWL,環境,active,可持續的,
-accumulate,v.,Toxins from processed food gradually accumulate in the body.,accumulate wealth; accumulate evidence; accumulate over time,"ac-(朝向) + cumul(堆積, 同 cumulative) + -ate → 一層層堆起來",build up; amass; gather; pile up,AWL,健康,passive,逐漸累積,
-deteriorate,v.,Air quality in the capital has deteriorated sharply since 2010.,deteriorate rapidly; conditions deteriorate; deteriorating health,"deterior-(更壞, 拉丁文 deterior) + -ate → 變得更壞",worsen; decline; degenerate; get worse,AWL,健康,passive,惡化,Task 1 描述下降趨勢也可用
-compensate,v.,Longer holidays do not compensate for consistently low wages.,compensate for; compensate workers; adequately compensate,"com-(一起) + pens(秤重、支付, 同 expense/pension) + -ate → 秤平、補足",make up for; offset; reimburse; counterbalance,AWL,工作,passive,彌補、補償,
-attribute,v.,Analysts attribute the drop in sales to the rise of online shopping.,attribute the rise to; be attributed to; widely attributed,"at-(朝向) + tribut(給予, 同 tribute/contribute) → 把功勞或原因歸給…",ascribe; credit; put down to,AWL,科技,passive,歸因於,attribute A to B 的搭配一定要記
-constraint,n.,Budget constraints forced the hospital to postpone the new wing.,financial constraints; time constraints; impose constraints,"con-(一起) + strain/strict(拉緊, 同 restrict) → 綁緊 → 限制",limitation; restriction; restraint; barrier,AWL,經濟,passive,限制、約束,
-inevitable,adj.,Rapid urbanisation makes some loss of farmland inevitable.,an inevitable consequence; an inevitable decline; almost inevitable,"in-(不) + evit(避開, 同 evade) + -able → 無法避開的",unavoidable; inescapable; certain; bound to happen,AWL,都市化,passive,不可避免的,
-pose,v.,Rising sea levels pose a serious threat to coastal communities.,pose a threat; pose a risk; pose a challenge; pose a question,"pos-(放置, 同 position/expose) → 把某物放到眼前 → 造成、提出",present; constitute; raise; create,高頻話題字,環境,active,造成（威脅）、提出,pose a threat 是雅思閱讀高頻搭配
-curriculum,n.,Financial literacy should be part of the national curriculum.,the school curriculum; curriculum design; a core curriculum,"curr-(跑, 同 current/occur) + -iculum → 要跑完的路程 → 課程",syllabus; course of study; programme,高頻話題字,教育,passive,課程（總體）,複數是 curricula
-surveillance,n.,Critics argue that mass surveillance erodes personal privacy.,CCTV surveillance; under surveillance; mass surveillance,"sur-(在上面) + veill(看守, 同 vigil 警醒) + -ance → 在上面盯著看",monitoring; observation; watch,高頻話題字,犯罪,passive,監控、監視,
-congestion,n.,Congestion charges have cut traffic in the city centre by a fifth.,traffic congestion; ease congestion; severe congestion,"con-(一起) + gest(攜帶, 同 digest/gesture) + -ion → 全擠在一起",overcrowding; gridlock; traffic jams; bottleneck,高頻話題字,都市化,active,壅塞、擁擠,
-obesity,n.,Childhood obesity has doubled in urban areas over the past twenty years.,childhood obesity; obesity rates; tackle obesity,"obes-(吃過頭而肥, 拉丁 obesus) + -ity → 肥胖的狀態",excess weight; being overweight; corpulence,高頻話題字,健康,passive,肥胖（症）,
+conduct,v.,Researchers conducted a survey of two thousand university students.,conduct research; conduct a survey; conduct an experiment,"con-(一起) + duct(引導, 同 conductor 導體/introduce) → 引導著進行",carry out; perform; undertake,AWL,Sublist 2,passive,進行、執行,學術寫作講「做研究」幾乎都用這個字，不用 do research
+constitute,v.,Migrant workers constitute nearly a third of the city's workforce.,constitute a threat; constitute a majority; constitute evidence,"con-(一起) + stitut(建立, 同 institute/substitute) → 一起建立成 → 組成",make up; form; comprise; account for,AWL,Sublist 1,passive,構成、組成,
+advocate,v.,Many educators advocate replacing final exams with continuous assessment.,advocate a policy; advocate for reform; strongly advocate,"ad-(朝向) + voc(聲音, 同 voice/vocal/vocation) + -ate → 為某事發聲",support; champion; promote; call for,AWL,Sublist 7,passive,提倡、主張,Task 2 表達立場好用；名詞 an advocate of 也很常見
+allocate,v.,The council allocates a fixed budget to each district every year.,allocate resources; allocate funding; allocate time,"ad-(朝向) + loc(地方, 同 location/local) + -ate → 放到該去的位置",distribute; assign; apportion; earmark,AWL,Sublist 6,passive,分配、撥出,
+implement,v.,The government implemented stricter penalties for repeat offenders.,implement a policy; implement measures; implement reforms,"im-(進入) + ple(填滿, 同 complete/supplement) + -ment → 填滿內容 → 付諸實行",carry out; enforce; put into practice; execute,AWL,Sublist 4,passive,實施、執行,
+accumulate,v.,Toxins from processed food gradually accumulate in the body.,accumulate wealth; accumulate evidence; accumulate over time,"ac-(朝向) + cumul(堆積, 同 cumulative) + -ate → 一層層堆起來",build up; amass; gather; pile up,AWL,Sublist 8,passive,逐漸累積,
+compensate,v.,Longer holidays do not compensate for consistently low wages.,compensate for; compensate workers; adequately compensate,"com-(一起) + pens(秤重、支付, 同 expense/pension) + -ate → 秤平、補足",make up for; offset; reimburse; counterbalance,AWL,Sublist 3,passive,彌補、補償,compensate for 的 for 不能省
+attribute,v.,Analysts attribute the drop in sales to the rise of online shopping.,attribute the rise to; be attributed to; widely attributed,"at-(朝向) + tribut(給予, 同 tribute/contribute/distribute) → 把原因歸給…",ascribe; credit; put down to,AWL,Sublist 4,passive,歸因於,attribute A to B 的搭配一定要記
+inevitable,adj.,Rapid urbanisation makes some loss of farmland inevitable.,an inevitable consequence; an inevitable decline; almost inevitable,"in-(不) + evit(避開, 同 evade/evitable) + -able → 無法避開的",unavoidable; inescapable; certain; bound to happen,AWL,Sublist 8,passive,不可避免的,
+pose,v.,Rising sea levels pose a serious threat to coastal communities.,pose a threat; pose a risk; pose a challenge; pose a question,"pos(放置, 同 position/expose/compose) → 把某物放到眼前 → 造成、提出",present; constitute; raise; create,AWL,Sublist 10,passive,造成（威脅）、提出,pose a threat / pose a risk 是閱讀高頻搭配
+bias,n.,Readers should be aware of the political bias of the newspapers they follow.,media bias; political bias; a bias towards; unconscious bias,原指保齡球球體偏一邊滾的斜度 → 偏向某一邊,prejudice; partiality; slant; one-sidedness,AWL,Sublist 8,passive,偏見、偏向,
+infrastructure,n.,The city has invested heavily in transport infrastructure over the past decade.,invest in infrastructure; ageing infrastructure; transport infrastructure,"infra-(在下面, 同 infrared 紅外線) + structure(結構) → 撐在底下的結構",public facilities; basic systems; utilities; networks,AWL,Sublist 8,passive,基礎建設,
+integrate,v.,Schools are gradually integrating digital tools into everyday lessons.,integrate into; fully integrated; integrate with,"integr(完整, 同 integrity/entire) + -ate → 併成完整的一體",combine; incorporate; merge; bring together,AWL,Sublist 4,passive,整合、融入,
+offset,v.,Planting trees can partly offset the emissions produced by air travel.,offset emissions; offset the impact; partly offset,off(離開) + set(放置) → 放到另一邊去抵掉,counterbalance; compensate for; cancel out; counteract,AWL,Sublist 8,passive,抵銷,
+abandon,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：go away from (a person or thing or place) not intending to return; forsake; desert
+abstract,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：existing in thought or as an idea but not having a physical or practical existence
+academy,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：school for special training
+access,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：means of approaching or entering (a place); way in
+accommodate,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：provide lodging or room for
+accompany,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：walk or travel with (sb) as a companion or helper; escort
+accurate,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：free from error
+achieve,v.,,,,,AWL,Sublist 2,passive,,"AWL 定義：gain or reach (sth), usu by effort, skill, courage, etc"
+acknowledge,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：accept the truth of admit (sth)
+acquire,v.,,,,,AWL,Sublist 2,passive,,"AWL 定義：gain (sth) by one's own ability, efforts or behaviour"
+adapt,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sth (for sth) make sth suitable for a new use, situation, etc; modify sth"
+adequate,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：satisfactory in quantity or quality; sufficient
+adjacent,,,,,,AWL,Sublist 10,passive,,AWL 定義：having a common endpoint or border also immediately preceding or following
+adjust,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：put (sth) into the correct order or position; arrange administrate v. to administer
+administration,,,,,,AWL,Sublist 2,passive,,
+adult,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：grown to full size or strength
+affect,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：have an influence on (sb/sth); produce an effect on
+aggregate,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sb (fml ) be formed or bring sb into an assembled group or amount
+aid,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：help albeit conj although
+albeit,,,,,,AWL,Sublist 10,passive,,
+alter,v.,,,,,AWL,Sublist 5,passive,,"AWL 定義：become different; change in character, position, size, shape, etc"
+alternative,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：available in place of sth else; other
+ambiguous,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：having more than one possible meaning
+amend,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：correct an error in (sth); make minor improvements in; change slightly
+analogy,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：partial similarity between two things that are compared
+analyse,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：separate into its parts in order to study its nature or structure
+annual,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：happening every year
+anticipate,,,,,,AWL,Sublist 9,passive,,
+apparent,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：clearly seen or understood; obvious
+append,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：sth (fml ) attach or add sth (esp in writing)
+appreciate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：understand and enjoy (sth); value highly
+approach,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：come near or nearer to in space or time
+appropriate,adj.,,,,,AWL,Sublist 2,passive,,AWL 定義：suitable; right and proper
+approximate,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：almost correct or exact but not completely so
+arbitrary,adj.,,,,,AWL,Sublist 8,passive,,"AWL 定義：based on personal opinion or impulse, not on reason"
+area,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：extent or measurement of a surface
+aspect,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：particular part or feature of sth being considered
+assemble,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：come together; collect
+assess,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：sth decide or fix the amount of sth
+assign,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth to sb give sth to sb as a share of work to be done or of things to be used
+assist,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：in/with sth; ~ (sb) in doing sth (fml ) help
+assume,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：accept as true before there is proof
+assure,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：tell (sb) positively or confidently
+attach,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth fasten or join sth (to sth)
+attain,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：succeed in getting (sth); achieve
+attitude,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：way of thinking or behaving
+author,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：writer of a book, play, etc"
+authority,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：power to give orders and make others obey
+automate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：cause to operate by automation
+available,adj.,,,,,AWL,Sublist 1,passive,,AWL 定義：that can be used or obtained
+aware,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：of sb/sth; ~ that... having knowledge or realization of sb/sth
+behalf,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：on behalf of sb/on sb's behalf; US in behalf of sb/in sb's behalf as the representative of or spokesman for sb; in the interest of sb
+benefit,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：profit; gain; future good (used esp with the vs and preps shown)
+bond,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：written agreement or promise that has legal force; covenant
+brief,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：lasting only a short time; short
+bulk,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：size, quantity or volume, esp when great"
+capable,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：having ability; able; competent
+capacity,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：ability to hold or contain sth
+category,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：class or group of things in a complete system of grouping
+cease,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：come or bring (sth) to an end; stop
+challenge,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：(to do sth) invitation or call (to sb) to take part in a game, contest, fight etc to prove who is better, stronger, more able, etc"
+channel,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sunken bed of a river, stream or canal"
+chapter,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：(usu numbered) division of a book
+chart,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：detailed map used to help navigation at sea, showing coasts, rocks, the depth of the sea, etc"
+chemical,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：of or relating to chemistry
+circumstance,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：condition or fact connected with an event or action cite quote; commend
+cite,,,,,,AWL,Sublist 6,passive,,
+civil,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：of or relating to the citizens of a country
+clarify,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：(cause sth to) become clear or easier to understand
+classic,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：having a high quality that is recognized and unquestioned; of lasting value and importance
+clause,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：group of words that includes a subject1(4a) and a verb, forming a sentence or part of a sentence"
+code,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：(system of) words, letters, symbols, etc that represent others, used for secret messages or for presenting or recording information briefly"
+coherent,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：connected logically or consistent; easy to understand; clear
+coincide,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：(of events) occur at the same time or occupy the same period of time as sth else
+collapse,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：fall down or in suddenly
+colleague,n.,,,,,AWL,Sublist 10,passive,,"AWL 定義：person with whom one works, esp in a profession or business"
+commence,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：begin (sth); start
+comment,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：written or spoken remark giving an opinion on, explaining or criticizing (an event, a person, a situation, etc)"
+commission,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：action, task or piece of work given to sb to do"
+commit,v.,,,,,AWL,Sublist 4,passive,,"AWL 定義：do (sth illegal, wrong or foolish)"
+commodity,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：thing bought in a shop and put to use, esp in the home"
+communicate,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：sth make sth known; convey sth
+community,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：the community the people living in one place, district or country, considered as a whole"
+compatible,adj.,,,,,AWL,Sublist 9,passive,,"AWL 定義：(of people, ideas, arguments, principles, etc) suited; that can exist together"
+compile,v.,,,,,AWL,Sublist 10,passive,,"AWL 定義：sth (for/from sth) collect (information) and arrange it in a book, list, report, etc"
+complement,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：thing that goes well or suitably with sth else, or makes it complete"
+complex,adj.,,,,,AWL,Sublist 2,passive,,AWL 定義：made up of (usu several) closely connected parts
+component,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：any of the parts of which sth is made
+compound,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：thing made up of two or more separate things combined together
+comprehensive,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：that includes everything
+comprise,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：have as parts or members; be made up of
+compute,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：sth calculate sth with a computer
+conceive,,,,,,AWL,Sublist 10,passive,,
+concentrate,v.,,,,,AWL,Sublist 4,passive,,"AWL 定義：(sth) (on sth/doing sth) focus (one's attention, effort, etc) exclusively and intensely on sth, not thinking about other less important things"
+concept,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：idea underlying sth; general notion
+conclude,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：(with sth) (usu fml ) come or bring (sth) to an end
+concurrent,adj.,,,,,AWL,Sublist 9,passive,,"AWL 定義：existing, happening or done at the same time"
+confer,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：(with sb) (on/about sth) have discussions (esp in order to exchange opinions or get advice)
+confine,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：sb/sth keep (a person or an animal) in a restricted space
+confirm,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：provide evidence for the truth or correctness of (a report, an opinion, etc); establish the truth of"
+conflict,,,,,,AWL,Sublist 5,passive,,
+conform,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：keep to or comply with (generally accepted rules, standards, etc)"
+consent,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：give agreement or permission
+consequent,adj.,,,,,AWL,Sublist 2,passive,,AWL 定義：(fml ) following sth as a result or an effect
+considerable,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：great in amount or size
+consist,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：(phr v) consist of sth be composed or made up of sth
+constrain,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：make (sb) do sth by strong (moral) persuasion or by force
+construct,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：build (sth); put or fit together; form
+consult,v.,,,,,AWL,Sublist 5,passive,,"AWL 定義：sb/sth go to (a person, book, etc) for information, advice, etc"
+consume,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：use (sth) up
+contact,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：state of touching (used esp with the vs shown)
+contemporary,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：of the time or period being referred to; belonging to the same time
+context,,,,,,AWL,Sublist 1,passive,,AWL 定義：writings preceding and following passage quoted
+contract,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：(for sth/to do sth) legally binding agreement, usu in writing"
+contradict,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：say sth that conflicts with by (sb), suggesting that the person is mistaken or not telling the truth"
+contrary,adj.,,,,,AWL,Sublist 7,passive,,"AWL 定義：opposite in nature, tendency or direction"
+contrast,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：A and/with B compare so that differences are made clear
+contribute,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：(to/towards sth) give one's share of (money, help, advice, etc) to help a joint cause"
+controversy,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：public discussion or argument, often rather angry, about sth which many people disagreewith"
+convene,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：summon to come together; arrange (a meeting, etc)"
+converse,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：(about sth); ~ (together) (fml ) talk
+convert,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：(sth) (from sth) (into/to sth) change (sth) from one form or use to another
+convince,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：sb make sb feel certain; cause sb to realize
+cooperate,,,,,,AWL,Sublist 6,passive,,AWL 定義：to work or act together
+coordinate,,,,,,AWL,Sublist 3,passive,,AWL 定義：vt. to organize or integrate (diverse elements) in a harmonious operation
+core,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：centre of such fruits as the apple and pear, containing the seeds"
+corporate,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：of or shared by all the members of a group; collective
+correspond,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：be in agreement; not contradict sth or each other
+couple,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：two people or things that are seen together or associated, esp a man and woman together"
+create,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：cause to exist; make (sth new or original)
+credit,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：permission to delay payment for goods and services until after they have been received; system of paying in this way
+criteria,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：(pl of criterion) standard by which sth is judged
+crucial,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：very important; decisive
+culture,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：refined understanding and appreciation of art, literature, etc"
+currency,n.,,,,,AWL,Sublist 8,passive,,AWL 定義：money system in use in a country
+cycle,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：series of events that are regularly repeated in the same order
+data,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：facts or information used in deciding or discussing sth
+debate,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：formal argument or discussion of a question, eg at a public meeting or in Parliament, with two or more opposing speakers, and often ending in a vote"
+decade,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：period of ten years
+deduce,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：sth arrive at (facts, a theory, etc) by reasoning; infer sth"
+define,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：sth state precisely the meaning of (eg words)
+definite,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：clear; not doubtful
+demonstrate,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：sth (to sb) show sth clearly by giving proof or evidence
+denote,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：be the name, sign or symbol of (sth); refer to"
+deny,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：say that (sth) is not true
+depress,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：make sad and without enthusiasm
+derive,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：sth from sth obtain sth from sth; get sth from sth
+design,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：(for sth) drawing or outline from which sth may be made
+despite,,,,,,AWL,Sublist 4,passive,,AWL 定義：prep without being affected by
+detect,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：discover or recognize that (sth) is present
+deviate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：from sth stop following
+device,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：thing made or adapted for a special purpose
+devote,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：oneself/sth to sb/sth give to sb/sth; dedicate ;
+differentiate,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：between A and B; ~ A (from B) see or show (two things) to be different; show sth to be different (from sth else)
+dimension,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：measurement of any sort
+diminish,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：become smaller or less; decrease
+discrete,,,,,,AWL,Sublist 5,passive,,
+discriminate,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：~ A from B see or make a difference (between two things)
+displace,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：move from the usual or correct place
+display,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth put sth on show
+dispose,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：place(sb/sth) in a suitable way; arrange
+distinct,adj.,,,,,AWL,Sublist 2,passive,,"AWL 定義：easily heard, seen, felt or understood; definite"
+distort,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：pull or twist out of its usual shape
+distribute,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：sth separate sth into parts and give a share to each person or thing
+diverse,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：of different kinds; varied
+document,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：paper, form, book, etc giving information about sth, evidence or proof of sth"
+domain,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：lands owned or ruled by a nobleman, government, etc"
+domestic,adj.,,,,,AWL,Sublist 4,passive,,"AWL 定義：of the home, household or family"
+dominate,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：have control of or a very strong influence on (people, events, etc)"
+draft,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：rough preliminary written version of sth
+drama,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：play for the theatre, radio or TV"
+duration,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：time during which sth lasts or continues
+dynamic,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：of power or forces that produce movement
+economy,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：avoidance of waste (of money, strength, time, resources, etc)"
+edit,v.,,,,,AWL,Sublist 6,passive,,"AWL 定義：prepare for publication, eg in a book, newspaper, or magazine"
+element,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：necessary or characteristic part of sth
+eliminate,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：sb/sth remove (esp sb/sth that is not wanted or needed)
+emerge,v.,,,,,AWL,Sublist 4,passive,,"AWL 定義：come out or up (from water, etc)"
+emphasis,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：force or stress given to a word or words when spoken, to make the meaning clear or to show importance"
+empirical,adj.,,,,,AWL,Sublist 7,passive,,"AWL 定義：based on observation or experiment, not on theory"
+enable,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：make able to do sth by giving him the necessary authority or means
+encounter,v.,,,,,AWL,Sublist 10,passive,,"AWL 定義：meet or find oneself faced by (sth/sb unpleasant, dangerous, difficult, etc)"
+energy,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：ability to act or work with strength and eagerness
+enforce,v.,,,,,AWL,Sublist 5,passive,,"AWL 定義：sth force people to obey (a law, etc); make sth effective"
+enhance,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：increase make (sb/sth) look better
+enormous,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：very large; immense
+ensure,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：make sure; guarantee
+entity,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：thing with distinct and real existence
+environment,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：conditions, circumstances, etc affecting people's lives"
+equate,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：sth consider sth as equal or equivalent (to sth else)
+equip,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sb/sth (with sth) supply sb/sth (with what is needed, for a particular purpose)"
+equivalent,adj.,,,,,AWL,Sublist 5,passive,,"AWL 定義：equal in value, amount, meaning, importance, etc"
+erode,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：destroy or wear (sth) away gradually
+error,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：thing done wrongly; mistake
+establish,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：set up on a firm or permanent basis
+estate,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：area of land, esp in the country, with one owner"
+estimate,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：judgement or calculation of the approximate size, cost, value, etc of sth"
+ethic,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：system of moral principles; rules of conduct
+ethnic,adj.,,,,,AWL,Sublist 4,passive,,"AWL 定義：of a national, racial or tribal group that has a common cultural tradition"
+evaluate,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：find out or form an idea of the amount or value of (sb/sth); assess
+eventual,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：happening at last as a result; ultimate
+evident,adj.,,,,,AWL,Sublist 1,passive,,AWL 定義：(that...) obvious (to the eye or mind); clear
+evolve,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：(cause to) develop naturally and (usu) gradually
+exceed,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：be greater or more numerous than (esp a quantity)
+exclude,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：sb/sth prevent sb from entering somewhere, taking part in sth, etc; keep sb out"
+exhibit,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：object or collection of objects displayed for the public, eg in a museum"
+expand,v.,,,,,AWL,Sublist 5,passive,,"AWL 定義：(into sth) (cause sth to) become greater in size, number or importance"
+expert,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：person with special knowledge, skill or training in a particular field"
+explicit,adj.,,,,,AWL,Sublist 6,passive,,"AWL 定義：(of a statement, etc) clearly and fully expressed"
+exploit,n.,,,,,AWL,Sublist 8,passive,,AWL 定義：brave or adventurous deed or action
+export,,,,,,AWL,Sublist 1,passive,,
+expose,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：uncover or make (sth) visible; display
+external,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：outside; situated on the outside of sth (esp the body)
+extract,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sth take or get sth out, usu with effort or by force"
+facilitate,v.,,,,,AWL,Sublist 5,passive,,"AWL 定義：(of an object, a process, etc but not of a person) make (sth) easy or less difficult"
+factor,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：fact, circumstance, etc that helps to produce a result"
+feature,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：one of the named parts of the face (eg nose, mouth, eyes) which together form its appearance"
+federal,,,,,,AWL,Sublist 6,passive,,AWL 定義：of or relating to a form of government or a country in which power is divided between one central and several regional government
+fee,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：(usu pl ) amount paid for professional advice or service, eg to private teachers, doctors, etc"
+file,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：metal tool with a rough surface for cutting, smoothing or shaping hard substances"
+final,adj.,,,,,AWL,Sublist 2,passive,,AWL 定義：of the end; coming last
+finance,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：management of money
+finite,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：having bounds; limited; not infinite
+flexible,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：that can bend easily without breaking
+focus,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：= >Usage at data data. point at which rays (of light, sound, etc) meet or from which theyappear to come"
+format,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：shape, size, binding, etc of a book"
+formula,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：(chemistry ) set of symbols showing the elements that a substance is made of
+forthcoming,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：about to happen or appear in the near future
+foundation,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：act of founding founded [ find: ] to meet with or discover by chance
+found,,,,,,AWL,Sublist 9,passive,,
+framework,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：structure giving shape and support
+function,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：special activity or purpose of a person or thing
+fund,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：sum of money saved or made available for a particular purpose
+fundamental,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：of or forming the basis or foundation of sth; essential
+furthermore,adv.,,,,,AWL,Sublist 6,passive,,AWL 定義：in addition; moreover ;
+gender,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：(in certain languages) classification of a noun or pronoun as masculine or feminine
+generate,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：cause to exist or occur; produce
+generation,,,,,,AWL,Sublist 5,passive,,
+globe,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：small spherical model of the earth showing the continents and usu also countries, rivers, cities, etc"
+goal,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：(in football, hockey, etc) pair of posts with a crossbar, between which the ball has to be kicked, hit, etc in order to score"
+grade,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：step, stage or degree of rank, quality, etc; level of classification"
+grant,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：agree to give or allow (what is asked for)
+guarantee,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：(against sth) promise (usu in writing) that certain conditions agreed to in a transaction will be fulfilled
+guideline,,,,,,AWL,Sublist 8,passive,,AWL 定義：a principle put forward to set standards or determine a course of actio
+hence,adv.,,,,,AWL,Sublist 4,passive,,AWL 定義：from this time
+hierarchy,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：system with grades of authority or status from the lowest to the highest
+highlight,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：best, most interesting or most exciting part of something"
+hypothesis,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：idea or suggestion that is based on known facts and is used as a basis for reasoning or further investigation
+identical,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：the ~ the same
+identify,v.,,,,,AWL,Sublist 1,passive,,"AWL 定義：sb/sth as sb/sth show, prove, etc who or what sb/sth is; recognize sb/sth (as being the specified person or thing)"
+ideology,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：ideas that form the basis of an economic or political theory or that are held by a particular group or person ignorant adj. ~ (of sth)knowing little or nothing; lacking education or information; unaware
+ignorance,,,,,,AWL,Sublist 6,passive,,
+illustrate,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：supply with pictures, diagrams, etc"
+image,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：copy of the shape of a person or thing, esp one made in stone or wood; statue"
+immigrate,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：enter a foreign country in order to live there permanently
+impact,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：hitting of one object against another
+implicate,v.,,,,,AWL,Sublist 4,passive,,"AWL 定義：sb show that sb is involved in sth, esp a crime"
+implicit,adj.,,,,,AWL,Sublist 8,passive,,"AWL 定義：implied, but not expressed directly; not explicit"
+imply,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：suggest (sth) indirectly rather than state it directly; hint
+impose,v.,,,,,AWL,Sublist 4,passive,,"AWL 定義：sth place (a penalty, tax, etc) officially on sb/sth"
+incentive,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：thing that encourages sb to do sth; stimulus
+incidence,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：of sth extent to which sth happens or has an effect
+incline,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：towards sth lean or slope in the direction of sth
+income,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：money received over a certain period, esp as payment for work or as interest on investments"
+incorporate,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth (in/into sth) make sth part of a whole; include
+index,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：list of names or topics referred to in a book, etc, usu arranged at the end in alphabetical order"
+indicate,v.,,,,,AWL,Sublist 1,passive,,"AWL 定義：sth (to sb) show sth, esp by pointing"
+individual,,,,,,AWL,Sublist 1,passive,,
+induce,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：persuade or influence (sb) to do sth
+infer,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：sth (from sth) reach (an opinion) from facts or reasoning; conclude sth
+inherent,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：existing as a natural or permanent feature or quality of sb/sth
+inhibit,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sb prevent sb from doing sth that should be natural or easy to do
+initial,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：of or at the beginning; first
+initiate,v.,,,,,AWL,Sublist 6,passive,,"AWL 定義：put (a scheme, etc) into operation; cause (sth) to begin"
+injure,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：hurt (sb); harm
+innovate,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：make changes; introduce new things
+input,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：action of putting sth in
+insert,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sth put, fit, place sth into sth or between two things"
+insight,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：(approv ) ability to see into the true nature (of sth); deep understanding
+inspect,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：examine (sth) closely
+instance,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：particular occurrence of sth that happens generally or several times; example; case
+institute,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：society or organization for a special (usu social, professional or educational) purpose"
+instruct,,,,,,AWL,Sublist 6,passive,,AWL 定義：to direct to do something; order
+integral,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：necessary for completeness
+integrity,n.,,,,,AWL,Sublist 10,passive,,AWL 定義：quality of being honest and morally upright
+intelligence,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：power of learning, understanding and reasoning; mental ability"
+intense,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：(of sensations) very great or severe; extreme
+interact,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：act or have an effect on each other
+intermediate,adj.,,,,,AWL,Sublist 9,passive,,"AWL 定義：situated or coming between two people, things, etc in time, space, degree, etc"
+internal,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：of or on the inside
+interpret,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：explain (sth which is not easily understandable)
+interval,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：time between two events
+intervene,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：(of time) come or be between
+intrinsic,adj.,,,,,AWL,Sublist 10,passive,,"AWL 定義：belonging naturally; existing within, not coming from outside"
+invest,v.,,,,,AWL,Sublist 2,passive,,"AWL 定義：(in sth/with sb) use (money) to buy shares, property, etc, in order to earn interest or bring profit"
+investigate,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：find out and examine in order to obtain the truth
+invoke,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：use (sth) as a reason for one's action
+involve,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：make necessary as a condition or result; entail
+isolate,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：sb/sth put or keep sb/sth entirely apart from other people or things; separate sb/sth ;
+issue,,,,,,AWL,Sublist 1,passive,,
+item,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：single article or unit in a list, etc"
+job,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：the patience of job
+journal,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：newspaper or periodical, esp one that is serious and deals with a specialized subject"
+justify,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：show that (sb/sth) is right, reasonable or just"
+label,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：piece of paper, cloth, metal, etc on or beside an object and describing its nature, name, owner, destination, etc"
+labour,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：physicalor mental work
+layer,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：thickness of material laid over a surface or forming a horizontal division
+lecture,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：(on sth) talk giving information about a subject to an audience or a class, often as part of a teaching programme"
+legal,adj.,,,,,AWL,Sublist 1,passive,,AWL 定義：of or based on the law
+legislate,,,,,,AWL,Sublist 1,passive,,
+levy,v.,,,,,AWL,Sublist 10,passive,,"AWL 定義：sth (on sb) collect (a payment, etc) by authority or force; impose sth"
+liberal,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：tolerant and open-minded; free from prejudice
+licence,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：official document showing that permission has been given to own, use or do sth"
+likewise,,,,,,AWL,Sublist 10,passive,,
+link,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：one ring or loop of a chain
+locate,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：discover the exact position or place of
+logic,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：science of reasoning
+maintain,v.,,,,,AWL,Sublist 2,passive,,"AWL 定義：sth cause sth to continue; keep sth in existence at the same level, standard, etc"
+major,,,,,,AWL,Sublist 1,passive,,
+manipulate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：control or handle with skill
+manual,adj.,,,,,AWL,Sublist 9,passive,,"AWL 定義：of, done with or controlled by the hands"
+margin,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：blank space round the written or printed matter on a page
+mature,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：fully grown or developed mentally or physically; having achieved one's full potential
+maximise,,,,,,AWL,Sublist 3,passive,,AWL 定義：[ maximize: ] vt. to make as high or great as possible; increase to a maximum
+mechanism,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：working parts of a machine, etc"
+media,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：the media means of mass communication, eg TV, radio, newspapers"
+mediate,v.,,,,,AWL,Sublist 9,passive,,"AWL 定義：act as a peacemaker or go-between for two or more people, groups, etc who disagree"
+medical,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：of the art of medicine; of curing disease
+medium,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：(pl usu media) means by which sth is expressed or communicated
+mental,adj.,,,,,AWL,Sublist 5,passive,,"AWL 定義：of, in or to the mind"
+method,,,,,,AWL,Sublist 1,passive,,
+migrate,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：(to...) move from one place to go to live or work in another
+military,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：of or for soldiers or an army; of or for armed forces
+minimal,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：smallest in amount or degree
+minimise,,,,,,AWL,Sublist 8,passive,,AWL 定義：[ minimize: ] to reduce to or estimate at the least possible degree or amount
+minimum,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：least or smallest amount, degree, etc possible"
+ministry,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：(buildings containing a) government department
+minor,adj.,,,,,AWL,Sublist 3,passive,,"AWL 定義：smaller, less serious, less important, etc"
+mode,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：(fml ) way or manner in which sth is done
+modify,v.,,,,,AWL,Sublist 5,passive,,"AWL 定義：change (sth) slightly, esp to make it less extreme or to improve it"
+monitor,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：device used to observe, record or test sth"
+motive,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：that which causes sb to act in a particular way; reason
+mutual,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：felt or done by each towards the other
+negate,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：deny or disprove the existence of (sb/sth)
+network,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：complex system of roads, etc crossingeach other"
+neutral,adj.,,,,,AWL,Sublist 6,passive,,"AWL 定義：not supporting or helping either side in a dispute, contest,war, etc; impartial"
+nevertheless,,,,,,AWL,Sublist 6,passive,,"AWL 定義：adv, conj in spite of this; however; still"
+nonetheless,,,,,,AWL,Sublist 10,passive,,
+norm,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：standard or pattern that is typical (of a group, etc)"
+normal,adj.,,,,,AWL,Sublist 2,passive,,"AWL 定義：in accordance with what is typical, usual or regular"
+notion,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：idea or belief; concept
+notwithstanding,,,,,,AWL,Sublist 10,passive,,AWL 定義：prep (can also follow the n to which it refers ) without being affected by (sth); in spite of
+nuclear,adj.,,,,,AWL,Sublist 8,passive,,"AWL 定義：of a nucleus, esp of an atom"
+objective,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：not influenced by personal feelings or opinions; unbiased; fair
+obtain,v.,,,,,AWL,Sublist 2,passive,,"AWL 定義：sth et sth; come to own or possess sth (by buying, borrowing, taking, etc)"
+obvious,adj.,,,,,AWL,Sublist 4,passive,,"AWL 定義：easily seen, recognized or understood; clear"
+occupy,v.,,,,,AWL,Sublist 4,passive,,"AWL 定義：live in or have possession of (a house, land, etc)"
+occur,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：come into being as an event or a process; happen
+odd,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：strange; unusual; peculiar
+ongoing,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：continuing to exist or progress
+option,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：power or freedom of choosing; choice
+orient,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：the Orient countries of the (Far) East (eg Japan, China)"
+outcome,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：effect or result (of an event, circumstances, etc)"
+output,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：quantity of goods, etc produced"
+overlap,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：partly cover (sth) by extending over its edge
+overseas,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：across the sea; foreign
+panel,n.,,,,,AWL,Sublist 10,passive,,"AWL 定義：separate, usu rectangular, part of the surface of a door, wall, ceiling, etc, usu raisedaboveor sunk below the surrounding area"
+paradigm,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：set of all the different forms of a word
+paragraph,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：distinct section of a written or printed text, usu consisting of several sentences dealingwith a single theme and starting on a new line"
+parallel,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：(of two or more lines) having the same distance between each other at every point
+parameter,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：quantity that does not vary in a particular case but does vary in other cases
+participate,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：take part or become involved (in an activity)
+partner,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：person who takes part in an activity with another or others, esp one of several owners of a business"
+passive,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：not active; submissive
+perceive,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：become aware of (sb/sth); notice; observe percent
+percent,,,,,,AWL,Sublist 1,passive,,
+period,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：length or portion of time
+persist,v.,,,,,AWL,Sublist 10,passive,,"AWL 定義：continue to do sth, esp in an obstinate and determined way and in spite of opposition, argument or failure"
+perspective,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：art of drawing solid objects on a flat surface so as to give the right impression of their height, width, depth and position in relation to each other"
+phase,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：stage in a process of change or development
+phenomenon,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：fact or occurrence, esp in nature or society, that can be perceived by the senses"
+philosophy,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：search for knowledge and understanding of the nature and meaning of the universe and of human life
+physical,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：of or concerning material things
+plus,,,,,,AWL,Sublist 8,passive,,AWL 定義：prep with the addition of
+policy,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：plan of action, statement of ideals, etc proposed or adopted by a government, politicalparty, business, etc"
+portion,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：part or share into which sth is divided
+positive,adj.,,,,,AWL,Sublist 2,passive,,AWL 定義：with no possibility of doubt; clear and definite
+potential,adj.,,,,,AWL,Sublist 2,passive,,AWL 定義：that can or may come into existence; possible
+practitioner,n.,,,,,AWL,Sublist 8,passive,,AWL 定義：person who practises a skill or an art
+precede,v.,,,,,AWL,Sublist 6,passive,,"AWL 定義：come or go before in time, order, rank, etc"
+precise,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：stated clearly andaccurately
+predict,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：say in advance that will happen; forecast
+predominant,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：having more power or influence than others
+preliminary,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：coming before a more important action or event; preparatory
+presume,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：suppose to be true; take (sth) for granted
+previous,adj.,,,,,AWL,Sublist 2,passive,,AWL 定義：coming before in time or order
+primary,adj.,,,,,AWL,Sublist 2,passive,,AWL 定義：earliest in time or order of development
+prime,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：most important; chief; fundamental
+principal,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：first in rank or importance; chief; main
+principle,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：basic general truth that underlies sth
+prior,adj.,,,,,AWL,Sublist 4,passive,,"AWL 定義：coming before in time, order or importance"
+priority,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：(state of) being more important (in rank)
+proceed,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：(to sth) go to a further or the next stage; go on
+process,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：series of actions or operations performed in order to do, make or achieve sth"
+professional,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：of or belonging to a profession
+prohibit,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sth/sb (from doing sth) forbid sth or sb from doing sth esp by laws, rules or regulations"
+project,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：scheme or undertaking
+promote,,,,,,AWL,Sublist 4,passive,,AWL 定義：to contribute to the growth or prosperity of:FURTHER
+prospect,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：(dated ) wide view of a landscape, etc"
+protocol,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：system of rules governing formal occasions, eg meetings between governments, diplomats, etc; official etiquette"
+psychology,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：science or study of the mind and how it functions
+publication,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：action of making a book or periodical, available to the public"
+publish,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：prepare, have printed and distribute to the public (a book, periodical, etc)"
+purchase,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：(action of) buying sth
+pursue,v.,,,,,AWL,Sublist 5,passive,,"AWL 定義：follow (sb/sth), esp in order to catch or kill; chase ,"
+qualitative,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：of or concerned with quality
+quote,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：(from sb/sth) repeat in speech or writing (words previously said or written by anotherperson)
+radical,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：of or from the root or base; fundamental
+random,adj.,,,,,AWL,Sublist 8,passive,,"AWL 定義：done, chosen, etc without method or conscious choice; haphazard"
+range,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：connected line or row of mountains, hills, etc"
+ratio,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：relation between two amounts determined by the number of times one contains the other
+rational,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：able to reason
+react,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：behave differently or change as a result of sth; respond
+recover,v.,,,,,AWL,Sublist 6,passive,,"AWL 定義：sth find again (sth stolen, lost, etc); regain possession of sth"
+refine,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：remove impurities from (sth); purify
+regime,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：method or system of government
+region,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：part of a surface or bodyor space with or without definite boundaries or characteristicfeatures
+register,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：official list or record of names, items, attendances, etc"
+regulate,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：control or direct by means of rules and restrictions
+reinforce,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：make stronger by adding material, etc"
+reject,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：refuse to accept
+relax,v.,,,,,AWL,Sublist 9,passive,,"AWL 定義：(make sth) become less tight, stiff, etc"
+release,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：sb/sth (from sth) allow (a person or an animal) to go; set free or liberate sb/sth ;
+relevant,adj.,,,,,AWL,Sublist 2,passive,,"AWL 定義：(to sth/sb)connected with what is being discussed, what is happening,what is being done, etc reluctance Unwillingness."
+reluctance,,,,,,AWL,Sublist 10,passive,,
+rely,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：(pt, pp relied) ~ on/upon sb/sth (to do sth) count or depend on sb/sth"
+remove,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：sth/sb (from sth) take sth/sb away from one place to another
+require,v.,,,,,AWL,Sublist 1,passive,,"AWL 定義：depend on (sb/sth) for success, fulfilment, etc; need"
+research,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：(on sb) careful study or investigation, esp in order to discover new facts or information"
+reside,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：(in/at...) have one's home (in a certain place); live
+resolve,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：on/upon/against sth/doing sth decide firmly; determine
+resource,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：supply of raw materials, etc which bring a country, person, etc wealth"
+respond,v.,,,,,AWL,Sublist 1,passive,,AWL 定義：(with sth) give a verbal or written answer
+restore,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：sth (fml ) give back (sth lost, etc) to its owner"
+restrain,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：sb/sthhold back sb/sth from movementor action; keep sb/sth under control or in check
+restrict,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：sb/sth (to sth) put a limit on sb/sth
+retain,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：keep (sth) in one's possession or use
+reveal,v.,,,,,AWL,Sublist 6,passive,,"AWL 定義：sth make (facts, etc) known"
+revenue,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：income, esp the total annual income of the State from taxes, etc"
+reverse,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：contrary or opposite to what is expected
+revise,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：re-examine (sth), esp in order to correct or improve it"
+revolution,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：overthrow of a system of government, esp by force"
+rigid,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：stiff; not bending or yielding
+role,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：actor's part in a play
+route,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：way taken or planned to get from one place to another
+scenario,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：written outline of a film, play, etc with details of the scenes and plot"
+schedule,n.,,,,,AWL,Sublist 8,passive,,AWL 定義：programme of work to be done or of planned events
+scheme,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：plan for doing or organizing sth
+scope,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：opportunity to do or achieve sth
+section,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：any of the parts into which sth may be or has been divided
+sector,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：part of a circle lying between two straight lines drawn from the centre to the circumference .
+secure,adj.,,,,,AWL,Sublist 2,passive,,"AWL 定義：not feeling worry, doubt, etc"
+seek,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：(after/for sth) look (for sth); try to find or obtain (sth)
+select,v.,,,,,AWL,Sublist 2,passive,,"AWL 定義：sb/sth choose sb/sth, esp as being the best or most suitable"
+sequence,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：set of events, numbers, actions, etc with each following the one before continuously or in a particular order"
+series,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：number of things, events, etc of a similar kind, esp. placed or occurring one after another"
+sex,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：condition of being male or female; gender
+shift,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：(sth/sb/oneself) (from.../to...); ~ (sth/sb/oneself) (about/around) (cause sth/sb/oneself to) change or move from one position or direction to another [/]
+significant,adj.,,,,,AWL,Sublist 1,passive,,"AWL 定義：having a meaning, esp one that is immediately obvious"
+similar,adj.,,,,,AWL,Sublist 1,passive,,AWL 定義：resembling sb/sth but not the same; alike
+simulate,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：pretend to have or feel
+site,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：place where a building, town, etc was, is, or will be situated"
+so-called,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：(used to suggest that the words used to describe sb/sth are not appropriate )
+sole,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：flat sea-fish that is eaten as food
+somewhat,,,,,,AWL,Sublist 7,passive,,AWL 定義：indef adv to some degree; rather
+source,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：starting-point of a river
+specific,adj.,,,,,AWL,Sublist 1,passive,,"AWL 定義：detailed, precise and exact"
+specify,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：(esp fml ) state or name clearly and definitely (details, materials, etc)"
+sphere,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：solid figure that is entirely round (ie with every point on the surface at an equal distance from the centre)
+stable,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：firmly established or fixed; not likely to move or change
+statistic,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：item of information expressed in numbers
+status,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：person's social, legal or professional position or rank in relation to others"
+straightforward,adj.,,,,,AWL,Sublist 10,passive,,"AWL 定義：honest and frank, without evasion"
+strategy,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：planning and directing an operation in a war or campaign
+stress,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：mental or physical distress, difficult circumstances, etc"
+structure,n.,,,,,AWL,Sublist 1,passive,,"AWL 定義：way in which sth is put together, organized, built, etc"
+style,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：manner of writing or speaking, esp contrasted with what is actually written or said"
+submit,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：(to sb/sth) accept the control, superior strength, etc (of sb/sth); yield (to sb/sth) ; ,"
+subordinate,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：(to sb) lower in rank or position
+subsequent,,,,,,AWL,Sublist 4,passive,,
+subsidy,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：money paid, esp by a government, to help an industry, to support the arts, to keep pricesdown, etc"
+substitute,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：person or thing that replaces, acts for or serves as sb or sth else"
+successor,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：person or thing that comes after and takes the place of (sb/sth)
+sufficient,,,,,,AWL,Sublist 3,passive,,
+sum,,,,,,AWL,Sublist 4,passive,,
+summary,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：brief statement of themain points of sth
+supplement,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：thing added to sth else to improve or complete it
+survey,v.,,,,,AWL,Sublist 2,passive,,"AWL 定義：look carefully at all of (sth/sb), esp from a distance"
+survive,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：~ (on sth) continue to live or exist
+suspend,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：sth (fml ) hang sth up
+sustain,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：bear (weight) without breaking or falling
+symbol,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：image, object, etc that suggests or refers to sth else; emblem"
+tape,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：narrow strip of material used for tying, fastening or labelling things"
+target,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：object or mark that a person tries to hit in shooting, etc; disc marked with concentric circles for this purpose in archery ; ."
+task,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：piece of work that has to be done
+team,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：group of players forming one side in certain games and sports
+technical,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：of or involving the mechanical arts and applied sciences
+technique,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：method of doing or performing sth, esp in the arts or sciences"
+technology,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：scientificstudy and use of mechanical arts and applied sciences, eg engineering"
+temporary,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：lasting or meant to last for a limited time only; notpermanent
+tense,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：stretched tightly; taut ;
+terminate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：come to an end or bring (sth) to an end
+text,n.,,,,,AWL,Sublist 2,passive,,AWL 定義：main written or printed part of a book or page
+theme,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：subject of a talk, a piece of writing or a person's thoughts; topic"
+theory,n.,,,,,AWL,Sublist 1,passive,,AWL 定義：set of reasoned ideas intended to explain facts or events
+thereby,adv.,,,,,AWL,Sublist 8,passive,,AWL 定義：by that means
+thesis,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：statement or theory put forward and supported by arguments
+topic,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：subject of a discussion, talk, programme, written work, etc"
+trace,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：mark, track, sign, etc showing what has existed or happened"
+tradition,n.,,,,,AWL,Sublist 2,passive,,"AWL 定義：passing of beliefs or customs from one generation to the next, esp without writing"
+transfer,v.,,,,,AWL,Sublist 2,passive,,AWL 定義：sth/sb (from...) (to...) move sth/sb from one place to another
+transform,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth/sb (into sth) completely change the appearance or character of sth/sb
+transit,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：process of going or being taken or transported from one place to another
+transmit,,,,,,AWL,Sublist 7,passive,,AWL 定義：To send trough or across.
+transport,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth/sb (to...) take sth/sb from one place to another in a vehicle
+trend,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：general tendency or direction
+trigger,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：lever that releases a spring, esp so as to fire a gun"
+ultimate,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：beyond which no other exists or is possible; last or final
+undergo,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：experience or endure (sth unpleasant or painful)
+underlie,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：lie or exist beneath (sth)
+undertake,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：(fml ) (start to) make oneself responsible for (sth)
+uniform,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：not changing in form or character; unvarying
+unify,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：form (sth) into a single unit or make uniform
+unique,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：being the only one of its type
+utilise,,,,,,AWL,Sublist 6,passive,,"AWL 定義：vt. (= utilize) to put to use, especially to find a profitable or practical use for"
+valid,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：legally effective because made or done with the correct formalities
+vary,v.,,,,,AWL,Sublist 1,passive,,"AWL 定義：(in sth) be different in size, volume, strength, etc"
+vehicle,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：conveyance such as a car, lorry or cart used for transporting goods or passengers on land"
+version,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：account of an event, etc from the point of view of one person"
+via,,,,,,AWL,Sublist 8,passive,,AWL 定義：prep by way of (sth); through
+violate,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：break or be contrary to
+virtual,adj.,,,,,AWL,Sublist 8,passive,,"AWL 定義：being or acting as what is described, but not accepted as such in name or officially"
+visible,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：that can be seen; in sight
+vision,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：power of seeing; sight
+visual,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：concerned with or used in seeing
+volume,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：book, esp one of a matching set or a series"
+voluntary,adj.,,,,,AWL,Sublist 7,passive,,"AWL 定義：acting,done or given willingly"
+welfare,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：good health, happiness, prosperity, etc of a person or group"
+whereby,,,,,,AWL,Sublist 10,passive,,AWL 定義：rel adv by which
+widespread,,,,,,AWL,Sublist 8,passive,,AWL 定義：extending over a wide area
+mitigate,v.,Governments must act now to mitigate the effects of climate change.,mitigate the effects; mitigate the impact; mitigate risk,"mit(緩和、變柔軟, 同 mild) + -igate(使…) → 使變柔和",alleviate; reduce; ease; lessen,高頻話題字,環境,passive,減輕、緩和,
+sustainable,adj.,Cities need sustainable transport systems that do not rely on private cars.,sustainable development; sustainable growth; environmentally sustainable,"sus-(在下) + tain(持有, 同 contain/retain/maintain) + -able → 在底下撐得住的",viable; enduring; long-term; environmentally sound,高頻話題字,環境,passive,可持續的,
 renewable,adj.,Denmark now generates over half its electricity from renewable sources.,renewable energy; renewable sources; shift to renewables,re-(再) + new(新) + -able → 可以一再變新的,sustainable; clean; green; inexhaustible,高頻話題字,環境,passive,可再生的,
-deterrent,n.,Heavier fines act as a deterrent to dangerous driving.,act as a deterrent; an effective deterrent; a strong deterrent,"de-(離開) + terr(恐懼, 同 terror/terrify) + -ent → 使人因害怕而退開",disincentive; discouragement; check; restraint,高頻話題字,犯罪,passive,嚇阻（手段）,
-bias,n.,Readers should be aware of the political bias of the newspapers they follow.,media bias; political bias; a bias towards; unconscious bias,bias 原指保齡球偏一邊滾的斜度 → 偏向某一邊,prejudice; partiality; slant; one-sidedness,高頻話題字,媒體,active,偏見、偏向,
-fluctuate,v.,"Between 2005 and 2010, sales fluctuated between 20 and 35 million units.",fluctuate wildly; fluctuate between; figures fluctuated,"flu(流動, 同 fluid/influence) + -ate → 像水一樣起起伏伏",vary; oscillate; swing; go up and down,Task1圖表用語,經濟,active,波動、起伏,Task 1 描述不規則變化的首選字
-plateau,v.,"After a sharp rise, the figure plateaued at around 60 per cent.",reach a plateau; plateau at; plateau after,"法文 plat(平的, 同 plate/plain) → 高原 → 走平的階段",level off; stabilise; flatten out; remain steady,Task1圖表用語,經濟,active,趨於平穩,名詞、動詞都可用
-peak,v.,Unemployment peaked at 12 per cent in 2009 before falling steadily.,peak at; reach a peak; a peak of; peak in 2009,peak 山頂 → 最高點；peak at + 數值 是固定用法,reach a maximum; culminate; top out; hit a high,Task1圖表用語,工作,active,達到高峰,注意 peak at 數值 / peak in 年份
-respectively,adv.,Spending on housing and transport rose to 30 and 18 per cent respectively.,A and B respectively; rose to X and Y respectively,"re-(回) + spect(看, 同 inspect/respect) + -ive-ly → 各自回頭對應著看",in that order; correspondingly,Task1圖表用語,經濟,passive,分別地,放句尾，讓兩組數據一次講完
-take its toll,phr.,Long working hours take a heavy toll on people's mental health.,take its toll on; take a heavy toll; take a toll on health,toll 原指過路費 → 走這條路要付的代價 → 造成損耗,damage; wear down; have a negative effect on; harm,口說表達,健康,active,造成損害、付出代價,Part 3 講負面影響時很自然
-bridge the gap,phr.,Online courses can help bridge the gap between rural and urban students.,bridge the gap between; help bridge the gap; bridge the digital gap,bridge(橋) 當動詞 → 在落差上架橋 → 弭平差距,close the gap; narrow the divide; reconcile,口說表達,教育,active,弭平差距,
-double-edged sword,n. phr.,Social media is a double-edged sword: it connects people but also spreads rumours.,prove to be a double-edged sword; a double-edged sword for; cut both ways,double-edged 雙刃 → 兩邊都會割到 → 有利也有弊,a mixed blessing; a trade-off; cut both ways,口說表達,科技,active,雙面刃,Part 3 討論利弊的萬用開場
+emission,n.,Carbon emissions from road transport fell for the third year running.,carbon emissions; cut emissions; greenhouse gas emissions,"e-(出去) + miss(送, 同 mission/transmit/dismiss) + -ion → 送出去的東西",discharge; release; output; fumes,高頻話題字,環境,passive,排放（物）,
+carbon footprint,n. phr.,Flying less is the fastest way to shrink your carbon footprint.,reduce your carbon footprint; a large carbon footprint; measure the carbon footprint,footprint(腳印) → 你踩在地球上留下的碳的印子,carbon impact; emissions total; environmental impact,高頻話題字,環境,passive,碳足跡,
+greenhouse gas,n. phr.,Methane is a greenhouse gas far more potent than carbon dioxide.,greenhouse gas emissions; cut greenhouse gases; a greenhouse gas effect,greenhouse(溫室) → 像溫室玻璃一樣把熱關在裡面的氣體,heat-trapping gas; carbon emissions,高頻話題字,環境,passive,溫室氣體,
+deforestation,n.,Large-scale deforestation has destroyed much of the region's rainforest.,large-scale deforestation; tackle deforestation; rates of deforestation,de-(去除) + forest(森林) + -ation → 把森林去掉這件事,forest clearance; logging; tree loss,高頻話題字,環境,passive,森林砍伐,
+biodiversity,n.,Wetlands support far greater biodiversity than most people realise.,protect biodiversity; loss of biodiversity; rich biodiversity,"bio(生命, 同 biology) + divers(不同, 同 diverse/diversity) → 生命的多樣性",variety of species; ecological diversity; wildlife variety,高頻話題字,環境,passive,生物多樣性,
+landfill,n.,Nearly half of all household waste still ends up in landfill.,end up in landfill; landfill sites; reduce landfill waste,land(土地) + fill(填) → 挖坑把垃圾填進土地,waste site; dump; tip; rubbish site,高頻話題字,環境,passive,垃圾掩埋場,
+conservation,n.,Conservation groups have campaigned for the forest to be protected.,wildlife conservation; energy conservation; conservation efforts,"con-(一起) + serv(保存, 同 preserve/reserve/observe) + -ation → 一起守住",protection; preservation; safeguarding,高頻話題字,環境,passive,保育、保護,
+habitat,n.,Road building has destroyed the natural habitat of several rare species.,natural habitat; habitat loss; destroy habitats,拉丁 habitare 居住（同 inhabit/habit） → 生物居住的地方,natural environment; home range; natural surroundings,高頻話題字,環境,passive,棲息地,
+pollutant,n.,Traffic releases pollutants that damage children's developing lungs.,airborne pollutants; industrial pollutants; release pollutants,拉丁 polluere 弄髒（同 pollution） + -ant(做…的東西) → 弄髒環境的東西,contaminant; toxin; impurity,高頻話題字,環境,passive,污染物,
+depletion,n.,The depletion of groundwater has forced farmers to change what they grow.,resource depletion; ozone depletion; the depletion of stocks,"de-(去除) + plet(填滿, 同 complete/replete) + -ion → 把填滿的東西掏空",exhaustion; using up; reduction; draining,高頻話題字,環境,passive,耗竭,
+ecosystem,n.,Coral reefs are among the most fragile ecosystems on the planet.,a fragile ecosystem; damage ecosystems; marine ecosystems,"eco(家, 希臘 oikos, 同 economy) + system → 生物的「家」這整套系統",natural system; biological community; habitat network,高頻話題字,環境,passive,生態系,
+degradation,n.,Environmental degradation is hardest to reverse in poorer regions.,environmental degradation; soil degradation; land degradation,"de-(向下) + grad(階, 同 grade/gradual/degree) + -ation → 一階一階降下去",deterioration; damage; decline; worsening,高頻話題字,環境,passive,惡化、退化,
+contaminate,v.,Industrial waste has contaminated the river for several kilometres.,contaminate water supplies; heavily contaminated; contaminate the soil,"con-(一起) + tamin(接觸, 同 contact/contagion) + -ate → 碰到而變髒",pollute; taint; poison; infect,高頻話題字,環境,passive,污染,
+extinction,n.,Several bird species now face extinction within a single generation.,face extinction; on the brink of extinction; mass extinction,"ex-(完全) + stinct(熄滅, 同 distinguish/instinct) + -ion → 整個熄掉不再有",dying out; disappearance; eradication,高頻話題字,環境,passive,滅絕,
+drought,n.,A prolonged drought left reservoirs at a third of their normal level.,a severe drought; prolonged drought; drought-hit areas,古英語 drugath「乾」（同 dry） + -th(狀態) → 乾的狀態,water shortage; dry spell; arid conditions,高頻話題字,環境,passive,乾旱,
+erosion,n.,Coastal erosion has washed away nearly ten metres of cliff since 1990.,soil erosion; coastal erosion; prevent erosion,"e-(出去) + ros/rod(啃, 同 rodent 齧齒類/corrode) + -ion → 一點一點被啃掉",wearing away; gradual loss; wearing down,高頻話題字,環境,passive,侵蝕,
+curb,v.,The city introduced a congestion charge to curb traffic in the centre.,curb emissions; curb pollution; curb the use of,curb 原指馬勒的鍊條 → 拉住不讓牠亂跑,restrict; limit; rein in; check,高頻話題字,環境,passive,抑制,
+curriculum,n.,Financial literacy should be part of the national curriculum.,the school curriculum; curriculum design; a core curriculum,"curr(跑, 同 current/occur/course) + -iculum → 要跑完的一段路程 → 課程",syllabus; course of study; programme,高頻話題字,教育,passive,課程（總體）,複數是 curricula
+substantial,adj.,There has been a substantial increase in tuition fees over the past decade.,a substantial increase; substantial evidence; a substantial amount of,"sub-(在下) + stant(站立, 同 stand/constant) + -ial → 站得住腳的 → 有實質分量的",considerable; significant; sizeable; marked,高頻話題字,教育,passive,大量的、實質的,
+literacy,n.,Adult literacy rates have risen sharply since the programme began.,adult literacy; literacy rates; financial literacy,"liter(字母, 同 letter/literature) + -acy → 認得字的能力",reading ability; being able to read and write,高頻話題字,教育,passive,識字能力、素養,digital literacy / financial literacy 都是高分搭配
+numeracy,n.,Employers complain that basic numeracy is weaker than it used to be.,basic numeracy; numeracy skills; literacy and numeracy,"numer(數字, 同 number/numerous) + -acy → 處理數字的能力",mathematical ability; number skills,高頻話題字,教育,passive,算術能力,
+tuition,n.,Tuition fees have tripled since the system was reformed.,tuition fees; pay tuition; private tuition,"tuit(照看, 同 tutor/intuition) + -ion → 被看顧著教導",teaching; instruction; course fees,高頻話題字,教育,passive,學費、教學,
+scholarship,n.,She won a full scholarship to study engineering abroad.,win a scholarship; a full scholarship; apply for scholarships,"schol(學校, 希臘 skholē 原意「閒暇」→ 有閒暇才能學習) + -ship → 學者的身分／補助",grant; bursary; financial award,高頻話題字,教育,passive,獎學金,
+vocational,adj.,Vocational training often leads to work faster than an academic degree.,vocational training; vocational courses; vocational qualifications,"voc(呼喚, 同 voice/vocation 天職) + -ation + -al → 為了「天職」而做的訓練",job-related; occupational; practical; career-focused,高頻話題字,教育,passive,職業的、技職的,
+rote learning,n. phr.,Rote learning helps with exams but rarely produces real understanding.,rely on rote learning; rote learning of facts; move away from rote learning,rote 原意「固定的路線」→ 照著固定套路死記,memorisation; learning by heart; mechanical learning,高頻話題字,教育,passive,死記硬背,
+critical thinking,n. phr.,Group debates are one of the best ways to develop critical thinking.,develop critical thinking; critical thinking skills; encourage critical thinking,"crit(判斷, 同 criterion/critic/crisis) → 會判斷的思考",analytical thinking; reasoning; independent thought,高頻話題字,教育,passive,批判性思考,
+assessment,n.,Continuous assessment reduces the pressure of a single final exam.,continuous assessment; formal assessment; assessment criteria,"as-(朝向) + sess(坐, 同 session/sedentary；法官「坐下來」評定稅額) + -ment → 坐下來評定",evaluation; appraisal; testing; marking,高頻話題字,教育,passive,評量,
+enrol,v.,Over four thousand students enrolled in online courses last year.,enrol in a course; enrol students; enrolment rates,"en-(進入) + rol(名冊, 同 roll 卷軸) → 把名字寫進名冊",sign up; register; enter; join,高頻話題字,教育,passive,註冊、入學,
+dropout rate,n. phr.,The dropout rate fell once the university introduced study mentors.,a high dropout rate; reduce the dropout rate; the dropout rate among,drop(掉落) + out → 中途掉出隊伍的比例,attrition rate; withdrawal rate; leaving rate,高頻話題字,教育,passive,輟學率,
+discipline,n.,Classroom discipline suffers when classes are too large.,classroom discipline; strict discipline; self-discipline,"disc(學習, 同 disciple 門徒/docile) + -ine → 學習該有的規矩",order; self-control; behaviour management,高頻話題字,教育,passive,紀律、自律,另一個意思是「學科」：an academic discipline
+extracurricular,adj.,Extracurricular activities matter as much as grades on an application.,extracurricular activities; extracurricular clubs; take part in extracurricular,"extra-(之外, 同 extraordinary) + curricul(課程) + -ar → 正課之外的",out-of-class; after-school; non-academic,高頻話題字,教育,passive,課外的,
+peer pressure,n. phr.,Teenagers often start smoking because of peer pressure rather than curiosity.,under peer pressure; resist peer pressure; intense peer pressure,"peer(同輩, 拉丁 par 相等, 同 pair/par) → 同輩之間的壓力",social pressure; group influence,高頻話題字,教育,passive,同儕壓力,
+mentor,n.,Every first-year student is assigned a mentor from the year above.,act as a mentor; a mentor programme; assign a mentor,源自《奧德賽》裡受託教導主角兒子的人物 Mentor → 引路人,adviser; guide; coach; tutor,高頻話題字,教育,passive,導師、引路人,
+plagiarism,n.,Universities now use software to detect plagiarism in essays.,accused of plagiarism; avoid plagiarism; plagiarism detection,拉丁 plagiarius「綁架者」→ 把別人的東西擄走當自己的,copying; academic dishonesty; intellectual theft,高頻話題字,教育,passive,抄襲,
+truancy,n.,Truancy fell after the school introduced later start times.,reduce truancy; truancy rates; persistent truancy,"truant(遊蕩者, 古法文 truant 乞丐) + -cy → 該上學卻在外面晃",skipping school; absenteeism; unauthorised absence,高頻話題字,教育,passive,曠課,
+lifelong learning,n. phr.,Rapid changes at work make lifelong learning a necessity rather than a choice.,promote lifelong learning; a culture of lifelong learning; commit to lifelong learning,life(一生) + long(那麼長) → 學習持續一輩子,continuous education; ongoing study; adult learning,高頻話題字,教育,passive,終身學習,
+attainment,n.,Educational attainment still depends heavily on family income.,educational attainment; attainment levels; raise attainment,"at-(朝向) + tain(持有, 同 contain/maintain/obtain) + -ment → 伸手拿到的程度",achievement; accomplishment; performance,高頻話題字,教育,passive,學習成就,
+automation,n.,Automation has replaced many routine tasks in warehouses.,increasing automation; workplace automation; the automation of tasks,"auto(自己, 同 automatic/autonomy) + mat(動, 同 automaton) + -ion → 自己會動",mechanisation; computerisation; robotisation,高頻話題字,科技,passive,自動化,
+algorithm,n.,The recommendation algorithm decides what most users see first.,a recommendation algorithm; tweak the algorithm; algorithms decide,源自波斯數學家 al-Khwārizmī 的名字拉丁化 → 一套計算步驟,procedure; formula; set of rules,高頻話題字,科技,passive,演算法,
+artificial intelligence,n. phr.,Artificial intelligence is already used to screen job applications.,advances in artificial intelligence; regulate artificial intelligence; artificial intelligence systems,"arti(技藝, 同 art/artisan) + fic(製造, 同 factory/fiction) → 人造的 + 智能",AI; machine intelligence; computer intelligence,高頻話題字,科技,passive,人工智慧,
+cybersecurity,n.,Hospitals have had to invest heavily in cybersecurity after recent attacks.,invest in cybersecurity; a cybersecurity breach; cybersecurity measures,"cyber(控制, 希臘 kybernan 掌舵, 同 govern) + security → 網路空間的防護",online security; information security; data protection,高頻話題字,科技,passive,網路資安,
+innovation,n.,Tax breaks are meant to encourage innovation in small firms.,technological innovation; drive innovation; a major innovation,"in-(進入) + nov(新, 同 novel/novice/renew) + -ation → 把新東西帶進來",breakthrough; advance; new development,高頻話題字,科技,passive,創新,
+obsolete,adj.,Video rental shops became obsolete almost overnight.,become obsolete; technically obsolete; render obsolete,"ob-(離開) + sol(習慣, 拉丁 solere) → 不再被使用習慣留著 → 過時",outdated; out of date; superseded; no longer used,高頻話題字,科技,passive,過時的、淘汰的,
+screen time,n. phr.,Parents are often advised to limit screen time before bed.,limit screen time; excessive screen time; daily screen time,screen(螢幕) + time → 盯著螢幕的時間,time spent on devices; device use,高頻話題字,科技,passive,螢幕使用時間,
+misinformation,n.,Health misinformation spreads faster than corrections ever do.,spread misinformation; combat misinformation; online misinformation,"mis-(錯誤, 同 mistake/misuse) + information → 錯的資訊",false information; fake news; inaccurate claims,高頻話題字,科技,passive,錯誤資訊,
+encryption,n.,End-to-end encryption means the provider cannot read your messages.,end-to-end encryption; strong encryption; encryption keys,"en-(進入) + crypt(隱藏, 同 cryptic/crypt 地窖) + -ion → 把訊息藏起來",encoding; scrambling; cipher protection,高頻話題字,科技,passive,加密,
+digital divide,n. phr.,The pandemic exposed a digital divide between urban and rural pupils.,bridge the digital divide; widen the digital divide; a growing digital divide,"divide(分開, 同 division) → 數位科技造成的一道裂縫",technology gap; access inequality; digital gap,高頻話題字,科技,passive,數位落差,
+user-friendly,adj.,The app succeeded because its interface was genuinely user-friendly.,a user-friendly interface; make it more user-friendly; user-friendly design,user(使用者) + friendly(友善) → 對使用者友善的,easy to use; intuitive; accessible; straightforward,高頻話題字,科技,passive,容易上手的,
+streamline,v.,Digital forms have streamlined the whole application process.,streamline the process; streamline operations; streamline procedures,stream(水流) + line(線) → 做成水流的形狀 → 去掉阻力,simplify; make more efficient; rationalise,高頻話題字,科技,passive,簡化流程,
+disrupt,v.,Streaming services disrupted the film industry within a decade.,disrupt an industry; disruptive technology; disrupt traditional retail,"dis-(分開) + rupt(破裂, 同 rupture/interrupt/erupt) → 把原本的樣子打破",upend; transform; shake up; overturn,高頻話題字,科技,passive,顛覆、打亂,
+breakthrough,n.,Cheap battery storage was the breakthrough that made solar power viable.,a major breakthrough; a scientific breakthrough; achieve a breakthrough,break(打破) + through(穿過) → 突破一道擋牆,major advance; leap forward; milestone; development,高頻話題字,科技,passive,突破,
+prototype,n.,The team built a working prototype in under three months.,build a prototype; an early prototype; test a prototype,"proto(最初, 同 protocol/protagonist) + type(型) → 最初的那個型",model; first version; trial design,高頻話題字,科技,passive,原型,
+redundant,adj.,Automation has made several checking jobs redundant.,make workers redundant; become redundant; a redundant system,"red-(回) + und(波浪, 同 abundant/inundate) + -ant → 一波波多出來 → 多餘",unnecessary; superfluous; surplus; no longer needed,高頻話題字,科技,passive,多餘的、被裁的,
+connectivity,n.,Poor connectivity still limits what rural schools can offer.,internet connectivity; poor connectivity; global connectivity,"con-(一起) + nect(綁, 同 connect/annex) + -ivity → 綁在一起的程度",network access; internet access; linkage,高頻話題字,科技,passive,連線能力,
+reliance,n.,Our reliance on a single search engine worries competition regulators.,heavy reliance on; growing reliance; reduce reliance on,"re-(回) + li(綁, 同 rely/ligament/liable) + -ance → 把自己綁回去靠著",dependence; dependency; need for,高頻話題字,科技,passive,依賴,
+upgrade,v.,Users are pushed to upgrade their phones long before they stop working.,upgrade a system; upgrade to a newer model; a free upgrade,"up(向上) + grade(等級, 同 gradual/degree) → 往上換一個等級",improve; modernise; update; enhance,高頻話題字,科技,passive,升級,
+cutting-edge,adj.,The hospital uses cutting-edge imaging equipment to detect tumours early.,cutting-edge technology; cutting-edge research; at the cutting edge of,cutting edge(刀刃最前緣) → 走在最前面的,state-of-the-art; advanced; leading; pioneering,高頻話題字,科技,passive,尖端的,
+obesity,n.,Childhood obesity has doubled in urban areas over the past twenty years.,childhood obesity; obesity rates; tackle obesity,拉丁 obesus「吃過頭而胖」(ob- 完全 + edere 吃) + -ity → 肥胖的狀態,excess weight; being overweight; corpulence,高頻話題字,健康,passive,肥胖（症）,
+deteriorate,v.,Air quality in the capital has deteriorated sharply since 2010.,deteriorate rapidly; conditions deteriorate; deteriorating health,拉丁 deterior「更壞」+ -ate → 變得更壞,worsen; decline; degenerate; get worse,高頻話題字,健康,passive,惡化,Task 1 描述下降趨勢也可用
+constraint,n.,Budget constraints forced the hospital to postpone the new wing.,financial constraints; time constraints; impose constraints,"con-(一起) + strain/strict(拉緊, 同 restrict/strain) → 綁緊 → 限制",limitation; restriction; restraint; barrier,高頻話題字,健康,passive,限制、約束,
+sedentary,adj.,A sedentary lifestyle raises the risk of heart disease considerably.,a sedentary lifestyle; sedentary work; increasingly sedentary,"sed(坐, 同 sediment 沉積物/session/reside) + -ary → 一直坐著的",inactive; desk-bound; physically inactive,高頻話題字,健康,passive,久坐不動的,
+life expectancy,n. phr.,Average life expectancy has risen by almost ten years since 1980.,average life expectancy; life expectancy at birth; raise life expectancy,"expect(期待, ex- 出去 + spect 看 → 往外看著等) → 預期能活多久",lifespan; longevity; average age at death,高頻話題字,健康,passive,平均壽命,
+longevity,n.,Researchers link longevity to strong social ties as much as to diet.,increased longevity; the secret of longevity; longevity in old age,"long(長) + ev(年歲, 拉丁 aevum 時代, 同 eternal/medieval) + -ity → 長的年歲",long life; lifespan; living to an old age,高頻話題字,健康,passive,長壽,
+well-being,n.,Flexible hours improved staff well-being more than a pay rise did.,mental well-being; improve well-being; a sense of well-being,well(好) + being(存在的狀態) → 整體活得好的狀態,welfare; quality of life; wellness,高頻話題字,健康,passive,身心健康,
+epidemic,n.,Doctors describe rising diabetes rates as a slow-moving epidemic.,an obesity epidemic; reach epidemic levels; contain an epidemic,"epi-(在…之上, 同 epicentre) + dem(人民, 同 democracy/demographic) → 落在人民身上的",outbreak; widespread disease; plague,高頻話題字,健康,passive,流行病,
+vaccination,n.,Vaccination rates fell in districts where clinics had closed.,mass vaccination; vaccination rates; a vaccination programme,拉丁 vacca「牛」→ 最早的疫苗來自牛痘 → 接種,immunisation; inoculation; jab,高頻話題字,健康,passive,疫苗接種,
+sanitation,n.,Poor sanitation remains the main cause of disease in the camps.,poor sanitation; access to sanitation; basic sanitation,"sanit(健康, 拉丁 sanus, 同 sane/sanitary) + -ation → 讓環境變健康",hygiene; waste management; cleanliness,高頻話題字,健康,passive,衛生設施,
+malnutrition,n.,One child in eight still suffers from malnutrition in the region.,suffer from malnutrition; childhood malnutrition; chronic malnutrition,"mal-(壞, 同 malfunction/malicious) + nutrition(營養) → 營養不良",undernourishment; poor nutrition; food deficiency,高頻話題字,健康,passive,營養不良,
+hygiene,n.,Simple hand hygiene prevents a surprising number of infections.,personal hygiene; food hygiene; poor hygiene,源自希臘健康女神 Hygieia 的名字 → 保持健康的做法,cleanliness; sanitation,高頻話題字,健康,passive,衛生,
+preventive,adj.,Spending on preventive care saves far more than it costs.,preventive care; preventive measures; preventive medicine,"pre-(事先) + vent(來, 同 event/invent/adventure) + -ive → 在事情來之前先擋住",precautionary; protective; pre-emptive,高頻話題字,健康,passive,預防性的,
+therapy,n.,Talking therapy is now offered before medication in mild cases.,undergo therapy; physical therapy; talking therapy,希臘 therapeia「照料、伺候」→ 治療,treatment; rehabilitation; counselling,高頻話題字,健康,passive,治療、療法,
+symptom,n.,Treating the symptoms does nothing about the underlying cause.,show symptoms; early symptoms; treat the symptoms,"sym-(一起, 同 sympathy/symmetry) + ptom(落下, 同 asymptote) → 一起出現的現象",sign; indication; manifestation,高頻話題字,健康,passive,症狀,
+outbreak,n.,An outbreak of food poisoning closed the canteen for a week.,an outbreak of; contain an outbreak; a major outbreak,out(向外) + break(爆開) → 突然爆出來,epidemic; flare-up; sudden spread,高頻話題字,健康,passive,爆發,
+insomnia,n.,Shift workers report insomnia far more often than office staff.,suffer from insomnia; chronic insomnia; cause insomnia,"in-(不) + somn(睡, 拉丁 somnus, 同 somnolent) + -ia(病症) → 睡不著",sleeplessness; sleep problems; difficulty sleeping,高頻話題字,健康,passive,失眠,
+addiction,n.,Smartphone addiction is now treated in some clinics as a genuine disorder.,treat addiction; addiction to sugar; screen addiction,"ad-(朝向) + dict(說, 同 dictate/predict；羅馬法把債務人「判給」債主) + -ion → 被判給某物",dependency; compulsion; craving,高頻話題字,健康,passive,成癮,
+immune,adj.,A poor diet gradually weakens the immune system.,the immune system; immune to infection; boost immune defences,"im-(不) + mun(義務, 同 municipal/community/commune) → 免除義務 → 免疫",resistant; protected; not susceptible,高頻話題字,健康,passive,免疫的,
+moderation,n.,Most nutritionists say sugar is fine in moderation.,in moderation; practise moderation; a message of moderation,"mod(尺度, 同 mode/model/modest) + -ation → 守著分寸",restraint; balance; self-control,高頻話題字,健康,passive,適量、節制,
+congestion,n.,Congestion charges have cut traffic in the city centre by a fifth.,traffic congestion; ease congestion; severe congestion,"con-(一起) + gest(攜帶, 同 digest/gesture/suggest) + -ion → 全擠在一起",overcrowding; gridlock; traffic jams; bottlenecks,高頻話題字,都市化,passive,壅塞,
+overpopulation,n.,Overpopulation puts enormous strain on housing and water supplies.,the problem of overpopulation; urban overpopulation; caused by overpopulation,over-(超過) + population(人口) → 人口超過負荷,excessive population; overcrowding; population pressure,高頻話題字,都市化,passive,人口過多,
+overcrowding,n.,Overcrowding on commuter trains has worsened every year since 2015.,severe overcrowding; ease overcrowding; overcrowding in schools,over-(超過) + crowd(擠) → 擠過了頭,congestion; excessive density; crush,高頻話題字,都市化,passive,過度擁擠,
+commute,v.,Nearly half the workforce commutes for more than an hour each way.,commute to work; a long commute; daily commuting,"com-(一起) + mut(改變, 同 mutate/mutual) → 原指把單程票「換算」成月票 → 通勤",travel to work; make the journey to work,高頻話題字,都市化,passive,通勤,
+suburb,n.,Families priced out of the centre have moved to the outer suburbs.,the outer suburbs; live in the suburbs; a leafy suburb,"sub-(在下、靠近) + urb(城市, 同 urban/urbane) → 城市旁邊那一圈",outskirts; residential area; commuter belt,高頻話題字,都市化,passive,郊區,
+urban sprawl,n. phr.,Green belts were introduced to limit urban sprawl around large cities.,limit urban sprawl; uncontrolled urban sprawl; the effects of urban sprawl,sprawl(四肢攤開) → 城市毫無節制地往外攤開,unplanned expansion; suburban spread; uncontrolled growth,高頻話題字,都市化,passive,都市擴張,
+affordable housing,n. phr.,The shortage of affordable housing has pushed young people out of the city.,a shortage of affordable housing; build affordable housing; affordable housing schemes,"afford(負擔得起, 古英語 geforthian 提供) + -able → 負擔得起的住宅",low-cost housing; social housing; subsidised housing,高頻話題字,都市化,passive,平價住宅,
+high-rise,adj.,Most new homes in the district are in high-rise blocks.,high-rise blocks; a high-rise development; live in a high-rise,high(高) + rise(升起) → 蓋得很高的,multi-storey; tower-block; tall,高頻話題字,都市化,passive,高層的,
+pedestrian,n.,The council closed the street to cars and gave it back to pedestrians.,pedestrian zones; pedestrian safety; pedestrian crossings,"ped(腳, 同 pedal/pedicure/centipede) + -ian → 用腳走路的人",person on foot; walker; foot traffic,高頻話題字,都市化,passive,行人,
+rush hour,n. phr.,Journey times almost double during the morning rush hour.,during rush hour; avoid rush hour; rush-hour traffic,rush(衝) + hour → 大家一起衝的那個時段,peak time; peak hours; the busy period,高頻話題字,都市化,passive,尖峰時段,
+migration,n.,Rural-to-urban migration has added two million people to the city.,rural-to-urban migration; internal migration; mass migration,"migr(遷移, 拉丁 migrare, 同 migrate/emigrate/immigrant) + -ation → 整群搬動",movement of people; relocation; influx,高頻話題字,都市化,passive,遷徙,
+gentrification,n.,Gentrification has pushed long-standing residents out of the neighbourhood.,rapid gentrification; the gentrification of the district; resist gentrification,"gentry(仕紳階級, 同 gentle 原意「出身好的」) → 變成仕紳住的地方",upmarket redevelopment; social upgrading,高頻話題字,都市化,passive,仕紳化,
+slum,n.,More than a billion people worldwide still live in slums.,live in slums; slum clearance; slum conditions,十九世紀倫敦俚語，指城市裡潮濕陰暗的後巷 → 貧民區,shanty town; informal settlement; deprived area,高頻話題字,都市化,passive,貧民窟,
+amenities,n.,The estate was built with almost no local amenities within walking distance.,local amenities; basic amenities; leisure amenities,拉丁 amoenus「令人愉快的」+ -ity → 讓生活舒服的設施,facilities; services; conveniences,高頻話題字,都市化,passive,生活機能設施,
+density,n.,Population density in the old quarter is five times the city average.,population density; high-density housing; urban density,"dens(濃密, 拉丁 densus) + -ity → 擠的程度",concentration; crowding level; compactness,高頻話題字,都市化,passive,密度,
+regeneration,n.,Urban regeneration turned the derelict docks into a cultural quarter.,urban regeneration; a regeneration scheme; regeneration projects,"re-(再) + gener(生, 同 generate/genesis/generation) + -ation → 讓地方再生一次",renewal; redevelopment; revitalisation,高頻話題字,都市化,passive,都市再生,
+green space,n. phr.,Access to green space measurably improves residents' mental health.,access to green space; preserve green space; public green space,green(綠) + space(空間) → 城市裡留下來的綠地,parkland; open space; recreational area,高頻話題字,都市化,passive,綠地,
+cost of living,n. phr.,The rising cost of living has driven graduates back to their home towns.,the rising cost of living; a high cost of living; the cost of living crisis,cost(花費) + living(過日子) → 過日子要花的錢,living expenses; household costs,高頻話題字,都市化,passive,生活成本,
+relocate,v.,Several firms relocated to the suburbs when city rents doubled.,relocate to the suburbs; relocate residents; relocate the factory,"re-(再) + loc(地方, 同 location/local) + -ate → 換到另一個位置",move; resettle; transfer; shift,高頻話題字,都市化,passive,搬遷,
+utilities,n.,Rent looks cheap until you add utilities and travel costs.,utility bills; pay for utilities; essential utilities,"util(有用, 拉丁 uti 使用, 同 use/utilise) + -ity → 水電瓦斯這類有用的基礎服務",public services; water and power; basic services,高頻話題字,都市化,passive,水電等公用事業,
+surveillance,n.,Critics argue that mass surveillance erodes personal privacy.,CCTV surveillance; under surveillance; mass surveillance,"sur-(在上面) + veill(看守, 拉丁 vigilare, 同 vigilant/vigil) + -ance → 在上面盯著看",monitoring; observation; watching,高頻話題字,犯罪,passive,監控,
+deterrent,n.,Heavier fines act as a deterrent to dangerous driving.,act as a deterrent; an effective deterrent; a strong deterrent,"de-(離開) + terr(恐懼, 同 terror/terrify) + -ent → 讓人因害怕而退開的東西",disincentive; discouragement; check; restraint,高頻話題字,犯罪,passive,嚇阻手段,
+rehabilitation,n.,Prisons that focus on rehabilitation report lower reoffending rates.,offender rehabilitation; a rehabilitation programme; focus on rehabilitation,"re-(再) + habilit(能力, 同 ability/able) + -ation → 讓能力回到身上",reform; reintegration; retraining,高頻話題字,犯罪,passive,更生、復健,
+reoffend,v.,Young offenders who find work are far less likely to reoffend.,likely to reoffend; reoffending rates; stop them reoffending,re-(再) + offend(冒犯、犯罪) → 再犯一次,commit further offences; relapse into crime,高頻話題字,犯罪,passive,再犯,
+custodial sentence,n. phr.,First-time offenders rarely receive a custodial sentence for this offence.,receive a custodial sentence; a lengthy custodial sentence; avoid a custodial sentence,"custod(看守, 同 custody/custodian) + -ial → 要被看管起來的刑罰",prison sentence; jail term; imprisonment,高頻話題字,犯罪,passive,有期徒刑,
+petty crime,n. phr.,Better street lighting cut petty crime in the neighbourhood by a third.,tackle petty crime; petty crime rates; a rise in petty crime,petty 來自法文 petit「小」→ 輕微的犯罪,minor offences; low-level crime; small-scale crime,高頻話題字,犯罪,passive,輕微犯罪,
+vandalism,n.,Repairing vandalism costs the council millions every year.,acts of vandalism; mindless vandalism; prevent vandalism,源自洗劫羅馬的日耳曼部族 Vandals（汪達爾人）→ 蓄意破壞,criminal damage; defacement; wilful damage,高頻話題字,犯罪,passive,破壞公物,
+fraud,n.,Online fraud now costs consumers more than street theft does.,commit fraud; online fraud; a fraud investigation,拉丁 fraus「欺騙」→ 用詐術取得財物,deception; scam; swindle; cheating,高頻話題字,犯罪,passive,詐欺,
+burglary,n.,Burglary fell steadily after the neighbourhood watch scheme started.,report a burglary; burglary rates; a burglary attempt,"burg(城堡、城鎮, 同 borough/burgher) → 闖進人家的屋子偷竊",break-in; housebreaking; robbery,高頻話題字,犯罪,passive,闖空門,
+community service,n. phr.,He was sentenced to two hundred hours of community service.,sentenced to community service; carry out community service; community service orders,community(社區) + service(服務) → 用勞務回饋社區來抵刑,unpaid work; a community sentence,高頻話題字,犯罪,passive,社區服務（刑）,
+parole,n.,She was released on parole after serving half her sentence.,released on parole; be granted parole; a parole board,法文 parole「話語」→ 以「承諾」（口頭保證）換取提早釋放,conditional release; early release,高頻話題字,犯罪,passive,假釋,
+prosecute,v.,Companies that dump waste illegally are rarely prosecuted.,prosecute offenders; be prosecuted for; decide to prosecute,"pro-(向前) + secut(跟隨, 同 sequence/pursue/consecutive) → 一路追訴到底",take to court; charge; bring to trial,高頻話題字,犯罪,passive,起訴,
+juvenile,adj.,Juvenile offenders are dealt with in a separate court system.,juvenile crime; juvenile offenders; a juvenile court,"juven(年輕, 拉丁 juvenis, 同 junior/rejuvenate) + -ile → 年少的",youth; underage; young,高頻話題字,犯罪,passive,青少年的,
+corruption,n.,Corruption in the licensing system was exposed by a whistleblower.,political corruption; tackle corruption; corruption scandals,"cor-(完全) + rupt(破裂, 同 rupture/disrupt/erupt) + -ion → 整個爛掉",bribery; dishonesty; graft; malpractice,高頻話題字,犯罪,passive,貪腐,
+offence,n.,Driving without insurance is a criminal offence in most countries.,a criminal offence; commit an offence; a minor offence,"of-(朝向) + fend(打, 同 defend/fend off) + -ence → 打到別人 → 冒犯、違法行為",crime; violation; breach; wrongdoing,高頻話題字,犯罪,passive,罪行,
+victim,n.,Support services for victims of crime remain badly underfunded.,victims of crime; support victims; fall victim to,拉丁 victima「祭品」→ 被犧牲掉的人,casualty; injured party; sufferer,高頻話題字,犯罪,passive,受害者,
+incarceration,n.,Mass incarceration has proved expensive and largely ineffective.,mass incarceration; the cost of incarceration; rates of incarceration,"in-(進入) + carcer(監獄, 拉丁 carcer) + -ation → 關進牢裡",imprisonment; jailing; detention,高頻話題字,犯罪,passive,監禁,
+patrol,n.,Regular police patrols reassured residents more than cameras did.,police patrols; patrol the streets; step up patrols,法文 patrouiller「在泥裡踩來踩去」→ 來回走動巡查,police presence; round; watch,高頻話題字,犯罪,passive,巡邏,
+law-abiding,adj.,Blanket surveillance treats law-abiding citizens as suspects.,law-abiding citizens; a law-abiding society; otherwise law-abiding,"law(法律) + abide(遵守, 古英語 abidan 停留) → 待在法律範圍裡",honest; compliant; respectable,高頻話題字,犯罪,passive,守法的,
+penalty,n.,Stiffer penalties alone have never been shown to reduce crime.,stiff penalties; impose a penalty; the maximum penalty,"pen(懲罰, 拉丁 poena, 同 punish/penal/pain) + -alty → 罰則",punishment; sanction; fine,高頻話題字,犯罪,passive,刑罰、罰則,
+undermine,v.,The spread of misinformation undermines public trust in journalism.,undermine confidence; undermine authority; undermine efforts,under(下面) + mine(挖礦) → 在底下挖坑 → 動搖根基,weaken; erode; damage; compromise,高頻話題字,媒體,passive,逐漸削弱,
+impartial,adj.,Public broadcasters are expected to remain impartial during elections.,remain impartial; impartial coverage; an impartial observer,"im-(不) + partial(偏袒的, part 部分 → 站在某一部分那邊) → 不偏任何一邊",unbiased; neutral; objective; even-handed,高頻話題字,媒體,passive,公正的,
+tabloid,n.,The story was splashed across every tabloid the following morning.,the tabloid press; tabloid headlines; a tabloid newspaper,tablet(小藥片) 的商標名 → 把新聞壓縮成小份、好吞的形式,popular press; red-top; sensational paper,高頻話題字,媒體,passive,小報,
+censorship,n.,State censorship makes it impossible to verify what really happened.,state censorship; impose censorship; media censorship,"cens(評定, 羅馬的 censor 監察官負責審查風紀) + -ship → 審查制度",suppression; control of information; blocking,高頻話題字,媒體,passive,審查制度,
+coverage,n.,The election received far more coverage online than on television.,media coverage; extensive coverage; biased coverage,cover(覆蓋) + -age → 報導所「蓋到」的範圍,reporting; media attention; treatment,高頻話題字,媒體,passive,報導（量）,
+credibility,n.,The paper lost credibility after publishing the story without checking it.,lose credibility; damage credibility; the credibility of a source,"cred(相信, 同 credit/incredible/creed) + -ibility → 可以被相信的程度",trustworthiness; reliability; believability,高頻話題字,媒體,passive,可信度,
+sensationalism,n.,Competition for clicks has encouraged sensationalism over accuracy.,media sensationalism; accused of sensationalism; tabloid sensationalism,"sens(感覺, 同 sense/sensation) + -ation + -ism → 一味追求刺激感受",hype; exaggeration; scaremongering,高頻話題字,媒體,passive,煽情報導,
+propaganda,n.,Wartime propaganda was designed to keep morale high at home.,state propaganda; spread propaganda; a propaganda campaign,拉丁 propagare「繁殖、散播」(同 propagate) → 把某套觀念大量散出去,political messaging; indoctrination; spin,高頻話題字,媒體,passive,政治宣傳,
+clickbait,n.,Headlines written as clickbait rarely deliver what they promise.,clickbait headlines; rely on clickbait; pure clickbait,click(點擊) + bait(誘餌) → 專門引你上鉤的餌,sensational headlines; attention-grabbing content,高頻話題字,媒體,passive,點擊誘餌,
+echo chamber,n. phr.,Recommendation systems can trap users in an echo chamber of similar views.,an online echo chamber; trapped in an echo chamber; create echo chambers,echo(回音) + chamber(房間) → 只聽得到自己聲音回彈的房間,filter bubble; closed information loop,高頻話題字,媒體,passive,同溫層,
+outlet,n.,Independent news outlets struggle to compete with social platforms.,a news outlet; mainstream outlets; independent outlets,"out(外) + let(讓出, 同 let) → 讓內容流出來的出口",media organisation; publication; channel,高頻話題字,媒體,passive,媒體機構,
+subscription,n.,Digital subscriptions now bring in more revenue than print advertising.,a digital subscription; cancel a subscription; subscription numbers,"sub-(在下) + script(寫, 同 script/describe/manuscript) + -ion → 在文件底下簽名訂閱",membership; paid access,高頻話題字,媒體,passive,訂閱,
+viral,adj.,The clip went viral before anyone checked whether it was genuine.,go viral; a viral video; viral marketing,virus(病毒) + -al → 像病毒一樣一傳十十傳百,rapidly shared; widely circulated,高頻話題字,媒體,passive,爆紅的,
+influencer,n.,Brands now spend more on influencers than on television advertising.,social media influencers; influencer marketing; a beauty influencer,"in-(進入) + flu(流, 同 fluent/fluid/fluctuate) + -ence + -er → 讓想法「流進」別人腦中的人",content creator; opinion leader,高頻話題字,媒體,passive,網紅,
+defamation,n.,The politician sued the magazine for defamation and won.,sue for defamation; a defamation case; defamation laws,"de-(去除) + fam(名聲, 同 fame/famous/infamous) + -ation → 把名聲拿掉",libel; slander; character attack,高頻話題字,媒體,passive,誹謗,
+editorial,n.,The paper ran an editorial calling for the minister to resign.,an editorial line; editorial independence; write an editorial,"edit(拿出來發表, 拉丁 edere 產出, 同 edition) + -orial → 代表報社立場的文章",opinion piece; leader; commentary,高頻話題字,媒體,passive,社論,
+scrutiny,n.,Social media companies are finally coming under serious scrutiny.,public scrutiny; come under scrutiny; close scrutiny,拉丁 scrutari「翻找破爛」(scruta 廢棄物) → 一件一件翻出來查,close examination; inspection; oversight,高頻話題字,媒體,passive,嚴格審視,
+circulation,n.,The magazine's circulation halved within five years of going online.,falling circulation; boost circulation; a circulation of,"circul(圓圈, 同 circle/circuit) + -ation → 一份份流通出去的量",readership; distribution; sales figures,高頻話題字,媒體,passive,發行量,
+anonymity,n.,Online anonymity protects whistleblowers but also shields abusers.,online anonymity; protect anonymity; the anonymity of the internet,"an-(沒有) + onym(名字, 同 synonym/pseudonym/acronym) + -ity → 沒有名字的狀態",namelessness; concealed identity,高頻話題字,媒體,passive,匿名,
+accountability,n.,Readers are demanding greater accountability from the platforms they use.,demand accountability; media accountability; public accountability,"account(交代, 原意「計算」) + -ability → 要能交代清楚的責任",answerability; responsibility; transparency,高頻話題字,媒體,passive,問責,
+soar,v.,House prices soared by almost 40 per cent between 2015 and 2020.,soar to a record high; prices soared; soaring demand,古法文 essorer 讓鳥乘風高飛 → 像鳥一樣往上衝,rocket; surge; shoot up; climb sharply,Task1圖表用語,上升,active,飆升,只用在幅度很大的上升，小幅上升用 rise / edge up
+surge,n.,The chart shows a sharp surge in online orders after 2018.,a surge in demand; a sudden surge; surge to a peak,"sur-(從下往上) + reg(升起, 同 erect/regent) → 像浪一樣湧上來",a sharp rise; a jump; a leap; an upswing,Task1圖表用語,上升,active,激增,
+climb,v.,Car ownership climbed steadily throughout the twenty-year period.,climb steadily; climb to a peak; figures climbed,古英語 climban 攀爬 → 一階一階往上,rise; increase; go up; ascend,Task1圖表用語,上升,active,攀升,
+escalate,v.,Waste production escalated rapidly once the population passed one million.,escalate rapidly; costs escalated; escalating figures,escalator(手扶梯) 的動詞化 → 像手扶梯一樣持續往上,increase sharply; mount; intensify; spiral,Task1圖表用語,上升,active,急遽上升,
+edge up,phr v.,Unemployment edged up slightly in the final two years of the period.,edge up slightly; figures edged up; edge up to,edge(邊緣) + up → 只往上挪一個邊的距離 → 微幅上升,rise slightly; creep up; inch up,Task1圖表用語,上升,active,微幅上升,
+plummet,v.,Newspaper sales plummeted from 12 million to under 4 million copies.,plummet to a low; sales plummeted; plummeting numbers,"plumb(鉛錘, 同 plumber 水管工原本用鉛錘測垂直) → 像鉛錘一樣直直落下",plunge; nosedive; drop sharply; tumble,Task1圖表用語,下降,active,暴跌,
+plunge,v.,Visitor numbers plunged by half after the border closed.,plunge by half; plunge to a record low; a dramatic plunge,plumb(鉛錘) 的另一支 → 整個人跳進水裡 → 猛然下墜,plummet; dive; fall sharply; slump,Task1圖表用語,下降,active,驟降,
+decline,n.,There was a steady decline in coal consumption across the whole period.,a steady decline; a sharp decline; a decline in numbers,"de-(向下) + clin(傾斜, 同 incline/recline/climate) → 向下傾",fall; drop; decrease; downturn,Task1圖表用語,下降,active,下降,名詞動詞都可用；a decline in 後面接名詞　｜　AWL Sublist 5
+dip,v.,Sales dipped briefly in 2012 before recovering the following year.,dip slightly; a slight dip; dip below,古英語 dyppan 浸一下 → 短暫沉下去又起來,fall slightly; drop briefly; ease,Task1圖表用語,下降,active,微幅下滑,指短暫下降後回升，不是持續下跌
+slump,n.,The graph shows a slump in manufacturing output during the recession.,a slump in sales; an economic slump; slump to a low,擬聲字，東西「噗通」塌下去的聲音 → 突然垮掉,sharp fall; downturn; collapse; plunge,Task1圖表用語,下降,active,驟跌、低迷,
+dwindle,v.,Fish stocks dwindled steadily as commercial fishing expanded.,dwindle steadily; dwindling numbers; dwindle to almost nothing,古英語 dwinan 枯萎 → 一點一點縮小到幾乎沒有,shrink; diminish; decrease gradually; taper off,Task1圖表用語,下降,active,逐漸減少,
+plateau,v.,"After a sharp rise, the figure plateaued at around 60 per cent.",plateau at; reach a plateau; plateau after 2010,"法文 plat(平的, 同 plate/plain) → 高原 → 走成平的一段",level off; stabilise; flatten out; remain steady,Task1圖表用語,穩定,active,趨於平穩,名詞、動詞都可用；plateau at + 數值
+level off,phr v.,Energy consumption rose quickly and then levelled off at 90 units.,level off at; begin to level off; levelling off,level(水平) + off → 從斜的走成水平,plateau; stabilise; flatten out; even out,Task1圖表用語,穩定,active,持平,
+stabilise,v.,Prices stabilised at just under two dollars per litre after 2016.,stabilise at; prices stabilised; begin to stabilise,"sta(站立, 同 stand/static/stable) + -ise → 站得住不再晃",level off; steady; remain constant; settle,Task1圖表用語,穩定,active,趨於穩定,
+fluctuate,v.,"Between 2005 and 2010, sales fluctuated between 20 and 35 million units.",fluctuate wildly; fluctuate between; figures fluctuated,"flu(流動, 同 fluid/influence/fluent) + -ate → 像水一樣起起伏伏",vary; oscillate; swing; go up and down,Task1圖表用語,穩定,active,波動、起伏,描述不規則變化的首選字；fluctuate between A and B　｜　AWL Sublist 8
+constant,adj.,The proportion of rural residents remained constant at 15 per cent.,remain constant; a constant rate; constant throughout,"con-(完全) + sta(站立, 同 stand/stable) → 完全站著不動",steady; unchanged; stable; uniform,Task1圖表用語,穩定,active,不變的,AWL Sublist 3
+peak,v.,Unemployment peaked at 12 per cent in 2009 before falling steadily.,peak at; reach a peak; peak in 2009,peak 山頂 → 圖上的最高點,reach a maximum; culminate; top out; hit a high,Task1圖表用語,極值,active,達到高峰,peak at + 數值 / peak in + 年份，介系詞不要搞混
+trough,n.,"The graph reaches a trough of just 5,000 visitors in January.",reach a trough; a trough of; the trough of the cycle,古英語 trog 食槽 → 凹下去的地方 → 谷底,low point; bottom; minimum; lowest level,Task1圖表用語,極值,active,谷底,
+bottom out,phr v.,Car sales bottomed out in 2013 and then began to recover.,bottom out at; bottom out in 2013; finally bottom out,bottom(底) + out → 走到底了，不會再往下,reach the lowest point; hit rock bottom; stop falling,Task1圖表用語,極值,active,觸底,
+rebound,v.,Tourism rebounded strongly in the two years after the crisis.,rebound strongly; a sharp rebound; rebound to,"re-(回) + bound(彈跳, 同 bounce) → 撞到底再彈回來",recover; bounce back; pick up; revive,Task1圖表用語,極值,active,回升,
+outstrip,v.,Demand for housing outstripped supply throughout the decade.,outstrip supply; outstrip growth; far outstrip,"out-(超過) + strip(奔跑, 舊義) → 跑贏對方",exceed; surpass; overtake; be greater than,Task1圖表用語,極值,active,超過、勝過,
+steadily,adv.,The number of graduates rose steadily from 2000 to 2015.,rise steadily; steadily increase; grow steadily,"stead(位置, 同 instead/homestead) + -y + -ly → 一直待在同一個節奏",consistently; gradually; progressively; at a constant rate,Task1圖表用語,幅度,active,穩定地,
+dramatically,adv.,Internet use grew dramatically after broadband became affordable.,rise dramatically; fall dramatically; change dramatically,"drama(戲劇, 希臘 dran 行動) + -ic + -ally → 像戲劇一樣誇張",sharply; markedly; significantly; strikingly,Task1圖表用語,幅度,active,劇烈地,
+marginally,adv.,Spending on transport increased only marginally over the period.,increase marginally; marginally higher; differ marginally,"margin(邊緣, 同 margin 頁邊) + -al + -ly → 只在邊緣動一點點",slightly; fractionally; a little; minimally,Task1圖表用語,幅度,active,微幅地,
+considerably,adv.,Figures for the two cities differ considerably in the second half of the period.,rise considerably; considerably higher; vary considerably,"con-(完全) + sider(星星, 原指觀星占卜 → 仔細考量) + -ably → 值得注意的程度",significantly; substantially; markedly; greatly,Task1圖表用語,幅度,active,相當大幅地,
+gradual,adj.,The chart shows a gradual shift from coal to renewable sources.,a gradual increase; a gradual decline; a gradual shift,"grad(步伐, 同 grade/graduate/progress) + -ual → 一步一步來的",steady; progressive; slow; incremental,Task1圖表用語,幅度,active,逐漸的,
+approximately,adv.,Approximately one in five households owned two or more cars.,approximately half; approximately 20 per cent; approximately equal,"ad-(接近) + proxim(最近的, 同 proximity/approach) + -ate + -ly → 靠近某個數",roughly; about; around; in the region of,Task1圖表用語,幅度,active,大約,
+respectively,adv.,Spending on housing and transport rose to 30 and 18 per cent respectively.,A and B respectively; rose to X and Y respectively,"re-(回) + spect(看, 同 inspect/respect/spectator) + -ive + -ly → 各自回頭對應著看",in that order; correspondingly,Task1圖表用語,比較,active,分別地,放句尾，讓兩組數據一次講完
+whereas,conj.,"Sales in Europe fell, whereas the figure for Asia more than doubled.",X rose whereas Y fell; whereas the figure for,where(在何處) + as(如同) → 「相對於某處的情況」→ 對比連接詞,while; by contrast; on the other hand,Task1圖表用語,比較,active,然而、相對地,AWL Sublist 5
+overtake,v.,Online sales overtook high-street sales for the first time in 2019.,overtake sales of; overtake in 2019; eventually overtake,over-(越過) + take → 從後面追上去越過,surpass; exceed; outstrip; pass,Task1圖表用語,比較,active,超越,
+outnumber,v.,Male graduates outnumbered female graduates by roughly two to one.,outnumber by two to one; far outnumber; outnumber the rest,out-(超過) + number → 數量壓過對方,exceed in number; be more numerous than; surpass,Task1圖表用語,比較,active,數量超過,
+double,v.,The number of international students doubled over the twenty-year period.,double in size; more than double; double over the period,"du(二, 同 dual/duo/duet) + -ble → 變成兩份",increase twofold; grow by 100 per cent; multiply by two,Task1圖表用語,比較,active,加倍,
+halve,v.,Carbon emissions from transport halved between 2010 and 2030.,halve in a decade; almost halve; halve the figure,half 的動詞形 → 切成一半,fall by half; be cut in half; drop 50 per cent,Task1圖表用語,比較,active,減半,
+account for,phr v.,Renewable sources accounted for just under a third of total output.,account for 30 per cent; account for the majority; collectively account for,"account(計算, 同 count) + for → 算一算佔了多少",make up; constitute; represent; comprise,Task1圖表用語,比例,active,佔（比例）,Task 1 講圓餅圖比例最常用的動詞
+proportion,n.,A large proportion of household waste was sent to landfill.,a large proportion of; the proportion of; in proportion to,"pro-(向前) + portion(份, 同 part/portion) → 分出來的那一份",share; percentage; fraction; ratio,Task1圖表用語,比例,active,比例,AWL Sublist 3
+figure,n.,The figure for private car use rose faster than any other category.,the figure for; figures rose; the corresponding figure,"fig(塑形, 同 figure 形狀/configure) → 呈現出來的形 → 數字",number; statistic; level; amount,Task1圖表用語,比例,active,數字、數據,the figure for X 是避免重複 the number of X 的標準替換
+overall,adv.,"Overall, the three countries followed very similar trends.","overall, the trend; the overall figure; an overall increase",over(蓋過) + all(全部) → 蓋過全部來看,in general; on the whole; broadly; taken as a whole,Task1圖表用語,綜述,active,整體而言,Overview 段落的起手式　｜　AWL Sublist 4
+throughout,prep.,Demand for water remained high throughout the period shown.,throughout the period; throughout the decade; stable throughout,through(穿過) + out(到底) → 從頭穿到尾,for the whole period; during the entire; across,Task1圖表用語,綜述,active,整段期間,
+witness,v.,The final decade witnessed a rapid expansion in solar capacity.,the period witnessed; the city witnessed growth; witness a rise,"wit(知道, 同 wit/wisdom) + -ness → 親眼見到 → 某段期間「出現了」某變化",see; experience; undergo; record,Task1圖表用語,綜述,active,（某期間）出現,把時間當主詞：The 1990s witnessed... 讓句型不再都是 X rose
+from my perspective,phr.,"From my perspective, the benefits clearly outweigh the drawbacks.",from my perspective; from a student's perspective; from that perspective,"per-(透過) + spect(看, 同 inspect/spectator) → 透過我的角度看出去",in my view; as I see it; personally; the way I see it,口說表達,表達觀點,active,就我而言,比 I think 高一級，Part 3 開頭好用
+it goes without saying,phr.,It goes without saying that access to clean water is a basic right.,it goes without saying that; it almost goes without saying,「不用講出來就成立」→ 用來引出理所當然的前提,obviously; needless to say; it is clear that,口說表達,表達觀點,active,不用說、顯而易見,
+to be honest,phr.,"To be honest, I had never really thought about that until now.",to be honest with you; to be perfectly honest,"honest(誠實, 拉丁 honos 榮譽) → 把話講白",frankly; honestly speaking; to tell the truth,口說表達,表達觀點,active,老實說,
+I'd argue that,phr.,I'd argue that smaller class sizes matter more than new equipment.,I'd argue that; I would argue the opposite; some would argue,"argu(使清楚, 拉丁 arguere 證明) → 把自己的理由攤開講",I would say that; in my opinion; my view is that,口說表達,表達觀點,active,我會說、我主張,
+it depends on,phr.,It depends on whether the city already has decent public transport.,it depends on the context; it really depends; that depends on,"de-(向下) + pend(懸掛, 同 pendant/suspend) → 掛在某個條件底下",it varies according to; it hinges on; that's determined by,口說表達,表達觀點,active,取決於,考官很吃「先分情況再回答」，但講完一定要接理由
+have mixed feelings about,phr.,I have mixed feelings about working from home permanently.,have mixed feelings about; mixed feelings on the subject,mixed(混合的) + feelings → 心裡兩種感覺混在一起,be in two minds about; be torn about; feel ambivalent,口說表達,表達觀點,active,感受複雜、又愛又恨,
+be hooked on,phr.,I got completely hooked on documentaries during the lockdown.,be hooked on a series; get hooked on; totally hooked,hook(鉤子) → 被鉤住放不掉,be addicted to; be really into; can't get enough of,口說表達,描述經驗,active,迷上、上癮,
+have a knack for,phr.,My sister has a real knack for picking up new languages.,have a knack for; a real knack for; lose the knack,knack 原意「巧妙的手法」→ 不用學就會的那種本事,have a talent for; be good at; have a gift for,口說表達,描述經驗,active,有天分、有一套,
+get the hang of,phr.,It took me a few weeks to get the hang of cooking for myself.,get the hang of it; once you get the hang of,hang(懸掛的方式) → 摸清楚東西該怎麼掛 → 抓到訣竅,get used to; master; pick up; work out how to,口說表達,描述經驗,active,抓到訣竅,
+broaden one's horizons,phr.,Studying abroad really broadened my horizons in ways I did not expect.,broaden your horizons; travel broadens the horizons,"horizon(地平線, 希臘 horizein 劃界) → 把看得到的界線往外推",widen your outlook; open your mind; expand your world view,口說表達,描述經驗,active,開闊眼界,
+look back on,phr v.,"Looking back on my school years, I wish I had joined more clubs.",look back on my school days; looking back on it now,look + back + on → 回頭去看那段時間,reflect on; recall; think back to,口說表達,描述經驗,active,回顧,Part 2 講過去經驗的收尾句型
+stand out,phr v.,One trip in particular stands out because it was my first time abroad.,stand out from the crowd; really stands out; stand out as,stand + out → 從一排東西裡站出來被看見,be memorable; be noticeable; be distinctive,口說表達,描述經驗,active,特別突出,
+be worn out,phr.,I was completely worn out after two hours of commuting each way.,be worn out after; completely worn out; feel worn out,wear(磨損) + out → 被磨到光了,be exhausted; be drained; be shattered,口說表達,描述經驗,active,筋疲力盡,
+unwind,v.,Cooking is how I unwind after a long day at university.,unwind after work; a good way to unwind; help me unwind,"un-(解開) + wind(纏繞, 同 winding 蜿蜒) → 把纏緊的線鬆開",relax; wind down; switch off; de-stress,口說表達,描述經驗,active,放鬆,
+procrastinate,v.,I tend to procrastinate whenever a deadline feels far away.,tend to procrastinate; stop procrastinating; procrastinate over,"pro-(向前) + cras(明天, 拉丁 cras) + -ate → 一直往明天推",put things off; delay; stall; drag your feet,口說表達,描述經驗,active,拖延,
+off the top of my head,phr.,"Off the top of my head, I'd say around half of my friends cycle to work.",off the top of my head; just off the top of my head,從腦袋最上層直接抓 → 沒細想就講,without thinking too hard; at a rough guess; spontaneously,口說表達,爭取時間,active,一時想到的,被問到數據或清單時的救命句，講完就能給個大概答案
+now that I think about it,phr.,"Now that I think about it, my hometown has changed enormously.",now that I think about it; come to think of it,把「我正在想」這件事講出來 → 自然地買到幾秒鐘,come to think of it; actually; on reflection,口說表達,爭取時間,active,我想想、這麼一說,
+that's a tough one,phr.,"That's a tough one, but I suppose safety would matter most to me.",that's a tough one; that's a tricky question,tough(硬的、難啃的) → 這題不好答,that's a difficult question; I've never thought about that,口說表達,爭取時間,active,這題有點難,說完一定要接答案，不要停在這裡
+how can I put this,phr.,How can I put this — the service was efficient but not exactly friendly.,how can I put this; how should I put it,put(放置、表達) → 「我該怎麼把這件事放成話」,how shall I say it; let me put it this way,口說表達,爭取時間,active,該怎麼說呢,
+more often than not,phr.,"More often than not, I end up studying in a café rather than at home.",more often than not; more often than not it's,「是的次數多過不是的次數」→ 通常,usually; in most cases; generally; as a rule,口說表達,程度與頻率,active,多半、通常,
+every now and then,phr.,I still go back to my old neighbourhood every now and then.,every now and then; only every now and then,一下 now 一下 then → 不規律地偶爾發生,occasionally; from time to time; once in a while,口說表達,程度與頻率,active,偶爾,
+to some extent,phr.,"To some extent I agree, though I think cost is the bigger issue.",to some extent; to a large extent; to a certain extent,"ex-(向外) + tend(伸展, 同 extend/tension) → 伸展到某個程度",partly; up to a point; in some ways,口說表達,程度與頻率,active,某種程度上,部分同意時最安全的說法，比 yes but 自然
+by and large,phr.,"By and large, people in my city are happy with the transport system.","by and large; by and large, most people",航海術語：by(順風) 與 large(側風) 兩種情況都算 → 大致上,generally; on the whole; for the most part,口說表達,程度與頻率,active,大致上,
+hands down,phr.,Public transport is hands down the cheapest way to get around here.,hands down the best; win hands down,賽馬領先太多，騎師可以放下韁繩 → 毫無懸念,without question; by far; undoubtedly,口說表達,程度與頻率,active,毫無疑問地,
+take its toll,phr.,Long working hours take a heavy toll on people's mental health.,take its toll on; take a heavy toll; take a toll on health,toll 原指過路費 → 走這條路要付出的代價,damage; wear down; have a negative effect on; harm,口說表達,評價利弊,active,造成損害、付出代價,Part 3 講負面影響很自然
+bridge the gap,phr.,Online courses can help bridge the gap between rural and urban students.,bridge the gap between; help bridge the gap; bridge the digital gap,bridge(橋) 當動詞 → 在落差上架一座橋,close the gap; narrow the divide; reconcile,口說表達,評價利弊,active,弭平差距,
+double-edged sword,n. phr.,Social media is a double-edged sword: it connects people but also spreads rumours.,prove to be a double-edged sword; a double-edged sword for; cut both ways,double-edged(雙刃) → 揮出去兩邊都會割到 → 有利也有弊,a mixed blessing; a trade-off; a two-sided issue,口說表達,評價利弊,active,雙面刃,討論利弊的萬用開場
+a game changer,n. phr.,Cheap solar panels have been a game changer for rural communities.,be a game changer; a real game changer; prove to be a game changer,把比賽規則改掉的東西 → 徹底改變局面,a turning point; a breakthrough; a major shift,口說表達,評價利弊,active,改變局勢的關鍵,
+a blessing in disguise,n. phr.,Missing that job turned out to be a blessing in disguise.,turn out to be a blessing in disguise; prove a blessing in disguise,disguise(偽裝) → 好事偽裝成壞事來,a hidden benefit; a silver lining; good news in the end,口說表達,評價利弊,active,因禍得福,
+weigh up,phr v.,You have to weigh up the cost against the time you would save.,weigh up the pros and cons; weigh up the options; weigh up carefully,weigh(秤重) + up → 兩邊放上秤來比,consider; compare; assess; balance,口說表達,評價利弊,active,權衡,
+make a difference,phr.,Even small changes at home can make a real difference over time.,make a real difference; make a big difference; make all the difference,"differ(分開, 同 differ/defer) → 造出一個差別來",have an impact; count; matter; be significant,口說表達,評價利弊,active,帶來改變,
+play a key role,phr.,Teachers play a key role in whether students enjoy reading at all.,play a key role in; play a major role; play a part in,role 原指演員台詞捲軸 → 在這件事裡演的角色,be central to; be crucial in; contribute significantly,口說表達,評價利弊,active,扮演關鍵角色,
+come down to,phr v.,In the end it comes down to whether people can afford the fares.,it comes down to; ultimately comes down to; come down to money,一路降下來，最後落在那一件事上,boil down to; be a question of; hinge on,口說表達,收尾,active,歸結於,
+the bottom line,n. phr.,The bottom line is that most people simply do not have the time.,the bottom line is that; the bottom line for me,財報最底下那一行結論 → 最關鍵的一點,the key point; what it really comes down to; the essential point,口說表達,收尾,active,重點是,
+in the long run,phr.,Cycling to work is cheaper and healthier in the long run.,in the long run; pay off in the long run; better in the long run,run(一段路程) → 跑很長一段之後來看,in the long term; over time; eventually; ultimately,口說表達,收尾,active,長期來看,
+be better off,phr.,Most families would be better off if childcare were subsidised.,be better off; financially better off; we'd be better off,off 指「處境」（如 well off 有錢）→ 處在更好的位置,be in a better position; benefit more; gain from it,口說表達,收尾,active,過得更好、更划算,

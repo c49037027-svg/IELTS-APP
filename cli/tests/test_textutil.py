@@ -30,6 +30,23 @@ class TestMasking(unittest.TestCase):
             masked, hits = textutil.mask_sentence(sentence, word)
             self.assertGreaterEqual(hits, 1, sentence)
 
+    def test_masks_irregular_past_tenses(self):
+        cases = [
+            ("Online sales overtook high-street sales in 2019.", "overtake"),
+            ("Prices rose sharply after the subsidy ended.", "rise"),
+            ("The figure fell to just 20 per cent.", "fall"),
+            ("Enrolment grew steadily throughout the decade.", "grow"),
+            ("The council withdrew the proposal last month.", "withdraw"),
+        ]
+        for sentence, word in cases:
+            masked, hits = textutil.mask_sentence(sentence, word)
+            self.assertEqual(hits, 1, f"{word}: {sentence}")
+
+    def test_masks_doubled_endings_of_short_words(self):
+        masked, hits = textutil.mask_sentence("Sales dipped briefly in 2012.", "dip")
+        self.assertEqual(hits, 1)
+        self.assertNotIn("dipped", masked)
+
     def test_does_not_mask_unrelated_lookalikes(self):
         masked, _ = textutil.mask_sentence(
             "That position is possible and posts are open.", "pose"

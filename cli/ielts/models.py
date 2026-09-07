@@ -67,6 +67,17 @@ def now_iso() -> str:
     return datetime.now().replace(microsecond=0).isoformat(sep=" ")
 
 
+def stamp_for(day: date | None) -> str:
+    """用指定日期 + 現在時刻組出時間戳。
+
+    `--date` 模擬未來某天時，複習紀錄也要落在那一天，
+    否則每日新卡上限與統計都會跟排程對不起來。
+    """
+    if day is None:
+        return now_iso()
+    return f"{day.isoformat()} {datetime.now():%H:%M:%S}"
+
+
 @dataclass
 class Card:
     id: int | None = None

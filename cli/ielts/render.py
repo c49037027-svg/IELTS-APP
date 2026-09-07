@@ -65,4 +65,7 @@ def spelling_prompt_lines(card: Card) -> list[str]:
         lines.append(_row("搭配", " · ".join(mask_all(card.collocation_list, card.word))))
     if card.root_analysis:
         lines.append(_row("字根", mask_sentence(card.root_analysis, card.word)[0]))
+    # AWL 字頭卡還沒補完時，英文定義就是唯一的線索（一樣遮掉目標字）
+    if not card.example_sentence and card.notes:
+        lines.append(_row("定義", mask_sentence(card.notes, card.word)[0]))
     return lines

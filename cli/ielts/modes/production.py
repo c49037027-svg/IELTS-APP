@@ -134,7 +134,7 @@ def run(
                 ui.dim("  （句子偏短，雅思口說/寫作通常需要更完整的結構）")
 
             repo.add_production(
-                ctx.conn, card.id or 0, card.topic, prompt_text, sentence
+                ctx.conn, card.id or 0, card.topic, prompt_text, sentence, today=ctx.today
             )
             summary.done += 1
             ui.ok("  ✓ 已存入輸出紀錄")

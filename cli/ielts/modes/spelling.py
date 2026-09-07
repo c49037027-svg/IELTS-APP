@@ -58,7 +58,7 @@ def run(
                 continue
 
             correct = textutil.spelling_correct(card.word, answer)
-            repo.record_spelling(ctx.conn, card.id or 0, answer, correct)
+            repo.record_spelling(ctx.conn, card.id or 0, answer, correct, today=ctx.today)
 
             if correct:
                 summary.correct += 1

@@ -73,8 +73,11 @@ with sync_playwright() as p:
     page.locator(".mode-card", has_text="拼字練習").click()
     page.wait_for_timeout(200)
     prompt_text = page.locator(".dim-box").inner_text()
-    step("拼字：題目有中文提示", "中文" in prompt_text)
-    step("拼字：例句已挖空", "______" in prompt_text, prompt_text.split("\n")[1][:60] if "\n" in prompt_text else "")
+    step("拼字：題目有線索（中文或英文定義）",
+         "中文" in prompt_text or "定義" in prompt_text,
+         prompt_text.replace("\n", " ")[:60])
+    step("拼字：優先出挖空例句的完整題目", "______" in prompt_text,
+         prompt_text.replace("\n", " ")[:60])
     page.locator("#spell-input").fill("zzzwrong")
     page.get_by_role("button", name="送出", exact=True).click()
     page.wait_for_timeout(200)

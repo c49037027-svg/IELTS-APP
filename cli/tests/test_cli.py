@@ -35,10 +35,11 @@ class TestBasicCommands(CliTestCase):
         self.assertEqual(code, 0)
         self.assertIn("usage", output.lower())
 
-    def test_init_seeds_thirty_cards(self):
+    def test_init_seeds_the_library(self):
         code, output = self.run_cmd("init")
         self.assertEqual(code, 0)
-        self.assertIn("新增 30 張", output)
+        self.assertIn("種子資料完成", output)
+        self.assertIn("AWL", output)
 
     def test_init_is_idempotent(self):
         self.run_cmd("init")
@@ -55,7 +56,8 @@ class TestBasicCommands(CliTestCase):
         self.run_cmd("init")
         code, output = self.run_cmd("stats")
         self.assertEqual(code, 0)
-        self.assertIn("總卡片 30 張", output)
+        self.assertIn("總卡片", output)
+        self.assertIn("Sublist 1", output)
 
     def test_list_and_show(self):
         self.run_cmd("init")
