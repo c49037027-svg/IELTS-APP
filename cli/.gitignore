@@ -1,0 +1,16 @@
+# 本機資料庫（每個人的學習進度不進版控）
+*.db
+*.db-wal
+*.db-shm
+
+# 匯出檔
+productions-*.md
+ielts-cards.csv
+ielts-template.csv
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ielts-vocab-cli"
+version = "1.0.0"
+description = "IELTS 單字學習 CLI —— 例句 / 搭配詞 / 字根 / 同義詞 四維度記憶，含 SM-2 間隔重複"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+# rich 只影響外觀，沒安裝會自動降級成純文字輸出。
+pretty = ["rich>=13.0"]
+
+[project.scripts]
+ielts = "ielts.cli:main"
+
+[tool.setuptools]
+packages = ["ielts", "ielts.modes"]
+
+[tool.setuptools.package-data]
+ielts = ["data/*.csv"]
