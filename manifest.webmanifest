@@ -1,7 +1,7 @@
 {
   "name": "IELTS 學習助手",
   "short_name": "IELTS",
-  "description": "雅思單字、閱讀、聽力一站式學習，含 AI 解析與每日推送",
+  "description": "雅思單字學習：例句／搭配詞／字根／同義詞四維度，SM-2 間隔重複",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

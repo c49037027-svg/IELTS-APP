@@ -1,9 +1,18 @@
-const CACHE_NAME = 'ielts-v1';
+const CACHE_NAME = 'ielts-v3';
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icon.svg'
+  './icon.svg',
+  './css/vocab.css',
+  './js/srs.js',
+  './js/textutil.js',
+  './js/cards.js',
+  './js/legacy-words.js',
+  './js/store.js',
+  './js/dashboard.js',
+  './js/vocab.js',
+  './js/app.js'
 ];
 
 self.addEventListener('install', e => {
