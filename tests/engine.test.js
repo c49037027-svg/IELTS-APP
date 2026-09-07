@@ -397,5 +397,92 @@ check('舊的 known / learning 會換算成認讀進度', () => {
   eq(fresh, 0, '沒學過的字不該有進度');
 });
 
+console.log('--- 發音 ---');
+// 這個 context 沒有 window，等同「不支援語音合成的瀏覽器」
+vm.runInContext(fs.readFileSync(path.join(ROOT, 'js/speech.js'), 'utf8'), ctx, { filename: 'js/speech.js' });
+
+check('沒有語音合成時 supported() 為 false', () => eq(run('Speech.supported()'), false));
+check('不支援時不畫喇叭按鈕', () => eq(run('Speech.button("mitigate")'), ''));
+check('不支援時 say() 回 false，不丟例外', () => eq(run('Speech.say("mitigate")'), false));
+
+check('挑語音：同口音的本機語音優先', () => {
+  const r = run(`Speech.pickVoice([
+    {name:'US cloud', lang:'en-US', localService:false},
+    {name:'GB cloud', lang:'en-GB', localService:false},
+    {name:'GB local', lang:'en-GB', localService:true}
+  ], 'en-GB').name`);
+  eq(r, 'GB local');
+});
+check('挑語音：沒有本機的就用同口音雲端語音', () => {
+  eq(run(`Speech.pickVoice([{name:'GB cloud',lang:'en-GB',localService:false}], 'en-GB').name`), 'GB cloud');
+});
+check('挑語音：沒有該口音時退回其他英語', () => {
+  eq(run(`Speech.pickVoice([{name:'AU',lang:'en-AU',localService:true}], 'en-GB').name`), 'AU');
+});
+check('挑語音：en_GB 底線寫法也算同口音', () => {
+  eq(run(`Speech.pickVoice([{name:'X',lang:'en_GB',localService:true}], 'en-GB').name`), 'X');
+});
+check('挑語音：完全沒有英語語音時回 null', () => {
+  eq(run(`Speech.pickVoice([{name:'中文',lang:'zh-TW',localService:true}], 'en-GB')`), null);
+});
+check('挑語音：清單是空的或壞的都不會爆', () => {
+  eq(run(`Speech.pickVoice([], 'en-GB')`), null);
+  eq(run(`Speech.pickVoice(null, 'en-GB')`), null);
+  eq(run(`Speech.pickVoice([null, undefined], 'en-GB')`), null);
+});
+
+check('設定預設值：英式、0.9 倍速、不自動念', () => {
+  const p = run('Speech._normalisePrefs({})');
+  eq(p, { accent: 'en-GB', rate: 0.9, autoExample: false });
+});
+check('語速夾在 0.6–1.2', () => {
+  eq(run('Speech._normalisePrefs({rate: 5}).rate'), 1.2);
+  eq(run('Speech._normalisePrefs({rate: 0.1}).rate'), 0.6);
+  eq(run('Speech._normalisePrefs({rate: "abc"}).rate'), 0.9);
+});
+check('不認得的口音退回英式', () => eq(run('Speech._normalisePrefs({accent:"fr-FR"}).accent'), 'en-GB'));
+check('設定寫得進 localStorage 也讀得回來', () => {
+  run('Speech.setPrefs({accent:"en-US", rate:1.1, autoExample:true})');
+  eq(JSON.parse(mem['ielts-speech']), { accent: 'en-US', rate: 1.1, autoExample: true });
+  eq(run('Speech.getPrefs().accent'), 'en-US');
+  run('Speech.setPrefs({accent:"en-GB", rate:0.9, autoExample:false})');
+});
+
+// 換一個有 window 的 context，模擬真的支援語音合成的瀏覽器
+check('支援語音時會呼叫 speak，並帶上挑好的語音與語速', () => {
+  const spoken = [];
+  const win = {
+    speechSynthesis: {
+      getVoices: () => [{ name: 'Daniel', lang: 'en-GB', localService: true }],
+      speak: u => spoken.push(u),
+      cancel: () => {}, resume: () => {},
+      addEventListener: () => {}
+    },
+    SpeechSynthesisUtterance: function (text) { this.text = text; }
+  };
+  const c3 = vm.createContext({ localStorage, console, window: win });
+  c3.window.SpeechSynthesisUtterance = win.SpeechSynthesisUtterance;
+  vm.runInContext(fs.readFileSync(path.join(ROOT, 'js/speech.js'), 'utf8'), c3, { filename: 'js/speech.js' });
+  vm.runInContext('Speech.setPrefs({accent:"en-GB", rate:0.8, autoExample:false})', c3);
+  eq(vm.runInContext('Speech.supported()', c3), true, 'supported');
+  eq(vm.runInContext('Speech.say("mitigate")', c3), true, 'say 回傳值');
+  eq(spoken.length, 1, '念了幾次');
+  eq(spoken[0].text, 'mitigate');
+  eq(spoken[0].voice.name, 'Daniel');
+  eq(spoken[0].rate, 0.8);
+  eq(spoken[0].lang, 'en-GB');
+
+  // 自動念要看設定
+  eq(vm.runInContext('Speech.autoSay("hello")', c3), false, '沒開自動念時不該出聲');
+  vm.runInContext('Speech.setPrefs({autoExample:true})', c3);
+  eq(vm.runInContext('Speech.autoSay("hello")', c3), true, '開了就要出聲');
+  eq(spoken.length, 2);
+
+  // 按鈕：例句裡的引號不能把 HTML 屬性切斷
+  const html = vm.runInContext(`Speech.button('He said "no" & left')`, c3);
+  ok(html.includes('data-speak="He said &quot;no&quot; &amp; left"'), `按鈕 HTML 沒跳脫好：${html}`);
+  ok(!html.includes('<script'), '不該混進標籤');
+});
+
 console.log(`\n通過 ${passed} 項，失敗 ${failed} 項`);
 process.exit(failed ? 1 : 0);

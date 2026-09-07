@@ -62,6 +62,8 @@
 | 🗣️ **主動輸出** | 給一個 active 字 + 一個雅思常見題幹，要你造句；句子存起來，可整份匯出成 markdown 貼給 AI 批改 |
 | 🧩 **補完卡片** | 逐一補齊缺的例句／搭配／字根／同義詞，只問缺的欄位；AWL 字頭卡會附上英文定義供參考 |
 
+每張卡的單字與例句旁邊都有 🔊，用手機／電腦系統內建的語音念出來 —— 詳見下面「發音」。
+
 另外還有：升級 active（每週把認讀已經穩的字升級成主動詞彙）、卡片清單、手動新增卡片、CSV 匯入匯出。
 統計在「進度」分頁：每日學習計畫（會直接告訴你今天該做哪一項）、今日各軌待複習數、連續學習天數、passive/active 比例、拼字錯誤率與最常拼錯的字、各分類與主題的覆蓋進度。
 
@@ -75,6 +77,27 @@
 - 舊版已經標記為「認識／複習中」的字，會換算成認讀軌的排程起點，進度不會歸零
 - **每天最多放 20 張新卡**進來（每軌各 20）。到期的舊卡不受限制 ——
   沒有這個上限，800 張卡會在第一天全部到期，等於沒有排程
+
+---
+
+## 發音
+
+用瀏覽器內建的語音合成（Web Speech API），**不下載音檔、不連任何外部服務**。
+iOS 與 Android 的英語語音裝在系統裡，所以加到主畫面、開飛航模式一樣念得出來。
+
+| 在哪裡 | 念什麼 |
+|---|---|
+| 通勤複習 | 單字旁邊一顆 🔊；翻面後例句自己也有一顆（筆電按 `p` 念單字） |
+| 拼字練習 | 「🔊 聽發音」按鈕念出目標字 —— 雅思聽力本來就是聽了要拼得出來，所以這是練習不是作弊；答完之後也可以再聽一次正確的字 |
+| 同義詞測驗 / 主動輸出 / 補完卡片 / 卡片詳情 | 單字旁邊一顆 🔊 |
+
+設定（⚙️ → 🔊 發音）：**口音**英式／美式、**語速** 0.6–1.2 倍、**翻面時自動念例句**（預設關）。
+
+- 挑語音時優先選系統本機語音（`localService`），雲端語音在飛航模式會失敗
+- 瀏覽器不支援語音合成時，喇叭按鈕整個不出現，其他功能完全不受影響
+- 這是網頁版限定的功能；指令列版沒有發音
+
+`phonetic` 欄位有值的卡片（舊版帶進來的那 100 個字）會在單字下面顯示 IPA 音標。
 
 ---
 
@@ -127,6 +150,7 @@ index.html              網頁版外殼（版面 + 樣式）
 css/vocab.css           單字模組樣式
 js/srs.js               SM-2 排程（純函式）
 js/textutil.js          挖空、拼字比對、同義詞寬鬆比對
+js/speech.js            發音（瀏覽器內建語音合成，離線可用）
 js/cards.js             779 張種子卡片（由 tools/build_seed.py 產生，不要手動改）
 js/legacy-words.js      舊版 100 個單字（首次啟動時匯入或補進既有卡片）
 js/store.js             單字庫：卡片、三軌排程、各種紀錄（localStorage）
@@ -160,16 +184,16 @@ python3 tools/build_seed.py           # 驗證通過才寫檔
 以及最重要的一條 —— **例句裡沒有真的用到那個字**（那樣拼字模式就出不了題）。
 
 要加新模式：在 `js/vocab.js` 加一組 `startXxx / renderXxx`，再到首頁的 `modeCard` 清單掛一個入口。
-介面層只呼叫 `Store` 與 `TextUtil`，不自己碰 localStorage。
+介面層只呼叫 `Store`、`TextUtil` 與 `Speech`，不自己碰 localStorage 或 speechSynthesis。
 
 ---
 
 ## 測試
 
 ```bash
-node tests/engine.test.js                      # 68 項：排程、挖空、資料層、CSV、每日上限、舊資料轉換
+node tests/engine.test.js                      # 82 項：排程、挖空、資料層、CSV、每日上限、舊資料轉換、發音
 python3 -m http.server 8899 --bind 127.0.0.1 & # 瀏覽器端到端需要先起一個 server
-python3 tests/browser.test.py                  # 34 項：五種模式實際點過一輪 + 截圖
+python3 tests/browser.test.py                  # 47 項：五種模式實際點過一輪 + 發音 + 截圖
 python3 tools/build_seed.py --check            # 779 張卡片的內容驗證
 cd cli && python3 -m unittest discover -s tests -t .   # 142 項：指令列版本
 ```
@@ -180,7 +204,7 @@ cd cli && python3 -m unittest discover -s tests -t .   # 142 項：指令列版�
 
 ```bash
 cd cli
-python3 -m ielts init      # 建立資料庫並灌入 30 個範例字
+python3 -m ielts init      # 建立資料庫並灌入 779 張卡片
 python3 -m ielts stats     # 看今天要做什麼
 python3 -m ielts review    # 通勤複習
 ```

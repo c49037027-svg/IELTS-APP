@@ -525,6 +525,30 @@
         </div>
       </div>
 
+      <div class="setting-section" id="speech-section">
+        <h3>🔊 發音</h3>
+        <div class="setting-row">
+          <span>口音</span>
+          <select id="speech-accent" onchange="saveSpeechSettings()">
+            <option value="en-GB">英式</option>
+            <option value="en-US">美式</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <span>語速 <span id="speech-rate-label">0.9×</span></span>
+          <input type="range" id="speech-rate" min="0.6" max="1.2" step="0.1"
+                 oninput="saveSpeechSettings()">
+        </div>
+        <div class="setting-row">
+          <span>翻面時自動念例句</span>
+          <input type="checkbox" id="speech-auto" onchange="saveSpeechSettings()">
+        </div>
+        <button class="btn btn-secondary" onclick="testSpeech()" style="margin-top:4px;">🔊 試聽</button>
+        <div class="setting-note" id="speech-status">
+          用手機／電腦系統內建的語音，不下載音檔、不連外部服務，離線也能念。
+        </div>
+      </div>
+
       <div class="setting-section">
         <h3>📊 學習數據</h3>
         <div class="setting-note">
@@ -539,6 +563,7 @@
 
 <script src="./js/srs.js"></script>
 <script src="./js/textutil.js"></script>
+<script src="./js/speech.js"></script>
 <script src="./js/cards.js"></script>
 <script src="./js/legacy-words.js"></script>
 <script src="./js/store.js"></script>

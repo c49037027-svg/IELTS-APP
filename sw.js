@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ielts-v3';
+const CACHE_NAME = 'ielts-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -7,6 +7,7 @@ const ASSETS = [
   './css/vocab.css',
   './js/srs.js',
   './js/textutil.js',
+  './js/speech.js',
   './js/cards.js',
   './js/legacy-words.js',
   './js/store.js',
@@ -34,7 +35,7 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
-  // Gemini API、其他第三方請求不快取，直接走網路
+  // 第三方請求不快取，直接走網路（這個 App 目前沒有任何外部請求）
   if (url.origin !== location.origin) return;
 
   e.respondWith(

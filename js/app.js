@@ -28,7 +28,44 @@ function openSettings() {
   document.getElementById('notif-time').value = state.settings.notifTime;
   document.getElementById('stat-streak').textContent = state.streak;
   document.getElementById('stat-last').textContent = state.lastStudyDate || '尚未開始';
+  loadSpeechSettings();
   document.getElementById('settings-modal').classList.add('show');
+}
+
+// ============ 發音設定 ============
+function loadSpeechSettings() {
+  const section = document.getElementById('speech-section');
+  if (!section) return;
+  if (!Speech.supported()) {
+    // 不支援的瀏覽器就把整段收掉，免得按了沒反應
+    section.querySelectorAll('.setting-row, .btn').forEach(el => { el.style.display = 'none'; });
+    document.getElementById('speech-status').textContent =
+      '這個瀏覽器不支援語音合成，喇叭按鈕不會出現。iPhone 請用 Safari。';
+    return;
+  }
+  const prefs = Speech.getPrefs();
+  document.getElementById('speech-accent').value = prefs.accent;
+  document.getElementById('speech-rate').value = prefs.rate;
+  document.getElementById('speech-rate-label').textContent = prefs.rate.toFixed(1) + '×';
+  document.getElementById('speech-auto').checked = prefs.autoExample;
+}
+
+function saveSpeechSettings() {
+  if (!Speech.supported()) return;
+  const prefs = Speech.setPrefs({
+    accent: document.getElementById('speech-accent').value,
+    rate: Number(document.getElementById('speech-rate').value),
+    autoExample: document.getElementById('speech-auto').checked
+  });
+  document.getElementById('speech-rate-label').textContent = prefs.rate.toFixed(1) + '×';
+}
+
+function testSpeech() {
+  // 試聽也順便當成 iOS 的「使用者動作」解鎖：第一次出聲一定要由點擊觸發
+  if (!Speech.say('The government should mitigate the effects of climate change.')) {
+    document.getElementById('speech-status').textContent =
+      '念不出來 —— 檢查手機沒有靜音、音量有開，iPhone 請用 Safari 開啟。';
+  }
 }
 function closeSettings(e) {
   if (e && e.target.id !== 'settings-modal' && e.type !== 'click') return;

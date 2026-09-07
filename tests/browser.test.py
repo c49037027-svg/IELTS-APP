@@ -33,6 +33,23 @@ with sync_playwright() as p:
     page.on("console", lambda m: errors.append(f"console.{m.type}: {m.text}") if m.type == "error" else None)
     page.on("pageerror", lambda e: errors.append(f"pageerror: {e}"))
 
+    # 無頭 Chromium 有 speechSynthesis 但沒有任何語音，念了也沒聲音。
+    # 換成假的，才能確認「按下喇叭 → 真的把正確的字送去念、而且帶對語速與語音」。
+    page.add_init_script("""
+      window.__spoken = [];
+      Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: {
+        getVoices: () => [
+          { name: 'US voice', lang: 'en-US', localService: true },
+          { name: 'GB voice', lang: 'en-GB', localService: true }
+        ],
+        speak: u => window.__spoken.push({ text: u.text, rate: u.rate, lang: u.lang,
+                                           voice: u.voice && u.voice.name }),
+        cancel: () => {}, resume: () => {}, addEventListener: () => {}
+      }});
+      Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true,
+        value: function (text) { this.text = text; } });
+    """)
+
     page.goto(BASE, wait_until="networkidle")
     page.wait_for_timeout(400)
 
@@ -55,6 +72,29 @@ with sync_playwright() as p:
     dims = page.locator(".dim-key").all_text_contents()
     step("複習：背面四維度", "例句" in dims and "字根" in dims and "同義" in dims, " ".join(dims))
     step("複習：背面預設沒有中文", "中文" not in dims)
+
+    # --- 發音 ---
+    step("複習：單字旁邊有喇叭", page.locator(".word-line .speak-btn").count() == 1)
+    page.locator(".word-line .speak-btn").click()
+    page.wait_for_timeout(150)
+    spoken = page.evaluate("window.__spoken")
+    step("發音：按喇叭會念出這個字",
+         len(spoken) == 1 and spoken[0]["text"] == word_before,
+         f"{spoken[0]['text'] if spoken else '(沒念)'} · {spoken[0]['voice'] if spoken else '-'}")
+    step("發音：預設用英式語音與 0.9 倍速",
+         bool(spoken) and spoken[0]["voice"] == "GB voice" and spoken[0]["rate"] == 0.9)
+    step("發音：例句也有自己的喇叭",
+         page.locator(".dim-row .speak-btn").count() >= 1)
+    page.locator(".dim-row .speak-btn").first.click()
+    page.wait_for_timeout(150)
+    spoken = page.evaluate("window.__spoken")
+    step("發音：例句念的是整句不是單字", len(spoken) == 2 and len(spoken[1]["text"]) > len(word_before))
+    page.keyboard.press("p")
+    page.wait_for_timeout(150)
+    step("發音：p 鍵也能念", len(page.evaluate("window.__spoken")) == 3)
+    step("發音：按喇叭不會誤觸翻面或評分", page.locator(".rating-grid").count() == 1)
+    page.evaluate("window.__spoken = []")
+
     page.screenshot(path=f"{OUT}/shot-review.png", full_page=True)
     page.locator(".rate-3").click()
     page.wait_for_timeout(200)
@@ -90,6 +130,14 @@ with sync_playwright() as p:
     page.get_by_role("button", name="看提示").click()
     page.wait_for_timeout(200)
     step("拼字：提示只給首字母與長度", "提示" in page.locator(".dim-box").inner_text())
+    # 聽寫：按「聽發音」要念出正確答案（雅思聽力本來就是聽了要拼得出來）
+    page.get_by_role("button", name="🔊 聽發音").click()
+    page.wait_for_timeout(150)
+    spoken = page.evaluate("window.__spoken")
+    step("拼字：聽發音念的是答案本身",
+         len(spoken) == 1 and " " not in spoken[0]["text"],
+         spoken[0]["text"] if spoken else "(沒念)")
+    page.evaluate("window.__spoken = []")
     page.locator("#vocab-stage .back-btn").click()
     page.wait_for_timeout(200)
 
@@ -187,6 +235,30 @@ with sync_playwright() as p:
     step("學習計畫有產出", len(page.locator("#daily-plan").inner_text()) > 10)
     page.screenshot(path=f"{OUT}/shot-progress.png", full_page=True)
 
+    # --- 發音設定 ---
+    page.locator(".settings-btn").click()
+    page.wait_for_timeout(200)
+    step("設定：有發音區塊", page.locator("#speech-section").count() == 1)
+    page.select_option("#speech-accent", "en-US")
+    page.wait_for_timeout(100)
+    page.get_by_role("button", name="🔊 試聽").click()
+    page.wait_for_timeout(150)
+    spoken = page.evaluate("window.__spoken")
+    step("設定：改成美式之後就用美式語音",
+         bool(spoken) and spoken[-1]["voice"] == "US voice",
+         spoken[-1]["voice"] if spoken else "(沒念)")
+    page.locator("#speech-rate").fill("1.2")
+    page.dispatch_event("#speech-rate", "input")
+    page.wait_for_timeout(100)
+    step("設定：語速標籤跟著動",
+         page.locator("#speech-rate-label").inner_text() == "1.2×",
+         page.locator("#speech-rate-label").inner_text())
+    page.locator("#speech-auto").check()
+    page.wait_for_timeout(100)
+    page.screenshot(path=f"{OUT}/shot-settings.png", full_page=True)
+    page.locator("#settings-modal .close-btn").click()
+    page.wait_for_timeout(200)
+
     # --- 重新整理後資料還在 ---
     page.locator('.tab-btn[data-tab="vocab"]').click()
     page.wait_for_timeout(200)
@@ -195,6 +267,17 @@ with sync_playwright() as p:
     page.wait_for_timeout(400)
     after = page.locator(".today-num b").first.inner_text()
     step("重新整理後進度保留", before == after, f"{before} → {after}")
+    step("重新整理後發音設定保留",
+         page.evaluate("Speech.getPrefs()") == {"accent": "en-US", "rate": 1.2, "autoExample": True},
+         str(page.evaluate("Speech.getPrefs()")))
+
+    # 開了自動念之後，翻面就會自動出聲
+    page.evaluate("window.__spoken = []")
+    page.locator(".mode-card", has_text="通勤複習").click()
+    page.wait_for_timeout(200)
+    page.get_by_text("看例句與同義詞").click()
+    page.wait_for_timeout(200)
+    step("發音：開了自動念，翻面就出聲", len(page.evaluate("window.__spoken")) == 1)
 
     browser.close()
 

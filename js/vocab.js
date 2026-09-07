@@ -15,6 +15,7 @@ const Vocab = (() => {
 
   function showHome() {
     session = null;
+    Speech.stop();   // 念到一半就退出模式時，別讓聲音繼續
     stage().innerHTML = '';
     stage().style.display = 'none';
     home().style.display = '';
@@ -132,13 +133,21 @@ const Vocab = (() => {
     renderHome();
   }
 
+  // ---------------------------------------------------------- 卡片標題
+  // 單字 + 喇叭 + 音標 / 詞性 / 分類，五個模式共用同一個寫法。
+  function wordHead(card) {
+    const meta = [card.phonetic, card.pos, card.category, card.topic].filter(Boolean).join(' · ');
+    return `<div class="word-line"><span class="card-word">${esc(card.word)}</span>${Speech.button(card.word)}</div>
+      ${meta ? `<div class="card-meta">${esc(meta)}</div>` : ''}`;
+  }
+
   // ---------------------------------------------------------- 卡片四維度
   // 複習背面固定是四個維度；中文（zh / exampleZh）只有在明確要求時才出現，
   // 通勤複習永遠不給中文對照。
   function backLines(card, showZh) {
     const rows = [];
     if (card.example) {
-      rows.push(['例句', esc(TextUtil.highlightTarget(card.example, card.word))]);
+      rows.push(['例句', esc(TextUtil.highlightTarget(card.example, card.word)) + Speech.button(card.example)]);
     }
     if (card.collocations.length) rows.push(['搭配', esc(card.collocations.join(' · '))]);
     if (card.root) rows.push(['字根', esc(card.root)]);
@@ -169,8 +178,7 @@ const Vocab = (() => {
     const card = s.items[s.index];
     showStage(modeHeader('通勤複習', `${s.index + 1} / ${s.items.length}`) + `
       <div class="card study-card">
-        <div class="card-word">${esc(card.word)}</div>
-        <div class="card-meta">${esc([card.pos, card.category, card.topic].filter(Boolean).join(' · '))}</div>
+        ${wordHead(card)}
         ${s.revealed ? `<div class="dim-box">${backLines(card, false)}</div>` : ''}
         ${s.revealed && Store.isIncomplete(card) ? `<div class="missing-tag">這張還缺：${
           esc(Store.missingCore(card).map(f => Store.CORE_LABELS[f]).join('、'))
@@ -183,17 +191,21 @@ const Vocab = (() => {
           <button class="btn rate-3" onclick="Vocab.rate(3)">Good<span>想得起來</span></button>
           <button class="btn rate-4" onclick="Vocab.rate(4)">Easy<span>太簡單</span></button>
         </div>
-        <div class="key-hint">鍵盤：1 / 2 / 3 / 4</div>`
+        <div class="key-hint">鍵盤：1 / 2 / 3 / 4　·　p 念一次</div>`
       : `
         <button class="btn btn-primary wide-btn" onclick="Vocab.reveal()">看例句與同義詞</button>
         <button class="btn btn-secondary wide-btn" onclick="Vocab.skip()">跳過這張</button>
-        <div class="key-hint">鍵盤：空白鍵翻面</div>`}`);
+        <div class="key-hint">鍵盤：空白鍵翻面　·　p 念一次</div>`}`);
   }
 
   function reveal() {
     if (!session || session.mode !== 'review') return;
+    const card = session.items[session.index];
     session.revealed = true;
     renderReview();
+    // 翻面才念，而且只在使用者打開「自動念例句」時。
+    // 這裡是點擊／按鍵之後才跑的，所以 iOS 的「語音必須由使用者動作觸發」也滿足。
+    Speech.autoSay(card.example || card.word);
   }
 
   function skip() {
@@ -270,6 +282,7 @@ const Vocab = (() => {
         <button class="btn btn-primary wide-btn" onclick="Vocab.submitSpell()">送出</button>
         <div class="sub-actions">
           <button class="tool-btn" onclick="Vocab.spellHint()">看提示</button>
+          ${Speech.supported() ? `<button class="tool-btn" onclick="Vocab.spellSay()">🔊 聽發音</button>` : ''}
           <button class="tool-btn" onclick="Vocab.spellSkip()">跳過</button>
         </div>`
       : `<button class="btn btn-primary wide-btn" onclick="Vocab.nextSpell()">下一題</button>`}`);
@@ -285,6 +298,13 @@ const Vocab = (() => {
     if (!session || session.phase !== 'ask') return;
     session.hinted = true;
     renderSpell();
+  }
+
+  // 聽寫：雅思聽力本來就是「聽到什麼就要拼出什麼」，所以這顆按鈕不算作弊，
+  // 但也不自動播 —— 要不要先聽由你決定。
+  function spellSay() {
+    if (!session || session.mode !== 'spell') return;
+    Speech.say(session.items[session.index].word);
   }
 
   function spellSkip() {
@@ -312,7 +332,7 @@ const Vocab = (() => {
       const state = Store.grade(card.id, 'spelling', SRS.GOOD);
       feedback = `<div class="feedback ok">
         <div class="feedback-title">✓ 正確</div>
-        <div class="feedback-body">${esc(card.word)}　${esc(SRS.describeNext(state, Store.today()))}</div>
+        <div class="feedback-body">${esc(card.word)}${Speech.button(card.word)}　${esc(SRS.describeNext(state, Store.today()))}</div>
       </div>`;
     } else {
       s.wrong += 1;
@@ -323,7 +343,7 @@ const Vocab = (() => {
         <div class="feedback-title">✗ 拼錯了</div>
         <div class="feedback-body">
           <div>你打的：<span class="diff-bad">${esc(diff.actual)}</span></div>
-          <div>正確的：<span class="diff-ok">${esc(diff.expected)}</span></div>
+          <div>正確的：<span class="diff-ok">${esc(diff.expected)}</span>${Speech.button(card.word)}</div>
           ${distance === 1 ? '<div class="feedback-note">只差 1 個字母 —— 這種最值得記下來。</div>' : ''}
           <div class="feedback-note">已加入錯誤清單，明天優先出現。</div>
         </div>
@@ -373,8 +393,7 @@ const Vocab = (() => {
     const card = s.items[s.index];
     showStage(modeHeader('同義詞測驗', `${s.index + 1} / ${s.items.length}`) + `
       <div class="card study-card">
-        <div class="card-word">${esc(card.word)}</div>
-        <div class="card-meta">${esc([card.pos, card.category, card.topic].filter(Boolean).join(' · '))}</div>
+        ${wordHead(card)}
       </div>
       ${feedback || ''}
       ${s.phase === 'ask' ? `
@@ -529,8 +548,7 @@ const Vocab = (() => {
     const card = s.items[s.index];
     showStage(modeHeader('主動輸出', `${s.index + 1} / ${s.items.length}`) + `
       <div class="card study-card">
-        <div class="card-word">${esc(card.word)}</div>
-        <div class="card-meta">${esc([card.pos, card.topic].filter(Boolean).join(' · '))}</div>
+        ${wordHead(card)}
         <div class="dim-box">
           ${card.collocations.length ? `<div class="dim-row"><span class="dim-key">搭配</span><span class="dim-val">${esc(card.collocations.join(' · '))}</span></div>` : ''}
           ${card.synonyms.length ? `<div class="dim-row"><span class="dim-key">同義</span><span class="dim-val">${esc(card.synonyms.join(' / '))}</span></div>` : ''}
@@ -717,8 +735,7 @@ const Vocab = (() => {
     showStage(modeHeader(`補完卡片 · ${card.topic || '未分類'}`,
       `${s.index + 1} / ${s.items.length}　全庫還有 ${remaining}`) + `
       <div class="card study-card">
-        <div class="card-word">${esc(card.word)}</div>
-        <div class="card-meta">${esc([card.pos, card.category, card.topic].filter(Boolean).join(' · '))}</div>
+        ${wordHead(card)}
         ${known.length ? `<div class="dim-box">${known.map(([k, v]) =>
           `<div class="dim-row"><span class="dim-key">${k}</span><span class="dim-val">${v}</span></div>`).join('')}</div>` : ''}
         <div class="missing-tag">缺少：${esc(missing.map(f => Store.CORE_LABELS[f]).join('、'))}</div>
@@ -798,8 +815,8 @@ const Vocab = (() => {
     }).join('');
     showStage(modeHeader(card.word) + `
       <div class="card study-card">
-        <div class="card-word">${esc(card.word)}</div>
-        <div class="card-meta">${esc([card.pos, card.category, card.topic, card.cardType].filter(Boolean).join(' · '))}</div>
+        <div class="word-line"><span class="card-word">${esc(card.word)}</span>${Speech.button(card.word)}</div>
+        <div class="card-meta">${esc([card.phonetic, card.pos, card.category, card.topic, card.cardType].filter(Boolean).join(' · '))}</div>
         <div class="dim-box">${backLines(card, true)}</div>
       </div>
       <div class="card">
@@ -955,11 +972,13 @@ const Vocab = (() => {
       if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!session.revealed) reveal(); }
       else if (['1', '2', '3', '4'].includes(e.key)) { e.preventDefault(); rate(Number(e.key)); }
       else if (e.key.toLowerCase() === 's') skip();
+      else if (e.key.toLowerCase() === 'p') Speech.say(session.items[session.index].word);
     }
   }
 
   function init() {
     Store.init();
+    Speech.init();
     document.addEventListener('keydown', onKey);
     showHome();
   }
@@ -967,7 +986,7 @@ const Vocab = (() => {
   return {
     init, showHome, setTopic, renderHome,
     startReview, reveal, skip, rate,
-    startSpell, submitSpell, nextSpell, spellHint, spellSkip,
+    startSpell, submitSpell, nextSpell, spellHint, spellSay, spellSkip,
     startSyn, submitSyn, nextSyn, synSkip,
     startProduce, submitProduce, nextProduce, produceSkip, showProductions,
     showPromote, showPromoteLoose, confirmPromote,
