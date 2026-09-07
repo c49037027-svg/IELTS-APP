@@ -178,6 +178,24 @@ check('舊資料的話題字併進同一個主題，不另立分類', () => {
     ok(byName[topic] >= 20, `${topic} = ${byName[topic]}`);
   }
 });
+check('Sublist 1、2 的 120 個字四維度齊全', () => {
+  for (const sublist of ['Sublist 1', 'Sublist 2']) {
+    const cards = run(`SEED_CARDS.filter(c => c.topic === ${JSON.stringify(sublist)})`);
+    eq(cards.length, 60, sublist);
+    const bad = cards.filter(c => !c.example || !c.collocations.length || !c.root || c.synonyms.length < 2);
+    eq(bad.map(c => c.word), [], `${sublist} 這些卡缺維度`);
+  }
+});
+check('補完佇列依 sublist 排序，從 Sublist 3 開始', () => {
+  const queue = run('Store.completionQueue({ limit: 20 }).map(c => c.topic)');
+  ok(queue.length > 0, '佇列不該是空的');
+  eq([...new Set(queue)], ['Sublist 3'], `實際是 ${[...new Set(queue)]}`);
+  const ranks = run(`Store.completionQueue().map(c => {
+    const m = /^Sublist (\\d+)$/.exec(c.topic || '');
+    return m ? Number(m[1]) : 99;
+  })`);
+  eq(ranks, [...ranks].sort((a, b) => a - b), '補完順序沒有照 sublist 由小到大');
+});
 check('AWL 依 sublist 分組，可以只練 Sublist 1', () => {
   const names = run('Store.coverage("topic").map(r => r.name)');
   for (let n = 1; n <= 10; n++) ok(names.includes(`Sublist ${n}`), `缺 Sublist ${n}`);
@@ -188,9 +206,17 @@ check('寫好的例句一定含目標字', () => {
   eq(bad, [], '這些卡的例句挖不到空');
 });
 check('舊資料的例句補進了 AWL 空卡，沒有被丟掉', () => {
-  const card = run('Store.findByWord("approach")');
-  ok(card && card.example.length > 0, 'approach 應該從舊資料拿到例句');
-  ok(card.collocations.length > 0, 'approach 應該從舊資料拿到搭配詞');
+  const merged = run(`(() => {
+    const c = Store.listCards().find(x => x.category === 'AWL' && !x.root
+      && x.example && x.collocations.length);
+    return c ? c.word : null;
+  })()`);
+  ok(merged, '應該有 AWL 卡片從舊資料拿到例句與搭配詞');
+});
+check('選 Sublist 1 不會混進 Sublist 10', () => {
+  const topics = run('Store.listCards({ topic: "Sublist 1" }).map(c => c.topic)');
+  eq([...new Set(topics)], ['Sublist 1']);
+  eq(topics.length, 60);
 });
 check('寫完的卡片四維度齊全', () => {
   const complete = run(`SEED_CARDS.filter(c => c.example || c.root || c.collocations.length || c.synonyms.length)`);
@@ -201,9 +227,10 @@ check('寫完的卡片四維度齊全', () => {
 check('沒寫完的卡片標記為不完整，交給補完模式', () => {
   const n = run('Store.incompleteCount()');
   ok(n > 400, `incomplete=${n}`);
-  const card = run('Store.findByWord("approach")');
-  ok(card, '找不到 approach');
-  eq(run('Store.missingCore(Store.findByWord("approach")).sort()'), ['root', 'synonyms']);
+  const card = run('Store.findByWord("alternative")');
+  ok(card, '找不到 alternative');
+  eq(run('Store.missingCore(Store.findByWord("alternative")).sort()'),
+     ['collocations', 'example', 'root', 'synonyms']);
 });
 check('種子字四個分類都在', () => {
   const names = run('Store.coverage("category").map(r => r.name)');

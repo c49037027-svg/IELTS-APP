@@ -41,12 +41,14 @@ pip install rich
 
 | 分類 | 張數 | 四維度齊全 |
 |---|---:|---:|
-| AWL 學術詞彙（570 字頭全收，`topic` = Sublist 1–10） | 564 | 14 |
+| AWL 學術詞彙（570 字頭全收，`topic` = Sublist 1–10） | 564 | 132 |
 | 高頻話題字（7 個主題 × 20） | 140 | 140 |
 | Task 1 圖表用語（依功能分組） | 39 | 39 |
 | 口說表達（依功能分組） | 36 | 36 |
 
-AWL 字頭卡只帶詞性與英文定義進來，四個維度留白，由 `ielts complete` 逐一補上。
+**Sublist 1、2 的 120 個字四維度全部寫齊**，裝好就能直接複習。
+Sublist 3 以後的字頭卡只帶詞性與英文定義進來，四個維度留白，由 `ielts complete` 逐一補上 ——
+補完佇列**依 sublist 由高頻排到低頻**，打開就是從 Sublist 3 開始。
 資料的唯一來源在專案根目錄的 `tools/`，改完跑 `python3 tools/build_seed.py` 重新產生。
 
 **每天最多放 20 張新卡**（每軌各 20），到期的舊卡不受限制 ——
@@ -127,11 +129,11 @@ ielts syn --topic 科技
 匯入時欄位空白的卡片會被標記為 incomplete，這個模式逐一把缺的補齊。
 
 ```bash
-ielts complete               # 預設處理 20 張
+ielts complete               # 預設處理 20 張，依 sublist 由高頻排到低頻
 ielts complete --word mitigate
 ```
 
-只會問缺的欄位，每填一張立刻存檔，`:q` 隨時離開。
+只會問缺的欄位，每填一張立刻存檔，`:q` 隨時離開。標題會顯示這張卡屬於哪個 sublist。
 
 ---
 
@@ -255,7 +257,7 @@ cli/
 
 ```bash
 cd cli
-python3 -m unittest discover -s tests -t .   # 137 個測試
+python3 -m unittest discover -s tests -t .   # 142 個測試
 ```
 
 涵蓋 SM-2 排程數學、挖空與拼字比對（含不規則動詞）、同義詞寬鬆比對、資料層查詢與三軌獨立性、

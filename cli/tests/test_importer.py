@@ -197,6 +197,44 @@ class TestSeed(ImporterTestCase):
         for topic in ("環境", "教育", "科技", "健康", "都市化", "犯罪", "媒體"):
             self.assertEqual(rows.get(topic), 20, topic)
 
+    def test_sublist_1_and_2_are_fully_written(self):
+        """最高頻的 120 個字四個維度都要齊全，直接可以進通勤複習。"""
+        seed.load_seed(self.conn)
+        for sublist in ("Sublist 1", "Sublist 2"):
+            cards = repo.list_cards(self.conn, topic=sublist)
+            self.assertEqual(len(cards), 60, sublist)
+            for card in cards:
+                self.assertEqual(card.missing_core_fields(), [], f"{sublist} {card.word}")
+
+    def test_completion_queue_starts_at_sublist_3(self):
+        """Sublist 1、2 已寫齊，補完模式應該接著從 Sublist 3 開始。"""
+        seed.load_seed(self.conn)
+        queue = repo.completion_queue(self.conn, limit=20)
+        self.assertTrue(queue)
+        self.assertTrue(all(c.topic == "Sublist 3" for c in queue),
+                        [c.topic for c in queue[:5]])
+
+    def test_completion_queue_is_ordered_by_sublist(self):
+        seed.load_seed(self.conn)
+        queue = repo.completion_queue(self.conn)
+
+        def rank(card):
+            return int(card.topic.split()[1]) if card.topic.startswith("Sublist ") else 99
+
+        ranks = [rank(c) for c in queue]
+        self.assertEqual(ranks, sorted(ranks), "補完順序沒有照 sublist 由小到大")
+
+    def test_topic_filter_does_not_confuse_sublist_1_and_10(self):
+        seed.load_seed(self.conn)
+        cards = repo.list_cards(self.conn, topic="Sublist 1")
+        self.assertEqual(len(cards), 60)
+        self.assertEqual({c.topic for c in cards}, {"Sublist 1"})
+
+    def test_partial_topic_still_matches(self):
+        """完全比對不到時仍要能用關鍵字篩選。"""
+        seed.load_seed(self.conn)
+        self.assertTrue(repo.list_cards(self.conn, topic="Sublist"))
+
     def test_awl_cards_are_grouped_by_sublist(self):
         seed.load_seed(self.conn)
         rows = {r["name"]: r["total"] for r in repo.counts_by(self.conn, "topic")}

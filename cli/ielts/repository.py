@@ -62,6 +62,19 @@ def _apply_daily_limit(
     return kept
 
 
+def _topic_clause(conn: sqlite3.Connection, topic: str) -> tuple[str, str]:
+    """topic 篩選：先試完全比對，找不到才退回子字串。
+
+    不這樣做的話，`--topic "Sublist 1"` 會把 Sublist 10 一起抓進來。
+    """
+    row = conn.execute(
+        "SELECT 1 FROM cards WHERE topic = ? LIMIT 1", (topic,)
+    ).fetchone()
+    if row:
+        return "AND topic = ?", topic
+    return "AND topic LIKE ?", f"%{topic}%"
+
+
 # ---------------------------------------------------------------- cards
 
 
@@ -157,8 +170,9 @@ def list_cards(
     sql = ["SELECT * FROM cards WHERE 1=1"]
     args: list[Any] = []
     if topic:
-        sql.append("AND topic LIKE ?")
-        args.append(f"%{topic}%")
+        clause, value = _topic_clause(conn, topic)
+        sql.append(clause)
+        args.append(value)
     if category:
         sql.append("AND category LIKE ?")
         args.append(f"%{category}%")
@@ -176,6 +190,29 @@ def list_cards(
         args.append(int(limit))
     rows = conn.execute(" ".join(sql), args).fetchall()
     return [Card.from_row(r) for r in rows]
+
+
+def completion_queue(
+    conn: sqlite3.Connection, *, limit: int | None = None, search: str | None = None
+) -> list[Card]:
+    """補完佇列：AWL 依 sublist 由高頻到低頻（1 → 10），其餘排在後面。
+
+    Sublist 1、2 已經寫齊，所以實際會從 Sublist 3 開始補。
+    """
+    sql = ["SELECT * FROM cards WHERE is_incomplete = 1"]
+    args: list[Any] = []
+    if search:
+        sql.append("AND word LIKE ?")
+        args.append(f"%{search}%")
+    sql.append(
+        "ORDER BY CASE WHEN topic LIKE 'Sublist %' "
+        "          THEN CAST(substr(topic, 9) AS INTEGER) ELSE 99 END, "
+        "         word COLLATE NOCASE"
+    )
+    if limit:
+        sql.append("LIMIT ?")
+        args.append(int(limit))
+    return [Card.from_row(r) for r in conn.execute(" ".join(sql), args).fetchall()]
 
 
 def set_card_type(conn: sqlite3.Connection, card_id: int, card_type: str) -> None:
@@ -289,8 +326,9 @@ def due_items(
         sql.append("AND c.card_type = ?")
         args.append(card_type)
     if topic:
-        sql.append("AND c.topic LIKE ?")
-        args.append(f"%{topic}%")
+        clause, value = _topic_clause(conn, topic)
+        sql.append(clause.replace("AND topic", "AND c.topic"))
+        args.append(value)
     if category:
         sql.append("AND c.category LIKE ?")
         args.append(f"%{category}%")
@@ -545,8 +583,9 @@ def production_candidates(
     ]
     args: list[Any] = []
     if topic:
-        sql.append("AND c.topic LIKE ?")
-        args.append(f"%{topic}%")
+        clause, value = _topic_clause(conn, topic)
+        sql.append(clause.replace("AND topic", "AND c.topic"))
+        args.append(value)
     sql.append("GROUP BY c.id ORDER BY used ASC, last_used ASC, RANDOM() LIMIT ?")
     args.append(max(1, int(limit)))
     return [Card.from_row(r) for r in conn.execute(" ".join(sql), args).fetchall()]
@@ -572,8 +611,9 @@ def promotion_candidates(
     ]
     args: list[Any] = [TRACK_RECALL, int(min_reviews)]
     if topic:
-        sql.append("AND c.topic LIKE ?")
-        args.append(f"%{topic}%")
+        clause, value = _topic_clause(conn, topic)
+        sql.append(clause.replace("AND topic", "AND c.topic"))
+        args.append(value)
     sql.append(
         "ORDER BY (s.interval - s.lapse_count * 2) DESC, s.review_count DESC LIMIT ?"
     )

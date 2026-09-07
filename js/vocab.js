@@ -678,7 +678,7 @@ const Vocab = (() => {
 
   // ---------------------------------------------------------- 補完卡片
   function startComplete() {
-    const items = Store.listCards({ incompleteOnly: true, limit: 50 });
+    const items = Store.completionQueue({ limit: 50 });
     if (!items.length) {
       showStage(modeHeader('補完卡片') + emptyState('所有卡片的四個維度都補齊了', ''));
       return;
@@ -713,7 +713,9 @@ const Vocab = (() => {
       </div>`;
     };
 
-    showStage(modeHeader('補完卡片', `${s.index + 1} / ${s.items.length}`) + `
+    const remaining = Store.incompleteCount();
+    showStage(modeHeader(`補完卡片 · ${card.topic || '未分類'}`,
+      `${s.index + 1} / ${s.items.length}　全庫還有 ${remaining}`) + `
       <div class="card study-card">
         <div class="card-word">${esc(card.word)}</div>
         <div class="card-meta">${esc([card.pos, card.category, card.topic].filter(Boolean).join(' · '))}</div>

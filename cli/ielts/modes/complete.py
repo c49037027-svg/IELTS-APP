@@ -20,23 +20,24 @@ FIELD_HINTS = {
 
 def run(ctx: AppContext, *, limit: int = 20, word: str | None = None) -> int:
     ui = ctx.ui
-    cards = repo.list_cards(
-        ctx.conn, incomplete_only=not word, search=word, limit=limit
-    )
-    cards = [c for c in cards if c.missing_core_fields()]
+    cards = repo.completion_queue(ctx.conn, limit=limit, search=word)
     if not cards:
         ui.ok("所有卡片的四個核心維度都補齊了 🎉")
         return 0
 
-    ui.rule(f"補完模式 · {len(cards)} 張待補")
-    ui.dim("直接 Enter = 跳過這個欄位 ｜ 輸入 :q 離開（已填的都會保留）")
+    ui.rule(f"補完模式 · 這批 {len(cards)} 張（全庫 {repo.incomplete_count(ctx.conn)} 張待補）")
+    ui.dim("AWL 依 sublist 由高頻排到低頻 ｜ 直接 Enter = 跳過這個欄位 ｜ :q 離開（已填的都會保留）")
     ui.blank()
 
     fixed = 0
     try:
         for index, card in enumerate(cards, start=1):
             missing = card.missing_core_fields()
-            ui.panel(_context_lines(card), title=f"[{index}/{len(cards)}] {card.label}", style="hint")
+            ui.panel(
+                _context_lines(card),
+                title=f"[{index}/{len(cards)}] {card.label}　{card.topic}",
+                style="hint",
+            )
             updates: dict[str, str] = {}
             for field_name in missing:
                 label = CORE_FIELD_LABELS[field_name]

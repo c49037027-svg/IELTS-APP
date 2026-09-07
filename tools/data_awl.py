@@ -12,6 +12,8 @@ topic 一律是 "Sublist N"，所以在 App 裡可以只練 Sublist 1，
 
 from awl_defs import DEFINITIONS
 from awl_headwords import HEADWORDS
+from data_awl_s1 import SUBLIST_1
+from data_awl_s2 import SUBLIST_2
 
 SUBLIST = dict(HEADWORDS)
 
@@ -139,6 +141,9 @@ FULL = [
         "category": "AWL", "topic": _topic("offset"), "zh": "抵銷",
     },
 ]
+
+#: Sublist 1、2 是最高頻的 120 個字，四個維度全部寫齊，直接可以進通勤複習。
+FULL = [*FULL, *SUBLIST_1, *SUBLIST_2]
 
 _FULL_WORDS = {entry["word"].lower() for entry in FULL}
 

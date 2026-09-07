@@ -16,18 +16,22 @@
 
 | 分類 | 張數 | 四維度齊全 | 說明 |
 |---|---:|---:|---|
-| AWL 學術詞彙 | 564 | 14 | AWL 570 個字頭全收，`topic` 標成 Sublist 1–10 |
+| AWL 學術詞彙 | 564 | 132 | AWL 570 個字頭全收，`topic` 標成 Sublist 1–10；**Sublist 1、2 的 120 個字四維度全部寫齊** |
 | 高頻話題字 | 140 | 140 | 環境／教育／科技／健康／都市化／犯罪／媒體，每個主題 20 字 |
 | Task 1 圖表用語 | 39 | 39 | 依功能分組：上升／下降／穩定／極值／幅度／比較／比例／綜述 |
 | 口說表達 | 36 | 36 | 依功能分組：表達觀點／描述經驗／爭取時間／程度與頻率／評價利弊／收尾 |
-| **合計** | **779** | **229** | |
+| **合計** | **779** | **347** | |
 
 - **AWL 570 個字頭一個不少**。其中 6 個（decline、overall、whereas、constant、proportion、fluctuate）
   同時是 Task 1 用語，以功能分類為準、備註標明 AWL sublist，一個字只留一張卡。
-- AWL 字頭卡預設只帶**詞性與英文定義**進來，四個維度留白 —— 例句、搭配詞、字根、同義詞由你在
+- **Sublist 1、2（最高頻的 120 個字）四個維度全部寫齊**，一裝好就能直接進通勤複習。
+- Sublist 3 以後的字頭卡只帶**詞性與英文定義**進來，四個維度留白 —— 例句、搭配詞、字根、同義詞由你在
   「補完卡片」模式自己寫。自己寫出來的才記得住，這比讀現成的解釋有效得多。
+- **補完模式依 sublist 由高頻排到低頻**（1 → 10），所以打開就是從 Sublist 3 開始，
+  不用自己決定先補哪個。
 - 網頁版首次啟動時，舊版 100 個單字的例句與搭配詞會**補進**對應的 AWL 空卡，不會浪費。
 - `topic` 是通用的分組維度，所以首頁可以只練「Sublist 1」或只練「下降」那一組。
+  篩選是**完全比對優先**，選「Sublist 1」不會把 Sublist 10 一起抓進來。
 
 ---
 
@@ -134,6 +138,7 @@ tests/                  網頁版測試（見 tests/README.md）
 tools/                  單字資料的唯一來源與產生器
   build_seed.py         驗證 + 產生 CSV 與 cards.js
   data_awl.py           AWL（完整卡 + 570 字頭）
+  data_awl_s1/s2.py     Sublist 1、2 的 120 張完整卡
   data_topics_a/b.py    七個主題的話題字
   data_task1.py         Task 1 圖表用語
   data_speaking.py      口說表達
@@ -162,11 +167,11 @@ python3 tools/build_seed.py           # 驗證通過才寫檔
 ## 測試
 
 ```bash
-node tests/engine.test.js                      # 65 項：排程、挖空、資料層、CSV、每日上限、舊資料轉換
+node tests/engine.test.js                      # 68 項：排程、挖空、資料層、CSV、每日上限、舊資料轉換
 python3 -m http.server 8899 --bind 127.0.0.1 & # 瀏覽器端到端需要先起一個 server
 python3 tests/browser.test.py                  # 34 項：五種模式實際點過一輪 + 截圖
 python3 tools/build_seed.py --check            # 779 張卡片的內容驗證
-cd cli && python3 -m unittest discover -s tests -t .   # 137 項：指令列版本
+cd cli && python3 -m unittest discover -s tests -t .   # 142 項：指令列版本
 ```
 
 ---

@@ -135,9 +135,16 @@ const Store = (() => {
   const findByWord = word => db.cards.find(c =>
     c.word.toLowerCase() === String(word).trim().toLowerCase()) || null;
 
+  //: topic 篩選：先試完全比對，找不到才退回子字串。
+  //  不這樣做的話，選「Sublist 1」會把 Sublist 10 一起抓進來。
+  function topicMatcher(topic) {
+    const exact = db.cards.some(c => c.topic === topic);
+    return exact ? (c => c.topic === topic) : (c => c.topic.includes(topic));
+  }
+
   function listCards(opts = {}) {
     let rows = db.cards.slice();
-    if (opts.topic) rows = rows.filter(c => c.topic.includes(opts.topic));
+    if (opts.topic) rows = rows.filter(topicMatcher(opts.topic));
     if (opts.category) rows = rows.filter(c => c.category.includes(opts.category));
     if (opts.cardType) rows = rows.filter(c => c.cardType === opts.cardType);
     if (opts.incompleteOnly) rows = rows.filter(isIncomplete);
@@ -146,6 +153,18 @@ const Store = (() => {
       rows = rows.filter(c => c.word.toLowerCase().includes(q));
     }
     rows.sort((a, b) => a.word.localeCompare(b.word));
+    return opts.limit ? rows.slice(0, opts.limit) : rows;
+  }
+
+  //: 補完佇列：AWL 依 sublist 由高頻到低頻（1 → 10），其餘排在後面。
+  //  Sublist 1、2 已經寫齊，所以實際會從 Sublist 3 開始補。
+  function completionQueue(opts = {}) {
+    const rank = card => {
+      const m = /^Sublist (\d+)$/.exec(card.topic || '');
+      return m ? Number(m[1]) : 99;
+    };
+    const rows = db.cards.filter(isIncomplete);
+    rows.sort((a, b) => rank(a) - rank(b) || a.word.localeCompare(b.word));
     return opts.limit ? rows.slice(0, opts.limit) : rows;
   }
 
@@ -210,7 +229,7 @@ const Store = (() => {
   function dueItems(track, opts = {}) {
     let rows = db.cards.filter(c => isDue(c.id, track));
     if (opts.cardType) rows = rows.filter(c => c.cardType === opts.cardType);
-    if (opts.topic) rows = rows.filter(c => c.topic.includes(opts.topic));
+    if (opts.topic) rows = rows.filter(topicMatcher(opts.topic));
     if (opts.category) rows = rows.filter(c => c.category.includes(opts.category));
     if (opts.requireExample) rows = rows.filter(c => c.example);
     if (opts.requireSynonyms) rows = rows.filter(c => c.synonyms.length >= 2);
@@ -271,7 +290,7 @@ const Store = (() => {
     const spellingAllowance = opts.onlyWrong || opts.ignoreDailyLimit
       ? Infinity
       : Math.max(0, NEW_PER_DAY - newIntroducedToday('spelling'));
-    if (opts.topic) rows = rows.filter(c => c.topic.includes(opts.topic));
+    if (opts.topic) rows = rows.filter(topicMatcher(opts.topic));
     shuffle(rows);
     // 排序：拼錯的最優先 → 有「挖空例句 + 中文提示」的完整題目 → 其餘按到期日。
     // 只有英文定義可用的字頭卡排最後，不要淹掉設計好的題型。
@@ -348,7 +367,7 @@ const Store = (() => {
     const used = new Map();
     db.productions.forEach(p => used.set(p.cardId, (used.get(p.cardId) || 0) + 1));
     let rows = db.cards.filter(c => c.cardType === 'active');
-    if (opts.topic) rows = rows.filter(c => c.topic.includes(opts.topic));
+    if (opts.topic) rows = rows.filter(topicMatcher(opts.topic));
     shuffle(rows);
     rows.sort((a, b) => (used.get(a.id) || 0) - (used.get(b.id) || 0));
     return opts.limit ? rows.slice(0, opts.limit) : rows;
@@ -361,7 +380,7 @@ const Store = (() => {
       if (c.cardType !== 'passive' || !c.example) return false;
       return getSrs(c.id, 'recall').reviews >= minReviews;
     });
-    if (opts.topic) rows = rows.filter(c => c.topic.includes(opts.topic));
+    if (opts.topic) rows = rows.filter(topicMatcher(opts.topic));
     rows.sort((a, b) => {
       const sa = getSrs(a.id, 'recall'), sb = getSrs(b.id, 'recall');
       return (sb.interval - sb.lapses * 2) - (sa.interval - sa.lapses * 2);
@@ -682,7 +701,7 @@ const Store = (() => {
     newIntroducedToday,
     init, save, resetAll, today, daysAgo,
     addCard, updateCard, getCard, findCard, findByWord, listCards, setCardType,
-    missingCore, isIncomplete, cardLabel, cardCount, incompleteCount,
+    missingCore, isIncomplete, cardLabel, cardCount, incompleteCount, completionQueue,
     getSrs, grade, dueItems, dueCount,
     recordSpelling, spellingQueue, spellingErrorList, spellingAccuracy, lastSpellingResult,
     hasSpellingClue,
