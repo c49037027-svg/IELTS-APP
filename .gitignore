@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# 本機資料庫與匯出檔（學習進度不進版控）
+*.db
+*.db-wal
+*.db-shm
+productions-*.md
+ielts-cards.csv
+ielts-template.csv
+
+# 測試產生的截圖
+tests/screenshots/
+
+# 編輯器與系統
+.DS_Store
+.vscode/
+.idea/
