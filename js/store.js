@@ -122,6 +122,8 @@ const Store = (() => {
   }
 
   const isIncomplete = card => missingCore(card).length > 0;
+  const hasBackContent = card =>
+    !!(card.example || card.collocations.length || card.root || card.synonyms.length);
   const cardLabel = card => (card.pos ? `${card.word} (${card.pos})` : card.word);
 
   function addCard(input) {
@@ -253,6 +255,9 @@ const Store = (() => {
     if (opts.topic) rows = rows.filter(topicMatcher(opts.topic));
     if (opts.category) rows = rows.filter(c => c.category.includes(opts.category));
     if (opts.requireExample) rows = rows.filter(c => c.example);
+    // 背面至少要有東西可看。例句還沒自己寫的卡片，背面還有搭配詞、字根、
+    // 同義詞、中文 —— 那已經是一張夠用的卡了，不該被擋在複習外面。
+    if (opts.requireContent) rows = rows.filter(hasBackContent);
     if (opts.requireSynonyms) rows = rows.filter(c => c.synonyms.length >= 2);
     shuffle(rows);
     // 四個維度齊全的卡片先出 —— 複習的重點就是那四個維度，
@@ -759,7 +764,7 @@ const Store = (() => {
     newIntroducedToday,
     init, save, resetAll, today, daysAgo,
     addCard, updateCard, getCard, findCard, findByWord, listCards, setCardType,
-    missingCore, isIncomplete, cardLabel, cardCount, incompleteCount, completionQueue,
+    missingCore, isIncomplete, hasBackContent, cardLabel, cardCount, incompleteCount, completionQueue,
     getSrs, grade, dueItems, dueCount,
     recordSpelling, spellingQueue, spellingErrorList, spellingAccuracy, lastSpellingResult,
     hasSpellingClue, spellingSentence, getPrefs, setPrefs, showZh, findLoosely,

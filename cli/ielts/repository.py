@@ -303,6 +303,7 @@ def due_items(
     category: str | None = None,
     card_type: str | None = None,
     require_fields: Sequence[str] = (),
+    require_any_fields: Sequence[str] = (),
     include_new: bool = True,
     ignore_daily_limit: bool = False,
 ) -> list[ReviewItem]:
@@ -337,6 +338,10 @@ def due_items(
         if field_name not in CARD_TEXT_FIELDS:
             continue
         sql.append(f"AND TRIM(c.{field_name}) <> ''")
+    # 「這幾個欄位至少要有一個」—— 用來確保卡片背面不是空的
+    any_fields = [f for f in require_any_fields if f in CARD_TEXT_FIELDS]
+    if any_fields:
+        sql.append("AND (" + " OR ".join(f"TRIM(c.{f}) <> ''" for f in any_fields) + ")")
     sql.append("ORDER BY s.due_date ASC, RANDOM()")
 
     rows = conn.execute(" ".join(sql), args).fetchall()

@@ -454,6 +454,24 @@ check('只能靠備註出題的卡片，備註裡不會有答案', () => {
   eq(leaks, [], '備註裡出現了答案本身');
 });
 
+check('例句還沒寫的卡片照樣進得了通勤複習', () => {
+  // 背面還有搭配詞、字根、同義詞、中文 —— 那已經是一張夠用的卡
+  const blank = run(`Store.completionQueue()[0]`);
+  ok(blank && !blank.example, '應該有例句留白的卡片');
+  ok(run(`Store.hasBackContent(Store.completionQueue()[0])`), '背面不該被當成空的');
+});
+check('完全沒內容的卡片不會進通勤複習', () => {
+  const r = run(`(() => {
+    const c = Store.addCard({ word: 'zzempty' });
+    return Store.hasBackContent(c);
+  })()`);
+  eq(r, false);
+});
+check('可複習的卡片數不受「例句還沒寫」影響', () => {
+  const n = run('Store.listCards({ cardType: "passive" }).filter(Store.hasBackContent).length');
+  ok(n > 700, `只有 ${n} 張可複習`);
+});
+
 console.log('--- 中文意思開關 ---');
 check('預設是顯示中文', () => eq(run('Store.showZh()'), true));
 check('CSV 認得 chinese_meaning 這個欄位名', () => {

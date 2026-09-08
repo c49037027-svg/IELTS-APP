@@ -127,6 +127,25 @@ class TestCommuteMode(ModeTestCase):
         # 單次覆寫不該改到設定本身
         self.assertFalse(settings.show_zh(self.conn))
 
+    def test_cards_without_an_example_are_still_reviewable(self):
+        """例句留白的卡片，背面還有搭配詞／字根／同義詞，照樣要能複習。"""
+        repo.add_card(
+            self.conn,
+            make_card("mitigate", example_sentence="",
+                      example_ref="Planting trees can mitigate urban heat."),
+        )
+        ui = FakeUI(keys=[" ", "3"])
+        summary = commute.run(self.context(ui), limit=10)
+        self.assertEqual(summary.done, 1, "這張卡不該被擋在複習外面")
+        self.assertIn("搭配", ui.output)
+        self.assertNotIn("Planting trees", ui.output, "複習模式不該顯示參考例句")
+
+    def test_cards_with_nothing_on_the_back_are_skipped(self):
+        repo.add_card(self.conn, Card(word="zzempty", card_type="passive"))
+        ui = FakeUI(keys=[])
+        summary = commute.run(self.context(ui), limit=10)
+        self.assertEqual(summary.total, 0, "空白卡翻面也沒東西可看")
+
     def test_active_cards_are_excluded_by_default(self):
         repo.add_card(self.conn, make_card("pose", card_type="active"))
         ui = FakeUI(keys=[])

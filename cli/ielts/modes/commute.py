@@ -37,7 +37,9 @@ def run(
         topic=topic,
         category=category,
         card_type=None if include_active else "passive",
-        require_fields=("example_sentence",),
+        # 背面至少要有東西可看就行。例句還沒自己寫的卡片，背面還有
+        # 搭配詞、字根、同義詞、中文 —— 那已經是一張夠用的卡了。
+        require_any_fields=("example_sentence", "collocations", "root_analysis", "synonyms"),
     )
     summary = SessionSummary(mode="通勤複習", total=len(items))
 

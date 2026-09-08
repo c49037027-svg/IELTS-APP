@@ -58,7 +58,7 @@ const Vocab = (() => {
   // ---------------------------------------------------------- 首頁
   function renderHome() {
     const t = Store.today();
-    const dueRecall = Store.dueCount('recall', filterOpts({ cardType: 'passive', requireExample: true }));
+    const dueRecall = Store.dueCount('recall', filterOpts({ cardType: 'passive', requireContent: true }));
     const dueSpell = Store.spellingQueue(filterOpts({})).length;
     const dueSyn = Store.dueItems('synonym', filterOpts({ requireSynonyms: true })).length;
     const wrongList = Store.spellingQueue({ onlyWrong: true }).length;
@@ -173,7 +173,7 @@ const Vocab = (() => {
   // ---------------------------------------------------------- 模式 A：通勤複習
   function startReview() {
     const items = Store.dueItems('recall', filterOpts({
-      cardType: 'passive', requireExample: true, preferComplete: true, limit: 40
+      cardType: 'passive', requireContent: true, preferComplete: true, limit: 40
     }));
     if (!items.length) {
       showStage(modeHeader('通勤複習') + emptyState('今天沒有到期的卡片了', '過幾小時或明天再回來，排程會自己安排。'));
@@ -191,9 +191,8 @@ const Vocab = (() => {
       <div class="card study-card">
         ${wordHead(card)}
         ${s.revealed ? `<div class="dim-box">${backLines(card)}</div>` : ''}
-        ${s.revealed && Store.isIncomplete(card) ? `<div class="missing-tag">這張還缺：${
-          esc(Store.missingCore(card).map(f => Store.CORE_LABELS[f]).join('、'))
-        }　回首頁用「補完卡片」補上</div>` : ''}
+        ${s.revealed && !card.example ? `<div class="missing-tag">
+          這張還沒有你自己的例句　·　回首頁的「✍️ 寫例句」補一句，會更好記</div>` : ''}
       </div>
       ${s.revealed ? `
         <div class="rating-grid">
