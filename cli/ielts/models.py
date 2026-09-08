@@ -27,6 +27,7 @@ CARD_TEXT_FIELDS = (
     "word",
     "pos",
     "example_sentence",
+    "example_ref",
     "collocations",
     "root_analysis",
     "synonyms",
@@ -84,6 +85,9 @@ class Card:
     word: str = ""
     pos: str = ""
     example_sentence: str = ""
+    #: 參考例句：例句欄留白給使用者自己寫時，這裡放一句備援的。
+    #: 只在補完模式「卡住的話看參考」時顯示，複習模式永遠看不到。
+    example_ref: str = ""
     collocations: str = ""
     root_analysis: str = ""
     synonyms: str = ""

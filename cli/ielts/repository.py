@@ -104,15 +104,16 @@ def add_card(conn: sqlite3.Connection, card: Card, today: date | None = None) ->
     stamp = now_iso()
     cur = conn.execute(
         """
-        INSERT INTO cards (word, pos, example_sentence, collocations, root_analysis,
-                           synonyms, category, topic, card_type, zh_hint, notes,
+        INSERT INTO cards (word, pos, example_sentence, example_ref, collocations,
+                           root_analysis, synonyms, category, topic, card_type,
+                           zh_hint, notes,
                            is_incomplete, missing_fields, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
-            card.word, card.pos, card.example_sentence, card.collocations,
-            card.root_analysis, card.synonyms, card.category, card.topic,
-            card.card_type, card.zh_hint, card.notes, incomplete, missing,
+            card.word, card.pos, card.example_sentence, card.example_ref,
+            card.collocations, card.root_analysis, card.synonyms, card.category,
+            card.topic, card.card_type, card.zh_hint, card.notes, incomplete, missing,
             stamp, stamp,
         ),
     )
@@ -470,7 +471,8 @@ def spelling_queue(
         sql.append("AND s.due_date <= ?")
         args.append(today.isoformat())
         # 至少要有一個線索（例句／中文／英文定義），否則題目無解
-        clue = ["TRIM(c.example_sentence) <> ''", "TRIM(c.notes) <> ''"]
+        clue = ["TRIM(c.example_sentence) <> ''", "TRIM(c.example_ref) <> ''",
+                "TRIM(c.notes) <> ''"]
         if show_zh:
             clue.append("TRIM(c.zh_hint) <> ''")
         sql.append("AND (" + " OR ".join(clue) + ")")
@@ -480,10 +482,11 @@ def spelling_queue(
     # 排序：拼錯的最優先 → 有「挖空例句 + 中文提示」的完整題目 → 其餘按到期日。
     # 只有英文定義可用的 AWL 字頭卡排最後，不要淹掉設計好的題型。
     zh_usable = "TRIM(c.zh_hint) <> ''" if show_zh else "0"
+    has_sentence = "(TRIM(c.example_sentence) <> '' OR TRIM(c.example_ref) <> '')"
     sql.append(
         "ORDER BY CASE WHEN last_result = 0 THEN 0 ELSE 1 END, "
-        f"CASE WHEN TRIM(c.example_sentence) <> '' AND {zh_usable} THEN 0 "
-        f"     WHEN TRIM(c.example_sentence) <> '' OR {zh_usable} THEN 1 "
+        f"CASE WHEN {has_sentence} AND {zh_usable} THEN 0 "
+        f"     WHEN {has_sentence} OR {zh_usable} THEN 1 "
         "     ELSE 2 END, "
         "s.due_date ASC, RANDOM() LIMIT ?"
     )

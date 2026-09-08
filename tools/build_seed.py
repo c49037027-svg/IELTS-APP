@@ -28,7 +28,7 @@ from data_topics import TOPICS  # noqa: E402
 CSV_PATH = ROOT / "cli" / "ielts" / "data" / "seed_cards.csv"
 JS_PATH = ROOT / "js" / "cards.js"
 
-COLUMNS = ["word", "pos", "example_sentence", "collocations", "root_analysis",
+COLUMNS = ["word", "pos", "example_sentence", "example_ref", "collocations", "root_analysis",
            "synonyms", "category", "topic", "card_type", "zh_hint", "notes"]
 
 #: 口說表達與 Task 1 用語是「拿來用」的字，一開始就是 active（會出現在主動輸出）。
@@ -60,6 +60,8 @@ def normalise(entry: dict) -> dict:
         "word": entry["word"].strip(),
         "pos": entry.get("pos", "").strip(),
         "example_sentence": entry.get("example", "").strip(),
+        # 參考例句：例句欄留白給使用者自己寫時的備援，只在補完模式按了才看得到
+        "example_ref": entry.get("example_ref", "").strip(),
         "collocations": "; ".join(c.strip() for c in entry.get("collocations", [])),
         "root_analysis": entry.get("root", "").strip(),
         "synonyms": "; ".join(s.strip() for s in entry.get("synonyms", [])),
@@ -113,9 +115,13 @@ def validate(entries: list[dict]) -> list[str]:
                 problems.append(f"{where}：英文定義裡出現這個字本身 → {notes}")
             continue
 
-        for field, label in (("example", "例句"), ("root", "字根")):
-            if not str(entry.get(field, "")).strip():
-                problems.append(f"{where}：缺{label}")
+        example = str(entry.get("example", "")).strip()
+        example_ref = str(entry.get("example_ref", "")).strip()
+        # 例句欄可以刻意留白給使用者自己寫，但那時一定要有一句參考例句墊底
+        if not example and not example_ref:
+            problems.append(f"{where}：缺例句（要嘛寫 example，要嘛給 example_ref）")
+        if not str(entry.get("root", "")).strip():
+            problems.append(f"{where}：缺字根")
 
         collocations = entry.get("collocations") or []
         synonyms = entry.get("synonyms") or []
@@ -127,9 +133,9 @@ def validate(entries: list[dict]) -> list[str]:
             problems.append(f"{where}：缺中文提示（拼字模式要用）")
 
         # 最重要的一條：例句裡必須真的用到這個字，否則挖空模式會出不了題
-        example = str(entry.get("example", ""))
-        if example and textutil.mask_sentence(example, word)[1] == 0:
-            problems.append(f"{where}：例句裡找不到這個字 → {example}")
+        for text, label in ((example, "例句"), (example_ref, "參考例句")):
+            if text and textutil.mask_sentence(text, word)[1] == 0:
+                problems.append(f"{where}：{label}裡找不到這個字 → {text}")
 
         # 搭配詞也應該含有這個字（片語除外，片語本身就是搭配）
         if len(word.split()) == 1:
@@ -159,6 +165,7 @@ def write_js(cards: list[dict]) -> None:
             "word": card["word"],
             "pos": card["pos"],
             "example": card["example_sentence"],
+            "exampleRef": card["example_ref"],
             "collocations": [c.strip() for c in card["collocations"].split(";") if c.strip()],
             "root": card["root_analysis"],
             "synonyms": [s.strip() for s in card["synonyms"].split(";") if s.strip()],
@@ -189,7 +196,9 @@ def report(cards: list[dict]) -> None:
         print("  話題字各主題：" + "、".join(f"{t} {n}" for t, n in sorted(topics.items())))
     complete = sum(1 for c in cards if c["example_sentence"] and c["collocations"]
                    and c["root_analysis"] and c["synonyms"])
-    print(f"  四維度齊全 {complete} 張 ／ 待補完 {len(cards) - complete} 張")
+    awaiting = sum(1 for c in cards if not c["example_sentence"] and c["example_ref"])
+    print(f"  四維度齊全 {complete} 張")
+    print(f"  例句留白等你自己寫 {awaiting} 張（搭配／字根／同義／中文都已備妥）")
     types = Counter(c["card_type"] for c in cards)
     print(f"  passive {types.get('passive', 0)} ／ active {types.get('active', 0)}")
 

@@ -7,7 +7,7 @@
 SUBLIST_3 = [
     {
         "word": "alternative", "pos": "adj./n.",
-        "example": "Solar power is now a realistic alternative to coal in many countries.",
+        "example_ref": "Solar power is now a realistic alternative to coal in many countries.",
         "collocations": ["a viable alternative", "an alternative to", "alternative energy"],
         "root": "alter(另一個, 同 alter/alternate/altruism) + -ative → 另一個可選的",
         "synonyms": ["option", "substitute", "choice", "replacement"],
@@ -16,7 +16,7 @@ SUBLIST_3 = [
     },
     {
         "word": "circumstance", "pos": "n.",
-        "example": "Under these circumstances the government had little choice but to act.",
+        "example_ref": "Under these circumstances the government had little choice but to act.",
         "collocations": ["under the circumstances", "in exceptional circumstances", "economic circumstances"],
         "root": "circum-(繞圈, 同 circle/circuit) + stance(站立, 同 stand) → 站在四周的條件",
         "synonyms": ["situation", "condition", "context", "factor"],
@@ -24,7 +24,7 @@ SUBLIST_3 = [
     },
     {
         "word": "comment", "pos": "n./v.",
-        "example": "Several readers left critical comments on the newspaper's website.",
+        "example_ref": "Several readers left critical comments on the newspaper's website.",
         "collocations": ["make a comment", "comment on", "no comment"],
         "root": "com-(一起) + ment(心思, 同 mental/mention) → 把想法說出來",
         "synonyms": ["remark", "observation", "opinion", "note"],
@@ -32,7 +32,7 @@ SUBLIST_3 = [
     },
     {
         "word": "component", "pos": "n.",
-        "example": "Regular exercise is a key component of any effective health programme.",
+        "example_ref": "Regular exercise is a key component of any effective health programme.",
         "collocations": ["a key component", "a major component", "component parts"],
         "root": "com-(一起) + pon(放置, 同 compose/postpone) → 一起放進來的部分",
         "synonyms": ["element", "part", "ingredient", "constituent"],
@@ -40,7 +40,7 @@ SUBLIST_3 = [
     },
     {
         "word": "consent", "pos": "n./v.",
-        "example": "Hospitals must obtain written consent before any operation.",
+        "example_ref": "Hospitals must obtain written consent before any operation.",
         "collocations": ["give consent", "informed consent", "without consent"],
         "root": "con-(一起) + sent(感覺, 同 sense/sentiment) → 感覺一致 → 同意",
         "synonyms": ["agreement", "permission", "approval", "authorisation"],
@@ -48,7 +48,7 @@ SUBLIST_3 = [
     },
     {
         "word": "considerable", "pos": "adj.",
-        "example": "Building the new metro line required a considerable amount of public money.",
+        "example_ref": "Building the new metro line required a considerable amount of public money.",
         "collocations": ["a considerable amount", "considerable evidence", "considerable impact"],
         "root": "consider(考慮) + -able → 大到值得考慮 → 相當大的",
         "synonyms": ["substantial", "significant", "sizeable", "extensive"],
@@ -57,7 +57,7 @@ SUBLIST_3 = [
     },
     {
         "word": "constrain", "pos": "v.",
-        "example": "Limited funding constrains what small schools can offer their students.",
+        "example_ref": "Limited funding constrains what small schools can offer their students.",
         "collocations": ["severely constrain", "constrain growth", "be constrained by"],
         "root": "con-(一起) + strain(拉緊, 同 strict/restrain) → 綁緊 → 限制",
         "synonyms": ["restrict", "limit", "hamper", "curb"],
@@ -65,7 +65,7 @@ SUBLIST_3 = [
     },
     {
         "word": "contribute", "pos": "v.",
-        "example": "Private cars contribute significantly to air pollution in large cities.",
+        "example_ref": "Private cars contribute significantly to air pollution in large cities.",
         "collocations": ["contribute to", "contribute significantly", "contribute towards"],
         "root": "con-(一起) + tribute(給予, 同 tribute/distribute) → 一起拿出來",
         "synonyms": ["add to", "donate", "play a part in", "help"],
@@ -74,7 +74,7 @@ SUBLIST_3 = [
     },
     {
         "word": "convene", "pos": "v.",
-        "example": "The committee convened an emergency meeting after the flooding.",
+        "example_ref": "The committee convened an emergency meeting after the flooding.",
         "collocations": ["convene a meeting", "convene a conference", "convene annually"],
         "root": "con-(一起) + ven(來, 同 venue/convenient/event) → 讓大家來到一起",
         "synonyms": ["assemble", "gather", "call together", "summon"],
@@ -82,7 +82,7 @@ SUBLIST_3 = [
     },
     {
         "word": "coordinate", "pos": "v.",
-        "example": "The charity coordinates relief efforts across five provinces.",
+        "example_ref": "The charity coordinates relief efforts across five provinces.",
         "collocations": ["coordinate efforts", "closely coordinate", "coordinate with"],
         "root": "co-(共同) + ordin(次序, 同 order/ordinary) → 讓各部分排在同一個秩序裡",
         "synonyms": ["organise", "harmonise", "synchronise", "manage"],
@@ -90,7 +90,7 @@ SUBLIST_3 = [
     },
     {
         "word": "core", "pos": "n./adj.",
-        "example": "Reading and writing remain the core skills of the curriculum.",
+        "example_ref": "Reading and writing remain the core skills of the curriculum.",
         "collocations": ["core skills", "at the core of", "core business"],
         "root": "拉丁 cor「心」(同 courage/cordial) → 最中心的部分",
         "synonyms": ["centre", "heart", "essence", "nucleus"],
@@ -98,7 +98,7 @@ SUBLIST_3 = [
     },
     {
         "word": "corporate", "pos": "adj.",
-        "example": "Many firms now publish an annual report on their corporate responsibility.",
+        "example_ref": "Many firms now publish an annual report on their corporate responsibility.",
         "collocations": ["corporate responsibility", "corporate culture", "corporate image"],
         "root": "corpor(身體, 同 corpse/corporation) + -ate → 像一個身體般的整體 → 公司的",
         "synonyms": ["business", "commercial", "collective", "organisational"],
@@ -106,7 +106,7 @@ SUBLIST_3 = [
     },
     {
         "word": "correspond", "pos": "v.",
-        "example": "The rise in obesity corresponds closely to the growth of fast-food outlets.",
+        "example_ref": "The rise in obesity corresponds closely to the growth of fast-food outlets.",
         "collocations": ["correspond to", "correspond closely", "correspond with"],
         "root": "cor-(一起) + respond(回應) → 互相對得上",
         "synonyms": ["match", "agree", "tally", "align"],
@@ -115,7 +115,7 @@ SUBLIST_3 = [
     },
     {
         "word": "criteria", "pos": "n.",
-        "example": "Applicants are judged against four published criteria.",
+        "example_ref": "Applicants are judged against four published criteria.",
         "collocations": ["meet the criteria", "strict criteria", "selection criteria"],
         "root": "希臘 krites「判斷者」(同 critic/critical) → 判斷的標準；單數是 criterion",
         "synonyms": ["standards", "benchmarks", "requirements", "measures"],
@@ -124,7 +124,7 @@ SUBLIST_3 = [
     },
     {
         "word": "deduce", "pos": "v.",
-        "example": "From the fossil record we can deduce that the climate was once far wetter.",
+        "example_ref": "From the fossil record we can deduce that the climate was once far wetter.",
         "collocations": ["deduce from", "reasonably deduce", "deduce a conclusion"],
         "root": "de-(向下) + duce(引導, 同 conduct/reduce/introduce) → 從已知推導下來",
         "synonyms": ["infer", "conclude", "work out", "reason"],
@@ -132,7 +132,7 @@ SUBLIST_3 = [
     },
     {
         "word": "demonstrate", "pos": "v.",
-        "example": "The study demonstrates a clear link between sleep and academic performance.",
+        "example_ref": "The study demonstrates a clear link between sleep and academic performance.",
         "collocations": ["demonstrate clearly", "demonstrate that", "demonstrate the need for"],
         "root": "de-(徹底) + monstr(顯示, 同 monster/monitor) → 完整攤開來給人看",
         "synonyms": ["show", "prove", "illustrate", "establish"],
@@ -140,7 +140,7 @@ SUBLIST_3 = [
     },
     {
         "word": "document", "pos": "n./v.",
-        "example": "Researchers documented every change in the river over ten years.",
+        "example_ref": "Researchers documented every change in the river over ten years.",
         "collocations": ["an official document", "document the process", "well documented"],
         "root": "doc(教導, 同 doctor/doctrine) + -ment → 用來教人／作為證明的東西",
         "synonyms": ["record", "paper", "file", "chronicle"],
@@ -148,7 +148,7 @@ SUBLIST_3 = [
     },
     {
         "word": "dominate", "pos": "v.",
-        "example": "A handful of technology firms dominate the global advertising market.",
+        "example_ref": "A handful of technology firms dominate the global advertising market.",
         "collocations": ["dominate the market", "completely dominate", "dominated by"],
         "root": "domin(主人, 同 dominion/domestic) + -ate → 當主人 → 支配",
         "synonyms": ["control", "rule", "lead", "overshadow"],
@@ -156,7 +156,7 @@ SUBLIST_3 = [
     },
     {
         "word": "emphasis", "pos": "n.",
-        "example": "Finnish schools place great emphasis on play in the early years.",
+        "example_ref": "Finnish schools place great emphasis on play in the early years.",
         "collocations": ["place emphasis on", "put emphasis on", "with particular emphasis"],
         "root": "em-(在裡面) + phas(顯現, 同 phase/phenomenon) → 讓某點浮出來 → 強調",
         "synonyms": ["stress", "focus", "importance", "priority"],
@@ -165,7 +165,7 @@ SUBLIST_3 = [
     },
     {
         "word": "ensure", "pos": "v.",
-        "example": "Free school meals help ensure that every child eats at least one hot meal.",
+        "example_ref": "Free school meals help ensure that every child eats at least one hot meal.",
         "collocations": ["ensure that", "help ensure", "ensure access to"],
         "root": "en-(使) + sure(確定) → 使某事確定發生",
         "synonyms": ["guarantee", "make certain", "secure", "safeguard"],
@@ -174,7 +174,7 @@ SUBLIST_3 = [
     },
     {
         "word": "exclude", "pos": "v.",
-        "example": "The survey excluded anyone under the age of eighteen.",
+        "example_ref": "The survey excluded anyone under the age of eighteen.",
         "collocations": ["exclude from", "socially excluded", "exclude the possibility"],
         "root": "ex-(向外) + clud(關閉, 同 include/conclude/close) → 關在外面",
         "synonyms": ["leave out", "omit", "bar", "rule out"],
@@ -182,7 +182,7 @@ SUBLIST_3 = [
     },
     {
         "word": "framework", "pos": "n.",
-        "example": "The agreement provides a legal framework for reducing emissions.",
+        "example_ref": "The agreement provides a legal framework for reducing emissions.",
         "collocations": ["a legal framework", "a theoretical framework", "within the framework of"],
         "root": "frame(架構) + work → 撐起整件事的骨架",
         "synonyms": ["structure", "system", "basis", "skeleton"],
@@ -190,7 +190,7 @@ SUBLIST_3 = [
     },
     {
         "word": "fund", "pos": "n./v.",
-        "example": "The scheme is funded entirely by local taxpayers.",
+        "example_ref": "The scheme is funded entirely by local taxpayers.",
         "collocations": ["public funds", "fully funded", "raise funds"],
         "root": "拉丁 fundus「底部、土地」(同 foundation/fundamental) → 打底的錢",
         "synonyms": ["finance", "capital", "resources", "back"],
@@ -198,7 +198,7 @@ SUBLIST_3 = [
     },
     {
         "word": "illustrate", "pos": "v.",
-        "example": "The chart illustrates how car ownership changed between 1990 and 2020.",
+        "example_ref": "The chart illustrates how car ownership changed between 1990 and 2020.",
         "collocations": ["illustrate the point", "clearly illustrate", "as the graph illustrates"],
         "root": "il-(進入) + lustr(光, 同 lustre/illuminate) → 照亮 → 說明",
         "synonyms": ["show", "depict", "demonstrate", "exemplify"],
@@ -207,7 +207,7 @@ SUBLIST_3 = [
     },
     {
         "word": "immigrate", "pos": "v.",
-        "example": "Her grandparents immigrated to Canada in the 1960s.",
+        "example_ref": "Her grandparents immigrated to Canada in the 1960s.",
         "collocations": ["immigrate to", "immigrate from", "legally immigrate"],
         "root": "im-(進入) + migr(遷移, 同 migrate/emigrate) → 遷進來",
         "synonyms": ["settle in", "move to", "relocate to", "resettle"],
@@ -216,7 +216,7 @@ SUBLIST_3 = [
     },
     {
         "word": "imply", "pos": "v.",
-        "example": "The findings imply that longer commutes damage mental health.",
+        "example_ref": "The findings imply that longer commutes damage mental health.",
         "collocations": ["imply that", "strongly imply", "does not imply"],
         "root": "im-(進入) + ply(摺疊, 同 apply/complicate/plywood) → 摺進話裡沒說白 → 暗示",
         "synonyms": ["suggest", "indicate", "hint at", "point to"],
@@ -225,7 +225,7 @@ SUBLIST_3 = [
     },
     {
         "word": "initial", "pos": "adj.",
-        "example": "The initial results were promising, but the effect faded after six months.",
+        "example_ref": "The initial results were promising, but the effect faded after six months.",
         "collocations": ["the initial stage", "an initial response", "initial costs"],
         "root": "in-(進入) + it(走, 同 initiate/transit/exit) → 剛走進來的 → 最初的",
         "synonyms": ["first", "original", "opening", "preliminary"],
@@ -233,7 +233,7 @@ SUBLIST_3 = [
     },
     {
         "word": "instance", "pos": "n.",
-        "example": "In this instance the council overruled the planning committee.",
+        "example_ref": "In this instance the council overruled the planning committee.",
         "collocations": ["for instance", "in this instance", "in many instances"],
         "root": "in-(在) + st(站立, 同 stand/status/constant) → 站在眼前的一個例子",
         "synonyms": ["example", "case", "occasion", "occurrence"],
@@ -242,7 +242,7 @@ SUBLIST_3 = [
     },
     {
         "word": "interact", "pos": "v.",
-        "example": "Children who interact regularly with adults develop language faster.",
+        "example_ref": "Children who interact regularly with adults develop language faster.",
         "collocations": ["interact with", "interact socially", "interact effectively"],
         "root": "inter-(之間, 同 international/internet) + act(行動) → 彼此有動作 → 互動",
         "synonyms": ["engage", "communicate", "mix", "connect"],
@@ -250,7 +250,7 @@ SUBLIST_3 = [
     },
     {
         "word": "justify", "pos": "v.",
-        "example": "Governments must justify every increase in military spending.",
+        "example_ref": "Governments must justify every increase in military spending.",
         "collocations": ["justify the cost", "hard to justify", "justify a decision"],
         "root": "just(正當, 同 justice/adjust) + -ify(使) → 使之顯得正當",
         "synonyms": ["defend", "warrant", "explain", "vindicate"],
@@ -258,7 +258,7 @@ SUBLIST_3 = [
     },
     {
         "word": "layer", "pos": "n./v.",
-        "example": "The ozone layer protects living things from ultraviolet radiation.",
+        "example_ref": "The ozone layer protects living things from ultraviolet radiation.",
         "collocations": ["the ozone layer", "a thick layer", "layer upon layer"],
         "root": "lay(放置) + -er → 一層層放上去的東西",
         "synonyms": ["stratum", "coating", "tier", "level"],
@@ -266,7 +266,7 @@ SUBLIST_3 = [
     },
     {
         "word": "link", "pos": "n./v.",
-        "example": "Researchers found a strong link between screen time and poor sleep.",
+        "example_ref": "Researchers found a strong link between screen time and poor sleep.",
         "collocations": ["a strong link", "a direct link", "link A to B"],
         "root": "古北歐語 hlekkr「鏈環」→ 一環扣一環 → 關聯",
         "synonyms": ["connection", "association", "relationship", "tie"],
@@ -275,7 +275,7 @@ SUBLIST_3 = [
     },
     {
         "word": "locate", "pos": "v.",
-        "example": "The new campus is located on the edge of the city.",
+        "example_ref": "The new campus is located on the edge of the city.",
         "collocations": ["be located in", "conveniently located", "locate a site"],
         "root": "loc(地方, 同 local/location/allocate) + -ate → 找出／設在某地",
         "synonyms": ["situate", "position", "find", "place"],
@@ -283,7 +283,7 @@ SUBLIST_3 = [
     },
     {
         "word": "maximise", "pos": "v.",
-        "example": "Terraced fields maximise the amount of land available for farming.",
+        "example_ref": "Terraced fields maximise the amount of land available for farming.",
         "collocations": ["maximise profits", "maximise efficiency", "maximise the benefit"],
         "root": "maxim(最大, 拉丁 maximus, 同 maximum) + -ise(使) → 使到最大",
         "synonyms": ["increase", "optimise", "boost", "enlarge"],
@@ -292,7 +292,7 @@ SUBLIST_3 = [
     },
     {
         "word": "minor", "pos": "adj.",
-        "example": "Most patients reported only minor side effects.",
+        "example_ref": "Most patients reported only minor side effects.",
         "collocations": ["a minor problem", "minor injuries", "a minor role"],
         "root": "拉丁 minor「較小」(同 minimum/minus/minority) → 較小的、次要的",
         "synonyms": ["slight", "small", "secondary", "trivial"],
@@ -300,7 +300,7 @@ SUBLIST_3 = [
     },
     {
         "word": "negate", "pos": "v.",
-        "example": "Rising fuel prices negated the savings made by the new engines.",
+        "example_ref": "Rising fuel prices negated the savings made by the new engines.",
         "collocations": ["negate the effect", "largely negate", "negate the benefits"],
         "root": "neg(否定, 同 negative/deny) + -ate → 使歸零 → 抵銷、否定",
         "synonyms": ["cancel out", "nullify", "undo", "invalidate"],
@@ -308,7 +308,7 @@ SUBLIST_3 = [
     },
     {
         "word": "outcome", "pos": "n.",
-        "example": "The outcome of the trial surprised even the researchers.",
+        "example_ref": "The outcome of the trial surprised even the researchers.",
         "collocations": ["a positive outcome", "the likely outcome", "learning outcomes"],
         "root": "out(出來) + come(來) → 走出來的結果",
         "synonyms": ["result", "consequence", "upshot", "conclusion"],
@@ -316,7 +316,7 @@ SUBLIST_3 = [
     },
     {
         "word": "partner", "pos": "n./v.",
-        "example": "The university has partnered with three hospitals to train nurses.",
+        "example_ref": "The university has partnered with three hospitals to train nurses.",
         "collocations": ["a business partner", "partner with", "a trading partner"],
         "root": "part(部分) + -ner → 分擔一部分的人",
         "synonyms": ["associate", "collaborator", "ally", "colleague"],
@@ -324,7 +324,7 @@ SUBLIST_3 = [
     },
     {
         "word": "philosophy", "pos": "n.",
-        "example": "The school's teaching philosophy puts curiosity ahead of examination results.",
+        "example_ref": "The school's teaching philosophy puts curiosity ahead of examination results.",
         "collocations": ["a teaching philosophy", "a philosophy of life", "underlying philosophy"],
         "root": "philo(愛, 同 philanthropy) + soph(智慧, 同 sophisticated) → 愛智慧",
         "synonyms": ["outlook", "principles", "doctrine", "worldview"],
@@ -332,7 +332,7 @@ SUBLIST_3 = [
     },
     {
         "word": "physical", "pos": "adj.",
-        "example": "Regular physical activity lowers the risk of heart disease.",
+        "example_ref": "Regular physical activity lowers the risk of heart disease.",
         "collocations": ["physical activity", "physical health", "physical evidence"],
         "root": "phys(自然, 希臘 physis, 同 physics/physician) + -ical → 關於物質世界的",
         "synonyms": ["bodily", "material", "tangible", "corporeal"],
@@ -340,7 +340,7 @@ SUBLIST_3 = [
     },
     {
         "word": "publish", "pos": "v.",
-        "example": "The team published their findings in a leading medical journal.",
+        "example_ref": "The team published their findings in a leading medical journal.",
         "collocations": ["publish a study", "publish findings", "recently published"],
         "root": "publ(公眾, 同 public/republic) + -ish → 讓公眾看得到",
         "synonyms": ["issue", "release", "print", "bring out"],
@@ -348,7 +348,7 @@ SUBLIST_3 = [
     },
     {
         "word": "react", "pos": "v.",
-        "example": "Local residents reacted angrily to the plan to close the library.",
+        "example_ref": "Local residents reacted angrily to the plan to close the library.",
         "collocations": ["react to", "react quickly", "react strongly"],
         "root": "re-(回) + act(行動) → 回過來動作 → 反應",
         "synonyms": ["respond", "reply", "answer", "retaliate"],
@@ -356,7 +356,7 @@ SUBLIST_3 = [
     },
     {
         "word": "register", "pos": "n./v.",
-        "example": "All private clinics must register with the health authority.",
+        "example_ref": "All private clinics must register with the health authority.",
         "collocations": ["register with", "the electoral register", "register a complaint"],
         "root": "re-(回) + gest(攜帶, 同 gesture/digest) → 帶回來記下 → 登記",
         "synonyms": ["enrol", "record", "sign up", "log"],
@@ -364,7 +364,7 @@ SUBLIST_3 = [
     },
     {
         "word": "rely", "pos": "v.",
-        "example": "Rural communities still rely heavily on a single bus service.",
+        "example_ref": "Rural communities still rely heavily on a single bus service.",
         "collocations": ["rely on", "rely heavily", "rely entirely"],
         "root": "re-(回) + ly(綁, 同 liable/ligament) → 把自己綁回某人身上 → 依賴",
         "synonyms": ["depend on", "count on", "trust", "lean on"],
@@ -373,7 +373,7 @@ SUBLIST_3 = [
     },
     {
         "word": "remove", "pos": "v.",
-        "example": "The council removed the tolls after a year of public pressure.",
+        "example_ref": "The council removed the tolls after a year of public pressure.",
         "collocations": ["remove a barrier", "completely remove", "remove from office"],
         "root": "re-(離開) + mov(移動, 同 move/motion/mobile) → 移走",
         "synonyms": ["take away", "eliminate", "withdraw", "delete"],
@@ -381,7 +381,7 @@ SUBLIST_3 = [
     },
     {
         "word": "scheme", "pos": "n.",
-        "example": "A city-wide bicycle scheme cut car journeys by a fifth.",
+        "example_ref": "A city-wide bicycle scheme cut car journeys by a fifth.",
         "collocations": ["a pilot scheme", "a government scheme", "launch a scheme"],
         "root": "希臘 schema「形狀、計畫」(同 schematic/scheme) → 事先畫好的形狀",
         "synonyms": ["plan", "programme", "project", "initiative"],
@@ -390,7 +390,7 @@ SUBLIST_3 = [
     },
     {
         "word": "sequence", "pos": "n.",
-        "example": "The diagram shows the sequence of stages in recycling glass.",
+        "example_ref": "The diagram shows the sequence of stages in recycling glass.",
         "collocations": ["a sequence of events", "in sequence", "the correct sequence"],
         "root": "sequ(跟隨, 同 sequel/consequence/subsequent) + -ence → 一個接一個",
         "synonyms": ["order", "series", "succession", "progression"],
@@ -399,7 +399,7 @@ SUBLIST_3 = [
     },
     {
         "word": "sex", "pos": "n.",
-        "example": "The data were analysed separately by age and sex.",
+        "example_ref": "The data were analysed separately by age and sex.",
         "collocations": ["by sex", "the opposite sex", "sex differences"],
         "root": "拉丁 sexus「區分」→ 生理上的區分",
         "synonyms": ["gender", "biological category"],
@@ -408,7 +408,7 @@ SUBLIST_3 = [
     },
     {
         "word": "shift", "pos": "n./v.",
-        "example": "There has been a marked shift towards remote working since 2020.",
+        "example_ref": "There has been a marked shift towards remote working since 2020.",
         "collocations": ["a shift towards", "a dramatic shift", "shift the focus"],
         "root": "古英語 sciftan「安排、分開」→ 換位置 → 轉變",
         "synonyms": ["change", "move", "switch", "transition"],
@@ -416,7 +416,7 @@ SUBLIST_3 = [
     },
     {
         "word": "specify", "pos": "v.",
-        "example": "The contract does not specify who pays for repairs.",
+        "example_ref": "The contract does not specify who pays for repairs.",
         "collocations": ["clearly specify", "specify the conditions", "unless otherwise specified"],
         "root": "spec(看, 同 species/specific/inspect) + -ify → 指明是哪一個",
         "synonyms": ["state", "stipulate", "define", "detail"],
@@ -424,7 +424,7 @@ SUBLIST_3 = [
     },
     {
         "word": "sufficient", "pos": "adj.",
-        "example": "Many families still lack sufficient income to heat their homes.",
+        "example_ref": "Many families still lack sufficient income to heat their homes.",
         "collocations": ["sufficient evidence", "more than sufficient", "sufficient funds"],
         "root": "suf-(在下面) + fic(製作, 同 efficient/factory/effect) → 底下做得夠了 → 足夠",
         "synonyms": ["enough", "adequate", "ample", "satisfactory"],
@@ -433,7 +433,7 @@ SUBLIST_3 = [
     },
     {
         "word": "task", "pos": "n.",
-        "example": "Reducing emissions is a task no single country can complete alone.",
+        "example_ref": "Reducing emissions is a task no single country can complete alone.",
         "collocations": ["a difficult task", "carry out a task", "a daunting task"],
         "root": "拉丁 taxare「評定」(同 tax/taxation) → 派下來的工作",
         "synonyms": ["job", "duty", "assignment", "undertaking"],
@@ -441,7 +441,7 @@ SUBLIST_3 = [
     },
     {
         "word": "technical", "pos": "adj.",
-        "example": "The delay was caused by a technical fault in the signalling system.",
+        "example_ref": "The delay was caused by a technical fault in the signalling system.",
         "collocations": ["a technical problem", "technical support", "technical skills"],
         "root": "techn(技藝, 希臘 techne, 同 technique/technology) + -ical → 關於技術的",
         "synonyms": ["specialised", "mechanical", "practical", "applied"],
@@ -449,7 +449,7 @@ SUBLIST_3 = [
     },
     {
         "word": "technique", "pos": "n.",
-        "example": "Farmers adopted new irrigation techniques to cope with the drought.",
+        "example_ref": "Farmers adopted new irrigation techniques to cope with the drought.",
         "collocations": ["a new technique", "master a technique", "farming techniques"],
         "root": "techn(技藝) + -ique → 做事的方法",
         "synonyms": ["method", "approach", "procedure", "skill"],
@@ -457,7 +457,7 @@ SUBLIST_3 = [
     },
     {
         "word": "technology", "pos": "n.",
-        "example": "Cheap solar technology has transformed electricity supply in rural areas.",
+        "example_ref": "Cheap solar technology has transformed electricity supply in rural areas.",
         "collocations": ["new technology", "digital technology", "technology transfer"],
         "root": "techn(技藝) + -logy(學問, 同 biology/psychology) → 技藝的學問",
         "synonyms": ["engineering", "applied science", "know-how", "innovation"],
@@ -465,7 +465,7 @@ SUBLIST_3 = [
     },
     {
         "word": "valid", "pos": "adj.",
-        "example": "Both sides made valid points about the cost of the project.",
+        "example_ref": "Both sides made valid points about the cost of the project.",
         "collocations": ["a valid argument", "valid evidence", "remain valid"],
         "root": "val(強壯, 同 value/valour/prevail) + -id → 站得住腳的",
         "synonyms": ["sound", "legitimate", "reasonable", "well-founded"],
@@ -473,7 +473,7 @@ SUBLIST_3 = [
     },
     {
         "word": "volume", "pos": "n.",
-        "example": "The volume of traffic entering the city centre has doubled since 2010.",
+        "example_ref": "The volume of traffic entering the city centre has doubled since 2010.",
         "collocations": ["the volume of traffic", "sales volume", "a large volume of"],
         "root": "拉丁 volumen「卷軸」(同 revolve/evolve) → 捲起來的量 → 體積、量",
         "synonyms": ["quantity", "amount", "capacity", "bulk"],

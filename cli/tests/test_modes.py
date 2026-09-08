@@ -279,7 +279,31 @@ class TestCompleteMode(ModeTestCase):
         ui = FakeUI()
         fixed = complete.run(self.context(ui), limit=5)
         self.assertEqual(fixed, 0)
-        self.assertIn("補齊", ui.output)
+        self.assertIn("寫過了", ui.output)
+
+    def test_question_mark_reveals_the_reference_example(self):
+        """例句想不出來時輸入 ? 才給參考句，不是預設就顯示。"""
+        repo.add_card(
+            self.conn,
+            make_card("mitigate", example_sentence="",
+                      example_ref="Planting trees can mitigate urban heat."),
+        )
+        ui = FakeUI(answers=["?", "We must mitigate the damage."])
+        complete.run(self.context(ui), limit=1)
+        self.assertIn("參考", ui.output)
+        self.assertIn("Planting trees", ui.output)
+        card = repo.find_card(self.conn, "mitigate", "v.")
+        self.assertEqual(card.example_sentence, "We must mitigate the damage.")
+
+    def test_reference_is_not_shown_unless_asked(self):
+        repo.add_card(
+            self.conn,
+            make_card("mitigate", example_sentence="",
+                      example_ref="Planting trees can mitigate urban heat."),
+        )
+        ui = FakeUI(answers=["We must mitigate the damage."])
+        complete.run(self.context(ui), limit=1)
+        self.assertNotIn("Planting trees", ui.output, "沒問就不該給參考句")
 
 
 if __name__ == "__main__":

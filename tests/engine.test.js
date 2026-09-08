@@ -191,18 +191,27 @@ check('Sublist 1、2 的 120 個字四維度齊全', () => {
     eq(bad.map(c => c.word), [], `${sublist} 這些卡缺維度`);
   }
 });
-check('全部卡片都寫齊了，補完佇列是空的', () => {
-  eq(run('Store.completionQueue().map(c => c.word)'), []);
-  eq(run('Store.incompleteCount()'), 0);
+check('留白的只有例句一項，其他三個維度都備妥', () => {
+  const queue = run('Store.completionQueue()');
+  eq(queue.length, 432, `待寫例句 ${queue.length} 張`);
+  const wrong = run(`Store.completionQueue()
+    .filter(c => JSON.stringify(Store.missingCore(c)) !== '["example"]')
+    .map(c => c.word)`);
+  eq(wrong, [], '這些卡缺的不只例句');
 });
-check('使用者自己匯入不完整的卡片時，補完順序仍照 sublist', () => {
-  const words = run(`(() => {
-    Store.addCard({ word: 'zzlater', topic: 'Sublist 7' });
-    Store.addCard({ word: 'zzsooner', topic: 'Sublist 3' });
-    const out = Store.completionQueue().map(c => c.word);
-    return out;
-  })()`);
-  eq(words, ['zzsooner', 'zzlater']);
+check('等你寫例句的卡片都有參考例句可看', () => {
+  const bad = run(`Store.completionQueue()
+    .filter(c => !c.exampleRef || TextUtil.maskSentence(c.exampleRef, c.word).hits === 0)
+    .map(c => c.word)`);
+  eq(bad, [], '這些卡沒有可用的參考例句');
+});
+check('補完佇列依 sublist 由高頻排到低頻', () => {
+  const ranks = run(`Store.completionQueue().map(c => {
+    const m = /^Sublist (\\d+)$/.exec(c.topic || '');
+    return m ? Number(m[1]) : 99;
+  })`);
+  eq(ranks, [...ranks].sort((a, b) => a - b), '沒有照 sublist 排');
+  eq(run('Store.completionQueue()[0].topic'), 'Sublist 3');
 });
 check('AWL 依 sublist 分組，可以只練 Sublist 1', () => {
   const names = run('Store.coverage("topic").map(r => r.name)');
@@ -229,17 +238,21 @@ check('選 Sublist 1 不會混進 Sublist 10', () => {
   eq([...new Set(topics)], ['Sublist 1']);
   eq(topics.length, 60);
 });
-check('寫完的卡片四維度齊全', () => {
-  const complete = run(`SEED_CARDS.filter(c => c.example || c.root || c.collocations.length || c.synonyms.length)`);
-  ok(complete.length > 200, `只有 ${complete.length} 張`);
-  const bad = complete.filter(c => !c.example || !c.collocations.length || !c.root || c.synonyms.length < 2);
+check('例句已經寫好的那批，四維度齊全', () => {
+  const complete = run('SEED_CARDS.filter(c => c.example)');
+  eq(complete.length, 347, `例句已寫好的有 ${complete.length} 張`);
+  const bad = complete.filter(c => !c.collocations.length || !c.root || c.synonyms.length < 2);
   eq(bad.map(c => c.word), [], '這些卡缺維度');
 });
-check('每張種子卡的四個維度都齊全', () => {
+check('每張種子卡的搭配詞、字根、同義詞都齊全', () => {
   const bad = run(`SEED_CARDS.filter(c =>
-    !c.example || !c.collocations.length || !c.root || c.synonyms.length < 2
+    !c.collocations.length || !c.root || c.synonyms.length < 2
   ).map(c => c.word)`);
   eq(bad, [], `${bad.length} 張卡沒寫齊`);
+});
+check('例句欄留白的卡片一定有參考例句', () => {
+  const bad = run('SEED_CARDS.filter(c => !c.example && !c.exampleRef).map(c => c.word)');
+  eq(bad, [], `${bad.length} 張卡連參考例句都沒有`);
 });
 check('舊版單字進到庫裡之後也都是四個維度齊全的', () => {
   // 跟種子重複的字會併進既有卡片（那張本來就齊全）；其餘的字自己帶著四個維度進來
@@ -419,19 +432,26 @@ check('舊的 known / learning 會換算成認讀進度', () => {
 console.log('--- 種子資料的線索 ---');
 // 用 SEED_CARDS 而不是 Store.listCards()：上面的 CSV 測試會往同一個 store
 // 塞測試卡片，拿整個 store 檢查會抓到那些假資料。
-check('每張種子卡都至少有例句或英文定義（不然任何模式都出不了題）', () => {
-  const mute = run('SEED_CARDS.filter(c => !c.example && !c.notes).map(c => c.word)');
+check('每張種子卡都至少有一個線索（不然任何模式都出不了題）', () => {
+  const mute = run(`SEED_CARDS
+    .filter(c => !c.example && !c.exampleRef && !c.notes).map(c => c.word)`);
   eq(mute, [], `${mute.length} 張卡沒有任何線索`);
+});
+check('關掉中文之後拼字題一張也不會少', () => {
+  const bad = run(`SEED_CARDS.filter(c => !Store.spellingSentence(c) && !c.notes).map(c => c.word)`);
+  eq(bad, [], '這些卡在純英文模式下出不了拼字題');
 });
 check('每張種子卡都有詞性', () => {
   const missing = run('SEED_CARDS.filter(c => !c.pos).map(c => c.word)');
   eq(missing, [], `${missing.length} 張卡沒有詞性`);
 });
-check('種子卡的英文定義不會直接洩漏答案', () => {
+check('只能靠備註出題的卡片，備註裡不會有答案', () => {
+  // 備註只有在「例句與參考例句都沒有」時才拿來當拼字線索
   const leaks = run(`SEED_CARDS
-    .filter(c => !c.example && c.notes && TextUtil.maskSentence(c.notes, c.word).hits > 0)
+    .filter(c => !c.example && !c.exampleRef && c.notes
+                 && TextUtil.maskSentence(c.notes, c.word).hits > 0)
     .map(c => c.word)`);
-  eq(leaks, [], '定義裡出現了答案本身');
+  eq(leaks, [], '備註裡出現了答案本身');
 });
 
 console.log('--- 中文意思開關 ---');

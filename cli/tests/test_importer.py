@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 from ielts import db as dbmod
-from ielts import importer, repository as repo, seed
+from ielts import importer, render as render_mod, repository as repo, seed
 from ielts.models import CORE_FIELDS, Card
 
 HEADER = "word,pos,example_sentence,collocations,root_analysis,synonyms,category,topic,card_type,zh_hint\n"
@@ -162,7 +162,7 @@ class TestSeed(ImporterTestCase):
     def test_fully_written_cards_have_all_four_dimensions(self):
         seed.load_seed(self.conn)
         complete = [c for c in repo.list_cards(self.conn) if not c.missing_core_fields()]
-        self.assertEqual(len(complete), dbmod.card_count(self.conn), "應該每一張都齊全")
+        self.assertEqual(len(complete), 347, "例句已經寫好的那批")
         for card in complete:
             self.assertTrue(card.example_sentence, card.word)
             self.assertTrue(card.collocation_list, card.word)
@@ -181,13 +181,22 @@ class TestSeed(ImporterTestCase):
             self.assertGreater(hits, 0, f"{card.word}: {card.example_sentence}")
 
     def test_every_card_can_be_asked_in_at_least_one_mode(self):
-        """沒有例句也沒有英文定義的卡片，在任何模式都出不了題。"""
+        """沒有句子也沒有英文定義的卡片，在任何模式都出不了題。"""
         seed.load_seed(self.conn)
         mute = [
             c.word for c in repo.list_cards(self.conn)
-            if not c.example_sentence.strip() and not c.notes.strip()
+            if not (c.example_sentence.strip() or c.example_ref.strip() or c.notes.strip())
         ]
         self.assertEqual(mute, [], f"{len(mute)} 張卡沒有任何線索：{mute[:10]}")
+
+    def test_spelling_still_covers_every_card_in_pure_english_mode(self):
+        """關掉中文時，例句留白的卡片靠參考例句照樣出得了題。"""
+        seed.load_seed(self.conn)
+        blank = repo.completion_queue(self.conn, limit=5)
+        for card in blank:
+            lines = render_mod.spelling_prompt_lines(card, show_zh=False)
+            self.assertTrue(any("______" in line for line in lines),
+                            f"{card.word} 在純英文模式下沒有挖空題目")
 
     def test_every_card_has_a_part_of_speech(self):
         seed.load_seed(self.conn)
@@ -235,24 +244,41 @@ class TestSeed(ImporterTestCase):
             for card in cards:
                 self.assertEqual(card.missing_core_fields(), [], f"{sublist} {card.word}")
 
-    def test_nothing_is_left_to_complete(self):
-        """779 張卡的四個維度全部寫齊了，補完佇列應該是空的。"""
+    def test_only_the_example_is_left_blank(self):
+        """留白的只有例句一項，搭配詞／字根／同義詞都已備妥。"""
         seed.load_seed(self.conn)
         queue = repo.completion_queue(self.conn)
-        self.assertEqual([c.word for c in queue], [])
+        self.assertEqual(len(queue), 432, "應該有 432 張等你寫例句")
+        for card in queue:
+            self.assertEqual(card.missing_core_fields(), ["example_sentence"], card.word)
 
-    def test_every_seeded_card_has_all_four_dimensions(self):
+    def test_cards_awaiting_an_example_still_have_a_reference(self):
+        """例句留白的卡片一定要有參考例句，不然使用者卡住時沒東西可看。"""
+        from ielts import textutil
+
+        seed.load_seed(self.conn)
+        for card in repo.completion_queue(self.conn):
+            self.assertTrue(card.example_ref, f"{card.word} 沒有參考例句")
+            hits = textutil.mask_sentence(card.example_ref, card.word)[1]
+            self.assertGreater(hits, 0, f"{card.word} 的參考例句裡沒有這個字")
+
+    def test_every_seeded_card_has_the_other_three_dimensions(self):
         seed.load_seed(self.conn)
         for card in repo.list_cards(self.conn):
-            self.assertEqual(card.missing_core_fields(), [], card.word)
+            self.assertTrue(card.collocation_list, card.word)
+            self.assertTrue(card.root_analysis, card.word)
+            self.assertGreaterEqual(len(card.synonym_list), 2, card.word)
 
-    def test_completion_queue_still_orders_new_gaps_by_sublist(self):
-        """使用者自己匯入不完整的卡片時，排序邏輯要照舊。"""
+    def test_completion_queue_orders_by_sublist(self):
         seed.load_seed(self.conn)
-        repo.add_card(self.conn, Card(word="zzlater", topic="Sublist 7"))
-        repo.add_card(self.conn, Card(word="zzsooner", topic="Sublist 3"))
         queue = repo.completion_queue(self.conn)
-        self.assertEqual([c.word for c in queue], ["zzsooner", "zzlater"])
+
+        def rank(card):
+            return int(card.topic.split()[1]) if card.topic.startswith("Sublist ") else 99
+
+        ranks = [rank(c) for c in queue]
+        self.assertEqual(ranks, sorted(ranks), "沒有照 sublist 由小到大")
+        self.assertEqual(queue[0].topic, "Sublist 3", "應該從 Sublist 3 開始")
 
     def test_completion_queue_is_ordered_by_sublist(self):
         seed.load_seed(self.conn)

@@ -1,9 +1,10 @@
-"""AWL Sublist 9 —— 四個維度全部寫齊。"""
+"""AWL Sublist 9 —— 搭配詞、字根、同義詞、中文都寫好了，
+例句欄故意留白給使用者自己寫 —— example_ref 是卡住時才看的參考。"""
 
 SUBLIST_9 = [
     {
         "word": "accommodate", "pos": "v.",
-        "example": "The new terminal can accommodate twice as many passengers.",
+        "example_ref": "The new terminal can accommodate twice as many passengers.",
         "collocations": ["accommodate demand", "accommodate visitors", "accommodate different needs"],
         "root": "ac-(朝向) + com-(一起) + mod(尺度, 同 mode/moderate) → 調整尺度容納進來",
         "synonyms": ["hold", "house", "cater for", "make room for"],
@@ -12,7 +13,7 @@ SUBLIST_9 = [
     },
     {
         "word": "analogy", "pos": "n.",
-        "example": "The author draws an analogy between the brain and a city's road network.",
+        "example_ref": "The author draws an analogy between the brain and a city's road network.",
         "collocations": ["draw an analogy", "by analogy", "a useful analogy"],
         "root": "ana-(依照) + logos(比例、道理, 同 logic/-logy) → 依同樣的道理類比",
         "synonyms": ["comparison", "parallel", "likeness", "metaphor"],
@@ -20,7 +21,7 @@ SUBLIST_9 = [
     },
     {
         "word": "anticipate", "pos": "v.",
-        "example": "Planners failed to anticipate how quickly the suburb would grow.",
+        "example_ref": "Planners failed to anticipate how quickly the suburb would grow.",
         "collocations": ["anticipate a problem", "widely anticipated", "anticipate demand"],
         "root": "anti-(在前, 拉丁 ante) + cip(拿取, 同 capture/accept) + -ate → 事先先拿到手",
         "synonyms": ["expect", "foresee", "predict", "forecast"],
@@ -28,7 +29,7 @@ SUBLIST_9 = [
     },
     {
         "word": "assure", "pos": "v.",
-        "example": "The minister assured residents that the plant was safe.",
+        "example_ref": "The minister assured residents that the plant was safe.",
         "collocations": ["assure someone that", "rest assured", "assure quality"],
         "root": "as-(朝向) + sure(確定, 同 secure/ensure) → 讓某人放心",
         "synonyms": ["promise", "reassure", "guarantee", "convince"],
@@ -37,7 +38,7 @@ SUBLIST_9 = [
     },
     {
         "word": "attain", "pos": "v.",
-        "example": "Only a handful of countries have attained their emissions targets.",
+        "example_ref": "Only a handful of countries have attained their emissions targets.",
         "collocations": ["attain a goal", "attain a level", "attain a standard"],
         "root": "at-(朝向) + tain(觸及, 拉丁 tangere, 同 contact/tangible) → 碰到目標",
         "synonyms": ["achieve", "reach", "accomplish", "obtain"],
@@ -45,7 +46,7 @@ SUBLIST_9 = [
     },
     {
         "word": "behalf", "pos": "n.",
-        "example": "The lawyer spoke on behalf of all forty residents.",
+        "example_ref": "The lawyer spoke on behalf of all forty residents.",
         "collocations": ["on behalf of", "on someone's behalf", "act on behalf of"],
         "root": "be(在) + half(一邊) → 站在某人那一邊 → 代表",
         "synonyms": ["representation", "interest", "support"],
@@ -54,7 +55,7 @@ SUBLIST_9 = [
     },
     {
         "word": "bulk", "pos": "n.",
-        "example": "The bulk of the funding went to just three universities.",
+        "example_ref": "The bulk of the funding went to just three universities.",
         "collocations": ["the bulk of", "in bulk", "buy in bulk"],
         "root": "古北歐語 bulki「船貨」→ 一大堆貨 → 大部分",
         "synonyms": ["majority", "mass", "greater part", "volume"],
@@ -63,7 +64,7 @@ SUBLIST_9 = [
     },
     {
         "word": "cease", "pos": "v.",
-        "example": "Production ceased entirely after the factory flooded.",
+        "example_ref": "Production ceased entirely after the factory flooded.",
         "collocations": ["cease to exist", "cease operations", "cease trading"],
         "root": "拉丁 cessare「停下」(同 cease/incessant) → 停住",
         "synonyms": ["stop", "halt", "end", "discontinue"],
@@ -71,7 +72,7 @@ SUBLIST_9 = [
     },
     {
         "word": "coherent", "pos": "adj.",
-        "example": "The country still lacks a coherent transport strategy.",
+        "example_ref": "The country still lacks a coherent transport strategy.",
         "collocations": ["a coherent argument", "a coherent strategy", "logically coherent"],
         "root": "co-(一起) + her(黏著, 同 adhere/inherent) + -ent → 黏得住、連得起來",
         "synonyms": ["logical", "consistent", "well-structured", "unified"],
@@ -80,7 +81,7 @@ SUBLIST_9 = [
     },
     {
         "word": "coincide", "pos": "v.",
-        "example": "The drop in sales coincided with the opening of the new mall.",
+        "example_ref": "The drop in sales coincided with the opening of the new mall.",
         "collocations": ["coincide with", "exactly coincide", "coincide in time"],
         "root": "co-(一起) + in-(進入) + cid(落下, 同 accident/incident) → 同時落在一起",
         "synonyms": ["happen together", "overlap", "concur", "match"],
@@ -88,7 +89,7 @@ SUBLIST_9 = [
     },
     {
         "word": "commence", "pos": "v.",
-        "example": "Construction is due to commence in the spring.",
+        "example_ref": "Construction is due to commence in the spring.",
         "collocations": ["commence work", "commence proceedings", "commence in"],
         "root": "com-(一起) + initiare(開始, 同 initiate/initial) → 一起走出第一步",
         "synonyms": ["begin", "start", "get under way", "initiate"],
@@ -97,7 +98,7 @@ SUBLIST_9 = [
     },
     {
         "word": "compatible", "pos": "adj.",
-        "example": "Rapid growth is not compatible with meeting the climate target.",
+        "example_ref": "Rapid growth is not compatible with meeting the climate target.",
         "collocations": ["compatible with", "fully compatible", "mutually compatible"],
         "root": "com-(一起) + pat(感受、忍受, 同 patient/passion) + -ible → 能一起相處",
         "synonyms": ["consistent", "suited", "in keeping", "harmonious"],
@@ -105,7 +106,7 @@ SUBLIST_9 = [
     },
     {
         "word": "concurrent", "pos": "adj.",
-        "example": "Two concurrent studies reached opposite conclusions.",
+        "example_ref": "Two concurrent studies reached opposite conclusions.",
         "collocations": ["concurrent sessions", "run concurrently", "concurrent with"],
         "root": "con-(一起) + curr(跑, 同 current/occur/course) + -ent → 同時在跑",
         "synonyms": ["simultaneous", "parallel", "co-occurring", "at the same time"],
@@ -113,7 +114,7 @@ SUBLIST_9 = [
     },
     {
         "word": "confine", "pos": "v.",
-        "example": "The outbreak was confined to two districts in the north.",
+        "example_ref": "The outbreak was confined to two districts in the north.",
         "collocations": ["be confined to", "confine oneself to", "confine attention to"],
         "root": "con-(一起) + fin(界線, 同 finish/define/final) → 圈在界線裡",
         "synonyms": ["restrict", "limit", "contain", "keep within"],
@@ -121,7 +122,7 @@ SUBLIST_9 = [
     },
     {
         "word": "controversy", "pos": "n.",
-        "example": "The proposal sparked controversy among parents and teachers alike.",
+        "example_ref": "The proposal sparked controversy among parents and teachers alike.",
         "collocations": ["spark controversy", "a source of controversy", "surrounded by controversy"],
         "root": "contro-(相反, 同 contrary/contrast) + vers(轉, 同 version/reverse) → 兩邊轉向對立",
         "synonyms": ["dispute", "debate", "argument", "disagreement"],
@@ -130,7 +131,7 @@ SUBLIST_9 = [
     },
     {
         "word": "converse", "pos": "v./n./adj.",
-        "example": "The converse is also true: cheaper fares increase ridership.",
+        "example_ref": "The converse is also true: cheaper fares increase ridership.",
         "collocations": ["the converse is true", "converse with", "conversely"],
         "root": "con-(一起) + vers(轉, 同 version/reverse) → 轉過來面對面談；也指「相反的情況」",
         "synonyms": ["opposite", "reverse", "talk", "chat"],
@@ -139,7 +140,7 @@ SUBLIST_9 = [
     },
     {
         "word": "device", "pos": "n.",
-        "example": "Most teenagers own at least three internet-connected devices.",
+        "example_ref": "Most teenagers own at least three internet-connected devices.",
         "collocations": ["a mobile device", "a safety device", "a device for"],
         "root": "de-(分開) + vis(看、分割, 同 divide/vision) → 設計出來分工用的東西",
         "synonyms": ["gadget", "instrument", "tool", "appliance"],
@@ -147,7 +148,7 @@ SUBLIST_9 = [
     },
     {
         "word": "devote", "pos": "v.",
-        "example": "The school devotes two hours a week to outdoor learning.",
+        "example_ref": "The school devotes two hours a week to outdoor learning.",
         "collocations": ["devote time to", "devote resources to", "be devoted to"],
         "root": "de-(徹底) + vot(發誓, 同 vote/vow) → 立誓全部投入",
         "synonyms": ["dedicate", "commit", "give over", "allocate"],
@@ -155,7 +156,7 @@ SUBLIST_9 = [
     },
     {
         "word": "diminish", "pos": "v.",
-        "example": "The advantage of an early start diminishes as children get older.",
+        "example_ref": "The advantage of an early start diminishes as children get older.",
         "collocations": ["diminish over time", "gradually diminish", "diminishing returns"],
         "root": "di-(向下) + minu(變小, 拉丁 minus, 同 minor/minute) → 越變越小",
         "synonyms": ["decrease", "decline", "shrink", "lessen"],
@@ -164,7 +165,7 @@ SUBLIST_9 = [
     },
     {
         "word": "distort", "pos": "v.",
-        "example": "Selective quotation distorts what the report actually said.",
+        "example_ref": "Selective quotation distorts what the report actually said.",
         "collocations": ["distort the facts", "distort a picture", "seriously distort"],
         "root": "dis-(離開) + tort(扭轉, 同 torture/torsion/contort) → 扭歪了",
         "synonyms": ["misrepresent", "twist", "warp", "skew"],
@@ -172,7 +173,7 @@ SUBLIST_9 = [
     },
     {
         "word": "duration", "pos": "n.",
-        "example": "The average duration of a hospital stay has halved since 1990.",
+        "example_ref": "The average duration of a hospital stay has halved since 1990.",
         "collocations": ["the duration of", "for the duration", "a short duration"],
         "root": "dur(持續、堅硬, 同 durable/endure/during) + -ation → 持續多久",
         "synonyms": ["length", "period", "span", "time"],
@@ -180,7 +181,7 @@ SUBLIST_9 = [
     },
     {
         "word": "erode", "pos": "v.",
-        "example": "Rising rents have steadily eroded the incomes of young families.",
+        "example_ref": "Rising rents have steadily eroded the incomes of young families.",
         "collocations": ["erode confidence", "gradually erode", "erode the coastline"],
         "root": "e-(向外) + rod(咬, 拉丁 rodere, 同 rodent/corrode) → 一點一點咬掉",
         "synonyms": ["wear away", "undermine", "eat into", "diminish"],
@@ -188,7 +189,7 @@ SUBLIST_9 = [
     },
     {
         "word": "ethic", "pos": "n.",
-        "example": "A strong work ethic is valued more than raw talent in the company.",
+        "example_ref": "A strong work ethic is valued more than raw talent in the company.",
         "collocations": ["a work ethic", "a code of ethics", "professional ethics"],
         "root": "希臘 ethos「品格、習俗」(同 ethos/ethical) → 做人做事的準則",
         "synonyms": ["moral code", "principles", "values", "standards"],
@@ -196,7 +197,7 @@ SUBLIST_9 = [
     },
     {
         "word": "format", "pos": "n./v.",
-        "example": "The exam has kept the same format for over a decade.",
+        "example_ref": "The exam has kept the same format for over a decade.",
         "collocations": ["the same format", "change the format", "in digital format"],
         "root": "拉丁 formatus「被塑形的」(同 form/formal) → 定下來的樣式",
         "synonyms": ["layout", "structure", "arrangement", "design"],
@@ -204,7 +205,7 @@ SUBLIST_9 = [
     },
     {
         "word": "found", "pos": "v.",
-        "example": "The charity was founded by a group of retired teachers.",
+        "example_ref": "The charity was founded by a group of retired teachers.",
         "collocations": ["found an organisation", "be founded on", "founded in 1890"],
         "root": "拉丁 fundus「底部」(同 fund/fundamental/foundation) → 打下地基 → 創辦",
         "synonyms": ["establish", "set up", "start", "create"],
@@ -213,7 +214,7 @@ SUBLIST_9 = [
     },
     {
         "word": "inherent", "pos": "adj.",
-        "example": "There are inherent risks in relying on a single supplier.",
+        "example_ref": "There are inherent risks in relying on a single supplier.",
         "collocations": ["inherent risk", "inherent in", "an inherent problem"],
         "root": "in-(在裡面) + her(黏著, 同 adhere/coherent) + -ent → 天生黏在裡面的",
         "synonyms": ["intrinsic", "built-in", "innate", "essential"],
@@ -221,7 +222,7 @@ SUBLIST_9 = [
     },
     {
         "word": "insight", "pos": "n.",
-        "example": "The interviews gave researchers real insight into why people stopped cycling.",
+        "example_ref": "The interviews gave researchers real insight into why people stopped cycling.",
         "collocations": ["gain insight into", "provide insight", "valuable insight"],
         "root": "in(進入) + sight(視力) → 看進事情內部",
         "synonyms": ["understanding", "perception", "grasp", "awareness"],
@@ -229,7 +230,7 @@ SUBLIST_9 = [
     },
     {
         "word": "integral", "pos": "adj.",
-        "example": "Field trips are an integral part of the geography course.",
+        "example_ref": "Field trips are an integral part of the geography course.",
         "collocations": ["an integral part", "integral to", "form an integral role"],
         "root": "integr(完整, 同 integrate/entire/integrity) + -al → 少了它就不完整",
         "synonyms": ["essential", "fundamental", "built-in", "indispensable"],
@@ -237,7 +238,7 @@ SUBLIST_9 = [
     },
     {
         "word": "intermediate", "pos": "adj.",
-        "example": "Students at intermediate level need very different materials.",
+        "example_ref": "Students at intermediate level need very different materials.",
         "collocations": ["intermediate level", "an intermediate stage", "intermediate between"],
         "root": "inter-(之間) + medi(中間, 同 medium/median) + -ate → 卡在兩者中間的",
         "synonyms": ["middle", "midway", "transitional", "in-between"],
@@ -245,7 +246,7 @@ SUBLIST_9 = [
     },
     {
         "word": "manual", "pos": "adj./n.",
-        "example": "Manual jobs have declined faster than office work.",
+        "example_ref": "Manual jobs have declined faster than office work.",
         "collocations": ["manual labour", "a manual worker", "a user manual"],
         "root": "manu(手, 拉丁 manus, 同 manufacture/manuscript) + -al → 用手的",
         "synonyms": ["hand-operated", "physical", "handbook", "guide"],
@@ -253,7 +254,7 @@ SUBLIST_9 = [
     },
     {
         "word": "mature", "pos": "adj./v.",
-        "example": "Mature students often outperform school leavers in their first year.",
+        "example_ref": "Mature students often outperform school leavers in their first year.",
         "collocations": ["a mature student", "emotionally mature", "mature into"],
         "root": "拉丁 maturus「成熟的」(同 premature) → 長好了的",
         "synonyms": ["grown-up", "developed", "ripe", "seasoned"],
@@ -261,7 +262,7 @@ SUBLIST_9 = [
     },
     {
         "word": "mediate", "pos": "v.",
-        "example": "The union asked an independent body to mediate in the dispute.",
+        "example_ref": "The union asked an independent body to mediate in the dispute.",
         "collocations": ["mediate a dispute", "mediate between", "mediate in"],
         "root": "medi(中間, 同 medium/median/intermediate) + -ate → 站中間喬事情",
         "synonyms": ["arbitrate", "intervene", "reconcile", "negotiate"],
@@ -269,7 +270,7 @@ SUBLIST_9 = [
     },
     {
         "word": "medium", "pos": "n./adj.",
-        "example": "Radio remains the most trusted news medium in rural areas.",
+        "example_ref": "Radio remains the most trusted news medium in rural areas.",
         "collocations": ["a medium of communication", "medium-sized", "through the medium of"],
         "root": "拉丁 medius「中間的」(同 media/median/mediate) → 中間的傳遞者",
         "synonyms": ["channel", "means", "vehicle", "middle"],
@@ -278,7 +279,7 @@ SUBLIST_9 = [
     },
     {
         "word": "military", "pos": "adj./n.",
-        "example": "Military spending rose while health budgets were frozen.",
+        "example_ref": "Military spending rose while health budgets were frozen.",
         "collocations": ["military spending", "military service", "the military"],
         "root": "milit(士兵, 拉丁 miles, 同 militant/militia) + -ary → 關於軍隊的",
         "synonyms": ["armed", "martial", "defence", "armed forces"],
@@ -286,7 +287,7 @@ SUBLIST_9 = [
     },
     {
         "word": "minimal", "pos": "adj.",
-        "example": "The change had minimal effect on journey times.",
+        "example_ref": "The change had minimal effect on journey times.",
         "collocations": ["minimal impact", "minimal cost", "keep to a minimal level"],
         "root": "minim(最小, 同 minimum/minimise/minor) + -al → 最小程度的",
         "synonyms": ["negligible", "slight", "tiny", "marginal"],
@@ -294,7 +295,7 @@ SUBLIST_9 = [
     },
     {
         "word": "mutual", "pos": "adj.",
-        "example": "The agreement was reached by mutual consent.",
+        "example_ref": "The agreement was reached by mutual consent.",
         "collocations": ["mutual benefit", "mutual respect", "by mutual agreement"],
         "root": "拉丁 mutuus「互換的」(同 mutate/commute) → 兩邊互相的",
         "synonyms": ["reciprocal", "shared", "joint", "two-way"],
@@ -302,7 +303,7 @@ SUBLIST_9 = [
     },
     {
         "word": "norm", "pos": "n.",
-        "example": "Working from home has become the norm in many industries.",
+        "example_ref": "Working from home has become the norm in many industries.",
         "collocations": ["become the norm", "social norms", "cultural norms"],
         "root": "拉丁 norma「木匠的角尺」(同 normal/enormous) → 拿來量的標準",
         "synonyms": ["standard", "convention", "rule", "average"],
@@ -310,7 +311,7 @@ SUBLIST_9 = [
     },
     {
         "word": "overlap", "pos": "v./n.",
-        "example": "The two studies overlap considerably in their methods.",
+        "example_ref": "The two studies overlap considerably in their methods.",
         "collocations": ["overlap with", "considerable overlap", "partly overlap"],
         "root": "over(在上面) + lap(疊) → 疊在一起的部分",
         "synonyms": ["coincide", "intersect", "cover", "share"],
@@ -318,7 +319,7 @@ SUBLIST_9 = [
     },
     {
         "word": "passive", "pos": "adj.",
-        "example": "Watching television is a passive activity compared with reading.",
+        "example_ref": "Watching television is a passive activity compared with reading.",
         "collocations": ["passive smoking", "a passive role", "remain passive"],
         "root": "pass(承受, 拉丁 pati, 同 patient/passion/compassion) + -ive → 只承受不主動",
         "synonyms": ["inactive", "unresponsive", "submissive", "receptive"],
@@ -327,7 +328,7 @@ SUBLIST_9 = [
     },
     {
         "word": "portion", "pos": "n.",
-        "example": "A large portion of the budget goes on maintenance alone.",
+        "example_ref": "A large portion of the budget goes on maintenance alone.",
         "collocations": ["a large portion", "a significant portion", "a portion of"],
         "root": "拉丁 portio「份額」(同 proportion/proportional) → 分到的一份",
         "synonyms": ["part", "share", "segment", "proportion"],
@@ -335,7 +336,7 @@ SUBLIST_9 = [
     },
     {
         "word": "preliminary", "pos": "adj.",
-        "example": "Preliminary results suggest the treatment is safe.",
+        "example_ref": "Preliminary results suggest the treatment is safe.",
         "collocations": ["preliminary results", "a preliminary study", "preliminary findings"],
         "root": "pre-(事先) + limin(門檻, 拉丁 limen, 同 eliminate/subliminal) → 還在門檻前的",
         "synonyms": ["initial", "introductory", "early", "provisional"],
@@ -343,7 +344,7 @@ SUBLIST_9 = [
     },
     {
         "word": "protocol", "pos": "n.",
-        "example": "Hospitals follow a strict protocol for handling infectious waste.",
+        "example_ref": "Hospitals follow a strict protocol for handling infectious waste.",
         "collocations": ["follow a protocol", "a strict protocol", "a research protocol"],
         "root": "希臘 proto-(第一, 同 prototype) + kolla(膠) → 黏在卷首的第一頁 → 規程",
         "synonyms": ["procedure", "rules", "guidelines", "etiquette"],
@@ -351,7 +352,7 @@ SUBLIST_9 = [
     },
     {
         "word": "qualitative", "pos": "adj.",
-        "example": "Interviews provide qualitative data that surveys cannot capture.",
+        "example_ref": "Interviews provide qualitative data that surveys cannot capture.",
         "collocations": ["qualitative research", "qualitative data", "a qualitative difference"],
         "root": "qual(性質, 同 quality/qualify) + -itative → 關於「是什麼樣」而非「有多少」",
         "synonyms": ["descriptive", "non-numerical", "interpretive"],
@@ -360,7 +361,7 @@ SUBLIST_9 = [
     },
     {
         "word": "refine", "pos": "v.",
-        "example": "The model was refined after three rounds of testing.",
+        "example_ref": "The model was refined after three rounds of testing.",
         "collocations": ["refine a model", "further refine", "refine a technique"],
         "root": "re-(再) + fine(精細) → 再弄得更精細",
         "synonyms": ["improve", "polish", "perfect", "purify"],
@@ -368,7 +369,7 @@ SUBLIST_9 = [
     },
     {
         "word": "relax", "pos": "v.",
-        "example": "The city relaxed parking restrictions during the festival.",
+        "example_ref": "The city relaxed parking restrictions during the festival.",
         "collocations": ["relax the rules", "relax restrictions", "relax a policy"],
         "root": "re-(再) + lax(鬆, 拉丁 laxus, 同 release/lax) → 放鬆",
         "synonyms": ["ease", "loosen", "unwind", "soften"],
@@ -376,7 +377,7 @@ SUBLIST_9 = [
     },
     {
         "word": "restrain", "pos": "v.",
-        "example": "Higher interest rates restrained borrowing but also slowed building.",
+        "example_ref": "Higher interest rates restrained borrowing but also slowed building.",
         "collocations": ["restrain growth", "restrain spending", "restrain oneself"],
         "root": "re-(往回) + strain(拉緊, 同 strict/constrain/restrict) → 往回拉住",
         "synonyms": ["hold back", "curb", "check", "limit"],
@@ -384,7 +385,7 @@ SUBLIST_9 = [
     },
     {
         "word": "revolution", "pos": "n.",
-        "example": "The digital revolution transformed how newspapers are funded.",
+        "example_ref": "The digital revolution transformed how newspapers are funded.",
         "collocations": ["the industrial revolution", "a digital revolution", "spark a revolution"],
         "root": "re-(再) + volv(捲動, 同 revolve/evolve/involve) + -ution → 整個翻轉一圈",
         "synonyms": ["upheaval", "transformation", "overthrow", "radical change"],
@@ -392,7 +393,7 @@ SUBLIST_9 = [
     },
     {
         "word": "rigid", "pos": "adj.",
-        "example": "Rigid timetables leave teachers little room to respond to their classes.",
+        "example_ref": "Rigid timetables leave teachers little room to respond to their classes.",
         "collocations": ["a rigid structure", "rigid rules", "overly rigid"],
         "root": "拉丁 rigere「僵硬」(同 rigour/rigorous) → 硬得彎不動",
         "synonyms": ["inflexible", "strict", "stiff", "unbending"],
@@ -401,7 +402,7 @@ SUBLIST_9 = [
     },
     {
         "word": "route", "pos": "n./v.",
-        "example": "The new bus route connects the suburb directly to the hospital.",
+        "example_ref": "The new bus route connects the suburb directly to the hospital.",
         "collocations": ["a bus route", "the quickest route", "route traffic"],
         "root": "拉丁 rupta via「打通的路」(同 rupture/route) → 走的路線",
         "synonyms": ["path", "way", "course", "itinerary"],
@@ -409,7 +410,7 @@ SUBLIST_9 = [
     },
     {
         "word": "scenario", "pos": "n.",
-        "example": "In the worst-case scenario, sea levels rise by a full metre.",
+        "example_ref": "In the worst-case scenario, sea levels rise by a full metre.",
         "collocations": ["a worst-case scenario", "a likely scenario", "under this scenario"],
         "root": "義大利文 scenario「舞台布景」(同 scene/scenic) → 一齣戲的劇本 → 設想的情況",
         "synonyms": ["situation", "case", "outlook", "possibility"],
@@ -417,7 +418,7 @@ SUBLIST_9 = [
     },
     {
         "word": "sphere", "pos": "n.",
-        "example": "Childcare was long treated as belonging to the private sphere.",
+        "example_ref": "Childcare was long treated as belonging to the private sphere.",
         "collocations": ["the public sphere", "in the sphere of", "a sphere of influence"],
         "root": "希臘 sphaira「球」(同 hemisphere/atmosphere) → 一個球狀的範圍",
         "synonyms": ["domain", "field", "area", "realm"],
@@ -425,7 +426,7 @@ SUBLIST_9 = [
     },
     {
         "word": "subordinate", "pos": "adj./n./v.",
-        "example": "Environmental concerns were subordinate to economic growth for decades.",
+        "example_ref": "Environmental concerns were subordinate to economic growth for decades.",
         "collocations": ["subordinate to", "a subordinate role", "subordinate staff"],
         "root": "sub-(在下面) + ordin(次序, 同 order/coordinate) + -ate → 排在下面的",
         "synonyms": ["secondary", "lesser", "junior", "inferior"],
@@ -433,7 +434,7 @@ SUBLIST_9 = [
     },
     {
         "word": "supplement", "pos": "n./v.",
-        "example": "Many students supplement their income with weekend work.",
+        "example_ref": "Many students supplement their income with weekend work.",
         "collocations": ["supplement income", "a dietary supplement", "supplement with"],
         "root": "sup-(在下面) + ple(填滿, 同 complete/supply/plenty) → 從底下補上",
         "synonyms": ["add to", "top up", "complement", "addition"],
@@ -441,7 +442,7 @@ SUBLIST_9 = [
     },
     {
         "word": "suspend", "pos": "v.",
-        "example": "Services were suspended for three days after the storm.",
+        "example_ref": "Services were suspended for three days after the storm.",
         "collocations": ["suspend services", "temporarily suspend", "suspend a decision"],
         "root": "sus-(在下面) + pend(懸掛, 同 pendant/depend/append) → 吊在半空 → 暫停",
         "synonyms": ["halt", "pause", "postpone", "hang"],
@@ -449,7 +450,7 @@ SUBLIST_9 = [
     },
     {
         "word": "team", "pos": "n./v.",
-        "example": "A research team from three universities ran the trial.",
+        "example_ref": "A research team from three universities ran the trial.",
         "collocations": ["a research team", "team up with", "work as a team"],
         "root": "古英語 team「一組拉車的牲口」→ 一起使力的一組",
         "synonyms": ["group", "crew", "squad", "unit"],
@@ -457,7 +458,7 @@ SUBLIST_9 = [
     },
     {
         "word": "temporary", "pos": "adj.",
-        "example": "The measures were meant to be temporary but lasted five years.",
+        "example_ref": "The measures were meant to be temporary but lasted five years.",
         "collocations": ["a temporary solution", "temporary accommodation", "purely temporary"],
         "root": "tempor(時間, 拉丁 tempus, 同 tempo/contemporary) + -ary → 只在一段時間內的",
         "synonyms": ["short-term", "provisional", "interim", "passing"],
@@ -466,7 +467,7 @@ SUBLIST_9 = [
     },
     {
         "word": "trigger", "pos": "v./n.",
-        "example": "The price rise triggered protests in a dozen cities.",
+        "example_ref": "The price rise triggered protests in a dozen cities.",
         "collocations": ["trigger a response", "trigger protests", "a trigger for"],
         "root": "荷蘭語 trekker「拉的東西」(同 trek) → 一扣就發動",
         "synonyms": ["set off", "spark", "prompt", "cause"],
@@ -474,7 +475,7 @@ SUBLIST_9 = [
     },
     {
         "word": "unify", "pos": "v.",
-        "example": "A single ticketing system unified four separate transport networks.",
+        "example_ref": "A single ticketing system unified four separate transport networks.",
         "collocations": ["unify a system", "a unified approach", "unify the country"],
         "root": "uni-(一, 同 unit/unique/union) + -ify(使) → 使成為一個",
         "synonyms": ["merge", "combine", "integrate", "consolidate"],
@@ -482,7 +483,7 @@ SUBLIST_9 = [
     },
     {
         "word": "violate", "pos": "v.",
-        "example": "The firm violated safety rules on more than twenty occasions.",
+        "example_ref": "The firm violated safety rules on more than twenty occasions.",
         "collocations": ["violate a law", "violate rights", "repeatedly violate"],
         "root": "拉丁 violare「強行對待」(同 violence/violent) → 硬闖過去 → 違反",
         "synonyms": ["breach", "break", "infringe", "contravene"],
@@ -490,7 +491,7 @@ SUBLIST_9 = [
     },
     {
         "word": "vision", "pos": "n.",
-        "example": "The mayor set out a clear vision for the city in 2050.",
+        "example_ref": "The mayor set out a clear vision for the city in 2050.",
         "collocations": ["a clear vision", "a vision for", "share a vision"],
         "root": "vis(看, 同 visible/visit/supervise) + -ion → 看到的東西；引申為願景",
         "synonyms": ["sight", "outlook", "foresight", "plan"],

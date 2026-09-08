@@ -98,6 +98,8 @@ const Store = (() => {
       word: String(input.word || '').trim(),
       pos: String(input.pos || '').trim(),
       example: String(input.example || '').trim(),
+      // 參考例句：例句留白給使用者自己寫時的備援，只在補完模式按了才看得到
+      exampleRef: String(input.exampleRef || '').trim(),
       collocations: multi(input.collocations),
       root: String(input.root || '').trim(),
       synonyms: multi(input.synonyms),
@@ -297,8 +299,11 @@ const Store = (() => {
   //: 拼字題至少要有一個線索（挖空例句／中文提示／英文定義），
   //  否則就是「憑空拼一個字」，答不出來也學不到東西。
   // 拼字題至少要有一個線索，不然就是「憑空拼一個看不到的字」。
-  // 關掉中文之後，只靠中文提示的卡片就出不了題了，要一起從佇列拿掉。
-  const hasSpellingClue = card => !!(card.example || card.notes || (showZh() && card.zh));
+  // 例句還沒自己寫的卡片用參考例句頂著（一樣會挖空，不會洩答案），
+  // 這樣關掉中文之後拼字題也不會少 —— 拼字是最需要每天練的一軌。
+  const spellingSentence = card => card.example || card.exampleRef || '';
+  const hasSpellingClue = card =>
+    !!(spellingSentence(card) || card.notes || (showZh() && card.zh));
 
   // onlyWrong 不看到期日：今天剛拼錯的字，當下就要能再練一次。
   function spellingQueue(opts = {}) {
@@ -316,7 +321,10 @@ const Store = (() => {
     // 排序：拼錯的最優先 → 有「挖空例句 + 中文提示」的完整題目 → 其餘按到期日。
     // 只有英文定義可用的字頭卡排最後，不要淹掉設計好的題型。
     const zhUsable = card => showZh() && !!card.zh;
-    const quality = card => (card.example && zhUsable(card) ? 0 : card.example || zhUsable(card) ? 1 : 2);
+    const quality = card => {
+      const sentence = spellingSentence(card);
+      return sentence && zhUsable(card) ? 0 : sentence || zhUsable(card) ? 1 : 2;
+    };
     rows.sort((a, b) => {
       const wrongA = lastSpellingResult(a.id) === false ? 0 : 1;
       const wrongB = lastSpellingResult(b.id) === false ? 0 : 1;
@@ -515,13 +523,14 @@ const Store = (() => {
     return rows.filter(r => r.some(c => String(c).trim()));
   }
 
-  const CSV_COLUMNS = ['word', 'pos', 'example_sentence', 'collocations', 'root_analysis',
+  const CSV_COLUMNS = ['word', 'pos', 'example_sentence', 'example_ref', 'collocations', 'root_analysis',
     'synonyms', 'category', 'topic', 'card_type', 'zh_hint', 'notes'];
 
   const HEADER_ALIASES = {
     vocab: 'word', vocabulary: 'word', term: 'word', 單字: 'word',
     part_of_speech: 'pos', partofspeech: 'pos', 詞性: 'pos',
     example: 'example_sentence', sentence: 'example_sentence', 例句: 'example_sentence',
+    exampleref: 'example_ref', reference_example: 'example_ref', 參考例句: 'example_ref',
     collocation: 'collocations', 搭配詞: 'collocations', 搭配: 'collocations',
     root: 'root_analysis', roots: 'root_analysis', etymology: 'root_analysis', 字根: 'root_analysis',
     synonym: 'synonyms', 同義詞: 'synonyms',
@@ -753,7 +762,7 @@ const Store = (() => {
     missingCore, isIncomplete, cardLabel, cardCount, incompleteCount, completionQueue,
     getSrs, grade, dueItems, dueCount,
     recordSpelling, spellingQueue, spellingErrorList, spellingAccuracy, lastSpellingResult,
-    hasSpellingClue, getPrefs, setPrefs, showZh, findLoosely,
+    hasSpellingClue, spellingSentence, getPrefs, setPrefs, showZh, findLoosely,
     addProduction, listProductions, setProductionFeedback, productionCandidates, promotionCandidates,
     coverage, cardTypeCounts, activityDays, streak, longestStreak,
     reviewsSince, reviewsOn, productionsSince, cardsAddedSince, distinctWordsUsed,

@@ -194,37 +194,45 @@ with sync_playwright() as p:
     page.locator("#vocab-stage .back-btn").click()
     page.wait_for_timeout(200)
 
-    # --- 補完卡片 ---
-    # 種子資料現在四個維度都寫齊了，所以佇列應該是空的
-    page.locator(".mode-card", has_text="補完卡片").click()
-    page.wait_for_timeout(200)
-    step("補完：全部寫齊時顯示空狀態",
-         "都補齊了" in page.locator(".empty-title").inner_text(),
-         page.locator(".empty-title").inner_text())
-    page.locator("#vocab-stage .back-btn").click()
-    page.wait_for_timeout(200)
-
-    # 自己匯入不完整的卡片時，補完模式仍要正常運作
-    page.evaluate("""Store.addCard({ word: 'zzbrowsertest', zh: '瀏覽器測試用',
-                                     example: 'A zzbrowsertest case appeared.' })""")
-    page.evaluate("Vocab.showHome()")
-    page.wait_for_timeout(200)
-    page.locator(".mode-card", has_text="補完卡片").click()
-    page.wait_for_timeout(200)
-    step("補完：只問缺的欄位", page.locator(".complete-field").count() > 0,
+    # --- 寫例句 ---
+    # 搭配詞／字根／同義詞都備好了，留白的只有例句
+    page.locator(".mode-card", has_text="寫例句").click()
+    page.wait_for_timeout(300)
+    step("寫例句：只問例句一項",
+         page.locator(".complete-field").count() == 1,
          f"{page.locator('.complete-field').count()} 個欄位")
-    step("補完：顯示缺什麼", page.locator(".missing-tag").count() == 1,
+    step("寫例句：缺的就是例句",
+         "英文例句" in page.locator(".missing-tag").inner_text(),
          page.locator(".missing-tag").inner_text())
-    step("補完：已經有的欄位不再問",
-         page.locator("#cf-example").count() == 0, "例句已存在，不該再問一次")
-    page.locator("#cf-root").fill("測試字根拆解")
-    page.locator("#cf-collocations").fill("a zzbrowsertest case")
-    page.locator("#cf-synonyms").fill("alpha; beta")
-    page.get_by_role("button", name="存起來，下一張").click()
+    step("寫例句：搭配／字根／同義詞已經在卡片上",
+         page.locator("#vocab-stage .dim-key").count() >= 3,
+         " ".join(page.locator("#vocab-stage .dim-key").all_text_contents()))
+
+    # 參考例句：預設藏起來，按了才出現
+    step("寫例句：參考例句預設看不到",
+         page.locator("#vocab-stage .ref-text").count() == 1
+         and page.locator("#vocab-stage .ref-text").is_hidden())
+    word_now = page.locator(".card-word").inner_text()
+    page.get_by_role("button", name="想不出來？看一句參考").click()
     page.wait_for_timeout(200)
-    step("補完：存完之後佇列清空",
-         page.evaluate("Store.incompleteCount()") == 0,
-         f"還剩 {page.evaluate('Store.incompleteCount()')} 張")
+    ref = page.locator("#vocab-stage .ref-text").inner_text()
+    step("寫例句：按了才給參考句", bool(ref.strip()), ref.replace("\n", " ")[:60])
+    step("寫例句：參考句裡真的有這個字",
+         word_now.lower()[:5] in ref.lower(), f"{word_now} / {ref[:40]}")
+
+    page.locator("#cf-example").fill(f"I wrote my own sentence with {word_now} in it.")
+    page.get_by_role("button", name="存起來，下一張").click()
+    page.wait_for_timeout(300)
+    step("寫例句：存完就換下一張", page.locator(".card-word").inner_text() != word_now)
+    saved = page.evaluate(f"Store.findByWord({word_now!r})")
+    step("寫例句：存的是我自己寫的句子",
+         "my own sentence" in (saved or {}).get("example", ""),
+         (saved or {}).get("example", "(沒存到)")[:50])
+    step("寫例句：寫完就不再是待補完，也有了複習用的例句",
+         page.evaluate(f"""(() => {{
+             const c = Store.findByWord({word_now!r});
+             return !!c && !Store.isIncomplete(c) && !!c.example;
+         }})()"""))
     page.locator("#vocab-stage .back-btn").click()
     page.wait_for_timeout(200)
 
@@ -280,7 +288,8 @@ with sync_playwright() as p:
     spell_hidden = page.evaluate("Store.spellingQueue({}).length")
     step("中文：關掉之後拼字題目仍然有得出", spell_hidden > 0, f"{spell_hidden} 題")
     step("中文：關掉之後拼字題不會出「只有中文可當線索」的字",
-         page.evaluate("Store.spellingQueue({}).every(c => c.example || c.notes)"))
+         page.evaluate("""Store.spellingQueue({})
+                            .every(c => Store.spellingSentence(c) || c.notes)"""))
     page.locator(".settings-btn").click()
     page.wait_for_timeout(200)
     page.locator("#show-zh").check()

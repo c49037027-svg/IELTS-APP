@@ -1,9 +1,10 @@
-"""AWL Sublist 8 —— 四個維度全部寫齊。"""
+"""AWL Sublist 8 —— 搭配詞、字根、同義詞、中文都寫好了，
+例句欄故意留白給使用者自己寫 —— example_ref 是卡住時才看的參考。"""
 
 SUBLIST_8 = [
     {
         "word": "abandon", "pos": "v.",
-        "example": "The company abandoned the project after two years of delays.",
+        "example_ref": "The company abandoned the project after two years of delays.",
         "collocations": ["abandon a plan", "abandon a project", "be abandoned"],
         "root": "古法語 a bandon「交由他人處置」→ 放手不管",
         "synonyms": ["give up", "drop", "desert", "discard"],
@@ -11,7 +12,7 @@ SUBLIST_8 = [
     },
     {
         "word": "accompany", "pos": "v.",
-        "example": "The rise in temperature was accompanied by a sharp fall in rainfall.",
+        "example_ref": "The rise in temperature was accompanied by a sharp fall in rainfall.",
         "collocations": ["be accompanied by", "accompany someone", "accompanying notes"],
         "root": "ac-(朝向) + company(同伴, com-(一起) + pan(麵包)) → 一起吃飯的人 → 陪同",
         "synonyms": ["go with", "escort", "attend", "come with"],
@@ -20,7 +21,7 @@ SUBLIST_8 = [
     },
     {
         "word": "ambiguous", "pos": "adj.",
-        "example": "The wording of the question was ambiguous and confused candidates.",
+        "example_ref": "The wording of the question was ambiguous and confused candidates.",
         "collocations": ["deliberately ambiguous", "an ambiguous result", "highly ambiguous"],
         "root": "ambi-(兩邊, 同 ambidextrous/ambition) + ag(驅動, 同 act/agent) → 往兩邊跑 → 兩種解讀",
         "synonyms": ["unclear", "vague", "equivocal", "open to interpretation"],
@@ -28,7 +29,7 @@ SUBLIST_8 = [
     },
     {
         "word": "append", "pos": "v.",
-        "example": "A list of sources was appended to the end of the report.",
+        "example_ref": "A list of sources was appended to the end of the report.",
         "collocations": ["append to", "append a note", "appended documents"],
         "root": "ap-(朝向) + pend(懸掛, 同 pendant/depend/suspend) → 掛在後面",
         "synonyms": ["add", "attach", "affix", "tack on"],
@@ -36,7 +37,7 @@ SUBLIST_8 = [
     },
     {
         "word": "appreciate", "pos": "v.",
-        "example": "Few commuters appreciate how much the subsidy costs the city.",
+        "example_ref": "Few commuters appreciate how much the subsidy costs the city.",
         "collocations": ["fully appreciate", "appreciate the difficulty", "appreciate the value of"],
         "root": "ap-(朝向) + preci(價值, 同 price/precious) + -ate → 看出它的價值",
         "synonyms": ["understand", "recognise", "value", "grasp"],
@@ -44,7 +45,7 @@ SUBLIST_8 = [
     },
     {
         "word": "arbitrary", "pos": "adj.",
-        "example": "The cut-off age of sixty-five is entirely arbitrary.",
+        "example_ref": "The cut-off age of sixty-five is entirely arbitrary.",
         "collocations": ["an arbitrary decision", "purely arbitrary", "arbitrary power"],
         "root": "arbitr(仲裁者, 同 arbitrate/arbiter) + -ary → 全憑仲裁者高興 → 隨意的",
         "synonyms": ["random", "capricious", "unjustified", "subjective"],
@@ -52,7 +53,7 @@ SUBLIST_8 = [
     },
     {
         "word": "automate", "pos": "v.",
-        "example": "Ports that automated early lost the most jobs.",
+        "example_ref": "Ports that automated early lost the most jobs.",
         "collocations": ["automate a process", "fully automated", "automate production"],
         "root": "auto-(自己, 同 automatic/autonomy) + mat(思考、行動) + -ate → 讓它自己動",
         "synonyms": ["mechanise", "computerise", "streamline"],
@@ -60,7 +61,7 @@ SUBLIST_8 = [
     },
     {
         "word": "chart", "pos": "n./v.",
-        "example": "The chart shows electricity use in four countries between 2000 and 2020.",
+        "example_ref": "The chart shows electricity use in four countries between 2000 and 2020.",
         "collocations": ["a bar chart", "a pie chart", "the chart shows"],
         "root": "希臘 khartes「紙草紙」(同 card/charter) → 畫在紙上的圖表",
         "synonyms": ["graph", "diagram", "table", "map"],
@@ -69,7 +70,7 @@ SUBLIST_8 = [
     },
     {
         "word": "clarify", "pos": "v.",
-        "example": "The minister was asked to clarify what the new rules actually mean.",
+        "example_ref": "The minister was asked to clarify what the new rules actually mean.",
         "collocations": ["clarify a point", "clarify the situation", "seek to clarify"],
         "root": "clar(清楚, 拉丁 clarus, 同 clear/declare) + -ify → 使變清楚",
         "synonyms": ["explain", "make clear", "elucidate", "spell out"],
@@ -77,7 +78,7 @@ SUBLIST_8 = [
     },
     {
         "word": "commodity", "pos": "n.",
-        "example": "Clean water is becoming a scarce commodity in the region.",
+        "example_ref": "Clean water is becoming a scarce commodity in the region.",
         "collocations": ["a scarce commodity", "commodity prices", "a valuable commodity"],
         "root": "com-(一起) + mod(尺度, 同 mode/moderate) + -ity → 有標準規格、可以交易的東西",
         "synonyms": ["goods", "product", "resource", "merchandise"],
@@ -85,7 +86,7 @@ SUBLIST_8 = [
     },
     {
         "word": "complement", "pos": "n./v.",
-        "example": "Online lessons complement classroom teaching rather than replacing it.",
+        "example_ref": "Online lessons complement classroom teaching rather than replacing it.",
         "collocations": ["complement each other", "a perfect complement", "complement nicely"],
         "root": "com-(一起) + ple(填滿, 同 complete/supply/plenty) → 補上缺的那塊",
         "synonyms": ["supplement", "go with", "complete", "enhance"],
@@ -94,7 +95,7 @@ SUBLIST_8 = [
     },
     {
         "word": "conform", "pos": "v.",
-        "example": "All new buildings must conform to strict energy standards.",
+        "example_ref": "All new buildings must conform to strict energy standards.",
         "collocations": ["conform to", "conform with", "refuse to conform"],
         "root": "con-(一起) + form(形狀) → 做成同一個形狀 → 遵守",
         "synonyms": ["comply", "adhere", "follow", "fit in"],
@@ -102,7 +103,7 @@ SUBLIST_8 = [
     },
     {
         "word": "contemporary", "pos": "adj./n.",
-        "example": "Contemporary art museums have become major tourist attractions.",
+        "example_ref": "Contemporary art museums have become major tourist attractions.",
         "collocations": ["contemporary society", "contemporary art", "a contemporary of"],
         "root": "con-(一起) + tempor(時間, 同 temporary/tempo) + -ary → 同一個時代的",
         "synonyms": ["modern", "current", "present-day", "of the same era"],
@@ -110,7 +111,7 @@ SUBLIST_8 = [
     },
     {
         "word": "contradict", "pos": "v.",
-        "example": "The latest figures contradict the government's own forecasts.",
+        "example_ref": "The latest figures contradict the government's own forecasts.",
         "collocations": ["contradict a claim", "flatly contradict", "contradict oneself"],
         "root": "contra-(相反, 同 contrast/contrary) + dict(說, 同 dictate/predict) → 說反話",
         "synonyms": ["dispute", "refute", "conflict with", "deny"],
@@ -118,7 +119,7 @@ SUBLIST_8 = [
     },
     {
         "word": "crucial", "pos": "adj.",
-        "example": "The first three years of life are crucial for language development.",
+        "example_ref": "The first three years of life are crucial for language development.",
         "collocations": ["a crucial role", "crucial evidence", "absolutely crucial"],
         "root": "拉丁 crux「十字路口」(同 cross/crux) → 決定往哪走的關鍵點",
         "synonyms": ["vital", "essential", "critical", "decisive"],
@@ -127,7 +128,7 @@ SUBLIST_8 = [
     },
     {
         "word": "currency", "pos": "n.",
-        "example": "A weak currency made imported food far more expensive.",
+        "example_ref": "A weak currency made imported food far more expensive.",
         "collocations": ["foreign currency", "a strong currency", "gain currency"],
         "root": "curr(流動, 同 current/occur/course) + -ency → 在市面上流通的東西",
         "synonyms": ["money", "legal tender", "cash", "acceptance"],
@@ -135,7 +136,7 @@ SUBLIST_8 = [
     },
     {
         "word": "denote", "pos": "v.",
-        "example": "In the diagram, the dotted line denotes the projected figure.",
+        "example_ref": "In the diagram, the dotted line denotes the projected figure.",
         "collocations": ["denote a change", "commonly denote", "denote something"],
         "root": "de-(徹底) + not(記號, 同 note/notice/notion) → 明確標示出",
         "synonyms": ["indicate", "signify", "represent", "mean"],
@@ -143,7 +144,7 @@ SUBLIST_8 = [
     },
     {
         "word": "detect", "pos": "v.",
-        "example": "The sensors can detect leaks long before they become visible.",
+        "example_ref": "The sensors can detect leaks long before they become visible.",
         "collocations": ["detect a problem", "early detection", "hard to detect"],
         "root": "de-(去除) + tect(覆蓋, 同 protect/detective) → 把蓋子掀掉 → 察覺",
         "synonyms": ["discover", "identify", "spot", "sense"],
@@ -151,7 +152,7 @@ SUBLIST_8 = [
     },
     {
         "word": "deviate", "pos": "v.",
-        "example": "The results deviate sharply from what the model predicted.",
+        "example_ref": "The results deviate sharply from what the model predicted.",
         "collocations": ["deviate from", "deviate significantly", "deviate from the norm"],
         "root": "de-(離開) + via(道路, 同 via/obvious/previous) + -ate → 走離原本的路",
         "synonyms": ["depart", "diverge", "stray", "differ"],
@@ -159,7 +160,7 @@ SUBLIST_8 = [
     },
     {
         "word": "displace", "pos": "v.",
-        "example": "The dam displaced more than forty thousand villagers.",
+        "example_ref": "The dam displaced more than forty thousand villagers.",
         "collocations": ["displaced people", "displace workers", "be displaced by"],
         "root": "dis-(離開) + place(地方) → 從原地趕走",
         "synonyms": ["uproot", "relocate", "replace", "oust"],
@@ -167,7 +168,7 @@ SUBLIST_8 = [
     },
     {
         "word": "drama", "pos": "n.",
-        "example": "Television drama remains the most watched genre among older viewers.",
+        "example_ref": "Television drama remains the most watched genre among older viewers.",
         "collocations": ["a television drama", "a courtroom drama", "high drama"],
         "root": "希臘 dran「行動」(同 dramatic/drastic) → 演出來的行動",
         "synonyms": ["play", "theatre", "production", "spectacle"],
@@ -175,7 +176,7 @@ SUBLIST_8 = [
     },
     {
         "word": "eventual", "pos": "adj.",
-        "example": "The eventual cost was three times the original estimate.",
+        "example_ref": "The eventual cost was three times the original estimate.",
         "collocations": ["the eventual outcome", "eventual success", "the eventual winner"],
         "root": "event(發生的事, e-(向外) + ven(來)) + -ual → 事情走完之後的",
         "synonyms": ["final", "ultimate", "resulting", "end"],
@@ -184,7 +185,7 @@ SUBLIST_8 = [
     },
     {
         "word": "exhibit", "pos": "v./n.",
-        "example": "Patients who exhibit these symptoms should be tested immediately.",
+        "example_ref": "Patients who exhibit these symptoms should be tested immediately.",
         "collocations": ["exhibit symptoms", "exhibit behaviour", "on exhibit"],
         "root": "ex-(向外) + hib(握住, 同 prohibit/inhibit/habit) → 拿出來給人看",
         "synonyms": ["display", "show", "demonstrate", "present"],
@@ -192,7 +193,7 @@ SUBLIST_8 = [
     },
     {
         "word": "exploit", "pos": "v./n.",
-        "example": "Companies have been accused of exploiting migrant workers.",
+        "example_ref": "Companies have been accused of exploiting migrant workers.",
         "collocations": ["exploit resources", "exploit workers", "fully exploit"],
         "root": "ex-(向外) + ploit(摺疊, 拉丁 plicare, 同 employ/apply) → 攤開來用到極致",
         "synonyms": ["take advantage of", "use", "make use of", "abuse"],
@@ -201,7 +202,7 @@ SUBLIST_8 = [
     },
     {
         "word": "guideline", "pos": "n.",
-        "example": "The new guidelines recommend at least an hour of exercise a day.",
+        "example_ref": "The new guidelines recommend at least an hour of exercise a day.",
         "collocations": ["follow guidelines", "issue guidelines", "official guidelines"],
         "root": "guide(引導) + line(線) → 畫出來讓人照著走的線",
         "synonyms": ["recommendation", "rule", "standard", "principle"],
@@ -209,7 +210,7 @@ SUBLIST_8 = [
     },
     {
         "word": "highlight", "pos": "v./n.",
-        "example": "The report highlights the shortage of affordable housing.",
+        "example_ref": "The report highlights the shortage of affordable housing.",
         "collocations": ["highlight the need for", "highlight a problem", "the highlight of"],
         "root": "high(高) + light(光) → 打光讓它突出來",
         "synonyms": ["emphasise", "underline", "draw attention to", "stress"],
@@ -218,7 +219,7 @@ SUBLIST_8 = [
     },
     {
         "word": "implicit", "pos": "adj.",
-        "example": "There is an implicit assumption that everyone owns a smartphone.",
+        "example_ref": "There is an implicit assumption that everyone owns a smartphone.",
         "collocations": ["an implicit assumption", "implicit in", "implicit trust"],
         "root": "im-(進入) + plic(摺疊, 同 imply/complex/apply) → 摺在裡面沒攤開",
         "synonyms": ["implied", "unspoken", "tacit", "understood"],
@@ -227,7 +228,7 @@ SUBLIST_8 = [
     },
     {
         "word": "induce", "pos": "v.",
-        "example": "Higher parking charges induced many drivers to switch to buses.",
+        "example_ref": "Higher parking charges induced many drivers to switch to buses.",
         "collocations": ["induce someone to", "induce a change", "induce sleep"],
         "root": "in-(進入) + duce(引導, 同 conduct/reduce/produce) → 引導進來",
         "synonyms": ["persuade", "prompt", "bring about", "cause"],
@@ -235,7 +236,7 @@ SUBLIST_8 = [
     },
     {
         "word": "inspect", "pos": "v.",
-        "example": "Officials inspect every restaurant at least once a year.",
+        "example_ref": "Officials inspect every restaurant at least once a year.",
         "collocations": ["inspect a site", "closely inspect", "inspect for damage"],
         "root": "in-(進入) + spect(看, 同 spectacle/respect/suspect) → 看進去 → 檢查",
         "synonyms": ["examine", "check", "survey", "scrutinise"],
@@ -243,7 +244,7 @@ SUBLIST_8 = [
     },
     {
         "word": "intense", "pos": "adj.",
-        "example": "Intense competition for places has pushed entry requirements higher.",
+        "example_ref": "Intense competition for places has pushed entry requirements higher.",
         "collocations": ["intense competition", "intense pressure", "intense heat"],
         "root": "in-(進入) + tens(拉緊, 同 tension/extend/tense) → 繃到極緊",
         "synonyms": ["extreme", "severe", "fierce", "acute"],
@@ -251,7 +252,7 @@ SUBLIST_8 = [
     },
     {
         "word": "manipulate", "pos": "v.",
-        "example": "Critics accused the newspaper of manipulating public opinion.",
+        "example_ref": "Critics accused the newspaper of manipulating public opinion.",
         "collocations": ["manipulate data", "manipulate public opinion", "easily manipulated"],
         "root": "manu(手, 同 manual/manufacture) + pl(填滿) + -ate → 用手操弄",
         "synonyms": ["control", "influence", "handle", "distort"],
@@ -259,7 +260,7 @@ SUBLIST_8 = [
     },
     {
         "word": "minimise", "pos": "v.",
-        "example": "Careful planning can minimise disruption to residents.",
+        "example_ref": "Careful planning can minimise disruption to residents.",
         "collocations": ["minimise the risk", "minimise disruption", "minimise costs"],
         "root": "minim(最小, 拉丁 minimus, 同 minimum/minor) + -ise → 使降到最小",
         "synonyms": ["reduce", "cut", "lessen", "curtail"],
@@ -268,7 +269,7 @@ SUBLIST_8 = [
     },
     {
         "word": "nuclear", "pos": "adj.",
-        "example": "Nuclear power supplies a fifth of the country's electricity.",
+        "example_ref": "Nuclear power supplies a fifth of the country's electricity.",
         "collocations": ["nuclear power", "nuclear energy", "a nuclear plant"],
         "root": "nucle(核心, 拉丁 nucleus 果仁, 同 nucleus) + -ar → 關於原子核的",
         "synonyms": ["atomic", "fission-based"],
@@ -276,7 +277,7 @@ SUBLIST_8 = [
     },
     {
         "word": "paragraph", "pos": "n.",
-        "example": "Each paragraph should begin with a clear topic sentence.",
+        "example_ref": "Each paragraph should begin with a clear topic sentence.",
         "collocations": ["the opening paragraph", "a topic sentence in a paragraph", "the final paragraph"],
         "root": "para-(旁邊) + graph(書寫, 同 graphic/biography) → 旁邊做記號分出的段落",
         "synonyms": ["section", "passage", "block of text"],
@@ -285,7 +286,7 @@ SUBLIST_8 = [
     },
     {
         "word": "plus", "pos": "prep./n.",
-        "example": "The fee covers tuition plus all course materials.",
+        "example_ref": "The fee covers tuition plus all course materials.",
         "collocations": ["plus the cost of", "a big plus", "plus interest"],
         "root": "拉丁 plus「更多」(同 plural/plenty/surplus) → 再加上",
         "synonyms": ["in addition to", "and", "with", "advantage"],
@@ -293,7 +294,7 @@ SUBLIST_8 = [
     },
     {
         "word": "practitioner", "pos": "n.",
-        "example": "General practitioners refer patients to hospital specialists.",
+        "example_ref": "General practitioners refer patients to hospital specialists.",
         "collocations": ["a general practitioner", "a medical practitioner", "experienced practitioners"],
         "root": "practi(實作, 同 practice/practical) + -tioner → 實際在做這行的人",
         "synonyms": ["professional", "specialist", "expert", "clinician"],
@@ -301,7 +302,7 @@ SUBLIST_8 = [
     },
     {
         "word": "predominant", "pos": "adj.",
-        "example": "Rice is the predominant crop in the southern provinces.",
+        "example_ref": "Rice is the predominant crop in the southern provinces.",
         "collocations": ["the predominant view", "predominantly male", "the predominant cause"],
         "root": "pre-(在前) + dominant(支配的, 同 dominate/domain) → 壓過其他的",
         "synonyms": ["main", "prevailing", "dominant", "chief"],
@@ -310,7 +311,7 @@ SUBLIST_8 = [
     },
     {
         "word": "prospect", "pos": "n.",
-        "example": "Graduates face better job prospects than they did a decade ago.",
+        "example_ref": "Graduates face better job prospects than they did a decade ago.",
         "collocations": ["job prospects", "the prospect of", "little prospect"],
         "root": "pro-(向前) + spect(看, 同 inspect/spectacle) → 往前看到的景象",
         "synonyms": ["outlook", "possibility", "chance", "expectation"],
@@ -318,7 +319,7 @@ SUBLIST_8 = [
     },
     {
         "word": "radical", "pos": "adj./n.",
-        "example": "Meeting the target will require radical changes to how we travel.",
+        "example_ref": "Meeting the target will require radical changes to how we travel.",
         "collocations": ["a radical change", "radical reform", "radically different"],
         "root": "radic(根, 拉丁 radix, 同 radish/eradicate) + -al → 動到根本的",
         "synonyms": ["fundamental", "sweeping", "drastic", "extreme"],
@@ -326,7 +327,7 @@ SUBLIST_8 = [
     },
     {
         "word": "random", "pos": "adj.",
-        "example": "Participants were assigned to the two groups at random.",
+        "example_ref": "Participants were assigned to the two groups at random.",
         "collocations": ["at random", "a random sample", "randomly selected"],
         "root": "古法語 randon「猛衝」→ 沒有章法地衝 → 隨機",
         "synonyms": ["chance", "arbitrary", "haphazard", "unplanned"],
@@ -335,7 +336,7 @@ SUBLIST_8 = [
     },
     {
         "word": "reinforce", "pos": "v.",
-        "example": "The findings reinforce earlier research on sleep and memory.",
+        "example_ref": "The findings reinforce earlier research on sleep and memory.",
         "collocations": ["reinforce a message", "reinforce stereotypes", "reinforce the view"],
         "root": "re-(再) + in-(使) + force(力量) → 再加一道力",
         "synonyms": ["strengthen", "support", "bolster", "confirm"],
@@ -343,7 +344,7 @@ SUBLIST_8 = [
     },
     {
         "word": "restore", "pos": "v.",
-        "example": "Planting mangroves helped restore the damaged coastline.",
+        "example_ref": "Planting mangroves helped restore the damaged coastline.",
         "collocations": ["restore confidence", "restore a building", "fully restore"],
         "root": "re-(再) + stor(建立, 拉丁 instaurare, 同 store/instaurate) → 再立起來",
         "synonyms": ["repair", "renew", "reinstate", "bring back"],
@@ -351,7 +352,7 @@ SUBLIST_8 = [
     },
     {
         "word": "revise", "pos": "v.",
-        "example": "The forecast was revised downwards twice in three months.",
+        "example_ref": "The forecast was revised downwards twice in three months.",
         "collocations": ["revise a figure", "revise upwards", "revise an estimate"],
         "root": "re-(再) + vis(看, 同 vision/supervise/visit) → 再看一次改一改",
         "synonyms": ["amend", "update", "rework", "adjust"],
@@ -360,7 +361,7 @@ SUBLIST_8 = [
     },
     {
         "word": "schedule", "pos": "n./v.",
-        "example": "The line opened two years behind schedule.",
+        "example_ref": "The line opened two years behind schedule.",
         "collocations": ["behind schedule", "ahead of schedule", "a busy schedule"],
         "root": "拉丁 schedula「小紙條」(同 cedula) → 寫在紙條上的時間表",
         "synonyms": ["timetable", "plan", "programme", "agenda"],
@@ -368,7 +369,7 @@ SUBLIST_8 = [
     },
     {
         "word": "tense", "pos": "adj./n.",
-        "example": "Relations between the two councils remain tense.",
+        "example_ref": "Relations between the two councils remain tense.",
         "collocations": ["a tense situation", "become tense", "the past tense"],
         "root": "拉丁 tendere「拉緊」(同 tension/extend/intense) → 繃緊的",
         "synonyms": ["strained", "edgy", "fraught", "taut"],
@@ -376,7 +377,7 @@ SUBLIST_8 = [
     },
     {
         "word": "terminate", "pos": "v.",
-        "example": "The contract was terminated after repeated safety breaches.",
+        "example_ref": "The contract was terminated after repeated safety breaches.",
         "collocations": ["terminate a contract", "terminate an agreement", "terminate early"],
         "root": "termin(界線, 拉丁 terminus, 同 terminal/determine) + -ate → 走到界線 → 結束",
         "synonyms": ["end", "cancel", "conclude", "discontinue"],
@@ -384,7 +385,7 @@ SUBLIST_8 = [
     },
     {
         "word": "theme", "pos": "n.",
-        "example": "Sustainability was the central theme of this year's conference.",
+        "example_ref": "Sustainability was the central theme of this year's conference.",
         "collocations": ["the central theme", "a recurring theme", "a common theme"],
         "root": "希臘 thema「擺出來的東西」(同 thesis/hypothesis) → 貫穿全文的主軸",
         "synonyms": ["subject", "topic", "motif", "idea"],
@@ -392,7 +393,7 @@ SUBLIST_8 = [
     },
     {
         "word": "thereby", "pos": "adv.",
-        "example": "The scheme cut journeys by a fifth, thereby reducing emissions.",
+        "example_ref": "The scheme cut journeys by a fifth, thereby reducing emissions.",
         "collocations": ["thereby reducing", "thereby avoiding", "thereby creating"],
         "root": "there(那) + by(藉由) → 藉由那件事",
         "synonyms": ["thus", "in that way", "consequently", "hence"],
@@ -401,7 +402,7 @@ SUBLIST_8 = [
     },
     {
         "word": "uniform", "pos": "adj./n.",
-        "example": "Rainfall is far from uniform across the country.",
+        "example_ref": "Rainfall is far from uniform across the country.",
         "collocations": ["a uniform standard", "uniform across", "school uniform"],
         "root": "uni-(一, 同 unit/unique) + form(形狀) → 都同一個形狀",
         "synonyms": ["consistent", "even", "standard", "unvarying"],
@@ -409,7 +410,7 @@ SUBLIST_8 = [
     },
     {
         "word": "vehicle", "pos": "n.",
-        "example": "Electric vehicles accounted for a third of new sales last year.",
+        "example_ref": "Electric vehicles accounted for a third of new sales last year.",
         "collocations": ["a motor vehicle", "electric vehicles", "a vehicle for change"],
         "root": "拉丁 vehere「運送」(同 convey/vector) + -icle → 載東西的工具",
         "synonyms": ["car", "transport", "means", "medium"],
@@ -417,7 +418,7 @@ SUBLIST_8 = [
     },
     {
         "word": "via", "pos": "prep.",
-        "example": "Most applications are now submitted via the council's website.",
+        "example_ref": "Most applications are now submitted via the council's website.",
         "collocations": ["via email", "travel via", "via the internet"],
         "root": "拉丁 via「道路」(同 previous/obvious/deviate) → 經由某條路",
         "synonyms": ["through", "by way of", "by means of", "using"],
@@ -425,7 +426,7 @@ SUBLIST_8 = [
     },
     {
         "word": "virtual", "pos": "adj.",
-        "example": "Virtual meetings have replaced most short business trips.",
+        "example_ref": "Virtual meetings have replaced most short business trips.",
         "collocations": ["virtual reality", "a virtual meeting", "a virtual monopoly"],
         "root": "virtu(能力, 拉丁 virtus, 同 virtue) + -al → 實質上有效果的；引申為「模擬的」",
         "synonyms": ["simulated", "online", "near-total", "effective"],
@@ -434,7 +435,7 @@ SUBLIST_8 = [
     },
     {
         "word": "visual", "pos": "adj.",
-        "example": "Visual aids help students remember far more of a lecture.",
+        "example_ref": "Visual aids help students remember far more of a lecture.",
         "collocations": ["visual aids", "visual impact", "visually impaired"],
         "root": "vis(看, 同 vision/visible/supervise) + -ual → 靠眼睛的",
         "synonyms": ["optical", "graphic", "pictorial", "seen"],
@@ -442,7 +443,7 @@ SUBLIST_8 = [
     },
     {
         "word": "widespread", "pos": "adj.",
-        "example": "There is widespread support for banning single-use plastics.",
+        "example_ref": "There is widespread support for banning single-use plastics.",
         "collocations": ["widespread support", "widespread damage", "become widespread"],
         "root": "wide(廣) + spread(散開) → 散得很開的",
         "synonyms": ["extensive", "prevalent", "common", "far-reaching"],

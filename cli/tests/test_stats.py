@@ -55,7 +55,7 @@ class TestDashboard(unittest.TestCase):
         data = stats.collect(self.ctx)
         self.assertGreater(data["total_cards"], 700)
         self.assertEqual(sum(data["types"].values()), data["total_cards"])
-        self.assertEqual(data["incomplete"], 0, "種子資料的四個維度都寫齊了")
+        self.assertEqual(data["incomplete"], 432, "例句留白給使用者自己寫的那批")
         self.assertGreater(data["due"][TRACK_RECALL], 0)
 
     def test_reviews_move_the_numbers(self):

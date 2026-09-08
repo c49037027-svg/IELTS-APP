@@ -115,7 +115,7 @@ const Vocab = (() => {
         ${modeCard('✍️', '拼字練習', '例句挖空 + 中文提示，打出完整拼字', dueSpell, 'Vocab.startSpell()')}
         ${modeCard('🔁', '同義詞測驗', '列出 2 個以上同義詞，練同義替換', dueSyn, 'Vocab.startSyn()')}
         ${modeCard('🗣️', '主動輸出', '用 active 字 + 雅思話題造句', types.active, 'Vocab.startProduce()')}
-        ${modeCard('🧩', '補完卡片', '補齊缺的例句 / 字根 / 搭配 / 同義詞', incomplete, 'Vocab.startComplete()')}
+        ${modeCard('🧩', '寫例句', '搭配／字根／同義詞都備好了，例句自己寫', incomplete, 'Vocab.startComplete()')}
       </div>
 
       ${wrongList > 0 ? `<button class="btn btn-error wide-btn" onclick="Vocab.startSpell(true)">
@@ -268,10 +268,12 @@ const Vocab = (() => {
     const s = session;
     if (s.index >= s.items.length) return finishSpell();
     const card = s.items[s.index];
-    const masked = TextUtil.maskSentence(card.example, card.word);
+    // 自己寫的例句優先；還沒寫的用參考例句頂著，兩者都會挖空
+    const sentence = Store.spellingSentence(card);
+    const masked = TextUtil.maskSentence(sentence, card.word);
     const rows = [];
-    if (card.example && masked.hits) rows.push(['例句', esc(masked.text)]);
-    else if (card.example) rows.push(['例句', '（例句直接含目標字，先不顯示）']);
+    if (sentence && masked.hits) rows.push(['例句', esc(masked.text)]);
+    else if (sentence) rows.push(['例句', '（例句直接含目標字，先不顯示）']);
     if (Store.showZh() && card.zh) rows.push(['中文', esc(card.zh)]);
     if (card.pos) rows.push(['詞性', esc(card.pos)]);
     if (card.collocations.length) rows.push(['搭配', esc(TextUtil.maskAll(card.collocations, card.word).join(' · '))]);
@@ -709,7 +711,7 @@ const Vocab = (() => {
   function startComplete() {
     const items = Store.completionQueue({ limit: 50 });
     if (!items.length) {
-      showStage(modeHeader('補完卡片') + emptyState('所有卡片的四個維度都補齊了', ''));
+      showStage(modeHeader('寫例句') + emptyState('每張卡的例句你都寫過了', '厲害。之後匯入新卡片時會再出現在這裡。'));
       return;
     }
     session = { mode: 'complete', items, index: 0, fixed: 0 };
@@ -730,8 +732,17 @@ const Vocab = (() => {
     if (card.synonyms.length) known.push(['同義', esc(card.synonyms.join(' / '))]);
 
     const fieldInput = (field) => {
+      // 例句是唯一「自己寫才有效」的欄位，所以參考例句預設藏起來，
+      // 真的想不出來才按 —— 看了就等於讀別人的句子，效果差一截。
+      const reference = (field === 'example' && card.exampleRef)
+        ? `<div class="ref-box">
+             <button type="button" class="tool-btn" onclick="Vocab.showExampleRef(this)">
+               想不出來？看一句參考</button>
+             <div class="ref-text" hidden>${esc(card.exampleRef)}${Speech.button(card.exampleRef)}</div>
+           </div>`
+        : '';
       const placeholders = {
-        example: '整句英文，句中要真的用到這個字',
+        example: '用這個字寫一句你自己的話，句中要真的用到它',
         collocations: '常見搭配，用分號分隔：conduct research; conduct a survey',
         root: '字根字首拆解：mit-(緩和) + -igate(使…)',
         synonyms: '同義詞，用分號分隔：alleviate; reduce; ease'
@@ -739,11 +750,12 @@ const Vocab = (() => {
       return `<div class="complete-field">
         <label>${esc(Store.CORE_LABELS[field])}</label>
         <textarea id="cf-${field}" rows="2" placeholder="${esc(placeholders[field])}"></textarea>
+        ${reference}
       </div>`;
     };
 
     const remaining = Store.incompleteCount();
-    showStage(modeHeader(`補完卡片 · ${card.topic || '未分類'}`,
+    showStage(modeHeader(`寫例句 · ${card.topic || '未分類'}`,
       `${s.index + 1} / ${s.items.length}　全庫還有 ${remaining}`) + `
       <div class="card study-card">
         ${wordHead(card)}
@@ -757,6 +769,13 @@ const Vocab = (() => {
       </div>
       <button class="btn btn-primary wide-btn" onclick="Vocab.saveComplete()">存起來，下一張</button>
       <button class="btn btn-secondary wide-btn" onclick="Vocab.skipComplete()">跳過這張</button>`);
+  }
+
+  function showExampleRef(btn) {
+    const box = btn.parentElement.querySelector('.ref-text');
+    if (!box) return;
+    box.hidden = false;
+    btn.remove();
   }
 
   function saveComplete() {
@@ -1001,7 +1020,7 @@ const Vocab = (() => {
     startSyn, submitSyn, nextSyn, synSkip,
     startProduce, submitProduce, nextProduce, produceSkip, showProductions,
     showPromote, showPromoteLoose, confirmPromote,
-    startComplete, saveComplete, skipComplete,
+    startComplete, saveComplete, skipComplete, showExampleRef,
     showLibrary, showCard, toggleType, showAddCard, saveNewCard,
     showTools, downloadCSV, downloadProductions, downloadTemplate
   };

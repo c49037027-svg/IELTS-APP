@@ -55,12 +55,16 @@ def back_lines(card: Card, *, show_zh: bool = False) -> list[str]:
 
 
 def spelling_prompt_lines(card: Card, *, show_zh: bool = True) -> list[str]:
-    """拼字模式的題目：例句挖空 + 中文提示，其他線索一律遮掉目標字。"""
+    """拼字模式的題目：例句挖空 + 中文提示，其他線索一律遮掉目標字。
+
+    自己寫的例句優先；還沒寫的用參考例句頂著（一樣挖空，不會洩答案）。
+    """
     lines: list[str] = []
-    masked, hits = mask_sentence(card.example_sentence, card.word)
-    if card.example_sentence and hits:
+    sentence = card.example_sentence or card.example_ref
+    masked, hits = mask_sentence(sentence, card.word)
+    if sentence and hits:
         lines.append(_row("例句", masked))
-    elif card.example_sentence:
+    elif sentence:
         # 例句裡找不到目標字（可能是變化形太特殊）→ 不顯示，以免直接洩題
         lines.append(_row("例句", "（例句含目標字原形，先不顯示）"))
     if show_zh and card.zh_hint:
@@ -71,7 +75,7 @@ def spelling_prompt_lines(card: Card, *, show_zh: bool = True) -> list[str]:
         lines.append(_row("搭配", " · ".join(mask_all(card.collocation_list, card.word))))
     if card.root_analysis:
         lines.append(_row("字根", mask_sentence(card.root_analysis, card.word)[0]))
-    # AWL 字頭卡還沒補完時，英文定義就是唯一的線索（一樣遮掉目標字）
-    if not card.example_sentence and card.notes:
+    # 字頭卡還沒補完時，英文定義就是唯一的線索（一樣遮掉目標字）
+    if not sentence and card.notes:
         lines.append(_row("定義", mask_sentence(card.notes, card.word)[0]))
     return lines

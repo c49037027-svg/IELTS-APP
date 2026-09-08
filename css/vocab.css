@@ -161,6 +161,15 @@
 .complete-field textarea:focus, .complete-field input:focus {
   outline: none; border-color: var(--primary); background: var(--card);
 }
+/* 參考例句：預設收起來，真的想不出來才按開 —— 看了就等於讀別人的句子 */
+.ref-box { margin-top: 6px; }
+.ref-box .tool-btn { flex: none; min-width: 0; font-size: 12px; padding: 6px 10px; }
+.ref-text {
+  margin-top: 6px; padding: 10px 12px; font-size: 14px; line-height: 1.6;
+  background: var(--bg); border-left: 3px solid var(--border); border-radius: 6px;
+  color: var(--text-light);
+}
+
 .missing-tag {
   display: inline-block; margin-top: 12px; padding: 4px 10px;
   background: rgba(184, 84, 80, .1); color: var(--error);
