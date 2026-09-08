@@ -141,19 +141,19 @@ accurate,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：free from error
 acknowledge,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：accept the truth of admit (sth)
 adapt,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sth (for sth) make sth suitable for a new use, situation, etc; modify sth"
 adequate,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：satisfactory in quantity or quality; sufficient
-adjacent,,,,,,AWL,Sublist 10,passive,,AWL 定義：having a common endpoint or border also immediately preceding or following
+adjacent,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：having a common endpoint or border; immediately preceding or following
 adjust,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：put (sth) into the correct order or position; arrange administrate v. to administer
 adult,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：grown to full size or strength
 aggregate,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sb (fml ) be formed or bring sb into an assembled group or amount
 aid,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：help albeit conj although
-albeit,,,,,,AWL,Sublist 10,passive,,
+albeit,conj.,,,,,AWL,Sublist 10,passive,,AWL 定義：although; even though
 alter,v.,,,,,AWL,Sublist 5,passive,,"AWL 定義：become different; change in character, position, size, shape, etc"
 alternative,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：available in place of sth else; other
 ambiguous,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：having more than one possible meaning
 amend,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：correct an error in (sth); make minor improvements in; change slightly
 analogy,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：partial similarity between two things that are compared
 annual,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：happening every year
-anticipate,,,,,,AWL,Sublist 9,passive,,
+anticipate,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：expect (sth); see what needs doing and do it in advance
 apparent,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：clearly seen or understood; obvious
 append,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：sth (fml ) attach or add sth (esp in writing)
 appreciate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：understand and enjoy (sth); value highly
@@ -166,9 +166,9 @@ attach,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth fasten or join sth (to sth
 attain,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：succeed in getting (sth); achieve
 attitude,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：way of thinking or behaving
 author,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：writer of a book, play, etc"
-automate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：cause to operate by automation
+automate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：convert (a process or facility) to be operated by machines rather than people
 aware,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：of sb/sth; ~ that... having knowledge or realization of sb/sth
-behalf,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：on behalf of sb/on sb's behalf; US in behalf of sb/in sb's behalf as the representative of or spokesman for sb; in the interest of sb
+behalf,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：the interest or support of a person or group, as when acting as their representative"
 bond,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：written agreement or promise that has legal force; covenant
 brief,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：lasting only a short time; short
 bulk,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：size, quantity or volume, esp when great"
@@ -180,7 +180,7 @@ channel,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sunken bed of a river, strea
 chart,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：detailed map used to help navigation at sea, showing coasts, rocks, the depth of the sea, etc"
 chemical,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：of or relating to chemistry
 circumstance,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：condition or fact connected with an event or action cite quote; commend
-cite,,,,,,AWL,Sublist 6,passive,,
+cite,v.,,,,,AWL,Sublist 6,passive,,"AWL 定義：quote (a passage, book or author) as evidence for an argument"
 civil,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：of or relating to the citizens of a country
 clarify,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：(cause sth to) become clear or easier to understand
 classic,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：having a high quality that is recognized and unquestioned; of lasting value and importance
@@ -202,13 +202,13 @@ component,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：any of the parts of which s
 compound,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：thing made up of two or more separate things combined together
 comprehensive,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：that includes everything
 comprise,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：have as parts or members; be made up of
-conceive,,,,,,AWL,Sublist 10,passive,,
+conceive,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：form (a plan or idea) in the mind; imagine
 concentrate,v.,,,,,AWL,Sublist 4,passive,,"AWL 定義：(sth) (on sth/doing sth) focus (one's attention, effort, etc) exclusively and intensely on sth, not thinking about other less important things"
 concurrent,adj.,,,,,AWL,Sublist 9,passive,,"AWL 定義：existing, happening or done at the same time"
 confer,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：(with sb) (on/about sth) have discussions (esp in order to exchange opinions or get advice)
 confine,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：sb/sth keep (a person or an animal) in a restricted space
 confirm,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：provide evidence for the truth or correctness of (a report, an opinion, etc); establish the truth of"
-conflict,,,,,,AWL,Sublist 5,passive,,
+conflict,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：serious disagreement or clash between opposing ideas, interests or groups"
 conform,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：keep to or comply with (generally accepted rules, standards, etc)"
 consent,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：give agreement or permission
 considerable,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：great in amount or size
@@ -225,8 +225,8 @@ convene,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：summon to come together; arr
 converse,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：(about sth); ~ (together) (fml ) talk
 convert,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：(sth) (from sth) (into/to sth) change (sth) from one form or use to another
 convince,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：sb make sb feel certain; cause sb to realize
-cooperate,,,,,,AWL,Sublist 6,passive,,AWL 定義：to work or act together
-coordinate,,,,,,AWL,Sublist 3,passive,,AWL 定義：vt. to organize or integrate (diverse elements) in a harmonious operation
+cooperate,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：work or act together
+coordinate,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：organize or integrate (diverse elements) into a harmonious operation
 core,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：centre of such fruits as the apple and pear, containing the seeds"
 corporate,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：of or shared by all the members of a group; collective
 correspond,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：be in agreement; not contradict sth or each other
@@ -243,7 +243,7 @@ demonstrate,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：sth (to sb) show sth clea
 denote,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：be the name, sign or symbol of (sth); refer to"
 deny,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：say that (sth) is not true
 depress,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：make sad and without enthusiasm
-despite,,,,,,AWL,Sublist 4,passive,,AWL 定義：prep without being affected by
+despite,prep.,,,,,AWL,Sublist 4,passive,,AWL 定義：without being affected by; in spite of
 detect,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：discover or recognize that (sth) is present
 deviate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：from sth stop following
 device,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：thing made or adapted for a special purpose
@@ -251,7 +251,7 @@ devote,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：oneself/sth to sb/sth give to 
 differentiate,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：between A and B; ~ A (from B) see or show (two things) to be different; show sth to be different (from sth else)
 dimension,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：measurement of any sort
 diminish,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：become smaller or less; decrease
-discrete,,,,,,AWL,Sublist 5,passive,,
+discrete,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：separate and distinct; not joined to or continuous with others
 discriminate,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：~ A from B see or make a difference (between two things)
 displace,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：move from the usual or correct place
 display,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth put sth on show
@@ -299,7 +299,7 @@ expose,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：uncover or make (sth) visible;
 external,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：outside; situated on the outside of sth (esp the body)
 extract,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sth take or get sth out, usu with effort or by force"
 facilitate,v.,,,,,AWL,Sublist 5,passive,,"AWL 定義：(of an object, a process, etc but not of a person) make (sth) easy or less difficult"
-federal,,,,,,AWL,Sublist 6,passive,,AWL 定義：of or relating to a form of government or a country in which power is divided between one central and several regional government
+federal,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：relating to a system of government in which power is divided between one central and several regional governments
 fee,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：(usu pl ) amount paid for professional advice or service, eg to private teachers, doctors, etc"
 file,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：metal tool with a rough surface for cutting, smoothing or shaping hard substances"
 finite,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：having bounds; limited; not infinite
@@ -307,27 +307,27 @@ flexible,adj.,,,,,AWL,Sublist 6,passive,,AWL 定義：that can bend easily witho
 format,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：shape, size, binding, etc of a book"
 forthcoming,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：about to happen or appear in the near future
 foundation,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：act of founding founded [ find: ] to meet with or discover by chance
-found,,,,,,AWL,Sublist 9,passive,,
+found,v.,,,,,AWL,Sublist 9,passive,,"AWL 定義：establish (an institution or organization), esp by providing money for it"
 framework,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：structure giving shape and support
 fund,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：sum of money saved or made available for a particular purpose
 fundamental,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：of or forming the basis or foundation of sth; essential
 furthermore,adv.,,,,,AWL,Sublist 6,passive,,AWL 定義：in addition; moreover ;
 gender,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：(in certain languages) classification of a noun or pronoun as masculine or feminine
 generate,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：cause to exist or occur; produce
-generation,,,,,,AWL,Sublist 5,passive,,
+generation,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：all the people born at about the same time; the production of sth such as electricity or heat
 globe,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：small spherical model of the earth showing the continents and usu also countries, rivers, cities, etc"
 goal,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：(in football, hockey, etc) pair of posts with a crossbar, between which the ball has to be kicked, hit, etc in order to score"
 grade,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：step, stage or degree of rank, quality, etc; level of classification"
 grant,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：agree to give or allow (what is asked for)
 guarantee,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：(against sth) promise (usu in writing) that certain conditions agreed to in a transaction will be fulfilled
-guideline,,,,,,AWL,Sublist 8,passive,,AWL 定義：a principle put forward to set standards or determine a course of actio
+guideline,n.,,,,,AWL,Sublist 8,passive,,AWL 定義：a principle put forward to set standards or determine a course of action
 hence,adv.,,,,,AWL,Sublist 4,passive,,AWL 定義：from this time
 hierarchy,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：system with grades of authority or status from the lowest to the highest
 highlight,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：best, most interesting or most exciting part of something"
 hypothesis,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：idea or suggestion that is based on known facts and is used as a basis for reasoning or further investigation
 identical,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：the ~ the same
 ideology,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：ideas that form the basis of an economic or political theory or that are held by a particular group or person ignorant adj. ~ (of sth)knowing little or nothing; lacking education or information; unaware
-ignorance,,,,,,AWL,Sublist 6,passive,,
+ignorance,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：lack of knowledge or information about sth
 illustrate,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：supply with pictures, diagrams, etc"
 image,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：copy of the shape of a person or thing, esp one made in stone or wood; statue"
 immigrate,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：enter a foreign country in order to live there permanently
@@ -352,7 +352,7 @@ insert,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sth put, fit, place sth into 
 insight,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：(approv ) ability to see into the true nature (of sth); deep understanding
 inspect,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：examine (sth) closely
 instance,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：particular occurrence of sth that happens generally or several times; example; case
-instruct,,,,,,AWL,Sublist 6,passive,,AWL 定義：to direct to do something; order
+instruct,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：direct (sb) to do sth; order
 integral,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：necessary for completeness
 integrity,n.,,,,,AWL,Sublist 10,passive,,AWL 定義：quality of being honest and morally upright
 intelligence,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：power of learning, understanding and reasoning; mental ability"
@@ -366,7 +366,7 @@ intrinsic,adj.,,,,,AWL,Sublist 10,passive,,"AWL 定義：belonging naturally; ex
 investigate,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：find out and examine in order to obtain the truth
 invoke,v.,,,,,AWL,Sublist 10,passive,,AWL 定義：use (sth) as a reason for one's action
 isolate,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：sb/sth put or keep sb/sth entirely apart from other people or things; separate sb/sth ;
-job,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：the patience of job
+job,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：a paid position of regular employment; a task or piece of work
 justify,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：show that (sb/sth) is right, reasonable or just"
 label,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：piece of paper, cloth, metal, etc on or beside an object and describing its nature, name, owner, destination, etc"
 layer,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：thickness of material laid over a surface or forming a horizontal division
@@ -374,7 +374,7 @@ lecture,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：(on sth) talk giving informa
 levy,v.,,,,,AWL,Sublist 10,passive,,"AWL 定義：sth (on sb) collect (a payment, etc) by authority or force; impose sth"
 liberal,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：tolerant and open-minded; free from prejudice
 licence,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：official document showing that permission has been given to own, use or do sth"
-likewise,,,,,,AWL,Sublist 10,passive,,
+likewise,adv.,,,,,AWL,Sublist 10,passive,,AWL 定義：in the same way; also
 link,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：one ring or loop of a chain
 locate,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：discover the exact position or place of
 logic,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：science of reasoning
@@ -382,9 +382,9 @@ manipulate,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：control or handle with ski
 manual,adj.,,,,,AWL,Sublist 9,passive,,"AWL 定義：of, done with or controlled by the hands"
 margin,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：blank space round the written or printed matter on a page
 mature,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：fully grown or developed mentally or physically; having achieved one's full potential
-maximise,,,,,,AWL,Sublist 3,passive,,AWL 定義：[ maximize: ] vt. to make as high or great as possible; increase to a maximum
+maximise,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：make as high or great as possible; increase to a maximum
 mechanism,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：working parts of a machine, etc"
-media,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：the media means of mass communication, eg TV, radio, newspapers"
+media,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：the main means of mass communication — television, radio, newspapers and the internet — taken as a whole"
 mediate,v.,,,,,AWL,Sublist 9,passive,,"AWL 定義：act as a peacemaker or go-between for two or more people, groups, etc who disagree"
 medical,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：of the art of medicine; of curing disease
 medium,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：(pl usu media) means by which sth is expressed or communicated
@@ -392,7 +392,7 @@ mental,adj.,,,,,AWL,Sublist 5,passive,,"AWL 定義：of, in or to the mind"
 migrate,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：(to...) move from one place to go to live or work in another
 military,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：of or for soldiers or an army; of or for armed forces
 minimal,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：smallest in amount or degree
-minimise,,,,,,AWL,Sublist 8,passive,,AWL 定義：[ minimize: ] to reduce to or estimate at the least possible degree or amount
+minimise,v.,,,,,AWL,Sublist 8,passive,,AWL 定義：reduce to the least possible degree or amount
 minimum,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：least or smallest amount, degree, etc possible"
 ministry,n.,,,,,AWL,Sublist 6,passive,,AWL 定義：(buildings containing a) government department
 minor,adj.,,,,,AWL,Sublist 3,passive,,"AWL 定義：smaller, less serious, less important, etc"
@@ -404,11 +404,11 @@ mutual,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：felt or done by each towards
 negate,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：deny or disprove the existence of (sb/sth)
 network,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：complex system of roads, etc crossingeach other"
 neutral,adj.,,,,,AWL,Sublist 6,passive,,"AWL 定義：not supporting or helping either side in a dispute, contest,war, etc; impartial"
-nevertheless,,,,,,AWL,Sublist 6,passive,,"AWL 定義：adv, conj in spite of this; however; still"
-nonetheless,,,,,,AWL,Sublist 10,passive,,
+nevertheless,adv.,,,,,AWL,Sublist 6,passive,,AWL 定義：in spite of this; however; still
+nonetheless,adv.,,,,,AWL,Sublist 10,passive,,AWL 定義：in spite of that; nevertheless
 norm,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：standard or pattern that is typical (of a group, etc)"
 notion,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：idea or belief; concept
-notwithstanding,,,,,,AWL,Sublist 10,passive,,AWL 定義：prep (can also follow the n to which it refers ) without being affected by (sth); in spite of
+notwithstanding,prep.,,,,,AWL,Sublist 10,passive,,AWL 定義：without being affected by (sth); in spite of
 nuclear,adj.,,,,,AWL,Sublist 8,passive,,"AWL 定義：of a nucleus, esp of an atom"
 objective,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：not influenced by personal feelings or opinions; unbiased; fair
 obvious,adj.,,,,,AWL,Sublist 4,passive,,"AWL 定義：easily seen, recognized or understood; clear"
@@ -416,7 +416,7 @@ occupy,v.,,,,,AWL,Sublist 4,passive,,"AWL 定義：live in or have possession of
 odd,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：strange; unusual; peculiar
 ongoing,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：continuing to exist or progress
 option,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：power or freedom of choosing; choice
-orient,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：the Orient countries of the (Far) East (eg Japan, China)"
+orient,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：align or position (sth) relative to a fixed point; familiarize (sb) with a new situation
 outcome,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：effect or result (of an event, circumstances, etc)"
 output,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：quantity of goods, etc produced"
 overlap,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：partly cover (sth) by extending over its edge
@@ -434,7 +434,7 @@ phase,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：stage in a process of change or
 phenomenon,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：fact or occurrence, esp in nature or society, that can be perceived by the senses"
 philosophy,n.,,,,,AWL,Sublist 3,passive,,AWL 定義：search for knowledge and understanding of the nature and meaning of the universe and of human life
 physical,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：of or concerning material things
-plus,,,,,,AWL,Sublist 8,passive,,AWL 定義：prep with the addition of
+plus,prep.,,,,,AWL,Sublist 8,passive,,AWL 定義：with the addition of
 portion,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：part or share into which sth is divided
 practitioner,n.,,,,,AWL,Sublist 8,passive,,AWL 定義：person who practises a skill or an art
 precede,v.,,,,,AWL,Sublist 6,passive,,"AWL 定義：come or go before in time, order, rank, etc"
@@ -450,7 +450,7 @@ priority,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：(state of) being more import
 professional,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：of or belonging to a profession
 prohibit,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：sth/sb (from doing sth) forbid sth or sb from doing sth esp by laws, rules or regulations"
 project,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：scheme or undertaking
-promote,,,,,,AWL,Sublist 4,passive,,AWL 定義：to contribute to the growth or prosperity of:FURTHER
+promote,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：contribute to the growth or prosperity of; further
 prospect,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：(dated ) wide view of a landscape, etc"
 protocol,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：system of rules governing formal occasions, eg meetings between governments, diplomats, etc; official etiquette"
 psychology,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：science or study of the mind and how it functions
@@ -472,8 +472,8 @@ reinforce,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：make stronger by adding ma
 reject,v.,,,,,AWL,Sublist 5,passive,,AWL 定義：refuse to accept
 relax,v.,,,,,AWL,Sublist 9,passive,,"AWL 定義：(make sth) become less tight, stiff, etc"
 release,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：sb/sth (from sth) allow (a person or an animal) to go; set free or liberate sb/sth ;
-reluctance,,,,,,AWL,Sublist 10,passive,,
-rely,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：(pt, pp relied) ~ on/upon sb/sth (to do sth) count or depend on sb/sth"
+reluctance,n.,,,,,AWL,Sublist 10,passive,,AWL 定義：unwillingness to do sth; hesitation
+rely,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：depend on (sb/sth) with full trust or confidence; count on
 remove,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：sth/sb (from sth) take sth/sb away from one place to another
 resolve,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：on/upon/against sth/doing sth decide firmly; determine
 restore,v.,,,,,AWL,Sublist 8,passive,,"AWL 定義：sth (fml ) give back (sth lost, etc) to its owner"
@@ -497,7 +497,7 @@ shift,v.,,,,,AWL,Sublist 3,passive,,AWL 定義：(sth/sb/oneself) (from.../to...
 simulate,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：pretend to have or feel
 so-called,adj.,,,,,AWL,Sublist 10,passive,,AWL 定義：(used to suggest that the words used to describe sb/sth are not appropriate )
 sole,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：flat sea-fish that is eaten as food
-somewhat,,,,,,AWL,Sublist 7,passive,,AWL 定義：indef adv to some degree; rather
+somewhat,adv.,,,,,AWL,Sublist 7,passive,,AWL 定義：to some degree; rather
 specify,v.,,,,,AWL,Sublist 3,passive,,"AWL 定義：(esp fml ) state or name clearly and definitely (details, materials, etc)"
 sphere,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：solid figure that is entirely round (ie with every point on the surface at an equal distance from the centre)
 stable,adj.,,,,,AWL,Sublist 5,passive,,AWL 定義：firmly established or fixed; not likely to move or change
@@ -508,12 +508,12 @@ stress,n.,,,,,AWL,Sublist 4,passive,,"AWL 定義：mental or physical distress, 
 style,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：manner of writing or speaking, esp contrasted with what is actually written or said"
 submit,v.,,,,,AWL,Sublist 7,passive,,"AWL 定義：(to sb/sth) accept the control, superior strength, etc (of sb/sth); yield (to sb/sth) ; ,"
 subordinate,adj.,,,,,AWL,Sublist 9,passive,,AWL 定義：(to sb) lower in rank or position
-subsequent,,,,,,AWL,Sublist 4,passive,,
+subsequent,adj.,,,,,AWL,Sublist 4,passive,,AWL 定義：coming after sth else in time; following
 subsidy,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：money paid, esp by a government, to help an industry, to support the arts, to keep pricesdown, etc"
 substitute,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：person or thing that replaces, acts for or serves as sb or sth else"
 successor,n.,,,,,AWL,Sublist 7,passive,,AWL 定義：person or thing that comes after and takes the place of (sb/sth)
-sufficient,,,,,,AWL,Sublist 3,passive,,
-sum,,,,,,AWL,Sublist 4,passive,,
+sufficient,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：enough for a particular purpose
+sum,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：an amount of money; the total obtained by adding numbers together
 summary,n.,,,,,AWL,Sublist 4,passive,,AWL 定義：brief statement of themain points of sth
 supplement,n.,,,,,AWL,Sublist 9,passive,,AWL 定義：thing added to sth else to improve or complete it
 survive,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：~ (on sth) continue to live or exist
@@ -537,7 +537,7 @@ topic,n.,,,,,AWL,Sublist 7,passive,,"AWL 定義：subject of a discussion, talk,
 trace,n.,,,,,AWL,Sublist 6,passive,,"AWL 定義：mark, track, sign, etc showing what has existed or happened"
 transform,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth/sb (into sth) completely change the appearance or character of sth/sb
 transit,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：process of going or being taken or transported from one place to another
-transmit,,,,,,AWL,Sublist 7,passive,,AWL 定義：To send trough or across.
+transmit,v.,,,,,AWL,Sublist 7,passive,,AWL 定義：send (sth) through or across
 transport,v.,,,,,AWL,Sublist 6,passive,,AWL 定義：sth/sb (to...) take sth/sb from one place to another in a vehicle
 trend,n.,,,,,AWL,Sublist 5,passive,,AWL 定義：general tendency or direction
 trigger,n.,,,,,AWL,Sublist 9,passive,,"AWL 定義：lever that releases a spring, esp so as to fire a gun"
@@ -548,11 +548,11 @@ undertake,v.,,,,,AWL,Sublist 4,passive,,AWL 定義：(fml ) (start to) make ones
 uniform,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：not changing in form or character; unvarying
 unify,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：form (sth) into a single unit or make uniform
 unique,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：being the only one of its type
-utilise,,,,,,AWL,Sublist 6,passive,,"AWL 定義：vt. (= utilize) to put to use, especially to find a profitable or practical use for"
+utilise,v.,,,,,AWL,Sublist 6,passive,,"AWL 定義：put to use, esp to find a profitable or practical use for"
 valid,adj.,,,,,AWL,Sublist 3,passive,,AWL 定義：legally effective because made or done with the correct formalities
 vehicle,n.,,,,,AWL,Sublist 8,passive,,"AWL 定義：conveyance such as a car, lorry or cart used for transporting goods or passengers on land"
 version,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：account of an event, etc from the point of view of one person"
-via,,,,,,AWL,Sublist 8,passive,,AWL 定義：prep by way of (sth); through
+via,prep.,,,,,AWL,Sublist 8,passive,,AWL 定義：by way of (sth); through
 violate,v.,,,,,AWL,Sublist 9,passive,,AWL 定義：break or be contrary to
 virtual,adj.,,,,,AWL,Sublist 8,passive,,"AWL 定義：being or acting as what is described, but not accepted as such in name or officially"
 visible,adj.,,,,,AWL,Sublist 7,passive,,AWL 定義：that can be seen; in sight
@@ -561,8 +561,8 @@ visual,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：concerned with or used in se
 volume,n.,,,,,AWL,Sublist 3,passive,,"AWL 定義：book, esp one of a matching set or a series"
 voluntary,adj.,,,,,AWL,Sublist 7,passive,,"AWL 定義：acting,done or given willingly"
 welfare,n.,,,,,AWL,Sublist 5,passive,,"AWL 定義：good health, happiness, prosperity, etc of a person or group"
-whereby,,,,,,AWL,Sublist 10,passive,,AWL 定義：rel adv by which
-widespread,,,,,,AWL,Sublist 8,passive,,AWL 定義：extending over a wide area
+whereby,adv.,,,,,AWL,Sublist 10,passive,,AWL 定義：by which
+widespread,adj.,,,,,AWL,Sublist 8,passive,,AWL 定義：extending over a wide area
 mitigate,v.,Governments must act now to mitigate the effects of climate change.,mitigate the effects; mitigate the impact; mitigate risk,"mit(緩和、變柔軟, 同 mild) + -igate(使…) → 使變柔和",alleviate; reduce; ease; lessen,高頻話題字,環境,passive,減輕、緩和,
 sustainable,adj.,Cities need sustainable transport systems that do not rely on private cars.,sustainable development; sustainable growth; environmentally sustainable,"sus-(在下) + tain(持有, 同 contain/retain/maintain) + -able → 在底下撐得住的",viable; enduring; long-term; environmentally sound,高頻話題字,環境,passive,可持續的,
 renewable,adj.,Denmark now generates over half its electricity from renewable sources.,renewable energy; renewable sources; shift to renewables,re-(再) + new(新) + -able → 可以一再變新的,sustainable; clean; green; inexhaustible,高頻話題字,環境,passive,可再生的,

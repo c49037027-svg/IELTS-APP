@@ -397,6 +397,24 @@ check('舊的 known / learning 會換算成認讀進度', () => {
   eq(fresh, 0, '沒學過的字不該有進度');
 });
 
+console.log('--- 種子資料的線索 ---');
+// 用 SEED_CARDS 而不是 Store.listCards()：上面的 CSV 測試會往同一個 store
+// 塞測試卡片，拿整個 store 檢查會抓到那些假資料。
+check('每張種子卡都至少有例句或英文定義（不然任何模式都出不了題）', () => {
+  const mute = run('SEED_CARDS.filter(c => !c.example && !c.notes).map(c => c.word)');
+  eq(mute, [], `${mute.length} 張卡沒有任何線索`);
+});
+check('每張種子卡都有詞性', () => {
+  const missing = run('SEED_CARDS.filter(c => !c.pos).map(c => c.word)');
+  eq(missing, [], `${missing.length} 張卡沒有詞性`);
+});
+check('種子卡的英文定義不會直接洩漏答案', () => {
+  const leaks = run(`SEED_CARDS
+    .filter(c => !c.example && c.notes && TextUtil.maskSentence(c.notes, c.word).hits > 0)
+    .map(c => c.word)`);
+  eq(leaks, [], '定義裡出現了答案本身');
+});
+
 console.log('--- 中文意思開關 ---');
 check('預設是顯示中文', () => eq(run('Store.showZh()'), true));
 check('CSV 認得 chinese_meaning 這個欄位名', () => {

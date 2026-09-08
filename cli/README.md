@@ -50,7 +50,7 @@ pip install rich
 | 口說表達（依功能分組） | 36 | 36 |
 
 **Sublist 1、2 的 120 個字四維度全部寫齊**，裝好就能直接複習。
-Sublist 3 以後的字頭卡只帶詞性與英文定義進來，四個維度留白，由 `ielts complete` 逐一補上 ——
+Sublist 3 以後的字頭卡只帶詞性與英文定義進來（每個字頭都有，不會出現空白卡），四個維度留白，由 `ielts complete` 逐一補上 ——
 補完佇列**依 sublist 由高頻排到低頻**，打開就是從 Sublist 3 開始。
 資料的唯一來源在專案根目錄的 `tools/`，改完跑 `python3 tools/build_seed.py` 重新產生。
 
@@ -273,7 +273,7 @@ cli/
 
 ```bash
 cd cli
-python3 -m unittest discover -s tests -t .   # 150 個測試
+python3 -m unittest discover -s tests -t .   # 153 個測試
 ```
 
 涵蓋 SM-2 排程數學、挖空與拼字比對（含不規則動詞）、同義詞寬鬆比對、資料層查詢與三軌獨立性、

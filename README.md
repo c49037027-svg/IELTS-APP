@@ -25,7 +25,7 @@
 - **AWL 570 個字頭一個不少**。其中 6 個（decline、overall、whereas、constant、proportion、fluctuate）
   同時是 Task 1 用語，以功能分類為準、備註標明 AWL sublist，一個字只留一張卡。
 - **Sublist 1、2（最高頻的 120 個字）四個維度全部寫齊**，一裝好就能直接進通勤複習。
-- Sublist 3 以後的字頭卡只帶**詞性與英文定義**進來，四個維度留白 —— 例句、搭配詞、字根、同義詞由你在
+- Sublist 3 以後的字頭卡只帶**詞性與英文定義**進來（570 個字頭一個不漏，全部都有定義），四個維度留白 —— 例句、搭配詞、字根、同義詞由你在
   「補完卡片」模式自己寫。自己寫出來的才記得住，這比讀現成的解釋有效得多。
 - **補完模式依 sublist 由高頻排到低頻**（1 → 10），所以打開就是從 Sublist 3 開始，
   不用自己決定先補哪個。
@@ -192,7 +192,7 @@ tools/                  單字資料的唯一來源與產生器
   data_task1.py         Task 1 圖表用語
   data_speaking.py      口說表達
   awl_headwords.py      570 字頭與 sublist（由 PDF 抽出）
-  awl_defs.py           546 個字頭的英文定義（由 PDF 抽出）
+  awl_defs.py           字頭的英文定義（PDF 抽出 + 手補的 15 個與修過的 27 個）
 cli/                    指令列版本（見 cli/README.md）
 ```
 
@@ -207,6 +207,8 @@ python3 tools/build_seed.py           # 驗證通過才寫檔
 
 驗證會擋下：重複的字、缺維度、同義詞少於 2 個、同義詞裡有自己，
 以及最重要的一條 —— **例句裡沒有真的用到那個字**（那樣拼字模式就出不了題）。
+字頭卡另外檢查：一定要有詞性與英文定義（兩者皆無的卡片在任何模式都出不了題），
+而且**定義裡不能出現被定義的字**（會被挖空模式遮掉，等於白給一行看不懂的線索）。
 
 要加新模式：在 `js/vocab.js` 加一組 `startXxx / renderXxx`，再到首頁的 `modeCard` 清單掛一個入口。
 介面層只呼叫 `Store`、`TextUtil` 與 `Speech`，不自己碰 localStorage 或 speechSynthesis。
@@ -216,11 +218,11 @@ python3 tools/build_seed.py           # 驗證通過才寫檔
 ## 測試
 
 ```bash
-node tests/engine.test.js                      # 89 項：排程、挖空、資料層、CSV、每日上限、舊資料轉換、發音、中文開關
+node tests/engine.test.js                      # 92 項：排程、挖空、資料層、CSV、每日上限、舊資料轉換、發音、中文開關、種子線索
 python3 -m http.server 8899 --bind 127.0.0.1 & # 瀏覽器端到端需要先起一個 server
 python3 tests/browser.test.py                  # 54 項：五種模式實際點過一輪 + 發音 + 中文開關 + 截圖
 python3 tools/build_seed.py --check            # 779 張卡片的內容驗證
-cd cli && python3 -m unittest discover -s tests -t .   # 150 項：指令列版本
+cd cli && python3 -m unittest discover -s tests -t .   # 153 項：指令列版本
 ```
 
 ---

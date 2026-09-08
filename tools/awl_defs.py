@@ -552,3 +552,66 @@ DEFINITIONS = {
     'whereby': ('', 'rel adv by which'),
     'widespread': ('', 'extending over a wide area'),
 }
+
+#: PDF 裡漏掉的 15 個字頭，補上詞性與定義。
+#: 沒有定義的卡片在任何模式都出不了題（拼字模式沒線索、複習模式沒例句），
+#: 只會卡在補完佇列裡，所以這些一定要補。
+#: 寫法跟上面一致：學習型辭典的口吻、小寫開頭、句尾不加句號。
+MISSING_FROM_PDF = {
+    'albeit': ('conj', 'although; even though'),
+    'anticipate': ('v', 'expect (sth); see what needs doing and do it in advance'),
+    'cite': ('v', 'quote (a passage, book or author) as evidence for an argument'),
+    'conceive': ('v', 'form (a plan or idea) in the mind; imagine'),
+    'conflict': ('n', 'serious disagreement or clash between opposing ideas, interests or groups'),
+    'discrete': ('adj', 'separate and distinct; not joined to or continuous with others'),
+    'found': ('v', 'establish (an institution or organization), esp by providing money for it'),
+    'generation': ('n', 'all the people born at about the same time; the production of sth such as electricity or heat'),
+    'ignorance': ('n', 'lack of knowledge or information about sth'),
+    'likewise': ('adv', 'in the same way; also'),
+    'nonetheless': ('adv', 'in spite of that; nevertheless'),
+    'reluctance': ('n', 'unwillingness to do sth; hesitation'),
+    'subsequent': ('adj', 'coming after sth else in time; following'),
+    'sufficient': ('adj', 'enough for a particular purpose'),
+    'sum': ('n', 'an amount of money; the total obtained by adding numbers together'),
+}
+
+DEFINITIONS.update(MISSING_FROM_PDF)
+
+#: PDF 有抽到定義、但詞性被寫在定義文字裡（"prep without being affected by"），
+#: 或抽壞了（"To send trough or across."、"...course of actio"、":FURTHER"）。
+#: 這裡把詞性拉出來、順手把句子修乾淨，寫法對齊上面。
+CLEANED_FROM_PDF = {
+    'adjacent': ('adj', 'having a common endpoint or border; immediately preceding or following'),
+    'context': ('n', 'the words that come before and after a passage and fix its meaning; the situation in which sth happens'),
+    'cooperate': ('v', 'work or act together'),
+    'coordinate': ('v', 'organize or integrate (diverse elements) into a harmonious operation'),
+    'despite': ('prep', 'without being affected by; in spite of'),
+    'federal': ('adj', 'relating to a system of government in which power is divided between one central and several regional governments'),
+    'guideline': ('n', 'a principle put forward to set standards or determine a course of action'),
+    'instruct': ('v', 'direct (sb) to do sth; order'),
+    'maximise': ('v', 'make as high or great as possible; increase to a maximum'),
+    'minimise': ('v', 'reduce to the least possible degree or amount'),
+    'nevertheless': ('adv', 'in spite of this; however; still'),
+    'notwithstanding': ('prep', 'without being affected by (sth); in spite of'),
+    'plus': ('prep', 'with the addition of'),
+    'promote': ('v', 'contribute to the growth or prosperity of; further'),
+    'somewhat': ('adv', 'to some degree; rather'),
+    'transmit': ('v', 'send (sth) through or across'),
+    'utilise': ('v', 'put to use, esp to find a profitable or practical use for'),
+    'via': ('prep', 'by way of (sth); through'),
+    'whereas': ('conj', 'in contrast with the fact that; while on the other hand'),
+    'whereby': ('adv', 'by which'),
+    'widespread': ('adj', 'extending over a wide area'),
+
+    # 抽到的定義本身就有問題：'job' 抽到的是諺語（the patience of job），
+    # 'orient' 抽到的是名詞「東方」而不是 AWL 要的動詞，其餘則是定義裡直接
+    # 出現被定義的字（拼字模式會把它遮掉，等於白給一行看不懂的線索）。
+    'automate': ('v', 'convert (a process or facility) to be operated by machines rather than people'),
+    'behalf': ('n', 'the interest or support of a person or group, as when acting as their representative'),
+    'job': ('n', 'a paid position of regular employment; a task or piece of work'),
+    'media': ('n', 'the main means of mass communication — television, radio, newspapers and the internet — taken as a whole'),
+    'orient': ('v', 'align or position (sth) relative to a fixed point; familiarize (sb) with a new situation'),
+    'rely': ('v', 'depend on (sb/sth) with full trust or confidence; count on'),
+}
+
+DEFINITIONS.update(CLEANED_FROM_PDF)

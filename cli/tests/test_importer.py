@@ -180,6 +180,35 @@ class TestSeed(ImporterTestCase):
             hits = textutil.mask_sentence(card.example_sentence, card.word)[1]
             self.assertGreater(hits, 0, f"{card.word}: {card.example_sentence}")
 
+    def test_every_card_can_be_asked_in_at_least_one_mode(self):
+        """沒有例句也沒有英文定義的卡片，在任何模式都出不了題。"""
+        seed.load_seed(self.conn)
+        mute = [
+            c.word for c in repo.list_cards(self.conn)
+            if not c.example_sentence.strip() and not c.notes.strip()
+        ]
+        self.assertEqual(mute, [], f"{len(mute)} 張卡沒有任何線索：{mute[:10]}")
+
+    def test_every_card_has_a_part_of_speech(self):
+        seed.load_seed(self.conn)
+        missing = [c.word for c in repo.list_cards(self.conn) if not c.pos.strip()]
+        self.assertEqual(missing, [], f"{len(missing)} 張卡沒有詞性：{missing[:10]}")
+
+    def test_definition_only_cards_survive_pure_english_mode(self):
+        """關掉中文之後，字頭卡靠英文定義照樣出得了拼字題。"""
+        from ielts import render, textutil
+
+        seed.load_seed(self.conn)
+        for word in ("albeit", "sufficient", "subsequent", "reluctance", "sum"):
+            cards = [c for c in repo.list_cards(self.conn, search=word) if c.word == word]
+            self.assertTrue(cards, word)
+            card = cards[0]
+            lines = render.spelling_prompt_lines(card, show_zh=False)
+            self.assertTrue(lines, f"{word}：純英文模式下沒有任何線索")
+            # 線索裡不可以直接出現答案
+            body = " ".join(lines)
+            self.assertEqual(textutil.mask_sentence(body, word)[1], 0, f"{word}：題目洩題")
+
     def test_seed_covers_every_category(self):
         seed.load_seed(self.conn)
         categories = {row["name"] for row in repo.counts_by(self.conn, "category")}

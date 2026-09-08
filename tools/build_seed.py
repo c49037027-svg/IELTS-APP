@@ -99,8 +99,18 @@ def validate(entries: list[dict]) -> list[str]:
         if not entry.get("topic"):
             problems.append(f"{where}：缺 topic")
 
-        # 只帶字頭進來的卡片：四個維度留白是刻意的，交給補完模式
+        # 只帶字頭進來的卡片：四個維度留白是刻意的，交給補完模式。
+        # 但至少要有「例句或英文定義」其中一個 —— 兩個都沒有的話這張卡在
+        # 每一個模式都出不了題（拼字沒線索、複習沒例句），只會卡在補完佇列裡。
         if entry.get("bare"):
+            notes = str(entry.get("notes", "")).strip()
+            if not notes:
+                problems.append(f"{where}：字頭卡沒有英文定義，任何模式都出不了題")
+            if not str(entry.get("pos", "")).strip():
+                problems.append(f"{where}：字頭卡缺詞性")
+            # 定義裡出現被定義的字 → 拼字模式會把它遮掉，剩下一行看不懂的線索
+            if notes and textutil.mask_sentence(notes, word)[1] > 0:
+                problems.append(f"{where}：英文定義裡出現這個字本身 → {notes}")
             continue
 
         for field, label in (("example", "例句"), ("root", "字根")):
