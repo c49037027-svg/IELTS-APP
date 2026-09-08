@@ -29,7 +29,13 @@ def front_lines(card: Card) -> list[str]:
 
 
 def back_lines(card: Card, *, show_zh: bool = False) -> list[str]:
-    """卡片背面：四個核心維度。"""
+    """卡片背面。
+
+    順序固定：例句 → 搭配詞 → 字根 → 同義詞 →（筆記）→ 中文意思。
+    中文永遠排最後，因為它只是「校對用」，不是記憶點 ——
+    先從英文語境理解，看完四個維度之後才用中文確認自己有沒有想歪。
+    show_zh 關掉就完全不出現（純英文思考模式）。
+    """
     lines: list[str] = []
     if card.example_sentence:
         lines.append(_row("例句", highlight_target(card.example_sentence, card.word)))
@@ -39,16 +45,16 @@ def back_lines(card: Card, *, show_zh: bool = False) -> list[str]:
         lines.append(_row("字根", card.root_analysis))
     if card.synonym_list:
         lines.append(_row("同義", " / ".join(card.synonym_list)))
-    if show_zh and card.zh_hint:
-        lines.append(_row("中文", card.zh_hint))
     if card.notes:
         lines.append(_row("筆記", card.notes))
+    if show_zh and card.zh_hint:
+        lines.append(_row("中文", card.zh_hint))
     if not lines:
         lines.append("（這張卡還沒有內容，用 `ielts complete` 補完）")
     return lines
 
 
-def spelling_prompt_lines(card: Card) -> list[str]:
+def spelling_prompt_lines(card: Card, *, show_zh: bool = True) -> list[str]:
     """拼字模式的題目：例句挖空 + 中文提示，其他線索一律遮掉目標字。"""
     lines: list[str] = []
     masked, hits = mask_sentence(card.example_sentence, card.word)
@@ -57,7 +63,7 @@ def spelling_prompt_lines(card: Card) -> list[str]:
     elif card.example_sentence:
         # 例句裡找不到目標字（可能是變化形太特殊）→ 不顯示，以免直接洩題
         lines.append(_row("例句", "（例句含目標字原形，先不顯示）"))
-    if card.zh_hint:
+    if show_zh and card.zh_hint:
         lines.append(_row("中文", card.zh_hint))
     if card.pos:
         lines.append(_row("詞性", card.pos))

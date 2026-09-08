@@ -137,5 +137,37 @@ class TestImportExportRoundTrip(CliTestCase):
         self.assertIn("ielts complete", output)
 
 
+class TestConfig(CliTestCase):
+    """中文意思開關：預設顯示，可以關掉，而且關掉會存下來。"""
+
+    def test_config_shows_current_state(self):
+        self.run_cmd("init")
+        code, output = self.run_cmd("config")
+        self.assertEqual(code, 0)
+        self.assertIn("中文意思", output)
+        self.assertIn("顯示", output)
+
+    def test_no_zh_turns_it_off_and_persists(self):
+        self.run_cmd("init")
+        code, output = self.run_cmd("config", "--no-zh")
+        self.assertEqual(code, 0)
+        self.assertIn("隱藏", output)
+        # 換一個 process 也要記得（設定存在資料庫裡，不是記憶體）
+        _, again = self.run_cmd("config")
+        self.assertIn("隱藏", again)
+
+    def test_zh_turns_it_back_on(self):
+        self.run_cmd("init")
+        self.run_cmd("config", "--no-zh")
+        _, output = self.run_cmd("config", "--zh")
+        self.assertIn("顯示", output)
+        self.assertNotIn("隱藏", output)
+
+    def test_zh_and_no_zh_together_is_rejected(self):
+        self.run_cmd("init")
+        with self.assertRaises(SystemExit):
+            self.run_cmd("config", "--zh", "--no-zh")
+
+
 if __name__ == "__main__":
     unittest.main()

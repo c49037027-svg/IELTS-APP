@@ -199,6 +199,31 @@ class TestSpellingQueue(RepositoryTestCase):
         queue = repo.spelling_queue(self.conn, today=TODAY, limit=5, only_wrong=True)
         self.assertEqual([i.card.id for i in queue], [wrong_id])
 
+    def test_zh_only_cards_drop_out_when_chinese_is_hidden(self):
+        """關掉中文之後，只靠中文提示的卡片就出不了題了，要一起排除。"""
+        repo.add_card(
+            self.conn,
+            Card(word="zzonlyzh", zh_hint="只有中文"),
+            today=TODAY,
+        )
+        with_zh = repo.spelling_queue(self.conn, today=TODAY, limit=50, show_zh=True)
+        without_zh = repo.spelling_queue(self.conn, today=TODAY, limit=50, show_zh=False)
+        self.assertIn("zzonlyzh", [i.card.word for i in with_zh])
+        self.assertNotIn("zzonlyzh", [i.card.word for i in without_zh])
+
+    def test_cards_with_an_example_survive_hiding_chinese(self):
+        repo.add_card(self.conn, full_card("mitigate"), today=TODAY)
+        queue = repo.spelling_queue(self.conn, today=TODAY, limit=50, show_zh=False)
+        self.assertIn("mitigate", [i.card.word for i in queue])
+
+    def test_definition_only_cards_survive_hiding_chinese(self):
+        """AWL 字頭卡只有英文定義 —— 那正好是純英文模式想要的題目。"""
+        repo.add_card(
+            self.conn, Card(word="zzdefonly", notes="AWL 定義：to do something"), today=TODAY
+        )
+        queue = repo.spelling_queue(self.conn, today=TODAY, limit=50, show_zh=False)
+        self.assertIn("zzdefonly", [i.card.word for i in queue])
+
     def test_a_later_correct_answer_clears_the_error_flag(self):
         card_id = repo.add_card(self.conn, full_card("congestion"), today=TODAY)
         repo.record_spelling(self.conn, card_id, "congession", False)

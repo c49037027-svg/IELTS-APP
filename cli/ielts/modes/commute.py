@@ -6,7 +6,7 @@
 
 from __future__ import annotations
 
-from .. import render, repository as repo, srs
+from .. import render, repository as repo, settings, srs
 from ..context import AppContext
 from ..db import TRACK_RECALL
 from ..errors import QuitSession
@@ -23,9 +23,12 @@ def run(
     topic: str | None = None,
     category: str | None = None,
     include_active: bool = False,
-    show_zh: bool = False,
+    show_zh: bool | None = None,
 ) -> SessionSummary:
     ui = ctx.ui
+    # None = 照設定走（ielts config --zh on/off）；--zh / --no-zh 才覆寫這一次
+    if show_zh is None:
+        show_zh = settings.show_zh(ctx.conn)
     items = repo.due_items(
         ctx.conn,
         TRACK_RECALL,

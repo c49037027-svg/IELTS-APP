@@ -6,7 +6,7 @@
 
 from __future__ import annotations
 
-from .. import render, repository as repo, srs, textutil
+from .. import render, repository as repo, settings, srs, textutil
 from ..context import AppContext
 from ..errors import QuitSession
 from ..models import SessionSummary
@@ -20,8 +20,10 @@ def run(
     only_wrong: bool = False,
 ) -> SessionSummary:
     ui = ctx.ui
+    show_zh = settings.show_zh(ctx.conn)
     items = repo.spelling_queue(
-        ctx.conn, today=ctx.today, limit=limit, topic=topic, only_wrong=only_wrong
+        ctx.conn, today=ctx.today, limit=limit, topic=topic,
+        only_wrong=only_wrong, show_zh=show_zh,
     )
     summary = SessionSummary(mode="拼字練習", total=len(items))
 
@@ -41,7 +43,7 @@ def run(
         for index, item in enumerate(items, start=1):
             card = item.card
             ui.panel(
-                render.spelling_prompt_lines(card),
+                render.spelling_prompt_lines(card, show_zh=show_zh),
                 title=f"[{index}/{len(items)}]",
                 style="hint",
             )

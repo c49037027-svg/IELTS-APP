@@ -64,6 +64,12 @@
 }
 .card-meta { font-size: 12px; color: var(--text-light); margin-top: 6px; }
 
+/* 中文意思：排最後，而且刻意做小、做淡 —— 它是校對用的，不是記憶點 */
+.dim-row.zh-row .dim-key, .dim-row.zh-row .dim-val {
+  font-size: 12px; color: var(--text-light);
+}
+.dim-row.zh-row { margin-top: -4px; }
+
 /* ---------- 發音 ---------- */
 /* 通勤時是單手操作，喇叭至少要有 36px 的觸控面積才按得到 */
 .speak-btn {

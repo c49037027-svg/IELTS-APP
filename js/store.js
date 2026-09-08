@@ -25,6 +25,10 @@ const Store = (() => {
     Technology: '科技', Health: '健康', Work: '工作'
   };
 
+  // 顯示偏好。中文意思只是「校對用」，不是記憶點 —— 所以它固定排在卡片背面
+  // 最後一行、用小字；showZh 關掉之後全 App 都不再出現中文（純英文思考模式）。
+  const DISPLAY_DEFAULTS = { showZh: true };
+
   let db = null;
 
   // ---------------------------------------------------------- 持久化
@@ -37,6 +41,7 @@ const Store = (() => {
       reviewLog: [],    // { cardId, track, rating, at }
       spelling: [],     // { cardId, input, correct, at }
       productions: [],  // { id, cardId, topic, prompt, sentence, at, feedback }
+      prefs: { ...DISPLAY_DEFAULTS },
       seeded: false
     };
   }
@@ -67,6 +72,20 @@ const Store = (() => {
   }
 
   const today = () => Dates.todayISO();
+
+  // ---------------------------------------------------------- 顯示偏好
+  function getPrefs() {
+    return { ...DISPLAY_DEFAULTS, ...((db && db.prefs) || {}) };
+  }
+
+  function setPrefs(patch) {
+    db.prefs = { ...getPrefs(), showZh: (patch || {}).showZh === true };
+    save();
+    return getPrefs();
+  }
+
+  /** 現在要不要顯示中文。整個 App 只認這一個判斷。 */
+  const showZh = () => getPrefs().showZh === true;
   const daysAgo = n => Dates.addDays(today(), -n);
 
   // ---------------------------------------------------------- 卡片
@@ -277,7 +296,9 @@ const Store = (() => {
 
   //: 拼字題至少要有一個線索（挖空例句／中文提示／英文定義），
   //  否則就是「憑空拼一個字」，答不出來也學不到東西。
-  const hasSpellingClue = card => !!(card.example || card.zh || card.notes);
+  // 拼字題至少要有一個線索，不然就是「憑空拼一個看不到的字」。
+  // 關掉中文之後，只靠中文提示的卡片就出不了題了，要一起從佇列拿掉。
+  const hasSpellingClue = card => !!(card.example || card.notes || (showZh() && card.zh));
 
   // onlyWrong 不看到期日：今天剛拼錯的字，當下就要能再練一次。
   function spellingQueue(opts = {}) {
@@ -294,7 +315,8 @@ const Store = (() => {
     shuffle(rows);
     // 排序：拼錯的最優先 → 有「挖空例句 + 中文提示」的完整題目 → 其餘按到期日。
     // 只有英文定義可用的字頭卡排最後，不要淹掉設計好的題型。
-    const quality = card => (card.example && card.zh ? 0 : card.example || card.zh ? 1 : 2);
+    const zhUsable = card => showZh() && !!card.zh;
+    const quality = card => (card.example && zhUsable(card) ? 0 : card.example || zhUsable(card) ? 1 : 2);
     rows.sort((a, b) => {
       const wrongA = lastSpellingResult(a.id) === false ? 0 : 1;
       const wrongB = lastSpellingResult(b.id) === false ? 0 : 1;
@@ -506,6 +528,7 @@ const Store = (() => {
     類別: 'category', 分類: 'category', 主題: 'topic', 話題: 'topic',
     type: 'card_type', cardtype: 'card_type',
     chinese: 'zh_hint', zh: 'zh_hint', meaning: 'zh_hint', translation: 'zh_hint', 中文: 'zh_hint',
+    chinese_meaning: 'zh_hint', chinesemeaning: 'zh_hint', 中文意思: 'zh_hint', 中文解釋: 'zh_hint',
     note: 'notes', 備註: 'notes'
   };
 
@@ -704,11 +727,11 @@ const Store = (() => {
     missingCore, isIncomplete, cardLabel, cardCount, incompleteCount, completionQueue,
     getSrs, grade, dueItems, dueCount,
     recordSpelling, spellingQueue, spellingErrorList, spellingAccuracy, lastSpellingResult,
-    hasSpellingClue,
+    hasSpellingClue, getPrefs, setPrefs, showZh,
     addProduction, listProductions, setProductionFeedback, productionCandidates, promotionCandidates,
     coverage, cardTypeCounts, activityDays, streak, longestStreak,
     reviewsSince, reviewsOn, productionsSince, cardsAddedSince, distinctWordsUsed,
     newCardsLearned, ratingBreakdown,
-    importCSV, exportCSV, exportProductionsMarkdown, parseCSV
+    importCSV, exportCSV, exportProductionsMarkdown, parseCSV, normaliseHeader
   };
 })();

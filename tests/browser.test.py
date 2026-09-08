@@ -71,7 +71,15 @@ with sync_playwright() as p:
     page.wait_for_timeout(200)
     dims = page.locator(".dim-key").all_text_contents()
     step("複習：背面四維度", "例句" in dims and "字根" in dims and "同義" in dims, " ".join(dims))
-    step("複習：背面預設沒有中文", "中文" not in dims)
+    # 中文意思：預設顯示，但固定排在四個維度之後
+    dim_order = [d for d in dims if d in ("例句", "搭配", "字根", "同義", "中文")]
+    if "中文" in dims:
+        step("複習：中文排在四個維度後面",
+             dim_order[-1] == "中文", " → ".join(dim_order))
+        step("複習：中文是小字",
+             page.locator("#vocab-stage .dim-row.zh-row").count() >= 1)
+    else:
+        step("複習：這張卡沒有中文（可跳過順序檢查）", True, " ".join(dims))
 
     # --- 發音 ---
     step("複習：單字旁邊有喇叭", page.locator(".word-line .speak-btn").count() == 1)
@@ -234,6 +242,38 @@ with sync_playwright() as p:
     step("進度頁有分類覆蓋", "分類覆蓋" in dash)
     step("學習計畫有產出", len(page.locator("#daily-plan").inner_text()) > 10)
     page.screenshot(path=f"{OUT}/shot-progress.png", full_page=True)
+
+    # --- 中文意思開關 ---
+    page.locator('.tab-btn[data-tab="vocab"]').click()
+    page.wait_for_timeout(200)
+    page.locator(".mode-card", has_text="通勤複習").click()
+    page.wait_for_timeout(200)
+    page.get_by_text("看例句與同義詞").click()
+    page.wait_for_timeout(200)
+    step("中文：預設看得到", page.locator("#vocab-stage .dim-row.zh-row").count() >= 1)
+    page.locator(".settings-btn").click()
+    page.wait_for_timeout(200)
+    page.locator("#show-zh").uncheck()
+    page.wait_for_timeout(200)
+    page.locator("#settings-modal .close-btn").click()
+    page.wait_for_timeout(200)
+    step("中文：關掉之後眼前這張卡立刻不見中文",
+         page.locator("#vocab-stage .dim-row.zh-row").count() == 0)
+    step("中文：關掉之後四個維度還在",
+         page.locator("#vocab-stage .dim-row").count() >= 3)
+    spell_hidden = page.evaluate("Store.spellingQueue({}).length")
+    step("中文：關掉之後拼字題目仍然有得出", spell_hidden > 0, f"{spell_hidden} 題")
+    step("中文：關掉之後拼字題不會出「只有中文可當線索」的字",
+         page.evaluate("Store.spellingQueue({}).every(c => c.example || c.notes)"))
+    page.locator(".settings-btn").click()
+    page.wait_for_timeout(200)
+    page.locator("#show-zh").check()
+    page.wait_for_timeout(150)
+    step("中文：可以再打開", page.evaluate("Store.showZh()") is True)
+    page.locator("#settings-modal .close-btn").click()
+    page.wait_for_timeout(200)
+    page.locator("#vocab-stage .back-btn").click()
+    page.wait_for_timeout(200)
 
     # --- 發音設定 ---
     page.locator(".settings-btn").click()

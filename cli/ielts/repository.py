@@ -438,12 +438,15 @@ def spelling_queue(
     limit: int = 20,
     topic: str | None = None,
     only_wrong: bool = False,
+    show_zh: bool = True,
 ) -> list[ReviewItem]:
     """拼字練習佇列。
 
     一般模式：今天到期的卡片，上次拼錯的字排最前面（錯誤清單，隔天優先出現）。
     only_wrong：直接調出錯誤清單，不看到期日 —— 今天剛拼錯的字，
     當下就要能再練一次，不必等到明天。
+    show_zh=False（純英文思考模式）時，只靠中文提示才出得了題的卡片會被排除，
+    否則會出現「什麼線索都沒有，憑空拼一個字」的題目。
     """
     today = today or date.today()
     last_result_sql = (
@@ -467,19 +470,20 @@ def spelling_queue(
         sql.append("AND s.due_date <= ?")
         args.append(today.isoformat())
         # 至少要有一個線索（例句／中文／英文定義），否則題目無解
-        sql.append(
-            "AND (TRIM(c.example_sentence) <> '' OR TRIM(c.zh_hint) <> '' "
-            "OR TRIM(c.notes) <> '')"
-        )
+        clue = ["TRIM(c.example_sentence) <> ''", "TRIM(c.notes) <> ''"]
+        if show_zh:
+            clue.append("TRIM(c.zh_hint) <> ''")
+        sql.append("AND (" + " OR ".join(clue) + ")")
     if topic:
         sql.append("AND c.topic LIKE ?")
         args.append(f"%{topic}%")
     # 排序：拼錯的最優先 → 有「挖空例句 + 中文提示」的完整題目 → 其餘按到期日。
     # 只有英文定義可用的 AWL 字頭卡排最後，不要淹掉設計好的題型。
+    zh_usable = "TRIM(c.zh_hint) <> ''" if show_zh else "0"
     sql.append(
         "ORDER BY CASE WHEN last_result = 0 THEN 0 ELSE 1 END, "
-        "CASE WHEN TRIM(c.example_sentence) <> '' AND TRIM(c.zh_hint) <> '' THEN 0 "
-        "     WHEN TRIM(c.example_sentence) <> '' OR TRIM(c.zh_hint) <> '' THEN 1 "
+        f"CASE WHEN TRIM(c.example_sentence) <> '' AND {zh_usable} THEN 0 "
+        f"     WHEN TRIM(c.example_sentence) <> '' OR {zh_usable} THEN 1 "
         "     ELSE 2 END, "
         "s.due_date ASC, RANDOM() LIMIT ?"
     )

@@ -12,7 +12,10 @@
 | 字根字首 | 理解型記憶的抓手，記得住也猜得到生字 |
 | 同義詞群 | 雅思聽力閱讀的核心機制是同義替換 |
 
-中文提示（`zh_hint`）只在拼字模式與補完模式出現，複習模式預設完全不顯示中文。
+卡片正面只有單字，不給中文。背面的順序固定是
+**例句 → 搭配 → 字根 → 同義 →（筆記）→ 中文意思** ——
+中文永遠排最後，因為它只是校對用，不是記憶點。
+程度上來之後用 `ielts config --no-zh` 整個關掉，強迫自己純英文思考。
 
 ---
 
@@ -68,7 +71,8 @@ ielts review --limit 50      # 一次跑 50 張
 ielts review --topic 環境    # 只複習某個主題
 ielts review --topic "Sublist 1"   # 只練 AWL 第一組（最高頻的 60 字）
 ielts review --all           # 連 active 卡片也一起複習
-ielts review --zh            # 背面也顯示中文（預設不顯示）
+ielts review --no-zh         # 這一次完全不顯示中文（蓋過設定）
+ielts review --zh            # 這一次顯示中文（蓋過設定）
 ```
 
 操作鍵：
@@ -124,6 +128,18 @@ ielts syn --topic 科技
 
 答案不在卡片清單裡時會列出來，你可以用 `ielts complete` 把它補進同義詞欄位。
 
+### 設定 `ielts config`
+
+```bash
+ielts config                 # 看目前的設定
+ielts config --no-zh         # 關掉中文意思：卡片背面、拼字題目、補完模式都純英文
+ielts config --zh            # 再打開
+```
+
+設定存在資料庫的 `meta` 表，之後每次都生效。
+關掉中文之後，**拼字練習會自動跳過「只有中文可以當線索」的字** ——
+不然題目會變成憑空拼一個看不到的字；有例句或有英文定義的卡片照常出題。
+
 ### 補完模式 `ielts complete`
 
 匯入時欄位空白的卡片會被標記為 incomplete，這個模式逐一把缺的補齊。
@@ -159,7 +175,7 @@ CSV 欄位（只有 `word` 必填）：
 | `category` | AWL / 高頻話題字 / Task1圖表用語 / 口說表達 |
 | `topic` | 環境、教育、科技、健康、都市化、犯罪、媒體… |
 | `card_type` | `passive`（預設）或 `active` |
-| `zh_hint` | 中文提示（只在拼字與補完模式顯示） |
+| `zh_hint` | 中文意思（排在卡片背面最後，可用 `ielts config --no-zh` 關掉）。欄位名寫 `chinese_meaning`／`中文意思` 也認得 |
 | `notes` | 自己的筆記 |
 
 匯入很寬鬆：欄位名大小寫、底線、空白、常見別名（`example`、`root`、`中文`、`詞性`…）都對得上；
@@ -257,11 +273,11 @@ cli/
 
 ```bash
 cd cli
-python3 -m unittest discover -s tests -t .   # 142 個測試
+python3 -m unittest discover -s tests -t .   # 150 個測試
 ```
 
 涵蓋 SM-2 排程數學、挖空與拼字比對（含不規則動詞）、同義詞寬鬆比對、資料層查詢與三軌獨立性、
-每日新卡上限、CSV 匯入的各種髒資料、streak 計算、種子資料內容驗證，
+每日新卡上限、中文開關（含關掉之後拼字佇列的變化）、CSV 匯入的各種髒資料、streak 計算、種子資料內容驗證，
 以及五種模式的端到端流程（用假的 UI 餵入按鍵）。
 
 ---

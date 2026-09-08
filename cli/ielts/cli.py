@@ -8,7 +8,7 @@ import sys
 from datetime import date
 
 from . import db as dbmod
-from . import importer, repository as repo, seed, stats
+from . import importer, repository as repo, seed, settings, stats
 from .context import AppContext
 from .errors import IeltsError, QuitSession
 from .models import Card
@@ -55,6 +55,26 @@ def cmd_init(ctx: AppContext, args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_config(ctx: AppContext, args: argparse.Namespace) -> int:
+    ui = ctx.ui
+    if args.zh is not None:
+        settings.set_show_zh(ctx.conn, args.zh)
+    show_zh = settings.show_zh(ctx.conn)
+    ui.blank()
+    ui.rule("設定")
+    ui.print(f"  中文意思　{'顯示' if show_zh else '隱藏（純英文思考模式）'}")
+    ui.blank()
+    if show_zh:
+        ui.dim("  中文固定排在卡片背面最後一行 —— 先用英文語境理解，中文只當校對。")
+        ui.dim("  程度上來之後用 `ielts config --no-zh` 整個關掉。")
+    else:
+        ui.dim("  卡片背面與拼字題目都不會出現中文。")
+        ui.dim("  拼字練習會自動跳過「只有中文可以當線索」的字，避免出無解的題。")
+        ui.dim("  要看中文用 `ielts config --zh`，或單次 `ielts review --zh`。")
+    ui.blank()
+    return 0
+
+
 def cmd_review(ctx: AppContext, args: argparse.Namespace) -> int:
     commute.run(
         ctx,
@@ -62,7 +82,7 @@ def cmd_review(ctx: AppContext, args: argparse.Namespace) -> int:
         topic=args.topic,
         category=args.category,
         include_active=args.all,
-        show_zh=args.zh,
+        show_zh=args.zh,   # None = 照 `ielts config` 的設定走
     )
     return 0
 
@@ -189,7 +209,8 @@ def cmd_show(ctx: AppContext, args: argparse.Namespace) -> int:
         return 1
     for card in cards:
         ctx.ui.panel(
-            render_mod.back_lines(card, show_zh=True), title=card.label, style="word"
+            render_mod.back_lines(card, show_zh=settings.show_zh(ctx.conn)),
+            title=card.label, style="word",
         )
         for track in dbmod.TRACKS:
             state = repo.get_srs(ctx.conn, card.id or 0, track)
@@ -259,12 +280,24 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--force", action="store_true", help="即使已有資料也重新灌入/更新種子")
     p.set_defaults(func=cmd_init)
 
+    p = sub.add_parser("config", help="看／改設定（目前只有中文意思的開關）")
+    grp = p.add_mutually_exclusive_group()
+    grp.add_argument("--zh", dest="zh", action="store_true", default=None,
+                     help="打開中文意思（排在卡片背面最後）")
+    grp.add_argument("--no-zh", dest="zh", action="store_false",
+                     help="關掉中文意思，全部純英文")
+    p.set_defaults(func=cmd_config)
+
     p = sub.add_parser("review", help="模式 A：通勤複習（passive 卡片）")
     p.add_argument("--limit", type=int, default=30, help="這次要複習幾張（預設 30）")
     p.add_argument("--topic", help="只複習某個主題")
     p.add_argument("--category", help="只複習某個分類")
     p.add_argument("--all", action="store_true", help="連 active 卡片也一起複習")
-    p.add_argument("--zh", action="store_true", help="背面也顯示中文提示（預設不顯示）")
+    zh = p.add_mutually_exclusive_group()
+    zh.add_argument("--zh", dest="zh", action="store_true", default=None,
+                    help="這一次背面顯示中文意思（蓋過設定）")
+    zh.add_argument("--no-zh", dest="zh", action="store_false",
+                    help="這一次完全不顯示中文（蓋過設定）")
     p.set_defaults(func=cmd_review)
 
     p = sub.add_parser("spell", help="模式 B：拼字練習")

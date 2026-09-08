@@ -397,6 +397,57 @@ check('舊的 known / learning 會換算成認讀進度', () => {
   eq(fresh, 0, '沒學過的字不該有進度');
 });
 
+console.log('--- 中文意思開關 ---');
+check('預設是顯示中文', () => eq(run('Store.showZh()'), true));
+check('CSV 認得 chinese_meaning 這個欄位名', () => {
+  ['chinese_meaning', 'Chinese Meaning', 'chineseMeaning', '中文意思', '中文'].forEach(h => {
+    eq(run(`Store.normaliseHeader(${JSON.stringify(h)})`), 'zh_hint', h);
+  });
+});
+check('關掉之後 showZh() 為 false，而且存得住', () => {
+  run('Store.setPrefs({showZh:false})');
+  eq(run('Store.showZh()'), false);
+  const saved = JSON.parse(mem['ielts-vocab-v2']);
+  eq(saved.prefs.showZh, false, '沒有寫進 localStorage');
+});
+check('關掉中文時，只有中文可當線索的卡片不會出拼字題', () => {
+  const r = run(`(() => {
+    const card = Store.addCard({ word: 'zzonlyzh', zh: '只有中文' });
+    Store.setPrefs({showZh:false});
+    const hiddenOk = Store.hasSpellingClue(card);
+    Store.setPrefs({showZh:true});
+    const shownOk = Store.hasSpellingClue(card);
+    return [hiddenOk, shownOk];
+  })()`);
+  eq(r, [false, true]);
+});
+check('有例句的卡片不受中文開關影響', () => {
+  const r = run(`(() => {
+    const card = Store.addCard({ word: 'zzhasex', example: 'A zzhasex appeared.', zh: '有中文' });
+    Store.setPrefs({showZh:false});
+    const a = Store.hasSpellingClue(card);
+    Store.setPrefs({showZh:true});
+    return [a, Store.hasSpellingClue(card)];
+  })()`);
+  eq(r, [true, true]);
+});
+check('只有英文定義的字頭卡在純英文模式下照樣能出題', () => {
+  const r = run(`(() => {
+    const card = Store.addCard({ word: 'zzdefonly', notes: 'AWL 定義：something' });
+    Store.setPrefs({showZh:false});
+    const a = Store.hasSpellingClue(card);
+    Store.setPrefs({showZh:true});
+    return a;
+  })()`);
+  eq(r, true);
+});
+check('setPrefs 只吃布林，塞垃圾不會壞掉', () => {
+  run('Store.setPrefs({showZh:"yes"})');
+  eq(run('Store.showZh()'), false, '非 true 一律當關閉');
+  run('Store.setPrefs({showZh:true})');
+  eq(run('Store.showZh()'), true);
+});
+
 console.log('--- 發音 ---');
 // 這個 context 沒有 window，等同「不支援語音合成的瀏覽器」
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'js/speech.js'), 'utf8'), ctx, { filename: 'js/speech.js' });

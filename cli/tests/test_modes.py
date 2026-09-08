@@ -4,7 +4,7 @@ import unittest
 from datetime import date
 
 from ielts import db as dbmod
-from ielts import repository as repo
+from ielts import repository as repo, settings
 from ielts.context import AppContext
 from ielts.db import TRACK_RECALL, TRACK_SPELLING
 from ielts.errors import QuitSession
@@ -100,17 +100,32 @@ class TestCommuteMode(ModeTestCase):
         self.assertEqual(summary.done, 1)
         self.assertEqual(repo.due_count(self.conn, TRACK_RECALL, today=TODAY), 1)
 
-    def test_back_side_never_shows_chinese_by_default(self):
+    def test_back_side_shows_chinese_last_by_default(self):
+        """中文是校對用的，所以要在四個維度之後才出現。"""
         repo.add_card(self.conn, make_card("mitigate"))
         ui = FakeUI(keys=[" ", "3"])
         commute.run(self.context(ui), limit=1)
-        self.assertNotIn("測試用中文", ui.output)
+        out = ui.output
+        self.assertIn("測試用中文", out)
+        for dimension in ("例句", "搭配", "字根", "同義"):
+            self.assertLess(out.index(dimension), out.index("測試用中文"), dimension)
 
-    def test_zh_flag_opts_into_chinese(self):
+    def test_hiding_chinese_is_a_setting(self):
         repo.add_card(self.conn, make_card("mitigate"))
+        settings.set_show_zh(self.conn, False)
+        ui = FakeUI(keys=[" ", "3"])
+        commute.run(self.context(ui), limit=1)
+        self.assertNotIn("測試用中文", ui.output)
+        self.assertIn("例句", ui.output)   # 其餘四個維度照常
+
+    def test_zh_flag_overrides_the_setting_for_one_session(self):
+        repo.add_card(self.conn, make_card("mitigate"))
+        settings.set_show_zh(self.conn, False)
         ui = FakeUI(keys=[" ", "3"])
         commute.run(self.context(ui), limit=1, show_zh=True)
         self.assertIn("測試用中文", ui.output)
+        # 單次覆寫不該改到設定本身
+        self.assertFalse(settings.show_zh(self.conn))
 
     def test_active_cards_are_excluded_by_default(self):
         repo.add_card(self.conn, make_card("pose", card_type="active"))

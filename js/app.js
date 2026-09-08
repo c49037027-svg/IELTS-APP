@@ -28,8 +28,15 @@ function openSettings() {
   document.getElementById('notif-time').value = state.settings.notifTime;
   document.getElementById('stat-streak').textContent = state.streak;
   document.getElementById('stat-last').textContent = state.lastStudyDate || '尚未開始';
+  document.getElementById('show-zh').checked = Store.showZh();
   loadSpeechSettings();
   document.getElementById('settings-modal').classList.add('show');
+}
+
+// ============ 中文意思開關 ============
+function toggleShowZh() {
+  Store.setPrefs({ showZh: document.getElementById('show-zh').checked });
+  Vocab.refresh();   // 眼前這張卡立刻跟著變，不用退出模式再進來
 }
 
 // ============ 發音設定 ============

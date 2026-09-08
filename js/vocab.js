@@ -133,6 +133,14 @@ const Vocab = (() => {
     renderHome();
   }
 
+  /** 在設定裡切換顯示偏好之後，讓眼前這一頁立刻跟著變。 */
+  function refresh() {
+    if (!session) { renderHome(); return; }
+    // 只重畫「重畫了不會弄丟作答狀態」的畫面，其餘等下一題自然套用
+    if (session.mode === 'review') renderReview();
+    else if (session.mode === 'spell' && session.phase === 'ask') renderSpell();
+  }
+
   // ---------------------------------------------------------- 卡片標題
   // 單字 + 喇叭 + 音標 / 詞性 / 分類，五個模式共用同一個寫法。
   function wordHead(card) {
@@ -141,22 +149,25 @@ const Vocab = (() => {
       ${meta ? `<div class="card-meta">${esc(meta)}</div>` : ''}`;
   }
 
-  // ---------------------------------------------------------- 卡片四維度
-  // 複習背面固定是四個維度；中文（zh / exampleZh）只有在明確要求時才出現，
-  // 通勤複習永遠不給中文對照。
-  function backLines(card, showZh) {
+  // ---------------------------------------------------------- 卡片背面
+  // 順序固定：例句 → 搭配詞 → 字根 → 同義詞 →（筆記）→ 中文意思。
+  // 中文永遠排最後而且是小字，因為它只是「校對用」，不是記憶點 ——
+  // 先從英文語境理解，看完四個維度之後才用中文確認自己有沒有想歪。
+  // Store.showZh() 關掉之後整張卡完全沒有中文（純英文思考模式）。
+  function backLines(card) {
     const rows = [];
     if (card.example) {
-      rows.push(['例句', esc(TextUtil.highlightTarget(card.example, card.word)) + Speech.button(card.example)]);
+      rows.push(['例句', esc(TextUtil.highlightTarget(card.example, card.word)) + Speech.button(card.example), '']);
     }
-    if (card.collocations.length) rows.push(['搭配', esc(card.collocations.join(' · '))]);
-    if (card.root) rows.push(['字根', esc(card.root)]);
-    if (card.synonyms.length) rows.push(['同義', esc(card.synonyms.join(' / '))]);
-    if (showZh && card.zh) rows.push(['中文', esc(card.zh)]);
-    if (showZh && card.exampleZh) rows.push(['句譯', esc(card.exampleZh)]);
-    if (card.notes) rows.push(['筆記', esc(card.notes)]);
-    if (!rows.length) rows.push(['', '這張卡還沒有內容，用「補完卡片」補上']);
-    return rows.map(([k, v]) => `<div class="dim-row"><span class="dim-key">${k}</span><span class="dim-val">${v}</span></div>`).join('');
+    if (card.collocations.length) rows.push(['搭配', esc(card.collocations.join(' · ')), '']);
+    if (card.root) rows.push(['字根', esc(card.root), '']);
+    if (card.synonyms.length) rows.push(['同義', esc(card.synonyms.join(' / ')), '']);
+    if (card.notes) rows.push(['筆記', esc(card.notes), '']);
+    if (Store.showZh() && card.zh) rows.push(['中文', esc(card.zh), ' zh-row']);
+    if (Store.showZh() && card.exampleZh) rows.push(['句譯', esc(card.exampleZh), ' zh-row']);
+    if (!rows.length) rows.push(['', '這張卡還沒有內容，用「補完卡片」補上', '']);
+    return rows.map(([k, v, cls]) =>
+      `<div class="dim-row${cls}"><span class="dim-key">${k}</span><span class="dim-val">${v}</span></div>`).join('');
   }
 
   // ---------------------------------------------------------- 模式 A：通勤複習
@@ -179,7 +190,7 @@ const Vocab = (() => {
     showStage(modeHeader('通勤複習', `${s.index + 1} / ${s.items.length}`) + `
       <div class="card study-card">
         ${wordHead(card)}
-        ${s.revealed ? `<div class="dim-box">${backLines(card, false)}</div>` : ''}
+        ${s.revealed ? `<div class="dim-box">${backLines(card)}</div>` : ''}
         ${s.revealed && Store.isIncomplete(card) ? `<div class="missing-tag">這張還缺：${
           esc(Store.missingCore(card).map(f => Store.CORE_LABELS[f]).join('、'))
         }　回首頁用「補完卡片」補上</div>` : ''}
@@ -261,7 +272,7 @@ const Vocab = (() => {
     const rows = [];
     if (card.example && masked.hits) rows.push(['例句', esc(masked.text)]);
     else if (card.example) rows.push(['例句', '（例句直接含目標字，先不顯示）']);
-    if (card.zh) rows.push(['中文', esc(card.zh)]);
+    if (Store.showZh() && card.zh) rows.push(['中文', esc(card.zh)]);
     if (card.pos) rows.push(['詞性', esc(card.pos)]);
     if (card.collocations.length) rows.push(['搭配', esc(TextUtil.maskAll(card.collocations, card.word).join(' · '))]);
     if (card.root) rows.push(['字根', esc(TextUtil.maskSentence(card.root, card.word).text)]);
@@ -711,7 +722,7 @@ const Vocab = (() => {
     const card = Store.getCard(s.items[s.index].id);
     const missing = Store.missingCore(card);
     const known = [];
-    if (card.zh) known.push(['中文', esc(card.zh)]);
+    if (Store.showZh() && card.zh) known.push(['中文', esc(card.zh)]);
     if (card.phonetic) known.push(['音標', esc(card.phonetic)]);
     if (card.example && !missing.includes('example')) known.push(['例句', esc(card.example)]);
     if (card.collocations.length) known.push(['搭配', esc(card.collocations.join(' · '))]);
@@ -817,7 +828,7 @@ const Vocab = (() => {
       <div class="card study-card">
         <div class="word-line"><span class="card-word">${esc(card.word)}</span>${Speech.button(card.word)}</div>
         <div class="card-meta">${esc([card.phonetic, card.pos, card.category, card.topic, card.cardType].filter(Boolean).join(' · '))}</div>
-        <div class="dim-box">${backLines(card, true)}</div>
+        <div class="dim-box">${backLines(card)}</div>
       </div>
       <div class="card">
         <div class="section-title">排程狀態</div>
@@ -853,7 +864,7 @@ const Vocab = (() => {
         ${field('nc-syn', '同義詞（分號分隔）', 'alleviate; reduce; ease', 2)}
         ${field('nc-category', '分類', 'AWL / 高頻話題字 / Task1圖表用語 / 口說表達')}
         ${field('nc-topic', '主題', '環境 / 教育 / 科技 …')}
-        ${field('nc-zh', '中文提示（只在拼字模式顯示）', '減輕、緩和')}
+        ${field('nc-zh', '中文意思（排在卡片背面最後、小字，可整個關掉）', '減輕、緩和')}
       </div>
       <div id="nc-msg"></div>
       <button class="btn btn-primary wide-btn" onclick="Vocab.saveNewCard()">新增</button>
@@ -984,7 +995,7 @@ const Vocab = (() => {
   }
 
   return {
-    init, showHome, setTopic, renderHome,
+    init, showHome, setTopic, renderHome, refresh,
     startReview, reveal, skip, rate,
     startSpell, submitSpell, nextSpell, spellHint, spellSay, spellSkip,
     startSyn, submitSyn, nextSyn, synSkip,
