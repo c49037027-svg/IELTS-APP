@@ -195,20 +195,36 @@ with sync_playwright() as p:
     page.wait_for_timeout(200)
 
     # --- 補完卡片 ---
+    # 種子資料現在四個維度都寫齊了，所以佇列應該是空的
+    page.locator(".mode-card", has_text="補完卡片").click()
+    page.wait_for_timeout(200)
+    step("補完：全部寫齊時顯示空狀態",
+         "都補齊了" in page.locator(".empty-title").inner_text(),
+         page.locator(".empty-title").inner_text())
+    page.locator("#vocab-stage .back-btn").click()
+    page.wait_for_timeout(200)
+
+    # 自己匯入不完整的卡片時，補完模式仍要正常運作
+    page.evaluate("""Store.addCard({ word: 'zzbrowsertest', zh: '瀏覽器測試用',
+                                     example: 'A zzbrowsertest case appeared.' })""")
+    page.evaluate("Vocab.showHome()")
+    page.wait_for_timeout(200)
     page.locator(".mode-card", has_text="補完卡片").click()
     page.wait_for_timeout(200)
     step("補完：只問缺的欄位", page.locator(".complete-field").count() > 0,
          f"{page.locator('.complete-field').count()} 個欄位")
     step("補完：顯示缺什麼", page.locator(".missing-tag").count() == 1,
          page.locator(".missing-tag").inner_text())
-    word = page.locator(".card-word").inner_text()
-    if page.locator("#cf-root").count():
-        page.locator("#cf-root").fill("測試字根拆解")
-    if page.locator("#cf-synonyms").count():
-        page.locator("#cf-synonyms").fill("alpha; beta")
+    step("補完：已經有的欄位不再問",
+         page.locator("#cf-example").count() == 0, "例句已存在，不該再問一次")
+    page.locator("#cf-root").fill("測試字根拆解")
+    page.locator("#cf-collocations").fill("a zzbrowsertest case")
+    page.locator("#cf-synonyms").fill("alpha; beta")
     page.get_by_role("button", name="存起來，下一張").click()
     page.wait_for_timeout(200)
-    step("補完：存檔後換下一張", page.locator(".card-word").inner_text() != word)
+    step("補完：存完之後佇列清空",
+         page.evaluate("Store.incompleteCount()") == 0,
+         f"還剩 {page.evaluate('Store.incompleteCount()')} 張")
     page.locator("#vocab-stage .back-btn").click()
     page.wait_for_timeout(200)
 

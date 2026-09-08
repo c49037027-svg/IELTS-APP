@@ -621,11 +621,35 @@ const Store = (() => {
   // 舊版的 100 個單字只有中文與例句，沒有字根與同義詞 ——
   // 匯入後會自動變成 incomplete，正好給補完模式處理，資料不會白白丟掉。
   // -ize / -ise 兩種拼法視為同一個字（analyze ↔ analyse）
+  //: 美式／英式拼法對得上同一張卡，免得 analyze 和 analyse 變成兩張。
+  //  -ize/-yze 對 -ise/-yse，-or 對 -our，-er 對 -re，兩個方向都試。
+  function spellingVariants(word) {
+    const w = String(word);
+    const rules = [
+      [/yze\b/i, 'yse'], [/yse\b/i, 'yze'],
+      [/ize\b/i, 'ise'], [/ise\b/i, 'ize'],
+      [/izing\b/i, 'ising'], [/ising\b/i, 'izing'],
+      [/isation\b/i, 'ization'], [/ization\b/i, 'isation'],
+      [/our\b/i, 'or'], [/or\b/i, 'our'],
+      [/re\b/i, 'er'], [/er\b/i, 're'],
+      [/ll/i, 'l'], [/^(.*[aeiou])l(ed|ing)\b/i, '$1ll$2']
+    ];
+    const out = new Set();
+    rules.forEach(([re, to]) => {
+      const v = w.replace(re, to);
+      if (v !== w) out.add(v);
+    });
+    return [...out];
+  }
+
   function findLoosely(word) {
     const direct = findByWord(word);
     if (direct) return direct;
-    const swapped = String(word).replace(/ize\b/i, 'ise').replace(/izing\b/i, 'ising');
-    return swapped === word ? null : findByWord(swapped);
+    for (const variant of spellingVariants(word)) {
+      const hit = findByWord(variant);
+      if (hit) return hit;
+    }
+    return null;
   }
 
   function importLegacyWords() {
@@ -638,6 +662,8 @@ const Store = (() => {
         const fill = {};
         if (!existing.example && w.example) fill.example = String(w.example).replace(/[{}]/g, '');
         if (!existing.collocations.length && (w.collocations || []).length) fill.collocations = w.collocations;
+        if (!existing.root && w.root) fill.root = w.root;
+        if (!existing.synonyms.length && (w.synonyms || []).length) fill.synonyms = w.synonyms;
         if (!existing.zh && w.zh) fill.zh = w.zh;
         if (!existing.phonetic && w.phonetic) fill.phonetic = w.phonetic;
         if (!existing.exampleZh && w.exampleZh) fill.exampleZh = w.exampleZh;
@@ -653,8 +679,8 @@ const Store = (() => {
         pos: '',
         example: String(w.example || '').replace(/[{}]/g, ''),
         collocations: w.collocations || [],
-        root: '',
-        synonyms: [],
+        root: w.root || '',
+        synonyms: w.synonyms || [],
         category: w.topic === 'AWL' ? 'AWL' : '高頻話題字',
         topic: LEGACY_TOPIC_MAP[w.topic] || w.topic || '',
         cardType: 'passive',
@@ -727,7 +753,7 @@ const Store = (() => {
     missingCore, isIncomplete, cardLabel, cardCount, incompleteCount, completionQueue,
     getSrs, grade, dueItems, dueCount,
     recordSpelling, spellingQueue, spellingErrorList, spellingAccuracy, lastSpellingResult,
-    hasSpellingClue, getPrefs, setPrefs, showZh,
+    hasSpellingClue, getPrefs, setPrefs, showZh, findLoosely,
     addProduction, listProductions, setProductionFeedback, productionCandidates, promotionCandidates,
     coverage, cardTypeCounts, activityDays, streak, longestStreak,
     reviewsSince, reviewsOn, productionsSince, cardsAddedSince, distinctWordsUsed,

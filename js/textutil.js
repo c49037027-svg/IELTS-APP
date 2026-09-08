@@ -13,6 +13,9 @@ const TextUtil = (() => {
   const TOKEN_RE = /[A-Za-z][A-Za-z'\-]*/g;
   const VOWELS = 'aeiou';
 
+  // 字尾會重複、但下面的字母規則抓不到的字（ui 看起來是兩個母音，其實只發一個短音）
+  const DOUBLE_FINAL = ['equip', 'quiz'];
+
   // 不規則動詞的過去式與過去分詞。規則式推不出這些形，但例句常用到，
   // 少了就會挖不到空。複合字（overtake → over + took）會自動沿用字尾的變化。
   const IRREGULAR = {
@@ -72,6 +75,12 @@ const TextUtil = (() => {
     const last = word[word.length - 1], prev = word[word.length - 2], prev2 = word[word.length - 3];
     if (word.length >= 3 && !'aeiouwxy'.includes(last) && VOWELS.includes(prev) && !VOWELS.includes(prev2)) {
       // 重複字尾：plan → planned / planning；dip → dipped / dipping
+      forms.add(word + last + 'ed');
+      forms.add(word + last + 'ing');
+    }
+    // 上面看的是字母，所以 equip 的 "ui" 被當成兩個母音而漏掉；
+    // 這些字其實只發一個短母音，字尾照樣重複。
+    if (DOUBLE_FINAL.some(b => word === b || word.endsWith(b))) {
       forms.add(word + last + 'ed');
       forms.add(word + last + 'ing');
     }

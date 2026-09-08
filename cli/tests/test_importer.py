@@ -6,7 +6,7 @@ from pathlib import Path
 
 from ielts import db as dbmod
 from ielts import importer, repository as repo, seed
-from ielts.models import CORE_FIELDS
+from ielts.models import CORE_FIELDS, Card
 
 HEADER = "word,pos,example_sentence,collocations,root_analysis,synonyms,category,topic,card_type,zh_hint\n"
 ROW = (
@@ -162,7 +162,7 @@ class TestSeed(ImporterTestCase):
     def test_fully_written_cards_have_all_four_dimensions(self):
         seed.load_seed(self.conn)
         complete = [c for c in repo.list_cards(self.conn) if not c.missing_core_fields()]
-        self.assertGreater(len(complete), 200)
+        self.assertEqual(len(complete), dbmod.card_count(self.conn), "應該每一張都齊全")
         for card in complete:
             self.assertTrue(card.example_sentence, card.word)
             self.assertTrue(card.collocation_list, card.word)
@@ -235,13 +235,24 @@ class TestSeed(ImporterTestCase):
             for card in cards:
                 self.assertEqual(card.missing_core_fields(), [], f"{sublist} {card.word}")
 
-    def test_completion_queue_starts_at_sublist_3(self):
-        """Sublist 1、2 已寫齊，補完模式應該接著從 Sublist 3 開始。"""
+    def test_nothing_is_left_to_complete(self):
+        """779 張卡的四個維度全部寫齊了，補完佇列應該是空的。"""
         seed.load_seed(self.conn)
-        queue = repo.completion_queue(self.conn, limit=20)
-        self.assertTrue(queue)
-        self.assertTrue(all(c.topic == "Sublist 3" for c in queue),
-                        [c.topic for c in queue[:5]])
+        queue = repo.completion_queue(self.conn)
+        self.assertEqual([c.word for c in queue], [])
+
+    def test_every_seeded_card_has_all_four_dimensions(self):
+        seed.load_seed(self.conn)
+        for card in repo.list_cards(self.conn):
+            self.assertEqual(card.missing_core_fields(), [], card.word)
+
+    def test_completion_queue_still_orders_new_gaps_by_sublist(self):
+        """使用者自己匯入不完整的卡片時，排序邏輯要照舊。"""
+        seed.load_seed(self.conn)
+        repo.add_card(self.conn, Card(word="zzlater", topic="Sublist 7"))
+        repo.add_card(self.conn, Card(word="zzsooner", topic="Sublist 3"))
+        queue = repo.completion_queue(self.conn)
+        self.assertEqual([c.word for c in queue], ["zzsooner", "zzlater"])
 
     def test_completion_queue_is_ordered_by_sublist(self):
         seed.load_seed(self.conn)

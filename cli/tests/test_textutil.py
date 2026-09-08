@@ -42,6 +42,19 @@ class TestMasking(unittest.TestCase):
             masked, hits = textutil.mask_sentence(sentence, word)
             self.assertEqual(hits, 1, f"{word}: {sentence}")
 
+    def test_masks_ui_words_whose_final_consonant_doubles(self):
+        """字母規則會把 equip 的 ui 當成兩個母音，漏掉 equipped。"""
+        for sentence, word in [
+            ("Schools were equipped with laptops but no training.", "equip"),
+            ("Equipping every classroom proved too expensive.", "equip"),
+        ]:
+            self.assertEqual(textutil.mask_sentence(sentence, word)[1], 1, sentence)
+
+    def test_double_final_does_not_break_normal_words(self):
+        """remain 不該變成 remainned。"""
+        self.assertNotIn("remainned", textutil.inflections("remain"))
+        self.assertIn("remained", textutil.inflections("remain"))
+
     def test_masks_doubled_endings_of_short_words(self):
         masked, hits = textutil.mask_sentence("Sales dipped briefly in 2012.", "dip")
         self.assertEqual(hits, 1)

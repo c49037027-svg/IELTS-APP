@@ -75,6 +75,11 @@ check('挖掉變化形', () => {
   ok(run('TextUtil.maskSentence("Researchers conducted a survey.","conduct").hits') >= 1);
   ok(run('TextUtil.maskSentence("The council allocates a budget.","allocate").hits') >= 1);
 });
+check('挖掉 equip → equipped（字母規則會誤判 ui 為兩個母音）', () => {
+  eq(run('TextUtil.maskSentence("Schools were equipped with laptops.","equip").hits'), 1);
+  eq(run('TextUtil.maskSentence("Equipping every classroom proved costly.","equip").hits'), 1);
+  ok(!run('[...TextUtil.inflections("remain")]').includes('remainned'), 'remain 不該被加上重複字尾');
+});
 check('挖掉不規則過去式', () => {
   const cases = [
     ['Online sales overtook high-street sales in 2019.', 'overtake'],
@@ -186,15 +191,18 @@ check('Sublist 1、2 的 120 個字四維度齊全', () => {
     eq(bad.map(c => c.word), [], `${sublist} 這些卡缺維度`);
   }
 });
-check('補完佇列依 sublist 排序，從 Sublist 3 開始', () => {
-  const queue = run('Store.completionQueue({ limit: 20 }).map(c => c.topic)');
-  ok(queue.length > 0, '佇列不該是空的');
-  eq([...new Set(queue)], ['Sublist 3'], `實際是 ${[...new Set(queue)]}`);
-  const ranks = run(`Store.completionQueue().map(c => {
-    const m = /^Sublist (\\d+)$/.exec(c.topic || '');
-    return m ? Number(m[1]) : 99;
-  })`);
-  eq(ranks, [...ranks].sort((a, b) => a - b), '補完順序沒有照 sublist 由小到大');
+check('全部卡片都寫齊了，補完佇列是空的', () => {
+  eq(run('Store.completionQueue().map(c => c.word)'), []);
+  eq(run('Store.incompleteCount()'), 0);
+});
+check('使用者自己匯入不完整的卡片時，補完順序仍照 sublist', () => {
+  const words = run(`(() => {
+    Store.addCard({ word: 'zzlater', topic: 'Sublist 7' });
+    Store.addCard({ word: 'zzsooner', topic: 'Sublist 3' });
+    const out = Store.completionQueue().map(c => c.word);
+    return out;
+  })()`);
+  eq(words, ['zzsooner', 'zzlater']);
 });
 check('AWL 依 sublist 分組，可以只練 Sublist 1', () => {
   const names = run('Store.coverage("topic").map(r => r.name)');
@@ -205,13 +213,16 @@ check('寫好的例句一定含目標字', () => {
     TextUtil.maskSentence(c.example, c.word).hits === 0).map(c => c.word)`);
   eq(bad, [], '這些卡的例句挖不到空');
 });
-check('舊資料的例句補進了 AWL 空卡，沒有被丟掉', () => {
-  const merged = run(`(() => {
-    const c = Store.listCards().find(x => x.category === 'AWL' && !x.root
-      && x.example && x.collocations.length);
-    return c ? c.word : null;
-  })()`);
-  ok(merged, '應該有 AWL 卡片從舊資料拿到例句與搭配詞');
+check('舊資料的音標補進了既有卡片，沒有被丟掉', () => {
+  // 種子卡現在四個維度都齊了，所以舊資料補的是音標與中文句譯這類額外欄位
+  const withPhonetic = run('Store.listCards().filter(c => c.phonetic).length');
+  eq(withPhonetic, 100, '舊版 100 個字的音標應該全部落在卡片上');
+  const c = run('Store.findByWord("analyse")');
+  ok(c && c.phonetic, 'analyse 應該從舊資料的 analyze 拿到音標');
+});
+check('美式與英式拼法不會變成兩張卡', () => {
+  ok(!run('Store.findByWord("analyze")'), 'analyze 應該併進 analyse，不該另開一張');
+  ok(!!run('Store.findByWord("analyse")'), 'analyse 要在');
 });
 check('選 Sublist 1 不會混進 Sublist 10', () => {
   const topics = run('Store.listCards({ topic: "Sublist 1" }).map(c => c.topic)');
@@ -224,13 +235,19 @@ check('寫完的卡片四維度齊全', () => {
   const bad = complete.filter(c => !c.example || !c.collocations.length || !c.root || c.synonyms.length < 2);
   eq(bad.map(c => c.word), [], '這些卡缺維度');
 });
-check('沒寫完的卡片標記為不完整，交給補完模式', () => {
-  const n = run('Store.incompleteCount()');
-  ok(n > 400, `incomplete=${n}`);
-  const card = run('Store.findByWord("alternative")');
-  ok(card, '找不到 alternative');
-  eq(run('Store.missingCore(Store.findByWord("alternative")).sort()'),
-     ['collocations', 'example', 'root', 'synonyms']);
+check('每張種子卡的四個維度都齊全', () => {
+  const bad = run(`SEED_CARDS.filter(c =>
+    !c.example || !c.collocations.length || !c.root || c.synonyms.length < 2
+  ).map(c => c.word)`);
+  eq(bad, [], `${bad.length} 張卡沒寫齊`);
+});
+check('舊版單字進到庫裡之後也都是四個維度齊全的', () => {
+  // 跟種子重複的字會併進既有卡片（那張本來就齊全）；其餘的字自己帶著四個維度進來
+  const bad = run(`LEGACY_VOCABULARY
+    .map(w => Store.findLoosely(w.en))
+    .filter(c => c && Store.missingCore(c).length)
+    .map(c => c.word)`);
+  eq(bad, [], `${bad.length} 張舊字卡沒寫齊`);
 });
 check('種子字四個分類都在', () => {
   const names = run('Store.coverage("category").map(r => r.name)');
@@ -326,11 +343,13 @@ check('造句紀錄與匯出', () => {
 });
 check('補完欄位後不再是 incomplete', () => {
   const r = run(`(() => {
-    const card = Store.findByWord('analyze');
+    const card = Store.addCard({ word: 'zzpartial', example: 'A zzpartial case.', collocations: ['a zzpartial case'] });
+    const before = Store.isIncomplete(Store.getCard(card.id));
     Store.updateCard(card.id, { root: 'ana-(分開) + lyz(鬆開) → 拆開來看', synonyms: 'examine; study; evaluate' });
     const after = Store.getCard(card.id);
-    return { incomplete: Store.isIncomplete(after), syn: after.synonyms };
+    return { before, incomplete: Store.isIncomplete(after), syn: after.synonyms };
   })()`);
+  ok(r.before, '補之前應該是不完整的');
   ok(!r.incomplete);
   eq(r.syn, ['examine', 'study', 'evaluate']);
 });
@@ -388,7 +407,7 @@ check('舊的 known / learning 會換算成認讀進度', () => {
   ['js/srs.js', 'js/textutil.js', 'js/cards.js', 'js/legacy-words.js', 'js/store.js']
     .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), c2, { filename: f }));
   vm.runInContext('Store.init()', c2);
-  const known = vm.runInContext('Store.getSrs(Store.findByWord("analyze").id,"recall")', c2);
+  const known = vm.runInContext('Store.getSrs(Store.findLoosely("analyze").id,"recall")', c2);
   const learning = vm.runInContext('Store.getSrs(Store.findByWord("approach").id,"recall")', c2);
   eq(known.reviews, 2, 'known');
   eq(known.interval, 6, 'known interval');

@@ -66,6 +66,10 @@ def normalise(text: str) -> str:
     return value.casefold()
 
 
+#: 字尾會重複、但上面的字母規則抓不到的字（ui 看起來是兩個母音，其實只發一個短音）
+DOUBLE_FINAL = ("equip", "quiz")
+
+
 def inflections(token: str) -> set[str]:
     """產生一個字的常見變化形，用來在例句裡找到它。
 
@@ -86,6 +90,10 @@ def inflections(token: str) -> set[str]:
         forms.update({stem + "ies", stem + "ied", stem + "ier", stem + "iest"})
     if len(word) >= 3 and word[-1] not in "aeiouwxy" and word[-2] in "aeiou" and word[-3] not in "aeiou":
         # 重複字尾：plan → planned / planning；dip → dipped / dipping
+        forms.update({word + word[-1] + "ed", word + word[-1] + "ing"})
+    if any(word == b or word.endswith(b) for b in DOUBLE_FINAL):
+        # 上面的規則看字母，所以 equip 的 "ui" 被當成兩個母音而漏掉；
+        # 這些字其實只發一個短母音，字尾照樣重複。
         forms.update({word + word[-1] + "ed", word + word[-1] + "ing"})
     if word.endswith("ate"):
         stem = word[:-1]

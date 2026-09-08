@@ -14,6 +14,14 @@ from awl_defs import DEFINITIONS
 from awl_headwords import HEADWORDS
 from data_awl_s1 import SUBLIST_1
 from data_awl_s2 import SUBLIST_2
+from data_awl_s3 import SUBLIST_3
+from data_awl_s4 import SUBLIST_4
+from data_awl_s5 import SUBLIST_5
+from data_awl_s6 import SUBLIST_6
+from data_awl_s7 import SUBLIST_7
+from data_awl_s8 import SUBLIST_8
+from data_awl_s9 import SUBLIST_9
+from data_awl_s10 import SUBLIST_10
 
 SUBLIST = dict(HEADWORDS)
 
@@ -142,8 +150,8 @@ FULL = [
     },
 ]
 
-#: Sublist 1、2 是最高頻的 120 個字，四個維度全部寫齊，直接可以進通勤複習。
-FULL = [*FULL, *SUBLIST_1, *SUBLIST_2]
+#: 已經寫齊四個維度的 sublist。
+FULL = [*FULL, *SUBLIST_1, *SUBLIST_2, *SUBLIST_3, *SUBLIST_4, *SUBLIST_5, *SUBLIST_6, *SUBLIST_7, *SUBLIST_8, *SUBLIST_9, *SUBLIST_10]
 
 _FULL_WORDS = {entry["word"].lower() for entry in FULL}
 
