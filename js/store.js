@@ -680,7 +680,9 @@ const Store = (() => {
         if (!existing.synonyms.length && (w.synonyms || []).length) fill.synonyms = w.synonyms;
         if (!existing.zh && w.zh) fill.zh = w.zh;
         if (!existing.phonetic && w.phonetic) fill.phonetic = w.phonetic;
-        if (!existing.exampleZh && w.exampleZh) fill.exampleZh = w.exampleZh;
+        // 句譯只有在例句也是從舊資料搬過來時才成立。既有卡片留著自己的例句，
+        // 卻配上舊例句的翻譯，就會出現「中文跟英文對不起來」的卡 —— 那比沒有翻譯更糟。
+        if (fill.example && !existing.exampleZh && w.exampleZh) fill.exampleZh = w.exampleZh;
         if (Object.keys(fill).length) {
           updateCard(existing.id, fill);
           merged += 1;

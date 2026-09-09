@@ -229,6 +229,22 @@ check('舊資料的音標補進了既有卡片，沒有被丟掉', () => {
   const c = run('Store.findByWord("analyse")');
   ok(c && c.phonetic, 'analyse 應該從舊資料的 analyze 拿到音標');
 });
+check('句譯一定對得上卡片上的例句', () => {
+  // 舊資料的句譯是配舊例句的。既有卡片留著自己的例句卻配上舊翻譯，
+  // 就會出現中英對不起來的卡 —— 那比沒有翻譯更糟。
+  const seed = new Map(run('SEED_CARDS.map(c => [c.word.toLowerCase(), c.example])'));
+  const rows = run('Store.listCards().filter(c => c.exampleZh).map(c => ({ w: c.word, ex: c.example }))');
+  const bad = rows.filter(r => {
+    const own = seed.get(r.w.toLowerCase());
+    return own && own === r.ex;   // 例句是種子的，句譯卻來自舊資料
+  }).map(r => r.w);
+  eq(bad, [], `${bad.length} 張卡的句譯跟例句對不起來`);
+});
+check('沒有句譯總比有錯的句譯好', () => {
+  const n = run('Store.listCards().filter(c => c.exampleZh).length');
+  ok(n > 0 && n < 40, `有句譯的卡片 ${n} 張 —— 應該只剩例句也來自舊資料的那批`);
+});
+
 check('美式與英式拼法不會變成兩張卡', () => {
   ok(!run('Store.findByWord("analyze")'), 'analyze 應該併進 analyse，不該另開一張');
   ok(!!run('Store.findByWord("analyse")'), 'analyse 要在');
