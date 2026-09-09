@@ -164,7 +164,11 @@ const Vocab = (() => {
     if (card.synonyms.length) rows.push(['同義', esc(card.synonyms.join(' / ')), '']);
     if (card.notes) rows.push(['筆記', esc(card.notes), '']);
     if (Store.showZh() && card.zh) rows.push(['中文', esc(card.zh), ' zh-row']);
-    if (Store.showZh() && card.exampleZh) rows.push(['句譯', esc(card.exampleZh), ' zh-row']);
+    // 句譯只跟著上面那一句例句走。沒顯示例句就不顯示句譯 ——
+    // 翻譯配錯句子比沒有翻譯更糟，會把錯的語意記進去。
+    if (Store.showZh() && card.example && card.exampleZh) {
+      rows.push(['句譯', esc(card.exampleZh), ' zh-row']);
+    }
     if (!rows.length) rows.push(['', '這張卡還沒有內容，用「補完卡片」補上', '']);
     return rows.map(([k, v, cls]) =>
       `<div class="dim-row${cls}"><span class="dim-key">${k}</span><span class="dim-val">${v}</span></div>`).join('');
@@ -271,8 +275,13 @@ const Vocab = (() => {
     const sentence = Store.spellingSentence(card);
     const masked = TextUtil.maskSentence(sentence, card.word);
     const rows = [];
+    const sentenceZh = Store.spellingSentenceZh(card);
     if (sentence && masked.hits) rows.push(['例句', esc(masked.text)]);
     else if (sentence) rows.push(['例句', '（例句直接含目標字，先不顯示）']);
+    // 句譯不會洩漏拼法，但能補上挖空之後失去的語境
+    if (Store.showZh() && sentence && masked.hits && sentenceZh) {
+      rows.push(['句譯', esc(sentenceZh)]);
+    }
     if (Store.showZh() && card.zh) rows.push(['中文', esc(card.zh)]);
     if (card.pos) rows.push(['詞性', esc(card.pos)]);
     if (card.collocations.length) rows.push(['搭配', esc(TextUtil.maskAll(card.collocations, card.word).join(' · '))]);
@@ -725,7 +734,10 @@ const Vocab = (() => {
     const known = [];
     if (Store.showZh() && card.zh) known.push(['中文', esc(card.zh)]);
     if (card.phonetic) known.push(['音標', esc(card.phonetic)]);
-    if (card.example && !missing.includes('example')) known.push(['例句', esc(card.example)]);
+    if (card.example && !missing.includes('example')) {
+      known.push(['例句', esc(card.example)]);
+      if (Store.showZh() && card.exampleZh) known.push(['句譯', esc(card.exampleZh)]);
+    }
     if (card.collocations.length) known.push(['搭配', esc(card.collocations.join(' · '))]);
     if (card.root) known.push(['字根', esc(card.root)]);
     if (card.synonyms.length) known.push(['同義', esc(card.synonyms.join(' / '))]);
@@ -737,7 +749,9 @@ const Vocab = (() => {
         ? `<div class="ref-box">
              <button type="button" class="tool-btn" onclick="Vocab.showExampleRef(this)">
                想不出來？看一句參考</button>
-             <div class="ref-text" hidden>${esc(card.exampleRef)}${Speech.button(card.exampleRef)}</div>
+             <div class="ref-text" hidden>${esc(card.exampleRef)}${Speech.button(card.exampleRef)}${
+               Store.showZh() && card.exampleRefZh
+                 ? `<div class="ref-zh">${esc(card.exampleRefZh)}</div>` : ''}</div>
            </div>`
         : '';
       const placeholders = {

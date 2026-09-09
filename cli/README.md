@@ -13,7 +13,7 @@
 | 同義詞群 | 雅思聽力閱讀的核心機制是同義替換 |
 
 卡片正面只有單字，不給中文。背面的順序固定是
-**例句 → 搭配 → 字根 → 同義 →（筆記）→ 中文意思** ——
+**例句 → 搭配 → 字根 → 同義 →（筆記）→ 中文意思 → 句譯** ——
 中文永遠排最後，因為它只是校對用，不是記憶點。
 程度上來之後用 `ielts config --no-zh` 整個關掉，強迫自己純英文思考。
 
@@ -173,12 +173,14 @@ CSV 欄位（只有 `word` 必填）：
 | `word` | 單字或片語 |
 | `pos` | 詞性 |
 | `example_sentence` | 英文例句 |
+| `example_zh` | 例句的中譯（跟例句綁成一組；`ielts config --no-zh` 一起關掉） |
 | `collocations` | 搭配詞，用 `;` 分隔 |
 | `root_analysis` | 字根字首拆解 |
 | `synonyms` | 同義詞，用 `;` 分隔 |
 | `category` | AWL / 高頻話題字 / Task1圖表用語 / 口說表達 |
 | `topic` | 環境、教育、科技、健康、都市化、犯罪、媒體… |
 | `card_type` | `passive`（預設）或 `active` |
+| `example_ref` / `example_ref_zh` | 參考例句與它的中譯（例句欄留白時的備援，一樣綁成一組） |
 | `zh_hint` | 中文意思（排在卡片背面最後，可用 `ielts config --no-zh` 關掉）。欄位名寫 `chinese_meaning`／`中文意思` 也認得 |
 | `notes` | 自己的筆記 |
 

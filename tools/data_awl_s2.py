@@ -7,6 +7,7 @@ SUBLIST_2 = [
     {
         "word": "achieve", "pos": "v.",
         "example": "The country achieved its emissions target two years early.",
+        "example_zh": "這個國家提早兩年達成了減排目標。",
         "collocations": ["achieve a goal", "achieve success", "hard to achieve"],
         "root": "法文 achever「做到頭」(à chef 到頂點, 同 chief) → 一路做到底",
         "synonyms": ["accomplish", "attain", "reach", "realise"],
@@ -15,6 +16,7 @@ SUBLIST_2 = [
     {
         "word": "acquire", "pos": "v.",
         "example": "Children acquire a second language far faster than adults.",
+        "example_zh": "兒童習得第二語言的速度比成人快得多。",
         "collocations": ["acquire skills", "acquire a taste for", "newly acquired"],
         "root": "ad-(朝向) + quir(尋求, 同 require/inquire/conquer) → 一路追到手",
         "synonyms": ["obtain", "gain", "pick up", "come by"],
@@ -23,6 +25,7 @@ SUBLIST_2 = [
     {
         "word": "administration", "pos": "n.",
         "example": "Too much of a teacher's week goes on administration.",
+        "example_zh": "老師一週有太多時間耗在行政事務上。",
         "collocations": ["hospital administration", "the administration of", "administration costs"],
         "root": "ad-(朝向) + minister(服務, 同 minister/minor 小的→僕從) + -ation → 為人打理事務",
         "synonyms": ["management", "governance", "running", "paperwork"],
@@ -31,6 +34,7 @@ SUBLIST_2 = [
     {
         "word": "affect", "pos": "v.",
         "example": "Rising sea temperatures affect fish stocks worldwide.",
+        "example_zh": "海溫上升影響全球的漁業資源。",
         "collocations": ["affect the outcome", "badly affected", "seriously affect"],
         "root": "af-(朝向) + fect(做, 同 effect/perfect/factory) → 對某物施加動作 → 影響",
         "synonyms": ["influence", "have an impact on", "change", "alter"],
@@ -40,6 +44,7 @@ SUBLIST_2 = [
     {
         "word": "appropriate", "pos": "adj.",
         "example": "Jeans are not appropriate for a formal interview.",
+        "example_zh": "牛仔褲不適合正式的面試場合。",
         "collocations": ["appropriate action", "where appropriate", "an appropriate response"],
         "root": "ap-(朝向) + propri(自己的, 同 property/proper) + -ate → 配得上這個場合的",
         "synonyms": ["suitable", "fitting", "proper", "apt"],
@@ -48,6 +53,7 @@ SUBLIST_2 = [
     {
         "word": "aspect", "pos": "n.",
         "example": "The report examines every aspect of student life.",
+        "example_zh": "這份報告檢視學生生活的每一個面向。",
         "collocations": ["an important aspect", "every aspect of", "a positive aspect"],
         "root": "a-(朝向) + spect(看, 同 inspect/respect/spectator) → 從某個角度看過去的那一面",
         "synonyms": ["side", "feature", "facet", "element"],
@@ -56,6 +62,7 @@ SUBLIST_2 = [
     {
         "word": "assist", "pos": "v.",
         "example": "Volunteers assist staff with the evening classes.",
+        "example_zh": "志工協助職員進行夜間課程。",
         "collocations": ["assist with", "assist in the process", "greatly assist"],
         "root": "as-(朝向) + sist(站, 同 consist/resist/insist) → 站到旁邊幫忙",
         "synonyms": ["help", "aid", "support", "lend a hand"],
@@ -64,6 +71,7 @@ SUBLIST_2 = [
     {
         "word": "category", "pos": "n.",
         "example": "Spending falls into three broad categories.",
+        "example_zh": "支出可以分成三大類。",
         "collocations": ["fall into a category", "a broad category", "three categories"],
         "root": "希臘 katēgoria「公開指稱」(kata 向下 + agora 集會場) → 當眾歸到某個名目下",
         "synonyms": ["class", "group", "type", "classification"],
@@ -72,6 +80,7 @@ SUBLIST_2 = [
     {
         "word": "chapter", "pos": "n.",
         "example": "The final chapter suggests directions for future research.",
+        "example_zh": "最後一章提出未來研究的方向。",
         "collocations": ["the opening chapter", "in this chapter", "a chapter on"],
         "root": "拉丁 caput「頭」的小詞(同 capital/captain/chief) → 一個小標頭底下的段落",
         "synonyms": ["section", "part", "division"],
@@ -80,6 +89,7 @@ SUBLIST_2 = [
     {
         "word": "commission", "pos": "v.",
         "example": "The council commissioned a study of local air quality.",
+        "example_zh": "議會委託進行了一項當地空氣品質研究。",
         "collocations": ["commission a study", "commission a report", "be commissioned to"],
         "root": "com-(一起) + miss(送, 同 mission/transmit/dismiss) + -ion → 把任務託付送出去",
         "synonyms": ["order", "appoint", "contract", "engage"],
@@ -88,6 +98,7 @@ SUBLIST_2 = [
     {
         "word": "community", "pos": "n.",
         "example": "The library is the only meeting place the community has.",
+        "example_zh": "圖書館是這個社區唯一的聚會場所。",
         "collocations": ["the local community", "a close-knit community", "community support"],
         "root": "com-(一起) + mun(義務、共有, 同 municipal/immune) + -ity → 共同承擔的一群人",
         "synonyms": ["neighbourhood", "population", "the public", "society"],
@@ -96,6 +107,7 @@ SUBLIST_2 = [
     {
         "word": "complex", "pos": "adj.",
         "example": "Traffic is a complex problem with no single solution.",
+        "example_zh": "交通是個複雜的問題，沒有單一解方。",
         "collocations": ["a complex problem", "increasingly complex", "complex systems"],
         "root": "com-(一起) + plex(編織, 同 perplex/plait) → 編在一起拆不開的",
         "synonyms": ["complicated", "intricate", "involved", "multi-layered"],
@@ -104,6 +116,7 @@ SUBLIST_2 = [
     {
         "word": "compute", "pos": "v.",
         "example": "The software computes the total cost automatically.",
+        "example_zh": "這套軟體會自動計算總成本。",
         "collocations": ["compute the total", "compute the cost", "computed automatically"],
         "root": "com-(一起) + put(算, 拉丁 putare 原意修剪→理清) → 一起算清楚",
         "synonyms": ["calculate", "work out", "reckon", "tally"],
@@ -112,6 +125,7 @@ SUBLIST_2 = [
     {
         "word": "conclude", "pos": "v.",
         "example": "The authors conclude that the policy has largely failed.",
+        "example_zh": "作者群的結論是這項政策大致上失敗了。",
         "collocations": ["conclude that", "the study concludes", "conclude an agreement"],
         "root": "con-(完全) + clud(關閉, 同 include/exclude/close) → 整個收攏關起來",
         "synonyms": ["decide", "determine", "infer", "wrap up"],
@@ -120,6 +134,7 @@ SUBLIST_2 = [
     {
         "word": "consequent", "pos": "adj.",
         "example": "Deforestation and the consequent soil erosion worry local farmers.",
+        "example_zh": "森林砍伐以及隨之而來的土壤侵蝕讓當地農民憂心。",
         "collocations": ["the consequent rise", "consequent damage", "consequent upon"],
         "root": "con-(一起) + sequ(跟隨, 同 sequence/consecutive/pursue) + -ent → 跟在後面來的",
         "synonyms": ["resulting", "following", "ensuing"],
@@ -128,6 +143,7 @@ SUBLIST_2 = [
     {
         "word": "construct", "pos": "v.",
         "example": "The bridge was constructed in under two years.",
+        "example_zh": "這座橋在兩年內建造完成。",
         "collocations": ["construct a building", "carefully constructed", "construct an argument"],
         "root": "con-(一起) + struct(建造, 同 structure/instruct/destroy) → 組建起來",
         "synonyms": ["build", "assemble", "put together", "erect"],
@@ -136,6 +152,7 @@ SUBLIST_2 = [
     {
         "word": "consume", "pos": "v.",
         "example": "Data centres consume as much power as a small city.",
+        "example_zh": "資料中心消耗的電力相當於一座小城市。",
         "collocations": ["consume energy", "consume resources", "heavily consumed"],
         "root": "con-(完全) + sum(拿取, 同 assume/resume) → 整個拿去用光",
         "synonyms": ["use up", "get through", "expend", "burn"],
@@ -144,6 +161,7 @@ SUBLIST_2 = [
     {
         "word": "credit", "pos": "n.",
         "example": "The team deserves credit for finishing ahead of schedule.",
+        "example_zh": "這個團隊提前完成，值得肯定。",
         "collocations": ["take credit for", "give credit to", "buy on credit"],
         "root": "cred(相信, 同 credible/incredible/creed) → 因為被信任而給出去的",
         "synonyms": ["recognition", "praise", "acknowledgement"],
@@ -152,6 +170,7 @@ SUBLIST_2 = [
     {
         "word": "culture", "pos": "n.",
         "example": "Working culture varies enormously between the two offices.",
+        "example_zh": "這兩個辦公室的工作文化差異極大。",
         "collocations": ["popular culture", "a company's culture", "cultural differences"],
         "root": "cult(耕作, 同 cultivate/agriculture) + -ure → 耕出來的東西 → 文化",
         "synonyms": ["way of life", "customs", "traditions", "values"],
@@ -160,6 +179,7 @@ SUBLIST_2 = [
     {
         "word": "design", "pos": "v.",
         "example": "The building was designed to use half the usual energy.",
+        "example_zh": "這棟建築在設計上只用一般建物一半的能源。",
         "collocations": ["design a system", "specially designed", "designed to reduce"],
         "root": "de-(下) + sign(標記) → 把構想標記下來 → 設計",
         "synonyms": ["plan", "devise", "create", "draw up"],
@@ -168,6 +188,7 @@ SUBLIST_2 = [
     {
         "word": "distinct", "pos": "adj.",
         "example": "The two species look alike but are genetically distinct.",
+        "example_zh": "這兩個物種外觀相似，但基因上截然不同。",
         "collocations": ["a distinct advantage", "distinct from", "three distinct groups"],
         "root": "di-(分開) + stinct(刺, 同 instinct/extinguish/distinguish) → 刺開來就分得出",
         "synonyms": ["separate", "clear", "different", "unmistakable"],
@@ -176,6 +197,7 @@ SUBLIST_2 = [
     {
         "word": "element", "pos": "n.",
         "example": "Trust is the one element the plan cannot do without.",
+        "example_zh": "信任是這個計畫唯一不能少的要素。",
         "collocations": ["a key element", "the elements of", "an essential element"],
         "root": "拉丁 elementum「最基本的組成」→ 構成整體的單位",
         "synonyms": ["component", "part", "ingredient", "factor"],
@@ -184,6 +206,7 @@ SUBLIST_2 = [
     {
         "word": "equate", "pos": "v.",
         "example": "People often equate wealth with success.",
+        "example_zh": "人們常把財富等同於成功。",
         "collocations": ["equate with", "wrongly equate", "equate A to B"],
         "root": "equ(相等, 同 equal/equator/equity) + -ate → 把兩件事當成相等",
         "synonyms": ["liken", "compare", "treat as the same", "identify with"],
@@ -192,6 +215,7 @@ SUBLIST_2 = [
     {
         "word": "evaluate", "pos": "v.",
         "example": "The study evaluates three ways of cutting food waste.",
+        "example_zh": "這項研究評估三種減少食物浪費的做法。",
         "collocations": ["evaluate the results", "critically evaluate", "evaluate options"],
         "root": "e-(出來) + valu(價值, 同 value/valid/available) + -ate → 把價值算出來",
         "synonyms": ["assess", "judge", "appraise", "weigh up"],
@@ -200,6 +224,7 @@ SUBLIST_2 = [
     {
         "word": "feature", "pos": "n.",
         "example": "The main feature of the design is a glass roof.",
+        "example_zh": "這個設計最主要的特色是玻璃屋頂。",
         "collocations": ["a key feature", "a distinctive feature", "a safety feature"],
         "root": "拉丁 factura「製作出來的樣子」(fact 做, 同 factory) → 做出來的外顯特點",
         "synonyms": ["characteristic", "attribute", "trait", "aspect"],
@@ -208,6 +233,7 @@ SUBLIST_2 = [
     {
         "word": "final", "pos": "adj.",
         "example": "The final section of the course is entirely practical.",
+        "example_zh": "這門課的最後一部分完全是實作。",
         "collocations": ["the final stage", "a final decision", "in the final analysis"],
         "root": "fin(結束, 同 finish/define/infinite) + -al → 走到界線的",
         "synonyms": ["last", "concluding", "closing", "ultimate"],
@@ -216,6 +242,7 @@ SUBLIST_2 = [
     {
         "word": "focus", "pos": "v.",
         "example": "The campaign focuses on cutting waste rather than recycling it.",
+        "example_zh": "這場宣導聚焦於減量，而不是回收。",
         "collocations": ["focus on", "focus attention", "sharply focused"],
         "root": "拉丁 focus「爐灶」→ 家裡大家圍著的中心點 → 聚焦處",
         "synonyms": ["concentrate", "centre", "zero in", "direct attention"],
@@ -224,6 +251,7 @@ SUBLIST_2 = [
     {
         "word": "impact", "pos": "n.",
         "example": "The bypass had an immediate impact on traffic in the town.",
+        "example_zh": "這條外環道對鎮上的交通立刻產生影響。",
         "collocations": ["have an impact on", "a major impact", "environmental impact"],
         "root": "im-(進入) + pact(打緊, 同 compact/pack) → 撞進去的那股力道",
         "synonyms": ["effect", "influence", "consequence", "repercussion"],
@@ -232,6 +260,7 @@ SUBLIST_2 = [
     {
         "word": "injure", "pos": "v.",
         "example": "Two workers were injured when the scaffolding collapsed.",
+        "example_zh": "鷹架倒塌時有兩名工人受傷。",
         "collocations": ["seriously injured", "injure yourself", "injure a knee"],
         "root": "in-(不) + jur(法律、正當, 同 jury/justice/perjury) → 對人做不正當的事 → 傷害",
         "synonyms": ["hurt", "harm", "wound", "damage"],
@@ -240,6 +269,7 @@ SUBLIST_2 = [
     {
         "word": "institute", "pos": "v.",
         "example": "The company instituted a four-day week last year.",
+        "example_zh": "這家公司去年開始實施週休三日。",
         "collocations": ["institute a policy", "institute reforms", "institute proceedings"],
         "root": "in-(進入) + stitut(建立, 同 constitute/substitute/statute) → 設立起來開始跑",
         "synonyms": ["establish", "introduce", "set up", "initiate"],
@@ -248,6 +278,7 @@ SUBLIST_2 = [
     {
         "word": "invest", "pos": "v.",
         "example": "The city has invested heavily in cycling infrastructure.",
+        "example_zh": "這座城市在自行車基礎建設上投入甚鉅。",
         "collocations": ["invest in", "heavily invest", "invest time"],
         "root": "in-(進入) + vest(衣服, 同 vest/vestment)；原指「給某物穿上外衣」→ 把錢投到某事上",
         "synonyms": ["put money into", "fund", "back", "commit"],
@@ -256,6 +287,7 @@ SUBLIST_2 = [
     {
         "word": "item", "pos": "n.",
         "example": "Every item on the questionnaire was answered by all participants.",
+        "example_zh": "問卷上的每一個項目所有受訪者都作答了。",
         "collocations": ["an item on the list", "each item", "a news item"],
         "root": "拉丁 item「同樣地」—— 舊清單每一行都以 item 開頭 → 一項",
         "synonyms": ["entry", "article", "thing", "element"],
@@ -264,6 +296,7 @@ SUBLIST_2 = [
     {
         "word": "journal", "pos": "n.",
         "example": "The findings appeared in a leading medical journal.",
+        "example_zh": "這些發現刊登在一份頂尖的醫學期刊上。",
         "collocations": ["an academic journal", "publish in a journal", "a peer-reviewed journal"],
         "root": "jour(日, 法文, 同 journey 原意「一天的路程」) + -al → 按期出刊的東西",
         "synonyms": ["periodical", "publication", "magazine"],
@@ -272,6 +305,7 @@ SUBLIST_2 = [
     {
         "word": "maintain", "pos": "v.",
         "example": "The council can no longer afford to maintain all its parks.",
+        "example_zh": "議會已經負擔不起維護所有公園。",
         "collocations": ["maintain standards", "well maintained", "maintain that"],
         "root": "main(手, 拉丁 manus, 同 manual/manage) + tain(持有, 同 contain/obtain) → 用手一直握著",
         "synonyms": ["keep up", "preserve", "sustain", "uphold"],
@@ -281,6 +315,7 @@ SUBLIST_2 = [
     {
         "word": "normal", "pos": "adj.",
         "example": "Rainfall was well above normal levels this spring.",
+        "example_zh": "今年春天的降雨量遠高於正常水準。",
         "collocations": ["under normal conditions", "return to normal", "normal practice"],
         "root": "norm(木匠的角尺, 拉丁 norma) + -al → 合乎標準尺度的",
         "synonyms": ["usual", "standard", "typical", "ordinary"],
@@ -289,6 +324,7 @@ SUBLIST_2 = [
     {
         "word": "obtain", "pos": "v.",
         "example": "Students must obtain written permission before filming on campus.",
+        "example_zh": "學生在校園內拍攝前必須取得書面許可。",
         "collocations": ["obtain permission", "obtain results", "hard to obtain"],
         "root": "ob-(朝向) + tain(持有, 同 contain/maintain/retain) → 把東西握到手上",
         "synonyms": ["get", "acquire", "secure", "procure"],
@@ -297,6 +333,7 @@ SUBLIST_2 = [
     {
         "word": "participate", "pos": "v.",
         "example": "More than half the school participates in the recycling scheme.",
+        "example_zh": "超過半數的學生參與了回收計畫。",
         "collocations": ["participate in", "actively participate", "participate fully"],
         "root": "part(部分) + cip(拿, 同 capture/recipient/principle) + -ate → 分到一份 → 參與",
         "synonyms": ["take part", "join in", "be involved", "contribute"],
@@ -305,6 +342,7 @@ SUBLIST_2 = [
     {
         "word": "perceive", "pos": "v.",
         "example": "Cycling is still perceived as dangerous by many parents.",
+        "example_zh": "許多家長仍然認為騎單車很危險。",
         "collocations": ["be perceived as", "perceive a difference", "widely perceived"],
         "root": "per-(徹底) + ceiv(拿, 同 receive/conceive/deceive) → 整個接收進來 → 察覺",
         "synonyms": ["see", "regard", "view", "discern"],
@@ -313,6 +351,7 @@ SUBLIST_2 = [
     {
         "word": "positive", "pos": "adj.",
         "example": "Early results of the trial were surprisingly positive.",
+        "example_zh": "試驗的初期結果出乎意料地正面。",
         "collocations": ["a positive effect", "positive feedback", "remain positive"],
         "root": "posit(放置, 同 position/compose/deposit) + -ive → 已經擺定的 → 確定的、正向的",
         "synonyms": ["favourable", "constructive", "encouraging", "upbeat"],
@@ -321,6 +360,7 @@ SUBLIST_2 = [
     {
         "word": "potential", "pos": "n.",
         "example": "Wind power has enormous potential along this coast.",
+        "example_zh": "這片海岸的風力發電潛力極大。",
         "collocations": ["enormous potential", "realise your potential", "the potential for"],
         "root": "potent(有力量, 同 power/potent/possible) + -ial → 還沒使出來的力量",
         "synonyms": ["capacity", "possibility", "promise", "capability"],
@@ -329,6 +369,7 @@ SUBLIST_2 = [
     {
         "word": "previous", "pos": "adj.",
         "example": "Sales were double those of the previous year.",
+        "example_zh": "銷量是前一年的兩倍。",
         "collocations": ["the previous year", "previous experience", "a previous study"],
         "root": "pre-(之前) + vi(路, 同 via/obvious/deviate) + -ous → 走在前面那一段的",
         "synonyms": ["earlier", "preceding", "prior", "former"],
@@ -337,6 +378,7 @@ SUBLIST_2 = [
     {
         "word": "primary", "pos": "adj.",
         "example": "The primary cause of the delay was poor weather.",
+        "example_zh": "延誤的主要原因是天候不佳。",
         "collocations": ["the primary cause", "primary school", "of primary importance"],
         "root": "prim(第一, 同 prime/primitive/prince) + -ary → 排在第一的",
         "synonyms": ["main", "chief", "principal", "foremost"],
@@ -345,6 +387,7 @@ SUBLIST_2 = [
     {
         "word": "purchase", "pos": "v.",
         "example": "Tickets purchased online cost ten per cent less.",
+        "example_zh": "線上購買的票便宜一成。",
         "collocations": ["purchase tickets", "recently purchased", "purchase online"],
         "root": "pur-(向前, 同 pursue) + chase(追) → 一路追到手 → 買下",
         "synonyms": ["buy", "acquire", "obtain", "pay for"],
@@ -354,6 +397,7 @@ SUBLIST_2 = [
     {
         "word": "range", "pos": "n.",
         "example": "The library offers a wide range of online courses.",
+        "example_zh": "這間圖書館提供各式各樣的線上課程。",
         "collocations": ["a wide range of", "range from", "the age range"],
         "root": "法文 rang「一排」(同 rank/arrange) → 排開來的幅度",
         "synonyms": ["variety", "spread", "span", "selection"],
@@ -362,6 +406,7 @@ SUBLIST_2 = [
     {
         "word": "region", "pos": "n.",
         "example": "The northern region receives twice as much rain as the south.",
+        "example_zh": "北部地區的降雨量是南部的兩倍。",
         "collocations": ["a coastal region", "the region of", "regional differences"],
         "root": "reg(統治、劃線, 同 regular/regime/rule) + -ion → 劃出來管轄的地方",
         "synonyms": ["area", "district", "zone", "territory"],
@@ -370,6 +415,7 @@ SUBLIST_2 = [
     {
         "word": "regulate", "pos": "v.",
         "example": "Few countries regulate the sale of personal data effectively.",
+        "example_zh": "很少有國家能有效規範個資的販售。",
         "collocations": ["regulate the market", "strictly regulated", "regulate access"],
         "root": "reg(規則, 同 regular/rule/regime) + -ate → 按規矩管起來",
         "synonyms": ["control", "govern", "supervise", "police"],
@@ -378,6 +424,7 @@ SUBLIST_2 = [
     {
         "word": "relevant", "pos": "adj.",
         "example": "Only two of the studies are relevant to this question.",
+        "example_zh": "這些研究中只有兩篇跟這個問題有關。",
         "collocations": ["relevant experience", "be relevant to", "highly relevant"],
         "root": "re-(再) + lev(舉起, 同 elevate/lever/relieve) + -ant → 扛得起這件事 → 有關係的",
         "synonyms": ["pertinent", "applicable", "related", "germane"],
@@ -386,6 +433,7 @@ SUBLIST_2 = [
     {
         "word": "reside", "pos": "v.",
         "example": "Nearly a third of students reside outside the city.",
+        "example_zh": "將近三分之一的學生居住在市區之外。",
         "collocations": ["reside in", "permanently reside", "reside abroad"],
         "root": "re-(回) + sid(坐, 同 sedentary/preside/president) → 坐回定處 → 定居",
         "synonyms": ["live", "dwell", "be based", "inhabit"],
@@ -394,6 +442,7 @@ SUBLIST_2 = [
     {
         "word": "resource", "pos": "n.",
         "example": "The region's water resources are already under strain.",
+        "example_zh": "這個地區的水資源已經處於緊繃狀態。",
         "collocations": ["natural resources", "limited resources", "allocate resources"],
         "root": "re-(再) + source(湧出, 拉丁 surgere, 同 surge) → 能再湧出來的東西",
         "synonyms": ["supply", "asset", "reserve", "means"],
@@ -402,6 +451,7 @@ SUBLIST_2 = [
     {
         "word": "restrict", "pos": "v.",
         "example": "The city restricts lorry access during the day.",
+        "example_zh": "這座城市在白天限制大型貨車進入。",
         "collocations": ["restrict access", "severely restricted", "restrict the use of"],
         "root": "re-(往回) + strict(拉緊, 同 strict/constraint/strain) → 往回拉緊 → 限制",
         "synonyms": ["limit", "curb", "confine", "cap"],
@@ -410,6 +460,7 @@ SUBLIST_2 = [
     {
         "word": "secure", "pos": "adj.",
         "example": "Few graduates now expect a secure job for life.",
+        "example_zh": "現在很少畢業生期待一份穩定的終身工作。",
         "collocations": ["a secure job", "feel secure", "secure storage"],
         "root": "se-(離開) + cur(擔心, 拉丁 cura, 同 cure/curious/accurate) → 不用擔心的",
         "synonyms": ["safe", "protected", "stable", "assured"],
@@ -418,6 +469,7 @@ SUBLIST_2 = [
     {
         "word": "seek", "pos": "v.",
         "example": "Patients now seek information online before visiting a doctor.",
+        "example_zh": "病人現在會先上網找資訊再去看醫生。",
         "collocations": ["seek advice", "seek to improve", "widely sought"],
         "root": "古英語 secan「尋找」→ 主動去找",
         "synonyms": ["look for", "pursue", "try to obtain", "request"],
@@ -427,6 +479,7 @@ SUBLIST_2 = [
     {
         "word": "select", "pos": "v.",
         "example": "Judges selected twelve finalists from four hundred entries.",
+        "example_zh": "評審從四百件作品中選出十二位決賽者。",
         "collocations": ["select candidates", "carefully selected", "select from"],
         "root": "se-(分開) + lect(挑, 同 collect/elect/lecture) → 從一堆裡挑出來",
         "synonyms": ["choose", "pick", "opt for", "single out"],
@@ -435,6 +488,7 @@ SUBLIST_2 = [
     {
         "word": "site", "pos": "n.",
         "example": "The site of the old factory is now a public park.",
+        "example_zh": "舊工廠的原址現在是一座公園。",
         "collocations": ["a building site", "on site", "the site of"],
         "root": "拉丁 situs「位置」(同 situate/situation) → 東西所在的位置",
         "synonyms": ["location", "place", "spot", "position"],
@@ -443,6 +497,7 @@ SUBLIST_2 = [
     {
         "word": "strategy", "pos": "n.",
         "example": "The company's strategy is to sell fewer products at higher prices.",
+        "example_zh": "這家公司的策略是賣得更少但賣得更貴。",
         "collocations": ["a long-term strategy", "adopt a strategy", "a marketing strategy"],
         "root": "strat(軍隊, 希臘 stratos) + ag(帶領, 同 agent/act) → 帶兵打仗的方法",
         "synonyms": ["plan", "approach", "policy", "tactics"],
@@ -451,6 +506,7 @@ SUBLIST_2 = [
     {
         "word": "survey", "pos": "n.",
         "example": "A survey of two thousand commuters found the same complaint.",
+        "example_zh": "一份針對兩千名通勤者的調查發現了同樣的抱怨。",
         "collocations": ["conduct a survey", "a national survey", "survey results"],
         "root": "sur-(在上面) + vey(看, 同 view/vision/purvey) → 從上面整個看過一遍",
         "synonyms": ["poll", "study", "questionnaire", "review"],
@@ -459,6 +515,7 @@ SUBLIST_2 = [
     {
         "word": "text", "pos": "n.",
         "example": "The full text of the report is available online.",
+        "example_zh": "報告全文可在線上取得。",
         "collocations": ["a written text", "the full text", "textual analysis"],
         "root": "text(編織, 同 textile/texture/context) → 把字織成的東西",
         "synonyms": ["writing", "wording", "document", "content"],
@@ -467,6 +524,7 @@ SUBLIST_2 = [
     {
         "word": "tradition", "pos": "n.",
         "example": "The festival is a tradition that goes back four centuries.",
+        "example_zh": "這個節慶是可以追溯到四百年前的傳統。",
         "collocations": ["a long tradition", "break with tradition", "by tradition"],
         "root": "tra-(越過) + dit(給, 同 date/betray/edit) + -ion → 一代交給一代",
         "synonyms": ["custom", "convention", "practice", "heritage"],
@@ -475,6 +533,7 @@ SUBLIST_2 = [
     {
         "word": "transfer", "pos": "v.",
         "example": "Patients are transferred to the main hospital for surgery.",
+        "example_zh": "病人會被轉送到主要醫院動手術。",
         "collocations": ["transfer funds", "be transferred to", "transfer skills"],
         "root": "trans-(越過) + fer(帶, 同 refer/offer/ferry) → 帶到另一邊去",
         "synonyms": ["move", "shift", "hand over", "relocate"],

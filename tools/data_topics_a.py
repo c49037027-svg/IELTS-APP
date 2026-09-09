@@ -5,6 +5,7 @@ TOPICS_A = [
     {
         "word": "mitigate", "pos": "v.",
         "example": "Governments must act now to mitigate the effects of climate change.",
+        "example_zh": "政府必須立刻行動，以減輕氣候變遷的影響。",
         "collocations": ["mitigate the effects", "mitigate the impact", "mitigate risk"],
         "root": "mit(緩和、變柔軟, 同 mild) + -igate(使…) → 使變柔和",
         "synonyms": ["alleviate", "reduce", "ease", "lessen"],
@@ -13,6 +14,7 @@ TOPICS_A = [
     {
         "word": "sustainable", "pos": "adj.",
         "example": "Cities need sustainable transport systems that do not rely on private cars.",
+        "example_zh": "城市需要不依賴私家車的永續交通系統。",
         "collocations": ["sustainable development", "sustainable growth", "environmentally sustainable"],
         "root": "sus-(在下) + tain(持有, 同 contain/retain/maintain) + -able → 在底下撐得住的",
         "synonyms": ["viable", "enduring", "long-term", "environmentally sound"],
@@ -21,6 +23,7 @@ TOPICS_A = [
     {
         "word": "renewable", "pos": "adj.",
         "example": "Denmark now generates over half its electricity from renewable sources.",
+        "example_zh": "丹麥現在有超過一半的電力來自再生能源。",
         "collocations": ["renewable energy", "renewable sources", "shift to renewables"],
         "root": "re-(再) + new(新) + -able → 可以一再變新的",
         "synonyms": ["sustainable", "clean", "green", "inexhaustible"],
@@ -29,6 +32,7 @@ TOPICS_A = [
     {
         "word": "emission", "pos": "n.",
         "example": "Carbon emissions from road transport fell for the third year running.",
+        "example_zh": "公路運輸的碳排放連續第三年下降。",
         "collocations": ["carbon emissions", "cut emissions", "greenhouse gas emissions"],
         "root": "e-(出去) + miss(送, 同 mission/transmit/dismiss) + -ion → 送出去的東西",
         "synonyms": ["discharge", "release", "output", "fumes"],
@@ -37,6 +41,7 @@ TOPICS_A = [
     {
         "word": "carbon footprint", "pos": "n. phr.",
         "example": "Flying less is the fastest way to shrink your carbon footprint.",
+        "example_zh": "少搭飛機是縮小碳足跡最快的方式。",
         "collocations": ["reduce your carbon footprint", "a large carbon footprint", "measure the carbon footprint"],
         "root": "footprint(腳印) → 你踩在地球上留下的碳的印子",
         "synonyms": ["carbon impact", "emissions total", "environmental impact"],
@@ -45,6 +50,7 @@ TOPICS_A = [
     {
         "word": "greenhouse gas", "pos": "n. phr.",
         "example": "Methane is a greenhouse gas far more potent than carbon dioxide.",
+        "example_zh": "甲烷是一種溫室氣體，效力遠強於二氧化碳。",
         "collocations": ["greenhouse gas emissions", "cut greenhouse gases", "a greenhouse gas effect"],
         "root": "greenhouse(溫室) → 像溫室玻璃一樣把熱關在裡面的氣體",
         "synonyms": ["heat-trapping gas", "carbon emissions"],
@@ -53,6 +59,7 @@ TOPICS_A = [
     {
         "word": "deforestation", "pos": "n.",
         "example": "Large-scale deforestation has destroyed much of the region's rainforest.",
+        "example_zh": "大規模的森林砍伐已經摧毀了這個地區大部分的雨林。",
         "collocations": ["large-scale deforestation", "tackle deforestation", "rates of deforestation"],
         "root": "de-(去除) + forest(森林) + -ation → 把森林去掉這件事",
         "synonyms": ["forest clearance", "logging", "tree loss"],
@@ -61,6 +68,7 @@ TOPICS_A = [
     {
         "word": "biodiversity", "pos": "n.",
         "example": "Wetlands support far greater biodiversity than most people realise.",
+        "example_zh": "濕地所支撐的生物多樣性遠比多數人想像的豐富。",
         "collocations": ["protect biodiversity", "loss of biodiversity", "rich biodiversity"],
         "root": "bio(生命, 同 biology) + divers(不同, 同 diverse/diversity) → 生命的多樣性",
         "synonyms": ["variety of species", "ecological diversity", "wildlife variety"],
@@ -69,6 +77,7 @@ TOPICS_A = [
     {
         "word": "landfill", "pos": "n.",
         "example": "Nearly half of all household waste still ends up in landfill.",
+        "example_zh": "將近一半的家庭垃圾最後仍進了掩埋場。",
         "collocations": ["end up in landfill", "landfill sites", "reduce landfill waste"],
         "root": "land(土地) + fill(填) → 挖坑把垃圾填進土地",
         "synonyms": ["waste site", "dump", "tip", "rubbish site"],
@@ -77,6 +86,7 @@ TOPICS_A = [
     {
         "word": "conservation", "pos": "n.",
         "example": "Conservation groups have campaigned for the forest to be protected.",
+        "example_zh": "保育團體長期倡議保護這片森林。",
         "collocations": ["wildlife conservation", "energy conservation", "conservation efforts"],
         "root": "con-(一起) + serv(保存, 同 preserve/reserve/observe) + -ation → 一起守住",
         "synonyms": ["protection", "preservation", "safeguarding"],
@@ -85,6 +95,7 @@ TOPICS_A = [
     {
         "word": "habitat", "pos": "n.",
         "example": "Road building has destroyed the natural habitat of several rare species.",
+        "example_zh": "道路興建摧毀了好幾種稀有物種的自然棲地。",
         "collocations": ["natural habitat", "habitat loss", "destroy habitats"],
         "root": "拉丁 habitare 居住（同 inhabit/habit） → 生物居住的地方",
         "synonyms": ["natural environment", "home range", "natural surroundings"],
@@ -93,6 +104,7 @@ TOPICS_A = [
     {
         "word": "pollutant", "pos": "n.",
         "example": "Traffic releases pollutants that damage children's developing lungs.",
+        "example_zh": "交通排放的污染物會傷害兒童發育中的肺部。",
         "collocations": ["airborne pollutants", "industrial pollutants", "release pollutants"],
         "root": "拉丁 polluere 弄髒（同 pollution） + -ant(做…的東西) → 弄髒環境的東西",
         "synonyms": ["contaminant", "toxin", "impurity"],
@@ -101,6 +113,7 @@ TOPICS_A = [
     {
         "word": "depletion", "pos": "n.",
         "example": "The depletion of groundwater has forced farmers to change what they grow.",
+        "example_zh": "地下水的枯竭迫使農民改種其他作物。",
         "collocations": ["resource depletion", "ozone depletion", "the depletion of stocks"],
         "root": "de-(去除) + plet(填滿, 同 complete/replete) + -ion → 把填滿的東西掏空",
         "synonyms": ["exhaustion", "using up", "reduction", "draining"],
@@ -109,6 +122,7 @@ TOPICS_A = [
     {
         "word": "ecosystem", "pos": "n.",
         "example": "Coral reefs are among the most fragile ecosystems on the planet.",
+        "example_zh": "珊瑚礁是地球上最脆弱的生態系之一。",
         "collocations": ["a fragile ecosystem", "damage ecosystems", "marine ecosystems"],
         "root": "eco(家, 希臘 oikos, 同 economy) + system → 生物的「家」這整套系統",
         "synonyms": ["natural system", "biological community", "habitat network"],
@@ -117,6 +131,7 @@ TOPICS_A = [
     {
         "word": "degradation", "pos": "n.",
         "example": "Environmental degradation is hardest to reverse in poorer regions.",
+        "example_zh": "環境退化在較貧窮的地區最難逆轉。",
         "collocations": ["environmental degradation", "soil degradation", "land degradation"],
         "root": "de-(向下) + grad(階, 同 grade/gradual/degree) + -ation → 一階一階降下去",
         "synonyms": ["deterioration", "damage", "decline", "worsening"],
@@ -125,6 +140,7 @@ TOPICS_A = [
     {
         "word": "contaminate", "pos": "v.",
         "example": "Industrial waste has contaminated the river for several kilometres.",
+        "example_zh": "工業廢水已經污染了這條河好幾公里。",
         "collocations": ["contaminate water supplies", "heavily contaminated", "contaminate the soil"],
         "root": "con-(一起) + tamin(接觸, 同 contact/contagion) + -ate → 碰到而變髒",
         "synonyms": ["pollute", "taint", "poison", "infect"],
@@ -133,6 +149,7 @@ TOPICS_A = [
     {
         "word": "extinction", "pos": "n.",
         "example": "Several bird species now face extinction within a single generation.",
+        "example_zh": "好幾種鳥類可能在一個世代之內就面臨滅絕。",
         "collocations": ["face extinction", "on the brink of extinction", "mass extinction"],
         "root": "ex-(完全) + stinct(熄滅, 同 distinguish/instinct) + -ion → 整個熄掉不再有",
         "synonyms": ["dying out", "disappearance", "eradication"],
@@ -141,6 +158,7 @@ TOPICS_A = [
     {
         "word": "drought", "pos": "n.",
         "example": "A prolonged drought left reservoirs at a third of their normal level.",
+        "example_zh": "長期乾旱使水庫只剩正常水位的三分之一。",
         "collocations": ["a severe drought", "prolonged drought", "drought-hit areas"],
         "root": "古英語 drugath「乾」（同 dry） + -th(狀態) → 乾的狀態",
         "synonyms": ["water shortage", "dry spell", "arid conditions"],
@@ -149,6 +167,7 @@ TOPICS_A = [
     {
         "word": "erosion", "pos": "n.",
         "example": "Coastal erosion has washed away nearly ten metres of cliff since 1990.",
+        "example_zh": "自 1990 年以來，海岸侵蝕已經沖掉將近十公尺的崖壁。",
         "collocations": ["soil erosion", "coastal erosion", "prevent erosion"],
         "root": "e-(出去) + ros/rod(啃, 同 rodent 齧齒類/corrode) + -ion → 一點一點被啃掉",
         "synonyms": ["wearing away", "gradual loss", "wearing down"],
@@ -157,6 +176,7 @@ TOPICS_A = [
     {
         "word": "curb", "pos": "v.",
         "example": "The city introduced a congestion charge to curb traffic in the centre.",
+        "example_zh": "這座城市推出壅塞費，以抑制市中心的車流。",
         "collocations": ["curb emissions", "curb pollution", "curb the use of"],
         "root": "curb 原指馬勒的鍊條 → 拉住不讓牠亂跑",
         "synonyms": ["restrict", "limit", "rein in", "check"],
@@ -167,6 +187,7 @@ TOPICS_A = [
     {
         "word": "curriculum", "pos": "n.",
         "example": "Financial literacy should be part of the national curriculum.",
+        "example_zh": "理財素養應該納入國家課綱。",
         "collocations": ["the school curriculum", "curriculum design", "a core curriculum"],
         "root": "curr(跑, 同 current/occur/course) + -iculum → 要跑完的一段路程 → 課程",
         "synonyms": ["syllabus", "course of study", "programme"],
@@ -176,6 +197,7 @@ TOPICS_A = [
     {
         "word": "substantial", "pos": "adj.",
         "example": "There has been a substantial increase in tuition fees over the past decade.",
+        "example_zh": "過去十年學費有相當大幅度的調漲。",
         "collocations": ["a substantial increase", "substantial evidence", "a substantial amount of"],
         "root": "sub-(在下) + stant(站立, 同 stand/constant) + -ial → 站得住腳的 → 有實質分量的",
         "synonyms": ["considerable", "significant", "sizeable", "marked"],
@@ -184,6 +206,7 @@ TOPICS_A = [
     {
         "word": "literacy", "pos": "n.",
         "example": "Adult literacy rates have risen sharply since the programme began.",
+        "example_zh": "這項計畫開始之後，成人識字率大幅上升。",
         "collocations": ["adult literacy", "literacy rates", "financial literacy"],
         "root": "liter(字母, 同 letter/literature) + -acy → 認得字的能力",
         "synonyms": ["reading ability", "being able to read and write"],
@@ -193,6 +216,7 @@ TOPICS_A = [
     {
         "word": "numeracy", "pos": "n.",
         "example": "Employers complain that basic numeracy is weaker than it used to be.",
+        "example_zh": "雇主抱怨基本的數字能力比以前更弱。",
         "collocations": ["basic numeracy", "numeracy skills", "literacy and numeracy"],
         "root": "numer(數字, 同 number/numerous) + -acy → 處理數字的能力",
         "synonyms": ["mathematical ability", "number skills"],
@@ -201,6 +225,7 @@ TOPICS_A = [
     {
         "word": "tuition", "pos": "n.",
         "example": "Tuition fees have tripled since the system was reformed.",
+        "example_zh": "制度改革之後，學費漲了三倍。",
         "collocations": ["tuition fees", "pay tuition", "private tuition"],
         "root": "tuit(照看, 同 tutor/intuition) + -ion → 被看顧著教導",
         "synonyms": ["teaching", "instruction", "course fees"],
@@ -209,6 +234,7 @@ TOPICS_A = [
     {
         "word": "scholarship", "pos": "n.",
         "example": "She won a full scholarship to study engineering abroad.",
+        "example_zh": "她拿到全額獎學金出國唸工程。",
         "collocations": ["win a scholarship", "a full scholarship", "apply for scholarships"],
         "root": "schol(學校, 希臘 skholē 原意「閒暇」→ 有閒暇才能學習) + -ship → 學者的身分／補助",
         "synonyms": ["grant", "bursary", "financial award"],
@@ -217,6 +243,7 @@ TOPICS_A = [
     {
         "word": "vocational", "pos": "adj.",
         "example": "Vocational training often leads to work faster than an academic degree.",
+        "example_zh": "技職訓練往往比學術學位更快帶來工作。",
         "collocations": ["vocational training", "vocational courses", "vocational qualifications"],
         "root": "voc(呼喚, 同 voice/vocation 天職) + -ation + -al → 為了「天職」而做的訓練",
         "synonyms": ["job-related", "occupational", "practical", "career-focused"],
@@ -225,6 +252,7 @@ TOPICS_A = [
     {
         "word": "rote learning", "pos": "n. phr.",
         "example": "Rote learning helps with exams but rarely produces real understanding.",
+        "example_zh": "死背有助於考試，但很少能產生真正的理解。",
         "collocations": ["rely on rote learning", "rote learning of facts", "move away from rote learning"],
         "root": "rote 原意「固定的路線」→ 照著固定套路死記",
         "synonyms": ["memorisation", "learning by heart", "mechanical learning"],
@@ -233,6 +261,7 @@ TOPICS_A = [
     {
         "word": "critical thinking", "pos": "n. phr.",
         "example": "Group debates are one of the best ways to develop critical thinking.",
+        "example_zh": "分組辯論是培養批判性思考最好的方式之一。",
         "collocations": ["develop critical thinking", "critical thinking skills", "encourage critical thinking"],
         "root": "crit(判斷, 同 criterion/critic/crisis) → 會判斷的思考",
         "synonyms": ["analytical thinking", "reasoning", "independent thought"],
@@ -241,6 +270,7 @@ TOPICS_A = [
     {
         "word": "assessment", "pos": "n.",
         "example": "Continuous assessment reduces the pressure of a single final exam.",
+        "example_zh": "持續性評量減輕了單一期末考的壓力。",
         "collocations": ["continuous assessment", "formal assessment", "assessment criteria"],
         "root": "as-(朝向) + sess(坐, 同 session/sedentary；法官「坐下來」評定稅額) + -ment → 坐下來評定",
         "synonyms": ["evaluation", "appraisal", "testing", "marking"],
@@ -249,6 +279,7 @@ TOPICS_A = [
     {
         "word": "enrol", "pos": "v.",
         "example": "Over four thousand students enrolled in online courses last year.",
+        "example_zh": "去年有超過四千名學生註冊了線上課程。",
         "collocations": ["enrol in a course", "enrol students", "enrolment rates"],
         "root": "en-(進入) + rol(名冊, 同 roll 卷軸) → 把名字寫進名冊",
         "synonyms": ["sign up", "register", "enter", "join"],
@@ -257,6 +288,7 @@ TOPICS_A = [
     {
         "word": "dropout rate", "pos": "n. phr.",
         "example": "The dropout rate fell once the university introduced study mentors.",
+        "example_zh": "大學導入學習輔導員之後，輟學率就下降了。",
         "collocations": ["a high dropout rate", "reduce the dropout rate", "the dropout rate among"],
         "root": "drop(掉落) + out → 中途掉出隊伍的比例",
         "synonyms": ["attrition rate", "withdrawal rate", "leaving rate"],
@@ -265,6 +297,7 @@ TOPICS_A = [
     {
         "word": "discipline", "pos": "n.",
         "example": "Classroom discipline suffers when classes are too large.",
+        "example_zh": "班級人數太多時，課堂紀律就會變差。",
         "collocations": ["classroom discipline", "strict discipline", "self-discipline"],
         "root": "disc(學習, 同 disciple 門徒/docile) + -ine → 學習該有的規矩",
         "synonyms": ["order", "self-control", "behaviour management"],
@@ -274,6 +307,7 @@ TOPICS_A = [
     {
         "word": "extracurricular", "pos": "adj.",
         "example": "Extracurricular activities matter as much as grades on an application.",
+        "example_zh": "在申請時，課外活動跟成績一樣重要。",
         "collocations": ["extracurricular activities", "extracurricular clubs", "take part in extracurricular"],
         "root": "extra-(之外, 同 extraordinary) + curricul(課程) + -ar → 正課之外的",
         "synonyms": ["out-of-class", "after-school", "non-academic"],
@@ -282,6 +316,7 @@ TOPICS_A = [
     {
         "word": "peer pressure", "pos": "n. phr.",
         "example": "Teenagers often start smoking because of peer pressure rather than curiosity.",
+        "example_zh": "青少年開始抽菸往往是因為同儕壓力，而不是好奇。",
         "collocations": ["under peer pressure", "resist peer pressure", "intense peer pressure"],
         "root": "peer(同輩, 拉丁 par 相等, 同 pair/par) → 同輩之間的壓力",
         "synonyms": ["social pressure", "group influence"],
@@ -290,6 +325,7 @@ TOPICS_A = [
     {
         "word": "mentor", "pos": "n.",
         "example": "Every first-year student is assigned a mentor from the year above.",
+        "example_zh": "每位大一新生都會分配到一位高年級的學長姐當導師。",
         "collocations": ["act as a mentor", "a mentor programme", "assign a mentor"],
         "root": "源自《奧德賽》裡受託教導主角兒子的人物 Mentor → 引路人",
         "synonyms": ["adviser", "guide", "coach", "tutor"],
@@ -298,6 +334,7 @@ TOPICS_A = [
     {
         "word": "plagiarism", "pos": "n.",
         "example": "Universities now use software to detect plagiarism in essays.",
+        "example_zh": "大學現在用軟體偵測作業中的抄襲。",
         "collocations": ["accused of plagiarism", "avoid plagiarism", "plagiarism detection"],
         "root": "拉丁 plagiarius「綁架者」→ 把別人的東西擄走當自己的",
         "synonyms": ["copying", "academic dishonesty", "intellectual theft"],
@@ -306,6 +343,7 @@ TOPICS_A = [
     {
         "word": "truancy", "pos": "n.",
         "example": "Truancy fell after the school introduced later start times.",
+        "example_zh": "學校把上課時間延後之後，逃學率就下降了。",
         "collocations": ["reduce truancy", "truancy rates", "persistent truancy"],
         "root": "truant(遊蕩者, 古法文 truant 乞丐) + -cy → 該上學卻在外面晃",
         "synonyms": ["skipping school", "absenteeism", "unauthorised absence"],
@@ -314,6 +352,7 @@ TOPICS_A = [
     {
         "word": "lifelong learning", "pos": "n. phr.",
         "example": "Rapid changes at work make lifelong learning a necessity rather than a choice.",
+        "example_zh": "職場的快速變化讓終身學習成為必要而非選擇。",
         "collocations": ["promote lifelong learning", "a culture of lifelong learning", "commit to lifelong learning"],
         "root": "life(一生) + long(那麼長) → 學習持續一輩子",
         "synonyms": ["continuous education", "ongoing study", "adult learning"],
@@ -322,6 +361,7 @@ TOPICS_A = [
     {
         "word": "attainment", "pos": "n.",
         "example": "Educational attainment still depends heavily on family income.",
+        "example_zh": "教育成就仍然高度取決於家庭收入。",
         "collocations": ["educational attainment", "attainment levels", "raise attainment"],
         "root": "at-(朝向) + tain(持有, 同 contain/maintain/obtain) + -ment → 伸手拿到的程度",
         "synonyms": ["achievement", "accomplishment", "performance"],
@@ -332,6 +372,7 @@ TOPICS_A = [
     {
         "word": "automation", "pos": "n.",
         "example": "Automation has replaced many routine tasks in warehouses.",
+        "example_zh": "自動化已經取代了倉儲中許多例行工作。",
         "collocations": ["increasing automation", "workplace automation", "the automation of tasks"],
         "root": "auto(自己, 同 automatic/autonomy) + mat(動, 同 automaton) + -ion → 自己會動",
         "synonyms": ["mechanisation", "computerisation", "robotisation"],
@@ -340,6 +381,7 @@ TOPICS_A = [
     {
         "word": "algorithm", "pos": "n.",
         "example": "The recommendation algorithm decides what most users see first.",
+        "example_zh": "推薦演算法決定了大多數使用者最先看到什麼。",
         "collocations": ["a recommendation algorithm", "tweak the algorithm", "algorithms decide"],
         "root": "源自波斯數學家 al-Khwārizmī 的名字拉丁化 → 一套計算步驟",
         "synonyms": ["procedure", "formula", "set of rules"],
@@ -348,6 +390,7 @@ TOPICS_A = [
     {
         "word": "artificial intelligence", "pos": "n. phr.",
         "example": "Artificial intelligence is already used to screen job applications.",
+        "example_zh": "人工智慧已經被用來篩選求職申請。",
         "collocations": ["advances in artificial intelligence", "regulate artificial intelligence", "artificial intelligence systems"],
         "root": "arti(技藝, 同 art/artisan) + fic(製造, 同 factory/fiction) → 人造的 + 智能",
         "synonyms": ["AI", "machine intelligence", "computer intelligence"],
@@ -356,6 +399,7 @@ TOPICS_A = [
     {
         "word": "cybersecurity", "pos": "n.",
         "example": "Hospitals have had to invest heavily in cybersecurity after recent attacks.",
+        "example_zh": "近期的攻擊之後，醫院不得不大舉投資資安。",
         "collocations": ["invest in cybersecurity", "a cybersecurity breach", "cybersecurity measures"],
         "root": "cyber(控制, 希臘 kybernan 掌舵, 同 govern) + security → 網路空間的防護",
         "synonyms": ["online security", "information security", "data protection"],
@@ -364,6 +408,7 @@ TOPICS_A = [
     {
         "word": "innovation", "pos": "n.",
         "example": "Tax breaks are meant to encourage innovation in small firms.",
+        "example_zh": "稅務減免的用意是鼓勵小公司創新。",
         "collocations": ["technological innovation", "drive innovation", "a major innovation"],
         "root": "in-(進入) + nov(新, 同 novel/novice/renew) + -ation → 把新東西帶進來",
         "synonyms": ["breakthrough", "advance", "new development"],
@@ -372,6 +417,7 @@ TOPICS_A = [
     {
         "word": "obsolete", "pos": "adj.",
         "example": "Video rental shops became obsolete almost overnight.",
+        "example_zh": "影片出租店幾乎是一夜之間就被淘汰了。",
         "collocations": ["become obsolete", "technically obsolete", "render obsolete"],
         "root": "ob-(離開) + sol(習慣, 拉丁 solere) → 不再被使用習慣留著 → 過時",
         "synonyms": ["outdated", "out of date", "superseded", "no longer used"],
@@ -380,6 +426,7 @@ TOPICS_A = [
     {
         "word": "screen time", "pos": "n. phr.",
         "example": "Parents are often advised to limit screen time before bed.",
+        "example_zh": "專家常建議家長限制睡前的螢幕時間。",
         "collocations": ["limit screen time", "excessive screen time", "daily screen time"],
         "root": "screen(螢幕) + time → 盯著螢幕的時間",
         "synonyms": ["time spent on devices", "device use"],
@@ -388,6 +435,7 @@ TOPICS_A = [
     {
         "word": "misinformation", "pos": "n.",
         "example": "Health misinformation spreads faster than corrections ever do.",
+        "example_zh": "健康方面的錯誤資訊傳播得比更正快得多。",
         "collocations": ["spread misinformation", "combat misinformation", "online misinformation"],
         "root": "mis-(錯誤, 同 mistake/misuse) + information → 錯的資訊",
         "synonyms": ["false information", "fake news", "inaccurate claims"],
@@ -396,6 +444,7 @@ TOPICS_A = [
     {
         "word": "encryption", "pos": "n.",
         "example": "End-to-end encryption means the provider cannot read your messages.",
+        "example_zh": "端對端加密意味著服務商讀不到你的訊息。",
         "collocations": ["end-to-end encryption", "strong encryption", "encryption keys"],
         "root": "en-(進入) + crypt(隱藏, 同 cryptic/crypt 地窖) + -ion → 把訊息藏起來",
         "synonyms": ["encoding", "scrambling", "cipher protection"],
@@ -404,6 +453,7 @@ TOPICS_A = [
     {
         "word": "digital divide", "pos": "n. phr.",
         "example": "The pandemic exposed a digital divide between urban and rural pupils.",
+        "example_zh": "疫情暴露了城鄉學生之間的數位落差。",
         "collocations": ["bridge the digital divide", "widen the digital divide", "a growing digital divide"],
         "root": "divide(分開, 同 division) → 數位科技造成的一道裂縫",
         "synonyms": ["technology gap", "access inequality", "digital gap"],
@@ -412,6 +462,7 @@ TOPICS_A = [
     {
         "word": "user-friendly", "pos": "adj.",
         "example": "The app succeeded because its interface was genuinely user-friendly.",
+        "example_zh": "這個 App 之所以成功，是因為介面真的很好用。",
         "collocations": ["a user-friendly interface", "make it more user-friendly", "user-friendly design"],
         "root": "user(使用者) + friendly(友善) → 對使用者友善的",
         "synonyms": ["easy to use", "intuitive", "accessible", "straightforward"],
@@ -420,6 +471,7 @@ TOPICS_A = [
     {
         "word": "streamline", "pos": "v.",
         "example": "Digital forms have streamlined the whole application process.",
+        "example_zh": "數位表單簡化了整個申請流程。",
         "collocations": ["streamline the process", "streamline operations", "streamline procedures"],
         "root": "stream(水流) + line(線) → 做成水流的形狀 → 去掉阻力",
         "synonyms": ["simplify", "make more efficient", "rationalise"],
@@ -428,6 +480,7 @@ TOPICS_A = [
     {
         "word": "disrupt", "pos": "v.",
         "example": "Streaming services disrupted the film industry within a decade.",
+        "example_zh": "串流服務在十年內就顛覆了電影產業。",
         "collocations": ["disrupt an industry", "disruptive technology", "disrupt traditional retail"],
         "root": "dis-(分開) + rupt(破裂, 同 rupture/interrupt/erupt) → 把原本的樣子打破",
         "synonyms": ["upend", "transform", "shake up", "overturn"],
@@ -436,6 +489,7 @@ TOPICS_A = [
     {
         "word": "breakthrough", "pos": "n.",
         "example": "Cheap battery storage was the breakthrough that made solar power viable.",
+        "example_zh": "便宜的電池儲能是讓太陽能可行的關鍵突破。",
         "collocations": ["a major breakthrough", "a scientific breakthrough", "achieve a breakthrough"],
         "root": "break(打破) + through(穿過) → 突破一道擋牆",
         "synonyms": ["major advance", "leap forward", "milestone", "development"],
@@ -444,6 +498,7 @@ TOPICS_A = [
     {
         "word": "prototype", "pos": "n.",
         "example": "The team built a working prototype in under three months.",
+        "example_zh": "這個團隊在三個月內做出了可運作的原型。",
         "collocations": ["build a prototype", "an early prototype", "test a prototype"],
         "root": "proto(最初, 同 protocol/protagonist) + type(型) → 最初的那個型",
         "synonyms": ["model", "first version", "trial design"],
@@ -452,6 +507,7 @@ TOPICS_A = [
     {
         "word": "redundant", "pos": "adj.",
         "example": "Automation has made several checking jobs redundant.",
+        "example_zh": "自動化讓好幾個檢查性質的職位變得多餘。",
         "collocations": ["make workers redundant", "become redundant", "a redundant system"],
         "root": "red-(回) + und(波浪, 同 abundant/inundate) + -ant → 一波波多出來 → 多餘",
         "synonyms": ["unnecessary", "superfluous", "surplus", "no longer needed"],
@@ -460,6 +516,7 @@ TOPICS_A = [
     {
         "word": "connectivity", "pos": "n.",
         "example": "Poor connectivity still limits what rural schools can offer.",
+        "example_zh": "網路連線不佳仍然限制了偏鄉學校能提供的內容。",
         "collocations": ["internet connectivity", "poor connectivity", "global connectivity"],
         "root": "con-(一起) + nect(綁, 同 connect/annex) + -ivity → 綁在一起的程度",
         "synonyms": ["network access", "internet access", "linkage"],
@@ -468,6 +525,7 @@ TOPICS_A = [
     {
         "word": "reliance", "pos": "n.",
         "example": "Our reliance on a single search engine worries competition regulators.",
+        "example_zh": "我們對單一搜尋引擎的依賴讓競爭主管機關憂心。",
         "collocations": ["heavy reliance on", "growing reliance", "reduce reliance on"],
         "root": "re-(回) + li(綁, 同 rely/ligament/liable) + -ance → 把自己綁回去靠著",
         "synonyms": ["dependence", "dependency", "need for"],
@@ -476,6 +534,7 @@ TOPICS_A = [
     {
         "word": "upgrade", "pos": "v.",
         "example": "Users are pushed to upgrade their phones long before they stop working.",
+        "example_zh": "使用者常在手機還能用的時候就被推著換新機。",
         "collocations": ["upgrade a system", "upgrade to a newer model", "a free upgrade"],
         "root": "up(向上) + grade(等級, 同 gradual/degree) → 往上換一個等級",
         "synonyms": ["improve", "modernise", "update", "enhance"],
@@ -484,6 +543,7 @@ TOPICS_A = [
     {
         "word": "cutting-edge", "pos": "adj.",
         "example": "The hospital uses cutting-edge imaging equipment to detect tumours early.",
+        "example_zh": "這家醫院用最先進的影像設備及早偵測腫瘤。",
         "collocations": ["cutting-edge technology", "cutting-edge research", "at the cutting edge of"],
         "root": "cutting edge(刀刃最前緣) → 走在最前面的",
         "synonyms": ["state-of-the-art", "advanced", "leading", "pioneering"],

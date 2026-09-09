@@ -4,6 +4,7 @@ SUBLIST_10 = [
     {
         "word": "adjacent", "pos": "adj.",
         "example_ref": "The car park is adjacent to the main entrance.",
+        "example_ref_zh": "停車場緊鄰主要入口。",
         "collocations": ["adjacent to", "an adjacent building", "adjacent areas"],
         "root": "ad-(朝向) + jac(躺, 拉丁 jacere, 同 adjacent/eject) + -ent → 躺在旁邊的",
         "synonyms": ["neighbouring", "next to", "adjoining", "bordering"],
@@ -12,6 +13,7 @@ SUBLIST_10 = [
     {
         "word": "albeit", "pos": "conj.",
         "example_ref": "Sales recovered, albeit more slowly than expected.",
+        "example_ref_zh": "銷售回升了，雖然速度比預期慢。",
         "collocations": ["albeit slowly", "albeit briefly", "albeit with reservations"],
         "root": "all + be + it → 「即使它全都是這樣」縮成一個連接詞",
         "synonyms": ["although", "even though", "though"],
@@ -21,6 +23,7 @@ SUBLIST_10 = [
     {
         "word": "assemble", "pos": "v.",
         "example_ref": "Volunteers assembled outside the town hall before dawn.",
+        "example_ref_zh": "志工們在天亮前聚集在市政廳外。",
         "collocations": ["assemble a team", "assemble parts", "assemble outside"],
         "root": "as-(朝向) + simul(一起, 拉丁 simul, 同 simultaneous/similar) → 聚到一起",
         "synonyms": ["gather", "collect", "put together", "convene"],
@@ -29,6 +32,7 @@ SUBLIST_10 = [
     {
         "word": "collapse", "pos": "v./n.",
         "example_ref": "Fish stocks collapsed within a decade of the fleet's arrival.",
+        "example_ref_zh": "船隊進駐後不到十年，漁獲量就崩跌了。",
         "collocations": ["collapse completely", "the collapse of", "an economic collapse"],
         "root": "col-(一起) + laps(滑落, 拉丁 labi, 同 lapse/relapse) → 整個垮下來",
         "synonyms": ["fall apart", "break down", "crumble", "fail"],
@@ -37,6 +41,7 @@ SUBLIST_10 = [
     {
         "word": "colleague", "pos": "n.",
         "example_ref": "She published the paper with two colleagues from Berlin.",
+        "example_ref_zh": "她和兩位來自柏林的同事共同發表了這篇論文。",
         "collocations": ["a close colleague", "former colleagues", "a colleague of mine"],
         "root": "col-(一起) + leg(選派, 拉丁 legare, 同 delegate/legal) → 一起被派來做事的人",
         "synonyms": ["co-worker", "associate", "workmate", "peer"],
@@ -45,6 +50,7 @@ SUBLIST_10 = [
     {
         "word": "compile", "pos": "v.",
         "example_ref": "The team compiled data from forty separate weather stations.",
+        "example_ref_zh": "團隊彙整了四十個獨立氣象站的資料。",
         "collocations": ["compile a list", "compile data", "compile a report"],
         "root": "com-(一起) + pil(堆積, 拉丁 pilare, 同 pile/compilation) → 堆在一起整理",
         "synonyms": ["assemble", "gather", "collate", "put together"],
@@ -53,6 +59,7 @@ SUBLIST_10 = [
     {
         "word": "conceive", "pos": "v.",
         "example_ref": "The scheme was first conceived in the 1970s but never funded.",
+        "example_ref_zh": "這項計畫最早在一九七〇年代構想出來，卻從未獲得經費。",
         "collocations": ["conceive an idea", "conceive of", "originally conceived"],
         "root": "con-(完全) + ceive(拿取, 同 receive/perceive/deceive) → 在心裡孕育出來",
         "synonyms": ["imagine", "devise", "think up", "envisage"],
@@ -61,6 +68,7 @@ SUBLIST_10 = [
     {
         "word": "convince", "pos": "v.",
         "example_ref": "The evidence failed to convince the planning committee.",
+        "example_ref_zh": "這些證據沒能說服都市計畫委員會。",
         "collocations": ["convince someone that", "hard to convince", "convince the public"],
         "root": "con-(徹底) + vinc(征服, 拉丁 vincere, 同 victory/evince) → 說到對方投降",
         "synonyms": ["persuade", "satisfy", "win over", "assure"],
@@ -69,6 +77,7 @@ SUBLIST_10 = [
     {
         "word": "depress", "pos": "v.",
         "example_ref": "The recession depressed house prices for almost five years.",
+        "example_ref_zh": "經濟衰退讓房價低迷了將近五年。",
         "collocations": ["depress prices", "depress demand", "severely depress"],
         "root": "de-(向下) + press(壓) → 往下壓",
         "synonyms": ["lower", "reduce", "dampen", "weaken"],
@@ -77,6 +86,7 @@ SUBLIST_10 = [
     {
         "word": "encounter", "pos": "v./n.",
         "example_ref": "Teachers encounter the same problem in almost every large class.",
+        "example_ref_zh": "老師在幾乎每個大班級裡都會遇到同樣的問題。",
         "collocations": ["encounter a problem", "encounter difficulties", "a chance encounter"],
         "root": "en-(進入) + counter(相對, 拉丁 contra, 同 contrary/counter) → 迎面碰上",
         "synonyms": ["meet", "come across", "face", "run into"],
@@ -85,6 +95,7 @@ SUBLIST_10 = [
     {
         "word": "enormous", "pos": "adj.",
         "example_ref": "Switching to renewables requires an enormous upfront investment.",
+        "example_ref_zh": "改用再生能源需要極為龐大的前期投資。",
         "collocations": ["an enormous amount", "enormous pressure", "an enormous impact"],
         "root": "e-(超出) + norm(標準, 同 norm/normal) + -ous → 超出常規尺度的",
         "synonyms": ["huge", "immense", "vast", "massive"],
@@ -93,6 +104,7 @@ SUBLIST_10 = [
     {
         "word": "forthcoming", "pos": "adj.",
         "example_ref": "The findings will appear in a forthcoming issue of the journal.",
+        "example_ref_zh": "這些研究結果將刊登在該期刊即將出版的一期。",
         "collocations": ["a forthcoming election", "not forthcoming", "the forthcoming year"],
         "root": "forth(向前) + coming(來) → 即將出現的",
         "synonyms": ["upcoming", "imminent", "approaching", "available"],
@@ -102,6 +114,7 @@ SUBLIST_10 = [
     {
         "word": "incline", "pos": "v./n.",
         "example_ref": "Younger voters incline towards parties with stronger climate policies.",
+        "example_ref_zh": "年輕選民傾向支持氣候政策較強硬的政黨。",
         "collocations": ["incline towards", "be inclined to", "a steep incline"],
         "root": "in-(朝向) + clin(傾斜, 拉丁 clinare, 同 decline/recline/climate) → 往某邊倒",
         "synonyms": ["lean", "tend", "be disposed", "slope"],
@@ -110,6 +123,7 @@ SUBLIST_10 = [
     {
         "word": "integrity", "pos": "n.",
         "example_ref": "The integrity of the data was questioned after the audit.",
+        "example_ref_zh": "查核之後，這批資料的完整性受到質疑。",
         "collocations": ["academic integrity", "personal integrity", "the integrity of"],
         "root": "integr(完整, 同 integrate/entire/integral) + -ity → 完整不缺角 → 正直、完整性",
         "synonyms": ["honesty", "soundness", "wholeness", "uprightness"],
@@ -118,6 +132,7 @@ SUBLIST_10 = [
     {
         "word": "intrinsic", "pos": "adj.",
         "example_ref": "Curiosity is an intrinsic motivation that rewards cannot replace.",
+        "example_ref_zh": "好奇心是一種獎勵無法取代的內在動機。",
         "collocations": ["intrinsic value", "intrinsic motivation", "intrinsic to"],
         "root": "intra-(在內部, 同 internal) + secus(跟隨) → 從內部來的",
         "synonyms": ["inherent", "innate", "built-in", "essential"],
@@ -127,6 +142,7 @@ SUBLIST_10 = [
     {
         "word": "invoke", "pos": "v.",
         "example_ref": "The council invoked emergency powers to clear the site.",
+        "example_ref_zh": "市議會動用了緊急權力來清空那塊基地。",
         "collocations": ["invoke a law", "invoke powers", "invoke the principle of"],
         "root": "in-(朝向) + voc(呼叫, 同 voice/vocal/advocate) → 把某個依據叫出來用",
         "synonyms": ["cite", "call upon", "appeal to", "apply"],
@@ -135,6 +151,7 @@ SUBLIST_10 = [
     {
         "word": "levy", "pos": "v./n.",
         "example_ref": "Several cities levy a small charge on every plastic bag.",
+        "example_ref_zh": "有幾個城市對每個塑膠袋徵收少額費用。",
         "collocations": ["levy a tax", "levy a charge", "a carbon levy"],
         "root": "拉丁 levare「舉起」(同 elevate/lever/relieve) → 把錢徵收上來",
         "synonyms": ["impose", "charge", "collect", "tax"],
@@ -143,6 +160,7 @@ SUBLIST_10 = [
     {
         "word": "likewise", "pos": "adv.",
         "example_ref": "Bus use fell sharply; likewise, cycling declined in the same period.",
+        "example_ref_zh": "公車使用率大幅下滑；同樣地，同期騎自行車的人也變少了。",
         "collocations": ["likewise, ...", "do likewise", "and likewise"],
         "root": "like(相似) + wise(方式, 同 otherwise/clockwise) → 用同樣的方式",
         "synonyms": ["similarly", "in the same way", "equally", "also"],
@@ -152,6 +170,7 @@ SUBLIST_10 = [
     {
         "word": "nonetheless", "pos": "adv.",
         "example_ref": "The sample was small; nonetheless, the pattern was striking.",
+        "example_ref_zh": "樣本數很小；儘管如此，這個模式仍然相當明顯。",
         "collocations": ["nonetheless, ...", "but nonetheless", "nonetheless remains"],
         "root": "none + the + less → 一點也不因此減少 → 儘管如此",
         "synonyms": ["nevertheless", "even so", "however", "still"],
@@ -160,6 +179,7 @@ SUBLIST_10 = [
     {
         "word": "notwithstanding", "pos": "prep./adv.",
         "example_ref": "Notwithstanding the cost, the scheme went ahead as planned.",
+        "example_ref_zh": "儘管成本高昂，這項計畫仍照原訂進度推行。",
         "collocations": ["notwithstanding the fact", "notwithstanding this", "notwithstanding the cost"],
         "root": "not + withstanding(抵擋, 同 withstand) → 擋不住 → 儘管",
         "synonyms": ["despite", "in spite of", "regardless of", "even so"],
@@ -169,6 +189,7 @@ SUBLIST_10 = [
     {
         "word": "odd", "pos": "adj.",
         "example_ref": "It seems odd that the busiest station has the fewest staff.",
+        "example_ref_zh": "最繁忙的車站人力卻最少，這件事看起來很奇怪。",
         "collocations": ["an odd choice", "odd numbers", "the odd occasion"],
         "root": "古北歐語 oddi「三角形的尖端、單數」→ 落單的 → 奇怪的",
         "synonyms": ["strange", "peculiar", "unusual", "curious"],
@@ -177,6 +198,7 @@ SUBLIST_10 = [
     {
         "word": "ongoing", "pos": "adj.",
         "example_ref": "The investigation is ongoing and no conclusions have been published.",
+        "example_ref_zh": "調查仍在進行中，尚未公布任何結論。",
         "collocations": ["an ongoing debate", "ongoing research", "ongoing support"],
         "root": "on(持續) + going(進行) → 還在進行中的",
         "synonyms": ["continuing", "current", "in progress", "unfinished"],
@@ -185,6 +207,7 @@ SUBLIST_10 = [
     {
         "word": "panel", "pos": "n.",
         "example_ref": "An independent panel reviewed all forty applications.",
+        "example_ref_zh": "一個獨立的評審小組審查了全部四十份申請。",
         "collocations": ["an expert panel", "a panel of judges", "a solar panel"],
         "root": "拉丁 pannus「布片」(同 pane/pannier) → 一小片；引申為一小組人",
         "synonyms": ["board", "committee", "jury", "board section"],
@@ -193,6 +216,7 @@ SUBLIST_10 = [
     {
         "word": "persist", "pos": "v.",
         "example_ref": "The shortage of nurses persists despite higher salaries.",
+        "example_ref_zh": "即使薪資提高，護理人力短缺的問題依然持續。",
         "collocations": ["persist in", "problems persist", "persist despite"],
         "root": "per-(徹底) + sist(站立, 同 assist/resist/consist) → 一直站著不倒",
         "synonyms": ["continue", "remain", "endure", "carry on"],
@@ -201,6 +225,7 @@ SUBLIST_10 = [
     {
         "word": "reluctance", "pos": "n.",
         "example_ref": "There is real reluctance among drivers to give up their cars.",
+        "example_ref_zh": "駕駛人確實很不情願放棄自己的車。",
         "collocations": ["reluctance to", "with some reluctance", "widespread reluctance"],
         "root": "re-(往回) + luct(掙扎, 拉丁 luctari, 同 reluctant) + -ance → 心裡往回掙 → 不情願",
         "synonyms": ["unwillingness", "hesitation", "resistance", "disinclination"],
@@ -209,6 +234,7 @@ SUBLIST_10 = [
     {
         "word": "so-called", "pos": "adj.",
         "example_ref": "The so-called smart motorway has done little to reduce delays.",
+        "example_ref_zh": "所謂的智慧型高速公路，其實幾乎沒有減少壅塞。",
         "collocations": ["the so-called experts", "a so-called solution", "so-called reform"],
         "root": "so(如此) + called(被稱為) → 「別人是這樣叫它啦」→ 帶質疑的語氣",
         "synonyms": ["supposed", "alleged", "self-styled", "purported"],
@@ -218,6 +244,7 @@ SUBLIST_10 = [
     {
         "word": "straightforward", "pos": "adj.",
         "example_ref": "The application process is straightforward and takes ten minutes.",
+        "example_ref_zh": "申請流程很簡單明瞭，十分鐘就能完成。",
         "collocations": ["a straightforward process", "fairly straightforward", "a straightforward answer"],
         "root": "straight(直) + forward(向前) → 一直往前、不繞彎",
         "synonyms": ["simple", "uncomplicated", "clear", "direct"],
@@ -226,6 +253,7 @@ SUBLIST_10 = [
     {
         "word": "undergo", "pos": "v.",
         "example_ref": "The city centre has undergone a complete transformation since 2010.",
+        "example_ref_zh": "市中心自二〇一〇年以來歷經了徹底的轉變。",
         "collocations": ["undergo change", "undergo treatment", "undergo a transformation"],
         "root": "under(在下面) + go(走) → 從底下走過去 → 經歷",
         "synonyms": ["experience", "go through", "endure", "be subjected to"],
@@ -235,6 +263,7 @@ SUBLIST_10 = [
     {
         "word": "whereby", "pos": "adv.",
         "example_ref": "The council introduced a scheme whereby residents park for free.",
+        "example_ref_zh": "市議會推出了一項讓居民免費停車的方案。",
         "collocations": ["a system whereby", "an arrangement whereby", "a scheme whereby"],
         "root": "where(哪裡) + by(藉由) → 藉由那個方式",
         "synonyms": ["by which", "through which", "by means of which"],

@@ -49,6 +49,9 @@ def back_lines(card: Card, *, show_zh: bool = False) -> list[str]:
         lines.append(_row("筆記", card.notes))
     if show_zh and card.zh_hint:
         lines.append(_row("中文", card.zh_hint))
+    # 句譯只跟著上面那一句例句走 —— 翻譯配錯句子比沒有翻譯更糟
+    if show_zh and card.example_sentence and card.example_zh:
+        lines.append(_row("句譯", card.example_zh))
     if not lines:
         lines.append("（這張卡還沒有內容，用 `ielts complete` 補完）")
     return lines
@@ -61,12 +64,17 @@ def spelling_prompt_lines(card: Card, *, show_zh: bool = True) -> list[str]:
     """
     lines: list[str] = []
     sentence = card.example_sentence or card.example_ref
+    # 句譯要跟著上面那一句走，不能拿參考例句的翻譯去配自己寫的句子
+    sentence_zh = card.example_zh if card.example_sentence else card.example_ref_zh
     masked, hits = mask_sentence(sentence, card.word)
     if sentence and hits:
         lines.append(_row("例句", masked))
     elif sentence:
         # 例句裡找不到目標字（可能是變化形太特殊）→ 不顯示，以免直接洩題
         lines.append(_row("例句", "（例句含目標字原形，先不顯示）"))
+    # 中譯不會洩漏拼法，但能補回挖空之後失去的語境
+    if show_zh and sentence and hits and sentence_zh:
+        lines.append(_row("句譯", sentence_zh))
     if show_zh and card.zh_hint:
         lines.append(_row("中文", card.zh_hint))
     if card.pos:

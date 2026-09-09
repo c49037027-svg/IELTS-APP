@@ -10,6 +10,7 @@ SPEAKING = [
     {
         "word": "from my perspective", "pos": "phr.",
         "example": "From my perspective, the benefits clearly outweigh the drawbacks.",
+        "example_zh": "從我的角度來看，好處明顯多過壞處。",
         "collocations": ["from my perspective", "from a student's perspective", "from that perspective"],
         "root": "per-(透過) + spect(看, 同 inspect/spectator) → 透過我的角度看出去",
         "synonyms": ["in my view", "as I see it", "personally", "the way I see it"],
@@ -19,6 +20,7 @@ SPEAKING = [
     {
         "word": "it goes without saying", "pos": "phr.",
         "example": "It goes without saying that access to clean water is a basic right.",
+        "example_zh": "不用說，能取得乾淨的水是基本權利。",
         "collocations": ["it goes without saying that", "it almost goes without saying"],
         "root": "「不用講出來就成立」→ 用來引出理所當然的前提",
         "synonyms": ["obviously", "needless to say", "it is clear that"],
@@ -27,6 +29,7 @@ SPEAKING = [
     {
         "word": "to be honest", "pos": "phr.",
         "example": "To be honest, I had never really thought about that until now.",
+        "example_zh": "老實說，我在此之前從來沒認真想過這件事。",
         "collocations": ["to be honest with you", "to be perfectly honest"],
         "root": "honest(誠實, 拉丁 honos 榮譽) → 把話講白",
         "synonyms": ["frankly", "honestly speaking", "to tell the truth"],
@@ -35,6 +38,7 @@ SPEAKING = [
     {
         "word": "I'd argue that", "pos": "phr.",
         "example": "I'd argue that smaller class sizes matter more than new equipment.",
+        "example_zh": "我會說，小班制比新設備更重要。",
         "collocations": ["I'd argue that", "I would argue the opposite", "some would argue"],
         "root": "argu(使清楚, 拉丁 arguere 證明) → 把自己的理由攤開講",
         "synonyms": ["I would say that", "in my opinion", "my view is that"],
@@ -43,6 +47,7 @@ SPEAKING = [
     {
         "word": "it depends on", "pos": "phr.",
         "example": "It depends on whether the city already has decent public transport.",
+        "example_zh": "這要看那個城市原本有沒有像樣的大眾運輸。",
         "collocations": ["it depends on the context", "it really depends", "that depends on"],
         "root": "de-(向下) + pend(懸掛, 同 pendant/suspend) → 掛在某個條件底下",
         "synonyms": ["it varies according to", "it hinges on", "that's determined by"],
@@ -52,6 +57,7 @@ SPEAKING = [
     {
         "word": "have mixed feelings about", "pos": "phr.",
         "example": "I have mixed feelings about working from home permanently.",
+        "example_zh": "對於永久在家工作，我的感受很複雜。",
         "collocations": ["have mixed feelings about", "mixed feelings on the subject"],
         "root": "mixed(混合的) + feelings → 心裡兩種感覺混在一起",
         "synonyms": ["be in two minds about", "be torn about", "feel ambivalent"],
@@ -62,6 +68,7 @@ SPEAKING = [
     {
         "word": "be hooked on", "pos": "phr.",
         "example": "I got completely hooked on documentaries during the lockdown.",
+        "example_zh": "封城期間我完全迷上了紀錄片。",
         "collocations": ["be hooked on a series", "get hooked on", "totally hooked"],
         "root": "hook(鉤子) → 被鉤住放不掉",
         "synonyms": ["be addicted to", "be really into", "can't get enough of"],
@@ -70,6 +77,7 @@ SPEAKING = [
     {
         "word": "have a knack for", "pos": "phr.",
         "example": "My sister has a real knack for picking up new languages.",
+        "example_zh": "我妹妹很有學新語言的天分。",
         "collocations": ["have a knack for", "a real knack for", "lose the knack"],
         "root": "knack 原意「巧妙的手法」→ 不用學就會的那種本事",
         "synonyms": ["have a talent for", "be good at", "have a gift for"],
@@ -78,6 +86,7 @@ SPEAKING = [
     {
         "word": "get the hang of", "pos": "phr.",
         "example": "It took me a few weeks to get the hang of cooking for myself.",
+        "example_zh": "我花了幾個星期才抓到自己煮飯的訣竅。",
         "collocations": ["get the hang of it", "once you get the hang of"],
         "root": "hang(懸掛的方式) → 摸清楚東西該怎麼掛 → 抓到訣竅",
         "synonyms": ["get used to", "master", "pick up", "work out how to"],
@@ -86,6 +95,7 @@ SPEAKING = [
     {
         "word": "broaden one's horizons", "pos": "phr.",
         "example": "Studying abroad really broadened my horizons in ways I did not expect.",
+        "example_zh": "出國唸書真的以我沒料到的方式開闊了我的視野。",
         "collocations": ["broaden your horizons", "travel broadens the horizons"],
         "root": "horizon(地平線, 希臘 horizein 劃界) → 把看得到的界線往外推",
         "synonyms": ["widen your outlook", "open your mind", "expand your world view"],
@@ -94,6 +104,7 @@ SPEAKING = [
     {
         "word": "look back on", "pos": "phr v.",
         "example": "Looking back on my school years, I wish I had joined more clubs.",
+        "example_zh": "回頭看學生時代，我希望自己當初多參加一些社團。",
         "collocations": ["look back on my school days", "looking back on it now"],
         "root": "look + back + on → 回頭去看那段時間",
         "synonyms": ["reflect on", "recall", "think back to"],
@@ -103,6 +114,7 @@ SPEAKING = [
     {
         "word": "stand out", "pos": "phr v.",
         "example": "One trip in particular stands out because it was my first time abroad.",
+        "example_zh": "有一趟旅行特別難忘，因為那是我第一次出國。",
         "collocations": ["stand out from the crowd", "really stands out", "stand out as"],
         "root": "stand + out → 從一排東西裡站出來被看見",
         "synonyms": ["be memorable", "be noticeable", "be distinctive"],
@@ -111,6 +123,7 @@ SPEAKING = [
     {
         "word": "be worn out", "pos": "phr.",
         "example": "I was completely worn out after two hours of commuting each way.",
+        "example_zh": "每天來回通勤兩小時，我整個人累垮了。",
         "collocations": ["be worn out after", "completely worn out", "feel worn out"],
         "root": "wear(磨損) + out → 被磨到光了",
         "synonyms": ["be exhausted", "be drained", "be shattered"],
@@ -119,6 +132,7 @@ SPEAKING = [
     {
         "word": "unwind", "pos": "v.",
         "example": "Cooking is how I unwind after a long day at university.",
+        "example_zh": "大學忙了一整天之後，煮飯是我放鬆的方式。",
         "collocations": ["unwind after work", "a good way to unwind", "help me unwind"],
         "root": "un-(解開) + wind(纏繞, 同 winding 蜿蜒) → 把纏緊的線鬆開",
         "synonyms": ["relax", "wind down", "switch off", "de-stress"],
@@ -127,6 +141,7 @@ SPEAKING = [
     {
         "word": "procrastinate", "pos": "v.",
         "example": "I tend to procrastinate whenever a deadline feels far away.",
+        "example_zh": "只要期限感覺還很遠，我就容易拖延。",
         "collocations": ["tend to procrastinate", "stop procrastinating", "procrastinate over"],
         "root": "pro-(向前) + cras(明天, 拉丁 cras) + -ate → 一直往明天推",
         "synonyms": ["put things off", "delay", "stall", "drag your feet"],
@@ -137,6 +152,7 @@ SPEAKING = [
     {
         "word": "off the top of my head", "pos": "phr.",
         "example": "Off the top of my head, I'd say around half of my friends cycle to work.",
+        "example_zh": "我一時想到的是，大概有一半的朋友騎車上班。",
         "collocations": ["off the top of my head", "just off the top of my head"],
         "root": "從腦袋最上層直接抓 → 沒細想就講",
         "synonyms": ["without thinking too hard", "at a rough guess", "spontaneously"],
@@ -146,6 +162,7 @@ SPEAKING = [
     {
         "word": "now that I think about it", "pos": "phr.",
         "example": "Now that I think about it, my hometown has changed enormously.",
+        "example_zh": "現在想想，我的家鄉變化真的很大。",
         "collocations": ["now that I think about it", "come to think of it"],
         "root": "把「我正在想」這件事講出來 → 自然地買到幾秒鐘",
         "synonyms": ["come to think of it", "actually", "on reflection"],
@@ -154,6 +171,7 @@ SPEAKING = [
     {
         "word": "that's a tough one", "pos": "phr.",
         "example": "That's a tough one, but I suppose safety would matter most to me.",
+        "example_zh": "這個問題不好答，不過我想安全對我來說最重要。",
         "collocations": ["that's a tough one", "that's a tricky question"],
         "root": "tough(硬的、難啃的) → 這題不好答",
         "synonyms": ["that's a difficult question", "I've never thought about that"],
@@ -163,6 +181,7 @@ SPEAKING = [
     {
         "word": "how can I put this", "pos": "phr.",
         "example": "How can I put this — the service was efficient but not exactly friendly.",
+        "example_zh": "我該怎麼說呢 —— 服務很有效率，但稱不上親切。",
         "collocations": ["how can I put this", "how should I put it"],
         "root": "put(放置、表達) → 「我該怎麼把這件事放成話」",
         "synonyms": ["how shall I say it", "let me put it this way"],
@@ -173,6 +192,7 @@ SPEAKING = [
     {
         "word": "more often than not", "pos": "phr.",
         "example": "More often than not, I end up studying in a café rather than at home.",
+        "example_zh": "多數時候，我最後都是在咖啡店唸書而不是在家。",
         "collocations": ["more often than not", "more often than not it's"],
         "root": "「是的次數多過不是的次數」→ 通常",
         "synonyms": ["usually", "in most cases", "generally", "as a rule"],
@@ -181,6 +201,7 @@ SPEAKING = [
     {
         "word": "every now and then", "pos": "phr.",
         "example": "I still go back to my old neighbourhood every now and then.",
+        "example_zh": "我到現在還是偶爾會回去以前住的社區。",
         "collocations": ["every now and then", "only every now and then"],
         "root": "一下 now 一下 then → 不規律地偶爾發生",
         "synonyms": ["occasionally", "from time to time", "once in a while"],
@@ -189,6 +210,7 @@ SPEAKING = [
     {
         "word": "to some extent", "pos": "phr.",
         "example": "To some extent I agree, though I think cost is the bigger issue.",
+        "example_zh": "我某種程度上同意，不過我認為成本才是更大的問題。",
         "collocations": ["to some extent", "to a large extent", "to a certain extent"],
         "root": "ex-(向外) + tend(伸展, 同 extend/tension) → 伸展到某個程度",
         "synonyms": ["partly", "up to a point", "in some ways"],
@@ -198,6 +220,7 @@ SPEAKING = [
     {
         "word": "by and large", "pos": "phr.",
         "example": "By and large, people in my city are happy with the transport system.",
+        "example_zh": "整體來說，我住的城市的人對交通系統還算滿意。",
         "collocations": ["by and large", "by and large, most people"],
         "root": "航海術語：by(順風) 與 large(側風) 兩種情況都算 → 大致上",
         "synonyms": ["generally", "on the whole", "for the most part"],
@@ -206,6 +229,7 @@ SPEAKING = [
     {
         "word": "hands down", "pos": "phr.",
         "example": "Public transport is hands down the cheapest way to get around here.",
+        "example_zh": "大眾運輸絕對是這裡最便宜的移動方式。",
         "collocations": ["hands down the best", "win hands down"],
         "root": "賽馬領先太多，騎師可以放下韁繩 → 毫無懸念",
         "synonyms": ["without question", "by far", "undoubtedly"],
@@ -216,6 +240,7 @@ SPEAKING = [
     {
         "word": "take its toll", "pos": "phr.",
         "example": "Long working hours take a heavy toll on people's mental health.",
+        "example_zh": "長工時對人的心理健康造成很大的損害。",
         "collocations": ["take its toll on", "take a heavy toll", "take a toll on health"],
         "root": "toll 原指過路費 → 走這條路要付出的代價",
         "synonyms": ["damage", "wear down", "have a negative effect on", "harm"],
@@ -225,6 +250,7 @@ SPEAKING = [
     {
         "word": "bridge the gap", "pos": "phr.",
         "example": "Online courses can help bridge the gap between rural and urban students.",
+        "example_zh": "線上課程有助於彌合城鄉學生之間的差距。",
         "collocations": ["bridge the gap between", "help bridge the gap", "bridge the digital gap"],
         "root": "bridge(橋) 當動詞 → 在落差上架一座橋",
         "synonyms": ["close the gap", "narrow the divide", "reconcile"],
@@ -233,6 +259,7 @@ SPEAKING = [
     {
         "word": "double-edged sword", "pos": "n. phr.",
         "example": "Social media is a double-edged sword: it connects people but also spreads rumours.",
+        "example_zh": "社群媒體是一把雙面刃：它連結人群，卻也散播謠言。",
         "collocations": ["prove to be a double-edged sword", "a double-edged sword for", "cut both ways"],
         "root": "double-edged(雙刃) → 揮出去兩邊都會割到 → 有利也有弊",
         "synonyms": ["a mixed blessing", "a trade-off", "a two-sided issue"],
@@ -242,6 +269,7 @@ SPEAKING = [
     {
         "word": "a game changer", "pos": "n. phr.",
         "example": "Cheap solar panels have been a game changer for rural communities.",
+        "example_zh": "便宜的太陽能板對農村社區來說是關鍵性的改變。",
         "collocations": ["be a game changer", "a real game changer", "prove to be a game changer"],
         "root": "把比賽規則改掉的東西 → 徹底改變局面",
         "synonyms": ["a turning point", "a breakthrough", "a major shift"],
@@ -250,6 +278,7 @@ SPEAKING = [
     {
         "word": "a blessing in disguise", "pos": "n. phr.",
         "example": "Missing that job turned out to be a blessing in disguise.",
+        "example_zh": "沒拿到那份工作，結果反而是因禍得福。",
         "collocations": ["turn out to be a blessing in disguise", "prove a blessing in disguise"],
         "root": "disguise(偽裝) → 好事偽裝成壞事來",
         "synonyms": ["a hidden benefit", "a silver lining", "good news in the end"],
@@ -258,6 +287,7 @@ SPEAKING = [
     {
         "word": "weigh up", "pos": "phr v.",
         "example": "You have to weigh up the cost against the time you would save.",
+        "example_zh": "你得把成本跟省下來的時間放在一起衡量。",
         "collocations": ["weigh up the pros and cons", "weigh up the options", "weigh up carefully"],
         "root": "weigh(秤重) + up → 兩邊放上秤來比",
         "synonyms": ["consider", "compare", "assess", "balance"],
@@ -266,6 +296,7 @@ SPEAKING = [
     {
         "word": "make a difference", "pos": "phr.",
         "example": "Even small changes at home can make a real difference over time.",
+        "example_zh": "就算是家裡的小改變，長期下來也真的會有影響。",
         "collocations": ["make a real difference", "make a big difference", "make all the difference"],
         "root": "differ(分開, 同 differ/defer) → 造出一個差別來",
         "synonyms": ["have an impact", "count", "matter", "be significant"],
@@ -274,6 +305,7 @@ SPEAKING = [
     {
         "word": "play a key role", "pos": "phr.",
         "example": "Teachers play a key role in whether students enjoy reading at all.",
+        "example_zh": "學生會不會喜歡閱讀，老師扮演關鍵角色。",
         "collocations": ["play a key role in", "play a major role", "play a part in"],
         "root": "role 原指演員台詞捲軸 → 在這件事裡演的角色",
         "synonyms": ["be central to", "be crucial in", "contribute significantly"],
@@ -284,6 +316,7 @@ SPEAKING = [
     {
         "word": "come down to", "pos": "phr v.",
         "example": "In the end it comes down to whether people can afford the fares.",
+        "example_zh": "說到底，關鍵在於人們負不負擔得起車資。",
         "collocations": ["it comes down to", "ultimately comes down to", "come down to money"],
         "root": "一路降下來，最後落在那一件事上",
         "synonyms": ["boil down to", "be a question of", "hinge on"],
@@ -292,6 +325,7 @@ SPEAKING = [
     {
         "word": "the bottom line", "pos": "n. phr.",
         "example": "The bottom line is that most people simply do not have the time.",
+        "example_zh": "重點是，大多數人根本沒有那個時間。",
         "collocations": ["the bottom line is that", "the bottom line for me"],
         "root": "財報最底下那一行結論 → 最關鍵的一點",
         "synonyms": ["the key point", "what it really comes down to", "the essential point"],
@@ -300,6 +334,7 @@ SPEAKING = [
     {
         "word": "in the long run", "pos": "phr.",
         "example": "Cycling to work is cheaper and healthier in the long run.",
+        "example_zh": "長遠來看，騎車上班既便宜又健康。",
         "collocations": ["in the long run", "pay off in the long run", "better in the long run"],
         "root": "run(一段路程) → 跑很長一段之後來看",
         "synonyms": ["in the long term", "over time", "eventually", "ultimately"],
@@ -308,6 +343,7 @@ SPEAKING = [
     {
         "word": "be better off", "pos": "phr.",
         "example": "Most families would be better off if childcare were subsidised.",
+        "example_zh": "如果育兒有補助，大多數家庭會過得更好。",
         "collocations": ["be better off", "financially better off", "we'd be better off"],
         "root": "off 指「處境」（如 well off 有錢）→ 處在更好的位置",
         "synonyms": ["be in a better position", "benefit more", "gain from it"],

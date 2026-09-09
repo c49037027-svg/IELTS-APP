@@ -12,7 +12,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Iterator
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 DEFAULT_DB_NAME = "ielts.db"
 
 #: SRS 排程軌道。認讀 / 拼字 / 同義詞是三種不同能力，各自獨立排程。
@@ -40,7 +40,9 @@ CREATE TABLE IF NOT EXISTS cards (
     word             TEXT NOT NULL,
     pos              TEXT NOT NULL DEFAULT '',
     example_sentence TEXT NOT NULL DEFAULT '',
+    example_zh       TEXT NOT NULL DEFAULT '',
     example_ref      TEXT NOT NULL DEFAULT '',
+    example_ref_zh   TEXT NOT NULL DEFAULT '',
     collocations     TEXT NOT NULL DEFAULT '',
     root_analysis    TEXT NOT NULL DEFAULT '',
     synonyms         TEXT NOT NULL DEFAULT '',
@@ -155,6 +157,14 @@ def _migrate(conn: sqlite3.Connection, from_version: int) -> None:
             conn.execute(
                 "ALTER TABLE cards ADD COLUMN example_ref TEXT NOT NULL DEFAULT ''"
             )
+    if from_version < 3:
+        # v3：例句與參考例句各自帶自己的中譯，兩兩成對
+        columns = {r["name"] for r in conn.execute("PRAGMA table_info(cards)")}
+        for column in ("example_zh", "example_ref_zh"):
+            if column not in columns:
+                conn.execute(
+                    f"ALTER TABLE cards ADD COLUMN {column} TEXT NOT NULL DEFAULT ''"
+                )
 
 
 def get_schema_version(conn: sqlite3.Connection) -> int:

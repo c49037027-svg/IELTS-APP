@@ -104,14 +104,16 @@ def add_card(conn: sqlite3.Connection, card: Card, today: date | None = None) ->
     stamp = now_iso()
     cur = conn.execute(
         """
-        INSERT INTO cards (word, pos, example_sentence, example_ref, collocations,
+        INSERT INTO cards (word, pos, example_sentence, example_zh,
+                           example_ref, example_ref_zh, collocations,
                            root_analysis, synonyms, category, topic, card_type,
                            zh_hint, notes,
                            is_incomplete, missing_fields, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
-            card.word, card.pos, card.example_sentence, card.example_ref,
+            card.word, card.pos, card.example_sentence, card.example_zh,
+            card.example_ref, card.example_ref_zh,
             card.collocations, card.root_analysis, card.synonyms, card.category,
             card.topic, card.card_type, card.zh_hint, card.notes, incomplete, missing,
             stamp, stamp,

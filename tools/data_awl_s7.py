@@ -5,6 +5,7 @@ SUBLIST_7 = [
     {
         "word": "adapt", "pos": "v.",
         "example_ref": "Coastal towns are having to adapt to more frequent flooding.",
+        "example_ref_zh": "沿海城鎮不得不適應愈來愈頻繁的淹水。",
         "collocations": ["adapt to", "adapt quickly", "adapt a text"],
         "root": "ad-(朝向) + apt(適合, 同 apt/aptitude) → 調整成適合的樣子",
         "synonyms": ["adjust", "modify", "acclimatise", "tailor"],
@@ -13,6 +14,7 @@ SUBLIST_7 = [
     {
         "word": "adult", "pos": "n./adj.",
         "example_ref": "Adult literacy classes are held three evenings a week.",
+        "example_ref_zh": "成人識字班每週有三個晚上開課。",
         "collocations": ["adult education", "young adults", "adult literacy"],
         "root": "ad-(朝向) + ult(成長, 拉丁 alere 養育, 同 adolescent) → 已經長成的",
         "synonyms": ["grown-up", "mature", "of age"],
@@ -21,6 +23,7 @@ SUBLIST_7 = [
     {
         "word": "aid", "pos": "n./v.",
         "example_ref": "Foreign aid accounts for less than one per cent of the national budget.",
+        "example_ref_zh": "外援佔國家預算不到百分之一。",
         "collocations": ["foreign aid", "financial aid", "aid workers"],
         "root": "拉丁 adiutare「幫助」(同 adjutant/aide) → 幫忙",
         "synonyms": ["help", "assistance", "support", "relief"],
@@ -29,6 +32,7 @@ SUBLIST_7 = [
     {
         "word": "channel", "pos": "n./v.",
         "example_ref": "The government channelled most of the funding into rural clinics.",
+        "example_ref_zh": "政府把大部分經費導向偏鄉診所。",
         "collocations": ["channel funds", "a distribution channel", "channel resources into"],
         "root": "拉丁 canalis「水道」(同 canal/channel) → 讓東西流過去的通道",
         "synonyms": ["direct", "route", "conduit", "medium"],
@@ -37,6 +41,7 @@ SUBLIST_7 = [
     {
         "word": "chemical", "pos": "adj./n.",
         "example_ref": "Chemical fertilisers have raised yields but damaged the soil.",
+        "example_ref_zh": "化學肥料提高了產量，卻損害了土壤。",
         "collocations": ["chemical fertilisers", "chemical reaction", "toxic chemicals"],
         "root": "chem(煉金術, 阿拉伯 al-kimiya) + -ical → 關於物質變化的",
         "synonyms": ["synthetic", "artificial", "compound", "substance"],
@@ -45,6 +50,7 @@ SUBLIST_7 = [
     {
         "word": "classic", "pos": "adj./n.",
         "example_ref": "The city is a classic example of unplanned urban sprawl.",
+        "example_ref_zh": "這座城市是未經規劃的都市蔓延的典型案例。",
         "collocations": ["a classic example", "a classic case", "a modern classic"],
         "root": "拉丁 classicus「第一等的」(同 class/classify) → 屬於最高等級的",
         "synonyms": ["typical", "definitive", "model", "textbook"],
@@ -54,6 +60,7 @@ SUBLIST_7 = [
     {
         "word": "comprehensive", "pos": "adj.",
         "example_ref": "The council published a comprehensive plan covering housing, transport and parks.",
+        "example_ref_zh": "議會公布了一份涵蓋住宅、交通與公園的全面計畫。",
         "collocations": ["a comprehensive review", "a comprehensive plan", "comprehensive coverage"],
         "root": "com-(一起) + prehend(抓住, 同 comprehend/apprehend) + -ive → 全部抓進來的",
         "synonyms": ["thorough", "complete", "all-inclusive", "wide-ranging"],
@@ -62,6 +69,7 @@ SUBLIST_7 = [
     {
         "word": "comprise", "pos": "v.",
         "example_ref": "Women comprise nearly two-thirds of the teaching workforce.",
+        "example_ref_zh": "女性佔了教職人力的將近三分之二。",
         "collocations": ["comprise of", "largely comprise", "comprise the majority"],
         "root": "com-(一起) + pris(抓住, 同 prison/surprise/enterprise) → 抓在一起構成",
         "synonyms": ["make up", "consist of", "constitute", "form"],
@@ -71,6 +79,7 @@ SUBLIST_7 = [
     {
         "word": "confirm", "pos": "v.",
         "example_ref": "Later studies confirmed the link between diet and heart disease.",
+        "example_ref_zh": "後續研究證實了飲食與心臟病之間的關聯。",
         "collocations": ["confirm a finding", "confirm that", "later confirmed"],
         "root": "con-(徹底) + firm(堅固, 同 firm/affirm) → 使變得確定",
         "synonyms": ["verify", "corroborate", "support", "substantiate"],
@@ -79,6 +88,7 @@ SUBLIST_7 = [
     {
         "word": "contrary", "pos": "adj./n.",
         "example_ref": "Contrary to expectations, cycling increased after the fare cut.",
+        "example_ref_zh": "與預期相反，降價之後騎單車的人反而變多。",
         "collocations": ["contrary to", "on the contrary", "the contrary view"],
         "root": "contra-(相反, 同 contrast/contradict) + -ary → 方向相反的",
         "synonyms": ["opposite", "conflicting", "opposed", "reverse"],
@@ -88,6 +98,7 @@ SUBLIST_7 = [
     {
         "word": "convert", "pos": "v.",
         "example_ref": "Several factories were converted into flats during the 1990s.",
+        "example_ref_zh": "好幾間工廠在 1990 年代被改建成公寓。",
         "collocations": ["convert into", "convert to", "convert a building"],
         "root": "con-(完全) + vert(轉, 同 reverse/version/divert) → 整個轉成另一種",
         "synonyms": ["change", "transform", "adapt", "turn"],
@@ -96,6 +107,7 @@ SUBLIST_7 = [
     {
         "word": "couple", "pos": "n./v.",
         "example_ref": "Rising rents, coupled with stagnant wages, forced families out of the city.",
+        "example_ref_zh": "房租上漲加上薪資停滯，把家庭逼出了城市。",
         "collocations": ["coupled with", "a couple of", "a young couple"],
         "root": "拉丁 copula「連結」(同 copulate/couple) → 把兩個綁在一起",
         "synonyms": ["pair", "combine", "link", "join"],
@@ -105,6 +117,7 @@ SUBLIST_7 = [
     {
         "word": "decade", "pos": "n.",
         "example_ref": "Car ownership has doubled over the past decade.",
+        "example_ref_zh": "過去十年間，汽車持有率增加了一倍。",
         "collocations": ["over the past decade", "the previous decade", "for decades"],
         "root": "希臘 deka「十」(同 decimal/December) → 十年",
         "synonyms": ["ten years", "ten-year period"],
@@ -114,6 +127,7 @@ SUBLIST_7 = [
     {
         "word": "definite", "pos": "adj.",
         "example_ref": "There is a definite link between overcrowding and poor exam results.",
+        "example_ref_zh": "過度擁擠與考試成績不佳之間有明確的關聯。",
         "collocations": ["a definite answer", "a definite improvement", "nothing definite"],
         "root": "de-(徹底) + fin(界線, 同 finish/define/final) + -ite → 界線劃清楚的",
         "synonyms": ["clear", "certain", "unmistakable", "firm"],
@@ -122,6 +136,7 @@ SUBLIST_7 = [
     {
         "word": "deny", "pos": "v.",
         "example_ref": "The company denied that it had known about the contamination.",
+        "example_ref_zh": "該公司否認事先知情污染的事。",
         "collocations": ["deny that", "flatly deny", "deny access"],
         "root": "de-(否定) + ny(說, 拉丁 negare, 同 negative/renegade) → 說不是",
         "synonyms": ["reject", "refute", "dispute", "contradict"],
@@ -130,6 +145,7 @@ SUBLIST_7 = [
     {
         "word": "differentiate", "pos": "v.",
         "example_ref": "The test cannot differentiate between the two strains of the virus.",
+        "example_ref_zh": "這項檢測無法區分這兩種病毒株。",
         "collocations": ["differentiate between", "differentiate from", "clearly differentiate"],
         "root": "differ(不同) + -ent + -iate → 指出不同之處",
         "synonyms": ["distinguish", "tell apart", "discriminate", "separate"],
@@ -138,6 +154,7 @@ SUBLIST_7 = [
     {
         "word": "dispose", "pos": "v.",
         "example_ref": "Households must dispose of batteries at designated collection points.",
+        "example_ref_zh": "家庭必須把電池丟到指定的回收點。",
         "collocations": ["dispose of", "safely dispose", "disposable income"],
         "root": "dis-(分開) + pos(放置, 同 position/compose/impose) → 分開放好 → 處理掉",
         "synonyms": ["get rid of", "discard", "throw away", "arrange"],
@@ -147,6 +164,7 @@ SUBLIST_7 = [
     {
         "word": "dynamic", "pos": "adj./n.",
         "example_ref": "The dynamic between central and local government has shifted.",
+        "example_ref_zh": "中央與地方政府之間的互動關係已經改變。",
         "collocations": ["a dynamic economy", "group dynamics", "highly dynamic"],
         "root": "希臘 dynamis「力量」(同 dynamite/dynasty) → 有力量在動的",
         "synonyms": ["energetic", "active", "changing", "vigorous"],
@@ -155,6 +173,7 @@ SUBLIST_7 = [
     {
         "word": "eliminate", "pos": "v.",
         "example_ref": "Better street lighting did not eliminate crime, but it did reduce it.",
+        "example_ref_zh": "改善路燈沒有消滅犯罪，但確實減少了犯罪。",
         "collocations": ["eliminate the need for", "completely eliminate", "eliminate waste"],
         "root": "e-(向外) + limin(門檻, 拉丁 limen, 同 preliminary/subliminal) → 趕出門檻外",
         "synonyms": ["remove", "get rid of", "eradicate", "abolish"],
@@ -163,6 +182,7 @@ SUBLIST_7 = [
     {
         "word": "empirical", "pos": "adj.",
         "example_ref": "There is little empirical evidence that the policy reduced accidents.",
+        "example_ref_zh": "幾乎沒有實證證據顯示這項政策減少了事故。",
         "collocations": ["empirical evidence", "empirical research", "empirical data"],
         "root": "希臘 empeiria「經驗」(同 experience/expert) + -ical → 靠實際觀察來的",
         "synonyms": ["observed", "experimental", "factual", "evidence-based"],
@@ -172,6 +192,7 @@ SUBLIST_7 = [
     {
         "word": "equip", "pos": "v.",
         "example_ref": "Schools were equipped with laptops but not with trained staff.",
+        "example_ref_zh": "學校配備了筆電，卻沒有受過訓練的師資。",
         "collocations": ["be equipped with", "well equipped", "equip someone for"],
         "root": "古法語 esquiper「裝備船隻」→ 配齊需要的東西",
         "synonyms": ["supply", "provide", "furnish", "kit out"],
@@ -180,6 +201,7 @@ SUBLIST_7 = [
     {
         "word": "extract", "pos": "v./n.",
         "example_ref": "Companies extract groundwater faster than the aquifer can refill.",
+        "example_ref_zh": "企業抽取地下水的速度超過含水層補注的速度。",
         "collocations": ["extract information", "extract minerals", "an extract from"],
         "root": "ex-(向外) + tract(拉, 同 attract/contract/tractor) → 拉出來",
         "synonyms": ["remove", "draw out", "obtain", "excerpt"],
@@ -188,6 +210,7 @@ SUBLIST_7 = [
     {
         "word": "file", "pos": "n./v.",
         "example_ref": "Residents filed more than a thousand complaints about the noise.",
+        "example_ref_zh": "居民針對噪音提出了超過一千件申訴。",
         "collocations": ["file a complaint", "on file", "a personnel file"],
         "root": "拉丁 filum「線」(同 filament/profile) → 用線串起來歸檔",
         "synonyms": ["submit", "record", "document", "lodge"],
@@ -196,6 +219,7 @@ SUBLIST_7 = [
     {
         "word": "finite", "pos": "adj.",
         "example_ref": "Fossil fuels are a finite resource, however efficiently we use them.",
+        "example_ref_zh": "不管我們用得多有效率，化石燃料都是有限的資源。",
         "collocations": ["a finite resource", "finite supply", "finite number"],
         "root": "fin(界線, 同 finish/define/final) + -ite → 有盡頭的",
         "synonyms": ["limited", "bounded", "restricted", "measurable"],
@@ -205,6 +229,7 @@ SUBLIST_7 = [
     {
         "word": "foundation", "pos": "n.",
         "example_ref": "Early reading skills lay the foundation for all later learning.",
+        "example_ref_zh": "早期的閱讀能力為日後所有的學習打下基礎。",
         "collocations": ["lay the foundation", "a solid foundation", "a charitable foundation"],
         "root": "found(奠基, 拉丁 fundus 底部, 同 fund/fundamental) + -ation → 打下的底",
         "synonyms": ["basis", "groundwork", "base", "institution"],
@@ -213,6 +238,7 @@ SUBLIST_7 = [
     {
         "word": "globe", "pos": "n.",
         "example_ref": "Similar protests took place across the globe that summer.",
+        "example_ref_zh": "那年夏天全球各地都發生了類似的抗議。",
         "collocations": ["across the globe", "around the globe", "the whole globe"],
         "root": "拉丁 globus「球」(同 global/globule) → 地球這顆球",
         "synonyms": ["world", "planet", "earth", "sphere"],
@@ -221,6 +247,7 @@ SUBLIST_7 = [
     {
         "word": "grade", "pos": "n./v.",
         "example_ref": "Students are graded on coursework as well as final examinations.",
+        "example_ref_zh": "學生的成績同時取決於平時作業與期末考。",
         "collocations": ["a high grade", "grade papers", "make the grade"],
         "root": "拉丁 gradus「步伐、等級」(同 gradual/degree/progress) → 一階一階的等級",
         "synonyms": ["level", "rank", "mark", "class"],
@@ -229,6 +256,7 @@ SUBLIST_7 = [
     {
         "word": "guarantee", "pos": "n./v.",
         "example_ref": "Higher spending does not guarantee better results.",
+        "example_ref_zh": "花更多錢並不保證更好的結果。",
         "collocations": ["guarantee that", "no guarantee", "a money-back guarantee"],
         "root": "古法語 garant「保證人」(同 warrant/warranty) → 打包票",
         "synonyms": ["ensure", "promise", "assure", "warranty"],
@@ -237,6 +265,7 @@ SUBLIST_7 = [
     {
         "word": "hierarchy", "pos": "n.",
         "example_ref": "Flat organisations have fewer levels of hierarchy than traditional firms.",
+        "example_ref_zh": "扁平化組織的層級比傳統公司少。",
         "collocations": ["a rigid hierarchy", "social hierarchy", "at the top of the hierarchy"],
         "root": "希臘 hieros(神聖) + arch(統治, 同 monarchy/architect) → 由上而下的位階",
         "synonyms": ["ranking", "pecking order", "structure", "chain of command"],
@@ -245,6 +274,7 @@ SUBLIST_7 = [
     {
         "word": "identical", "pos": "adj.",
         "example_ref": "The two reports reached almost identical conclusions.",
+        "example_ref_zh": "這兩份報告得出了幾乎完全相同的結論。",
         "collocations": ["virtually identical", "identical to", "identical twins"],
         "root": "ident(相同, 拉丁 idem, 同 identity/identify) + -ical → 完全一樣的",
         "synonyms": ["the same", "indistinguishable", "matching", "equal"],
@@ -254,6 +284,7 @@ SUBLIST_7 = [
     {
         "word": "ideology", "pos": "n.",
         "example_ref": "The reforms were driven by ideology rather than evidence.",
+        "example_ref_zh": "這些改革是由意識形態而非證據所驅動。",
         "collocations": ["political ideology", "a dominant ideology", "driven by ideology"],
         "root": "idea(觀念) + -logy(學問) → 一整套的觀念系統",
         "synonyms": ["belief system", "doctrine", "philosophy", "creed"],
@@ -262,6 +293,7 @@ SUBLIST_7 = [
     {
         "word": "infer", "pos": "v.",
         "example_ref": "From the graph we can infer that demand peaks in midsummer.",
+        "example_ref_zh": "從圖表我們可以推論需求在仲夏達到高峰。",
         "collocations": ["infer from", "reasonably infer", "infer a conclusion"],
         "root": "in-(進入) + fer(帶, 同 transfer/refer/offer) → 把結論帶進來",
         "synonyms": ["deduce", "conclude", "gather", "work out"],
@@ -271,6 +303,7 @@ SUBLIST_7 = [
     {
         "word": "innovate", "pos": "v.",
         "example_ref": "Firms that fail to innovate rarely survive a decade.",
+        "example_ref_zh": "無法創新的公司很少能撐過十年。",
         "collocations": ["innovate rapidly", "continue to innovate", "innovate in"],
         "root": "in-(進入) + nov(新, 同 novel/renovate/novice) + -ate → 弄出新東西",
         "synonyms": ["invent", "pioneer", "modernise", "revolutionise"],
@@ -280,6 +313,7 @@ SUBLIST_7 = [
     {
         "word": "insert", "pos": "v./n.",
         "example_ref": "A new clause was inserted into the agreement at the last minute.",
+        "example_ref_zh": "協議在最後一刻被插入了一項新條款。",
         "collocations": ["insert into", "insert a clause", "insert a coin"],
         "root": "in-(進入) + sert(接合, 拉丁 serere, 同 series/desert) → 塞進中間",
         "synonyms": ["put in", "add", "introduce", "embed"],
@@ -288,6 +322,7 @@ SUBLIST_7 = [
     {
         "word": "intervene", "pos": "v.",
         "example_ref": "The central bank intervened to stop the currency falling further.",
+        "example_ref_zh": "央行出手干預，阻止貨幣進一步貶值。",
         "collocations": ["intervene in", "intervene directly", "rarely intervene"],
         "root": "inter-(之間) + ven(來, 同 convene/event/venue) → 走進中間",
         "synonyms": ["step in", "interfere", "mediate", "get involved"],
@@ -297,6 +332,7 @@ SUBLIST_7 = [
     {
         "word": "isolate", "pos": "v.",
         "example_ref": "Poor transport links isolate many villages from basic services.",
+        "example_ref_zh": "交通不便使許多村落與基本服務隔絕。",
         "collocations": ["socially isolated", "isolate a problem", "isolate from"],
         "root": "拉丁 insula「島」(同 insular/peninsula) → 變成孤島",
         "synonyms": ["separate", "cut off", "segregate", "detach"],
@@ -305,6 +341,7 @@ SUBLIST_7 = [
     {
         "word": "media", "pos": "n.",
         "example_ref": "Social media has changed how young people follow the news.",
+        "example_ref_zh": "社群媒體改變了年輕人接收新聞的方式。",
         "collocations": ["social media", "mass media", "media coverage"],
         "root": "medi(中間, 同 medium/mediate/middle) 的複數 → 傳遞訊息的中介",
         "synonyms": ["press", "outlets", "broadcasting", "communications"],
@@ -314,6 +351,7 @@ SUBLIST_7 = [
     {
         "word": "mode", "pos": "n.",
         "example_ref": "Walking remains the main mode of transport for short trips.",
+        "example_ref_zh": "短程移動的主要方式仍然是走路。",
         "collocations": ["a mode of transport", "a mode of communication", "in this mode"],
         "root": "拉丁 modus「方式、尺度」(同 model/moderate/modify) → 做事的方式",
         "synonyms": ["method", "way", "form", "means"],
@@ -322,6 +360,7 @@ SUBLIST_7 = [
     {
         "word": "paradigm", "pos": "n.",
         "example_ref": "The discovery forced a complete paradigm shift in the field.",
+        "example_ref_zh": "這項發現迫使該領域發生了徹底的典範轉移。",
         "collocations": ["a paradigm shift", "the dominant paradigm", "a new paradigm"],
         "root": "para-(旁邊) + deigma(範例, 希臘 deiknynai 顯示, 同 index) → 擺在旁邊的典範",
         "synonyms": ["model", "framework", "pattern", "example"],
@@ -331,6 +370,7 @@ SUBLIST_7 = [
     {
         "word": "phenomenon", "pos": "n.",
         "example_ref": "Urban heat islands are a well-documented phenomenon.",
+        "example_ref_zh": "都市熱島是有充分文獻記載的現象。",
         "collocations": ["a natural phenomenon", "a recent phenomenon", "a global phenomenon"],
         "root": "希臘 phainomenon「顯現的事物」(同 phase/emphasis) → 觀察得到的現象",
         "synonyms": ["occurrence", "event", "trend", "happening"],
@@ -340,6 +380,7 @@ SUBLIST_7 = [
     {
         "word": "priority", "pos": "n.",
         "example_ref": "Cutting waiting times is the government's stated priority.",
+        "example_ref_zh": "縮短候診時間是政府宣稱的優先事項。",
         "collocations": ["a top priority", "give priority to", "set priorities"],
         "root": "prior(在前, 同 prime/primary) + -ity → 排在前面的事",
         "synonyms": ["precedence", "importance", "first concern", "preference"],
@@ -348,6 +389,7 @@ SUBLIST_7 = [
     {
         "word": "prohibit", "pos": "v.",
         "example_ref": "The city prohibits diesel vehicles from entering the old town.",
+        "example_ref_zh": "這座城市禁止柴油車進入舊城區。",
         "collocations": ["prohibit from", "strictly prohibited", "prohibit the sale of"],
         "root": "pro-(在前) + hib(握住, 同 exhibit/inhibit/habit) → 擋在前面不讓過",
         "synonyms": ["ban", "forbid", "outlaw", "bar"],
@@ -357,6 +399,7 @@ SUBLIST_7 = [
     {
         "word": "publication", "pos": "n.",
         "example_ref": "Publication of the findings was delayed by six months.",
+        "example_ref_zh": "這些研究發現的發表延後了六個月。",
         "collocations": ["the publication of", "a scientific publication", "prior to publication"],
         "root": "publ(公眾, 同 public/publish) + -ation → 公開出來這件事",
         "synonyms": ["release", "issue", "printing", "journal"],
@@ -365,6 +408,7 @@ SUBLIST_7 = [
     {
         "word": "quote", "pos": "v./n.",
         "example_ref": "The article quotes three experts who disagree with the policy.",
+        "example_ref_zh": "這篇文章引述了三位不認同該政策的專家。",
         "collocations": ["quote from", "widely quoted", "a direct quote"],
         "root": "拉丁 quotare「標上號碼」(同 quota/quotient) → 標出出處來引述",
         "synonyms": ["cite", "repeat", "reference", "excerpt"],
@@ -373,6 +417,7 @@ SUBLIST_7 = [
     {
         "word": "release", "pos": "v./n.",
         "example_ref": "Factories release most of their pollutants at night.",
+        "example_ref_zh": "工廠大部分的污染物是在夜間排放的。",
         "collocations": ["release information", "a press release", "release into"],
         "root": "re-(往回) + lease(放鬆, 拉丁 laxare, 同 relax/lax) → 鬆開放走",
         "synonyms": ["emit", "free", "issue", "let go"],
@@ -381,6 +426,7 @@ SUBLIST_7 = [
     {
         "word": "reverse", "pos": "v./adj./n.",
         "example_ref": "It will take decades to reverse the damage done to the wetland.",
+        "example_ref_zh": "要逆轉這片濕地所受的損害需要數十年。",
         "collocations": ["reverse a decision", "reverse the trend", "in reverse"],
         "root": "re-(往回) + vers(轉, 同 version/convert/divert) → 轉回去",
         "synonyms": ["overturn", "undo", "invert", "opposite"],
@@ -389,6 +435,7 @@ SUBLIST_7 = [
     {
         "word": "simulate", "pos": "v.",
         "example_ref": "The model simulates how floodwater would move through the city.",
+        "example_ref_zh": "這個模型模擬洪水如何在城市中流動。",
         "collocations": ["simulate conditions", "computer-simulated", "simulate an environment"],
         "root": "simil(相似, 同 similar/assimilate) + -ate → 做出很像的樣子",
         "synonyms": ["model", "imitate", "replicate", "mimic"],
@@ -397,6 +444,7 @@ SUBLIST_7 = [
     {
         "word": "sole", "pos": "adj.",
         "example_ref": "Tourism is the sole source of income for many island families.",
+        "example_ref_zh": "觀光是許多島上家庭唯一的收入來源。",
         "collocations": ["the sole reason", "the sole survivor", "sole responsibility"],
         "root": "拉丁 solus「單獨」(同 solo/solitude/desolate) → 只有一個",
         "synonyms": ["only", "single", "exclusive", "lone"],
@@ -406,6 +454,7 @@ SUBLIST_7 = [
     {
         "word": "somewhat", "pos": "adv.",
         "example_ref": "The results are somewhat weaker than the researchers had hoped.",
+        "example_ref_zh": "結果比研究人員原本期望的稍微弱一些。",
         "collocations": ["somewhat higher", "somewhat surprising", "somewhat different"],
         "root": "some(某種) + what(程度) → 有那麼一點",
         "synonyms": ["rather", "slightly", "fairly", "a little"],
@@ -415,6 +464,7 @@ SUBLIST_7 = [
     {
         "word": "submit", "pos": "v.",
         "example_ref": "Applications must be submitted before the end of March.",
+        "example_ref_zh": "申請必須在三月底前送出。",
         "collocations": ["submit an application", "submit a report", "submit to"],
         "root": "sub-(在下面) + mit(送, 同 mission/transmit/commit) → 送到上級手裡",
         "synonyms": ["hand in", "present", "put forward", "yield"],
@@ -423,6 +473,7 @@ SUBLIST_7 = [
     {
         "word": "successor", "pos": "n.",
         "example_ref": "Her successor abandoned the project within a year.",
+        "example_ref_zh": "她的繼任者在一年內就放棄了這個計畫。",
         "collocations": ["a likely successor", "name a successor", "his successor"],
         "root": "suc-(接著) + cess(走, 同 proceed/exceed/access) + -or → 接著走上來的人",
         "synonyms": ["replacement", "heir", "follower", "next in line"],
@@ -431,6 +482,7 @@ SUBLIST_7 = [
     {
         "word": "survive", "pos": "v.",
         "example_ref": "Few small bookshops survived the arrival of online retailers.",
+        "example_ref_zh": "線上零售商出現之後，很少有小書店存活下來。",
         "collocations": ["survive on", "barely survive", "survive a crisis"],
         "root": "sur-(超過) + viv(活, 同 vivid/revive/survival) → 活過那個時間點",
         "synonyms": ["endure", "last", "outlive", "withstand"],
@@ -439,6 +491,7 @@ SUBLIST_7 = [
     {
         "word": "thesis", "pos": "n.",
         "example_ref": "Her thesis argues that congestion charging is regressive.",
+        "example_ref_zh": "她的論文主張壅塞費具有累退性質。",
         "collocations": ["a doctoral thesis", "the central thesis", "defend a thesis"],
         "root": "希臘 tithenai「放置」(同 hypothesis/synthesis) → 擺出來的主張",
         "synonyms": ["dissertation", "argument", "proposition", "claim"],
@@ -448,6 +501,7 @@ SUBLIST_7 = [
     {
         "word": "topic", "pos": "n.",
         "example_ref": "Climate change is now a topic in almost every school subject.",
+        "example_ref_zh": "氣候變遷現在幾乎是每一門學科都會談到的主題。",
         "collocations": ["a controversial topic", "on the topic of", "a topic sentence"],
         "root": "希臘 topos「地方」(同 topography/utopia) → 談話落在哪個地方 → 主題",
         "synonyms": ["subject", "issue", "theme", "matter"],
@@ -457,6 +511,7 @@ SUBLIST_7 = [
     {
         "word": "transmit", "pos": "v.",
         "example_ref": "The disease is transmitted through contaminated water.",
+        "example_ref_zh": "這種疾病透過受污染的水傳播。",
         "collocations": ["transmit a signal", "transmit a disease", "transmit information"],
         "root": "trans-(橫越) + mit(送, 同 mission/submit/commit) → 送過去",
         "synonyms": ["send", "pass on", "convey", "spread"],
@@ -465,6 +520,7 @@ SUBLIST_7 = [
     {
         "word": "ultimate", "pos": "adj.",
         "example_ref": "The ultimate aim is to make the city carbon neutral by 2040.",
+        "example_ref_zh": "最終目標是讓這座城市在 2040 年達到碳中和。",
         "collocations": ["the ultimate aim", "the ultimate goal", "ultimate responsibility"],
         "root": "ultim(最後, 拉丁 ultimus, 同 ultimatum) + -ate → 最後那一個",
         "synonyms": ["final", "eventual", "greatest", "supreme"],
@@ -474,6 +530,7 @@ SUBLIST_7 = [
     {
         "word": "unique", "pos": "adj.",
         "example_ref": "Each city faces a unique combination of pressures.",
+        "example_ref_zh": "每座城市面對的壓力組合都是獨一無二的。",
         "collocations": ["a unique opportunity", "unique to", "absolutely unique"],
         "root": "un(一, 拉丁 unus, 同 unit/union/universe) + -ique → 只有一個",
         "synonyms": ["distinctive", "one-of-a-kind", "singular", "unparalleled"],
@@ -483,6 +540,7 @@ SUBLIST_7 = [
     {
         "word": "visible", "pos": "adj.",
         "example_ref": "The effects of the drought are visible from space.",
+        "example_ref_zh": "乾旱造成的影響從太空就看得見。",
         "collocations": ["clearly visible", "highly visible", "barely visible"],
         "root": "vis(看, 同 vision/visit/supervise) + -ible → 看得到的",
         "synonyms": ["noticeable", "apparent", "observable", "evident"],
@@ -491,6 +549,7 @@ SUBLIST_7 = [
     {
         "word": "voluntary", "pos": "adj.",
         "example_ref": "The scheme is voluntary, which explains the low participation rate.",
+        "example_ref_zh": "這個方案是自願性質的，這解釋了為何參與率偏低。",
         "collocations": ["voluntary work", "on a voluntary basis", "the voluntary sector"],
         "root": "volunt(意願, 拉丁 voluntas, 同 volunteer/volition) + -ary → 出於自己意願的",
         "synonyms": ["optional", "willing", "unpaid", "elective"],

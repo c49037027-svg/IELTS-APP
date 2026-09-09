@@ -275,6 +275,13 @@ with sync_playwright() as p:
     page.get_by_text("看例句與同義詞").click()
     page.wait_for_timeout(200)
     step("中文：預設看得到", page.locator("#vocab-stage .dim-row.zh-row").count() >= 1)
+    back_text = page.locator("#vocab-stage").inner_text()
+    step("句譯：卡片上有例句就看得到句譯",
+         "例句" not in back_text or "句譯" in back_text)
+    # 句譯是綁在例句上的。自己寫的句子沒有翻譯很正常，
+    # 但「有翻譯卻沒有句子」代表翻譯配到別的句子上了。
+    step("句譯：沒有孤兒翻譯",
+         page.evaluate("Store.listCards().every(c => !c.exampleZh || !!c.example)"))
     page.locator(".settings-btn").click()
     page.wait_for_timeout(200)
     page.locator("#show-zh").uncheck()

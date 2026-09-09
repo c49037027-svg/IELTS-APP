@@ -98,8 +98,12 @@ const Store = (() => {
       word: String(input.word || '').trim(),
       pos: String(input.pos || '').trim(),
       example: String(input.example || '').trim(),
+      // 例句的中譯，跟 example 一組 —— 換了例句翻譯也要跟著換，
+      // 不然會出現「中文翻的是另一句」的卡片。
+      exampleZh: String(input.exampleZh || '').trim(),
       // 參考例句：例句留白給使用者自己寫時的備援，只在補完模式按了才看得到
       exampleRef: String(input.exampleRef || '').trim(),
+      exampleRefZh: String(input.exampleRefZh || '').trim(),
       collocations: multi(input.collocations),
       root: String(input.root || '').trim(),
       synonyms: multi(input.synonyms),
@@ -107,7 +111,6 @@ const Store = (() => {
       topic: String(input.topic || '').trim(),
       cardType: input.cardType === 'active' ? 'active' : 'passive',
       zh: String(input.zh || '').trim(),
-      exampleZh: String(input.exampleZh || '').trim(),
       phonetic: String(input.phonetic || '').trim(),
       notes: String(input.notes || '').trim(),
       createdAt: input.createdAt || Dates.nowISO()
@@ -307,6 +310,9 @@ const Store = (() => {
   // 例句還沒自己寫的卡片用參考例句頂著（一樣會挖空，不會洩答案），
   // 這樣關掉中文之後拼字題也不會少 —— 拼字是最需要每天練的一軌。
   const spellingSentence = card => card.example || card.exampleRef || '';
+  // 句譯要跟著上面那一句走 —— 拿參考例句的翻譯去配自己寫的句子會誤導。
+  const spellingSentenceZh = card =>
+    (card.example ? card.exampleZh : card.exampleRefZh) || '';
   const hasSpellingClue = card =>
     !!(spellingSentence(card) || card.notes || (showZh() && card.zh));
 
@@ -528,7 +534,8 @@ const Store = (() => {
     return rows.filter(r => r.some(c => String(c).trim()));
   }
 
-  const CSV_COLUMNS = ['word', 'pos', 'example_sentence', 'example_ref', 'collocations', 'root_analysis',
+  const CSV_COLUMNS = ['word', 'pos', 'example_sentence', 'example_zh',
+    'example_ref', 'example_ref_zh', 'collocations', 'root_analysis',
     'synonyms', 'category', 'topic', 'card_type', 'zh_hint', 'notes'];
 
   const HEADER_ALIASES = {
@@ -536,6 +543,8 @@ const Store = (() => {
     part_of_speech: 'pos', partofspeech: 'pos', 詞性: 'pos',
     example: 'example_sentence', sentence: 'example_sentence', 例句: 'example_sentence',
     exampleref: 'example_ref', reference_example: 'example_ref', 參考例句: 'example_ref',
+    examplezh: 'example_zh', sentence_translation: 'example_zh', 句譯: 'example_zh',
+    例句中譯: 'example_zh', examplerefzh: 'example_ref_zh', 參考例句中譯: 'example_ref_zh',
     collocation: 'collocations', 搭配詞: 'collocations', 搭配: 'collocations',
     root: 'root_analysis', roots: 'root_analysis', etymology: 'root_analysis', 字根: 'root_analysis',
     synonym: 'synonyms', 同義詞: 'synonyms',
@@ -605,10 +614,9 @@ const Store = (() => {
   function exportCSV() {
     const lines = [CSV_COLUMNS.join(',')];
     db.cards.forEach(c => {
-      // 例句中譯是網頁版才有的欄位，匯出時併進 notes，搬到 CLI 也不會遺失。
-      const notes = [c.notes, c.exampleZh ? `例句中譯：${c.exampleZh}` : ''].filter(Boolean).join(' ｜ ');
-      lines.push([c.word, c.pos, c.example, c.collocations, c.root, c.synonyms,
-        c.category, c.topic, c.cardType, c.zh, notes].map(csvCell).join(','));
+      lines.push([c.word, c.pos, c.example, c.exampleZh, c.exampleRef, c.exampleRefZh,
+        c.collocations, c.root, c.synonyms,
+        c.category, c.topic, c.cardType, c.zh, c.notes].map(csvCell).join(','));
     });
     return '﻿' + lines.join('\n');
   }
@@ -769,7 +777,7 @@ const Store = (() => {
     missingCore, isIncomplete, hasBackContent, cardLabel, cardCount, incompleteCount, completionQueue,
     getSrs, grade, dueItems, dueCount,
     recordSpelling, spellingQueue, spellingErrorList, spellingAccuracy, lastSpellingResult,
-    hasSpellingClue, spellingSentence, getPrefs, setPrefs, showZh, findLoosely,
+    hasSpellingClue, spellingSentence, spellingSentenceZh, getPrefs, setPrefs, showZh, findLoosely,
     addProduction, listProductions, setProductionFeedback, productionCandidates, promotionCandidates,
     coverage, cardTypeCounts, activityDays, streak, longestStreak,
     reviewsSince, reviewsOn, productionsSince, cardsAddedSince, distinctWordsUsed,

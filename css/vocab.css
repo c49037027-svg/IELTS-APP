@@ -169,6 +169,8 @@
   background: var(--bg); border-left: 3px solid var(--border); border-radius: 6px;
   color: var(--text-light);
 }
+/* 參考例句的中譯：跟在句子下面，小一號，只是確認自己有沒有看懂 */
+.ref-zh { margin-top: 4px; font-size: 13px; color: var(--text-light); opacity: .85; }
 
 .missing-tag {
   display: inline-block; margin-top: 12px; padding: 4px 10px;

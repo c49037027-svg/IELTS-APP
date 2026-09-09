@@ -27,7 +27,9 @@ CARD_TEXT_FIELDS = (
     "word",
     "pos",
     "example_sentence",
+    "example_zh",
     "example_ref",
+    "example_ref_zh",
     "collocations",
     "root_analysis",
     "synonyms",
@@ -85,9 +87,14 @@ class Card:
     word: str = ""
     pos: str = ""
     example_sentence: str = ""
+    #: example_sentence 的中譯。兩者一組 —— 使用者換掉例句時翻譯也要跟著換，
+    #: 否則會出現「中文翻的是另一句」的卡片。
+    example_zh: str = ""
     #: 參考例句：例句欄留白給使用者自己寫時，這裡放一句備援的。
     #: 只在補完模式「卡住的話看參考」時顯示，複習模式永遠看不到。
     example_ref: str = ""
+    #: example_ref 的中譯，跟 example_ref 一組。
+    example_ref_zh: str = ""
     collocations: str = ""
     root_analysis: str = ""
     synonyms: str = ""

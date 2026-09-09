@@ -28,7 +28,8 @@ from data_topics import TOPICS  # noqa: E402
 CSV_PATH = ROOT / "cli" / "ielts" / "data" / "seed_cards.csv"
 JS_PATH = ROOT / "js" / "cards.js"
 
-COLUMNS = ["word", "pos", "example_sentence", "example_ref", "collocations", "root_analysis",
+COLUMNS = ["word", "pos", "example_sentence", "example_zh", "example_ref", "example_ref_zh",
+           "collocations", "root_analysis",
            "synonyms", "category", "topic", "card_type", "zh_hint", "notes"]
 
 #: 口說表達與 Task 1 用語是「拿來用」的字，一開始就是 active（會出現在主動輸出）。
@@ -60,8 +61,11 @@ def normalise(entry: dict) -> dict:
         "word": entry["word"].strip(),
         "pos": entry.get("pos", "").strip(),
         "example_sentence": entry.get("example", "").strip(),
+        # 中譯跟句子兩兩成對，換了句子翻譯也要跟著換
+        "example_zh": entry.get("example_zh", "").strip(),
         # 參考例句：例句欄留白給使用者自己寫時的備援，只在補完模式按了才看得到
         "example_ref": entry.get("example_ref", "").strip(),
+        "example_ref_zh": entry.get("example_ref_zh", "").strip(),
         "collocations": "; ".join(c.strip() for c in entry.get("collocations", [])),
         "root_analysis": entry.get("root", "").strip(),
         "synonyms": "; ".join(s.strip() for s in entry.get("synonyms", [])),
@@ -137,6 +141,16 @@ def validate(entries: list[dict]) -> list[str]:
             if text and textutil.mask_sentence(text, word)[1] == 0:
                 problems.append(f"{where}：{label}裡找不到這個字 → {text}")
 
+        # 中譯與句子兩兩成對：有句子就要有翻譯，沒句子就不該有翻譯
+        for text, zh, label in (
+            (example, str(entry.get("example_zh", "")).strip(), "例句"),
+            (example_ref, str(entry.get("example_ref_zh", "")).strip(), "參考例句"),
+        ):
+            if text and not zh:
+                problems.append(f"{where}：{label}缺中譯 → {text}")
+            if zh and not text:
+                problems.append(f"{where}：有{label}中譯卻沒有{label} → {zh}")
+
         # 搭配詞也應該含有這個字（片語除外，片語本身就是搭配）
         if len(word.split()) == 1:
             bad = [c for c in collocations if textutil.mask_sentence(c, word)[1] == 0]
@@ -165,7 +179,9 @@ def write_js(cards: list[dict]) -> None:
             "word": card["word"],
             "pos": card["pos"],
             "example": card["example_sentence"],
+            "exampleZh": card["example_zh"],
             "exampleRef": card["example_ref"],
+            "exampleRefZh": card["example_ref_zh"],
             "collocations": [c.strip() for c in card["collocations"].split(";") if c.strip()],
             "root": card["root_analysis"],
             "synonyms": [s.strip() for s in card["synonyms"].split(";") if s.strip()],

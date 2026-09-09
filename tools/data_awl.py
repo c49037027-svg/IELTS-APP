@@ -34,6 +34,7 @@ FULL = [
     {
         "word": "conduct", "pos": "v.",
         "example": "Researchers conducted a survey of two thousand university students.",
+        "example_zh": "研究人員對兩千名大學生進行了一項調查。",
         "collocations": ["conduct research", "conduct a survey", "conduct an experiment"],
         "root": "con-(一起) + duct(引導, 同 conductor 導體/introduce) → 引導著進行",
         "synonyms": ["carry out", "perform", "undertake"],
@@ -43,6 +44,7 @@ FULL = [
     {
         "word": "constitute", "pos": "v.",
         "example": "Migrant workers constitute nearly a third of the city's workforce.",
+        "example_zh": "移工佔了這座城市勞動力的將近三分之一。",
         "collocations": ["constitute a threat", "constitute a majority", "constitute evidence"],
         "root": "con-(一起) + stitut(建立, 同 institute/substitute) → 一起建立成 → 組成",
         "synonyms": ["make up", "form", "comprise", "account for"],
@@ -51,6 +53,7 @@ FULL = [
     {
         "word": "advocate", "pos": "v.",
         "example": "Many educators advocate replacing final exams with continuous assessment.",
+        "example_zh": "許多教育工作者主張以持續性評量取代期末考。",
         "collocations": ["advocate a policy", "advocate for reform", "strongly advocate"],
         "root": "ad-(朝向) + voc(聲音, 同 voice/vocal/vocation) + -ate → 為某事發聲",
         "synonyms": ["support", "champion", "promote", "call for"],
@@ -60,6 +63,7 @@ FULL = [
     {
         "word": "allocate", "pos": "v.",
         "example": "The council allocates a fixed budget to each district every year.",
+        "example_zh": "議會每年撥給各行政區一筆固定預算。",
         "collocations": ["allocate resources", "allocate funding", "allocate time"],
         "root": "ad-(朝向) + loc(地方, 同 location/local) + -ate → 放到該去的位置",
         "synonyms": ["distribute", "assign", "apportion", "earmark"],
@@ -68,6 +72,7 @@ FULL = [
     {
         "word": "implement", "pos": "v.",
         "example": "The government implemented stricter penalties for repeat offenders.",
+        "example_zh": "政府對累犯實施了更嚴格的罰則。",
         "collocations": ["implement a policy", "implement measures", "implement reforms"],
         "root": "im-(進入) + ple(填滿, 同 complete/supplement) + -ment → 填滿內容 → 付諸實行",
         "synonyms": ["carry out", "enforce", "put into practice", "execute"],
@@ -76,6 +81,7 @@ FULL = [
     {
         "word": "accumulate", "pos": "v.",
         "example": "Toxins from processed food gradually accumulate in the body.",
+        "example_zh": "加工食品的毒素會在體內逐漸累積。",
         "collocations": ["accumulate wealth", "accumulate evidence", "accumulate over time"],
         "root": "ac-(朝向) + cumul(堆積, 同 cumulative) + -ate → 一層層堆起來",
         "synonyms": ["build up", "amass", "gather", "pile up"],
@@ -84,6 +90,7 @@ FULL = [
     {
         "word": "compensate", "pos": "v.",
         "example": "Longer holidays do not compensate for consistently low wages.",
+        "example_zh": "較長的假期彌補不了長期偏低的薪資。",
         "collocations": ["compensate for", "compensate workers", "adequately compensate"],
         "root": "com-(一起) + pens(秤重、支付, 同 expense/pension) + -ate → 秤平、補足",
         "synonyms": ["make up for", "offset", "reimburse", "counterbalance"],
@@ -93,6 +100,7 @@ FULL = [
     {
         "word": "attribute", "pos": "v.",
         "example": "Analysts attribute the drop in sales to the rise of online shopping.",
+        "example_zh": "分析師把銷量下滑歸因於網路購物的興起。",
         "collocations": ["attribute the rise to", "be attributed to", "widely attributed"],
         "root": "at-(朝向) + tribut(給予, 同 tribute/contribute/distribute) → 把原因歸給…",
         "synonyms": ["ascribe", "credit", "put down to"],
@@ -102,6 +110,7 @@ FULL = [
     {
         "word": "inevitable", "pos": "adj.",
         "example": "Rapid urbanisation makes some loss of farmland inevitable.",
+        "example_zh": "快速的都市化使得部分農地的流失無可避免。",
         "collocations": ["an inevitable consequence", "an inevitable decline", "almost inevitable"],
         "root": "in-(不) + evit(避開, 同 evade/evitable) + -able → 無法避開的",
         "synonyms": ["unavoidable", "inescapable", "certain", "bound to happen"],
@@ -110,6 +119,7 @@ FULL = [
     {
         "word": "pose", "pos": "v.",
         "example": "Rising sea levels pose a serious threat to coastal communities.",
+        "example_zh": "海平面上升對沿海社區構成嚴重威脅。",
         "collocations": ["pose a threat", "pose a risk", "pose a challenge", "pose a question"],
         "root": "pos(放置, 同 position/expose/compose) → 把某物放到眼前 → 造成、提出",
         "synonyms": ["present", "constitute", "raise", "create"],
@@ -119,6 +129,7 @@ FULL = [
     {
         "word": "bias", "pos": "n.",
         "example": "Readers should be aware of the political bias of the newspapers they follow.",
+        "example_zh": "讀者應該留意自己關注的報紙帶有什麼政治偏見。",
         "collocations": ["media bias", "political bias", "a bias towards", "unconscious bias"],
         "root": "原指保齡球球體偏一邊滾的斜度 → 偏向某一邊",
         "synonyms": ["prejudice", "partiality", "slant", "one-sidedness"],
@@ -127,6 +138,7 @@ FULL = [
     {
         "word": "infrastructure", "pos": "n.",
         "example": "The city has invested heavily in transport infrastructure over the past decade.",
+        "example_zh": "過去十年這座城市在交通基礎建設上投入甚鉅。",
         "collocations": ["invest in infrastructure", "ageing infrastructure", "transport infrastructure"],
         "root": "infra-(在下面, 同 infrared 紅外線) + structure(結構) → 撐在底下的結構",
         "synonyms": ["public facilities", "basic systems", "utilities", "networks"],
@@ -135,6 +147,7 @@ FULL = [
     {
         "word": "integrate", "pos": "v.",
         "example": "Schools are gradually integrating digital tools into everyday lessons.",
+        "example_zh": "學校正逐步把數位工具整合進日常課程。",
         "collocations": ["integrate into", "fully integrated", "integrate with"],
         "root": "integr(完整, 同 integrity/entire) + -ate → 併成完整的一體",
         "synonyms": ["combine", "incorporate", "merge", "bring together"],
@@ -143,6 +156,7 @@ FULL = [
     {
         "word": "offset", "pos": "v.",
         "example": "Planting trees can partly offset the emissions produced by air travel.",
+        "example_zh": "種樹可以部分抵銷航空旅行所產生的排放。",
         "collocations": ["offset emissions", "offset the impact", "partly offset"],
         "root": "off(離開) + set(放置) → 放到另一邊去抵掉",
         "synonyms": ["counterbalance", "compensate for", "cancel out", "counteract"],

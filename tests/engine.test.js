@@ -230,19 +230,27 @@ check('舊資料的音標補進了既有卡片，沒有被丟掉', () => {
   ok(c && c.phonetic, 'analyse 應該從舊資料的 analyze 拿到音標');
 });
 check('句譯一定對得上卡片上的例句', () => {
-  // 舊資料的句譯是配舊例句的。既有卡片留著自己的例句卻配上舊翻譯，
+  // 句譯與例句是綁在一起的一組。換了例句卻留著舊翻譯，
   // 就會出現中英對不起來的卡 —— 那比沒有翻譯更糟。
-  const seed = new Map(run('SEED_CARDS.map(c => [c.word.toLowerCase(), c.example])'));
-  const rows = run('Store.listCards().filter(c => c.exampleZh).map(c => ({ w: c.word, ex: c.example }))');
+  const seed = new Map(run('SEED_CARDS.map(c => [c.word.toLowerCase(), { ex: c.example, zh: c.exampleZh }])'));
+  const rows = run('Store.listCards().map(c => ({ w: c.word, ex: c.example, zh: c.exampleZh }))');
   const bad = rows.filter(r => {
     const own = seed.get(r.w.toLowerCase());
-    return own && own === r.ex;   // 例句是種子的，句譯卻來自舊資料
+    return own && own.ex && own.ex === r.ex && r.zh !== own.zh;
   }).map(r => r.w);
   eq(bad, [], `${bad.length} 張卡的句譯跟例句對不起來`);
 });
-check('沒有句譯總比有錯的句譯好', () => {
-  const n = run('Store.listCards().filter(c => c.exampleZh).length');
-  ok(n > 0 && n < 40, `有句譯的卡片 ${n} 張 —— 應該只剩例句也來自舊資料的那批`);
+check('沒有孤兒句譯，種子例句也都附了句譯', () => {
+  // 自己寫的句子沒有翻譯很正常；但「有翻譯卻沒有句子」代表翻譯配到別的句子上了
+  const orphan = run('Store.listCards().filter(c => c.exampleZh && !c.example).map(c => c.word)');
+  eq(orphan, [], '有句譯卻沒有例句');
+  const missing = run('SEED_CARDS.filter(c => c.example && !c.exampleZh).map(c => c.word)');
+  eq(missing, [], '種子例句缺句譯');
+});
+check('參考例句也都有中譯', () => {
+  const bad = run(`SEED_CARDS.filter(c =>
+    (c.exampleRef && !c.exampleRefZh) || (c.exampleRefZh && !c.exampleRef)).map(c => c.word)`);
+  eq(bad, [], `${bad.length} 張卡的參考例句與中譯沒有成對`);
 });
 
 check('美式與英式拼法不會變成兩張卡', () => {

@@ -5,6 +5,7 @@ TOPICS_B = [
     {
         "word": "obesity", "pos": "n.",
         "example": "Childhood obesity has doubled in urban areas over the past twenty years.",
+        "example_zh": "過去二十年，都會地區的兒童肥胖率增加了一倍。",
         "collocations": ["childhood obesity", "obesity rates", "tackle obesity"],
         "root": "拉丁 obesus「吃過頭而胖」(ob- 完全 + edere 吃) + -ity → 肥胖的狀態",
         "synonyms": ["excess weight", "being overweight", "corpulence"],
@@ -13,6 +14,7 @@ TOPICS_B = [
     {
         "word": "deteriorate", "pos": "v.",
         "example": "Air quality in the capital has deteriorated sharply since 2010.",
+        "example_zh": "首都的空氣品質自 2010 年以來急遽惡化。",
         "collocations": ["deteriorate rapidly", "conditions deteriorate", "deteriorating health"],
         "root": "拉丁 deterior「更壞」+ -ate → 變得更壞",
         "synonyms": ["worsen", "decline", "degenerate", "get worse"],
@@ -22,6 +24,7 @@ TOPICS_B = [
     {
         "word": "constraint", "pos": "n.",
         "example": "Budget constraints forced the hospital to postpone the new wing.",
+        "example_zh": "預算限制迫使醫院延後新大樓的興建。",
         "collocations": ["financial constraints", "time constraints", "impose constraints"],
         "root": "con-(一起) + strain/strict(拉緊, 同 restrict/strain) → 綁緊 → 限制",
         "synonyms": ["limitation", "restriction", "restraint", "barrier"],
@@ -30,6 +33,7 @@ TOPICS_B = [
     {
         "word": "sedentary", "pos": "adj.",
         "example": "A sedentary lifestyle raises the risk of heart disease considerably.",
+        "example_zh": "久坐的生活型態大幅提高心臟病的風險。",
         "collocations": ["a sedentary lifestyle", "sedentary work", "increasingly sedentary"],
         "root": "sed(坐, 同 sediment 沉積物/session/reside) + -ary → 一直坐著的",
         "synonyms": ["inactive", "desk-bound", "physically inactive"],
@@ -38,6 +42,7 @@ TOPICS_B = [
     {
         "word": "life expectancy", "pos": "n. phr.",
         "example": "Average life expectancy has risen by almost ten years since 1980.",
+        "example_zh": "自 1980 年以來，平均壽命增加了將近十歲。",
         "collocations": ["average life expectancy", "life expectancy at birth", "raise life expectancy"],
         "root": "expect(期待, ex- 出去 + spect 看 → 往外看著等) → 預期能活多久",
         "synonyms": ["lifespan", "longevity", "average age at death"],
@@ -46,6 +51,7 @@ TOPICS_B = [
     {
         "word": "longevity", "pos": "n.",
         "example": "Researchers link longevity to strong social ties as much as to diet.",
+        "example_zh": "研究人員認為長壽與緊密社交連結的關聯，跟飲食一樣密切。",
         "collocations": ["increased longevity", "the secret of longevity", "longevity in old age"],
         "root": "long(長) + ev(年歲, 拉丁 aevum 時代, 同 eternal/medieval) + -ity → 長的年歲",
         "synonyms": ["long life", "lifespan", "living to an old age"],
@@ -54,6 +60,7 @@ TOPICS_B = [
     {
         "word": "well-being", "pos": "n.",
         "example": "Flexible hours improved staff well-being more than a pay rise did.",
+        "example_zh": "彈性工時對員工身心健康的改善勝過加薪。",
         "collocations": ["mental well-being", "improve well-being", "a sense of well-being"],
         "root": "well(好) + being(存在的狀態) → 整體活得好的狀態",
         "synonyms": ["welfare", "quality of life", "wellness"],
@@ -62,6 +69,7 @@ TOPICS_B = [
     {
         "word": "epidemic", "pos": "n.",
         "example": "Doctors describe rising diabetes rates as a slow-moving epidemic.",
+        "example_zh": "醫師把不斷上升的糖尿病比例形容為一場緩慢蔓延的流行病。",
         "collocations": ["an obesity epidemic", "reach epidemic levels", "contain an epidemic"],
         "root": "epi-(在…之上, 同 epicentre) + dem(人民, 同 democracy/demographic) → 落在人民身上的",
         "synonyms": ["outbreak", "widespread disease", "plague"],
@@ -70,6 +78,7 @@ TOPICS_B = [
     {
         "word": "vaccination", "pos": "n.",
         "example": "Vaccination rates fell in districts where clinics had closed.",
+        "example_zh": "診所關閉的行政區，疫苗接種率跟著下降。",
         "collocations": ["mass vaccination", "vaccination rates", "a vaccination programme"],
         "root": "拉丁 vacca「牛」→ 最早的疫苗來自牛痘 → 接種",
         "synonyms": ["immunisation", "inoculation", "jab"],
@@ -78,6 +87,7 @@ TOPICS_B = [
     {
         "word": "sanitation", "pos": "n.",
         "example": "Poor sanitation remains the main cause of disease in the camps.",
+        "example_zh": "衛生條件不佳仍是營區內疾病的主因。",
         "collocations": ["poor sanitation", "access to sanitation", "basic sanitation"],
         "root": "sanit(健康, 拉丁 sanus, 同 sane/sanitary) + -ation → 讓環境變健康",
         "synonyms": ["hygiene", "waste management", "cleanliness"],
@@ -86,6 +96,7 @@ TOPICS_B = [
     {
         "word": "malnutrition", "pos": "n.",
         "example": "One child in eight still suffers from malnutrition in the region.",
+        "example_zh": "這個地區每八個孩子就有一個仍受營養不良之苦。",
         "collocations": ["suffer from malnutrition", "childhood malnutrition", "chronic malnutrition"],
         "root": "mal-(壞, 同 malfunction/malicious) + nutrition(營養) → 營養不良",
         "synonyms": ["undernourishment", "poor nutrition", "food deficiency"],
@@ -94,6 +105,7 @@ TOPICS_B = [
     {
         "word": "hygiene", "pos": "n.",
         "example": "Simple hand hygiene prevents a surprising number of infections.",
+        "example_zh": "單純的洗手衛生就能預防出乎意料多的感染。",
         "collocations": ["personal hygiene", "food hygiene", "poor hygiene"],
         "root": "源自希臘健康女神 Hygieia 的名字 → 保持健康的做法",
         "synonyms": ["cleanliness", "sanitation"],
@@ -102,6 +114,7 @@ TOPICS_B = [
     {
         "word": "preventive", "pos": "adj.",
         "example": "Spending on preventive care saves far more than it costs.",
+        "example_zh": "投入預防性照護所省下的錢遠多於花費。",
         "collocations": ["preventive care", "preventive measures", "preventive medicine"],
         "root": "pre-(事先) + vent(來, 同 event/invent/adventure) + -ive → 在事情來之前先擋住",
         "synonyms": ["precautionary", "protective", "pre-emptive"],
@@ -110,6 +123,7 @@ TOPICS_B = [
     {
         "word": "therapy", "pos": "n.",
         "example": "Talking therapy is now offered before medication in mild cases.",
+        "example_zh": "輕症現在會先提供談話治療，再考慮用藥。",
         "collocations": ["undergo therapy", "physical therapy", "talking therapy"],
         "root": "希臘 therapeia「照料、伺候」→ 治療",
         "synonyms": ["treatment", "rehabilitation", "counselling"],
@@ -118,6 +132,7 @@ TOPICS_B = [
     {
         "word": "symptom", "pos": "n.",
         "example": "Treating the symptoms does nothing about the underlying cause.",
+        "example_zh": "只處理症狀對根本原因毫無幫助。",
         "collocations": ["show symptoms", "early symptoms", "treat the symptoms"],
         "root": "sym-(一起, 同 sympathy/symmetry) + ptom(落下, 同 asymptote) → 一起出現的現象",
         "synonyms": ["sign", "indication", "manifestation"],
@@ -126,6 +141,7 @@ TOPICS_B = [
     {
         "word": "outbreak", "pos": "n.",
         "example": "An outbreak of food poisoning closed the canteen for a week.",
+        "example_zh": "一次食物中毒事件讓餐廳停業一週。",
         "collocations": ["an outbreak of", "contain an outbreak", "a major outbreak"],
         "root": "out(向外) + break(爆開) → 突然爆出來",
         "synonyms": ["epidemic", "flare-up", "sudden spread"],
@@ -134,6 +150,7 @@ TOPICS_B = [
     {
         "word": "insomnia", "pos": "n.",
         "example": "Shift workers report insomnia far more often than office staff.",
+        "example_zh": "輪班工作者失眠的比例遠高於辦公室職員。",
         "collocations": ["suffer from insomnia", "chronic insomnia", "cause insomnia"],
         "root": "in-(不) + somn(睡, 拉丁 somnus, 同 somnolent) + -ia(病症) → 睡不著",
         "synonyms": ["sleeplessness", "sleep problems", "difficulty sleeping"],
@@ -142,6 +159,7 @@ TOPICS_B = [
     {
         "word": "addiction", "pos": "n.",
         "example": "Smartphone addiction is now treated in some clinics as a genuine disorder.",
+        "example_zh": "手機成癮現在在部分診所被當成真正的疾患來治療。",
         "collocations": ["treat addiction", "addiction to sugar", "screen addiction"],
         "root": "ad-(朝向) + dict(說, 同 dictate/predict；羅馬法把債務人「判給」債主) + -ion → 被判給某物",
         "synonyms": ["dependency", "compulsion", "craving"],
@@ -150,6 +168,7 @@ TOPICS_B = [
     {
         "word": "immune", "pos": "adj.",
         "example": "A poor diet gradually weakens the immune system.",
+        "example_zh": "飲食不良會逐漸削弱免疫系統。",
         "collocations": ["the immune system", "immune to infection", "boost immune defences"],
         "root": "im-(不) + mun(義務, 同 municipal/community/commune) → 免除義務 → 免疫",
         "synonyms": ["resistant", "protected", "not susceptible"],
@@ -158,6 +177,7 @@ TOPICS_B = [
     {
         "word": "moderation", "pos": "n.",
         "example": "Most nutritionists say sugar is fine in moderation.",
+        "example_zh": "多數營養師說糖只要適量就沒問題。",
         "collocations": ["in moderation", "practise moderation", "a message of moderation"],
         "root": "mod(尺度, 同 mode/model/modest) + -ation → 守著分寸",
         "synonyms": ["restraint", "balance", "self-control"],
@@ -168,6 +188,7 @@ TOPICS_B = [
     {
         "word": "congestion", "pos": "n.",
         "example": "Congestion charges have cut traffic in the city centre by a fifth.",
+        "example_zh": "壅塞費讓市中心的車流減少了五分之一。",
         "collocations": ["traffic congestion", "ease congestion", "severe congestion"],
         "root": "con-(一起) + gest(攜帶, 同 digest/gesture/suggest) + -ion → 全擠在一起",
         "synonyms": ["overcrowding", "gridlock", "traffic jams", "bottlenecks"],
@@ -176,6 +197,7 @@ TOPICS_B = [
     {
         "word": "overpopulation", "pos": "n.",
         "example": "Overpopulation puts enormous strain on housing and water supplies.",
+        "example_zh": "人口過多對住宅與供水造成巨大壓力。",
         "collocations": ["the problem of overpopulation", "urban overpopulation", "caused by overpopulation"],
         "root": "over-(超過) + population(人口) → 人口超過負荷",
         "synonyms": ["excessive population", "overcrowding", "population pressure"],
@@ -184,6 +206,7 @@ TOPICS_B = [
     {
         "word": "overcrowding", "pos": "n.",
         "example": "Overcrowding on commuter trains has worsened every year since 2015.",
+        "example_zh": "通勤列車的過度擁擠自 2015 年起逐年惡化。",
         "collocations": ["severe overcrowding", "ease overcrowding", "overcrowding in schools"],
         "root": "over-(超過) + crowd(擠) → 擠過了頭",
         "synonyms": ["congestion", "excessive density", "crush"],
@@ -192,6 +215,7 @@ TOPICS_B = [
     {
         "word": "commute", "pos": "v.",
         "example": "Nearly half the workforce commutes for more than an hour each way.",
+        "example_zh": "將近一半的勞動人口單程通勤超過一小時。",
         "collocations": ["commute to work", "a long commute", "daily commuting"],
         "root": "com-(一起) + mut(改變, 同 mutate/mutual) → 原指把單程票「換算」成月票 → 通勤",
         "synonyms": ["travel to work", "make the journey to work"],
@@ -200,6 +224,7 @@ TOPICS_B = [
     {
         "word": "suburb", "pos": "n.",
         "example": "Families priced out of the centre have moved to the outer suburbs.",
+        "example_zh": "被市中心房價逼走的家庭搬到了外圍郊區。",
         "collocations": ["the outer suburbs", "live in the suburbs", "a leafy suburb"],
         "root": "sub-(在下、靠近) + urb(城市, 同 urban/urbane) → 城市旁邊那一圈",
         "synonyms": ["outskirts", "residential area", "commuter belt"],
@@ -208,6 +233,7 @@ TOPICS_B = [
     {
         "word": "urban sprawl", "pos": "n. phr.",
         "example": "Green belts were introduced to limit urban sprawl around large cities.",
+        "example_zh": "綠帶的設立是為了限制大城市周邊的都市蔓延。",
         "collocations": ["limit urban sprawl", "uncontrolled urban sprawl", "the effects of urban sprawl"],
         "root": "sprawl(四肢攤開) → 城市毫無節制地往外攤開",
         "synonyms": ["unplanned expansion", "suburban spread", "uncontrolled growth"],
@@ -216,6 +242,7 @@ TOPICS_B = [
     {
         "word": "affordable housing", "pos": "n. phr.",
         "example": "The shortage of affordable housing has pushed young people out of the city.",
+        "example_zh": "平價住宅短缺把年輕人擠出了城市。",
         "collocations": ["a shortage of affordable housing", "build affordable housing", "affordable housing schemes"],
         "root": "afford(負擔得起, 古英語 geforthian 提供) + -able → 負擔得起的住宅",
         "synonyms": ["low-cost housing", "social housing", "subsidised housing"],
@@ -224,6 +251,7 @@ TOPICS_B = [
     {
         "word": "high-rise", "pos": "adj.",
         "example": "Most new homes in the district are in high-rise blocks.",
+        "example_zh": "這個行政區的新建住宅大多是高層大樓。",
         "collocations": ["high-rise blocks", "a high-rise development", "live in a high-rise"],
         "root": "high(高) + rise(升起) → 蓋得很高的",
         "synonyms": ["multi-storey", "tower-block", "tall"],
@@ -232,6 +260,7 @@ TOPICS_B = [
     {
         "word": "pedestrian", "pos": "n.",
         "example": "The council closed the street to cars and gave it back to pedestrians.",
+        "example_zh": "議會禁止車輛進入這條街，把它還給行人。",
         "collocations": ["pedestrian zones", "pedestrian safety", "pedestrian crossings"],
         "root": "ped(腳, 同 pedal/pedicure/centipede) + -ian → 用腳走路的人",
         "synonyms": ["person on foot", "walker", "foot traffic"],
@@ -240,6 +269,7 @@ TOPICS_B = [
     {
         "word": "rush hour", "pos": "n. phr.",
         "example": "Journey times almost double during the morning rush hour.",
+        "example_zh": "早上尖峰時段的行車時間幾乎是平常的兩倍。",
         "collocations": ["during rush hour", "avoid rush hour", "rush-hour traffic"],
         "root": "rush(衝) + hour → 大家一起衝的那個時段",
         "synonyms": ["peak time", "peak hours", "the busy period"],
@@ -248,6 +278,7 @@ TOPICS_B = [
     {
         "word": "migration", "pos": "n.",
         "example": "Rural-to-urban migration has added two million people to the city.",
+        "example_zh": "鄉村到城市的人口遷移為這座城市增加了兩百萬人。",
         "collocations": ["rural-to-urban migration", "internal migration", "mass migration"],
         "root": "migr(遷移, 拉丁 migrare, 同 migrate/emigrate/immigrant) + -ation → 整群搬動",
         "synonyms": ["movement of people", "relocation", "influx"],
@@ -256,6 +287,7 @@ TOPICS_B = [
     {
         "word": "gentrification", "pos": "n.",
         "example": "Gentrification has pushed long-standing residents out of the neighbourhood.",
+        "example_zh": "仕紳化把長期居住的住戶擠出了這個社區。",
         "collocations": ["rapid gentrification", "the gentrification of the district", "resist gentrification"],
         "root": "gentry(仕紳階級, 同 gentle 原意「出身好的」) → 變成仕紳住的地方",
         "synonyms": ["upmarket redevelopment", "social upgrading"],
@@ -264,6 +296,7 @@ TOPICS_B = [
     {
         "word": "slum", "pos": "n.",
         "example": "More than a billion people worldwide still live in slums.",
+        "example_zh": "全球仍有超過十億人住在貧民窟。",
         "collocations": ["live in slums", "slum clearance", "slum conditions"],
         "root": "十九世紀倫敦俚語，指城市裡潮濕陰暗的後巷 → 貧民區",
         "synonyms": ["shanty town", "informal settlement", "deprived area"],
@@ -272,6 +305,7 @@ TOPICS_B = [
     {
         "word": "amenities", "pos": "n.",
         "example": "The estate was built with almost no local amenities within walking distance.",
+        "example_zh": "這個社區蓋起來時，走路可及的生活機能幾乎等於零。",
         "collocations": ["local amenities", "basic amenities", "leisure amenities"],
         "root": "拉丁 amoenus「令人愉快的」+ -ity → 讓生活舒服的設施",
         "synonyms": ["facilities", "services", "conveniences"],
@@ -280,6 +314,7 @@ TOPICS_B = [
     {
         "word": "density", "pos": "n.",
         "example": "Population density in the old quarter is five times the city average.",
+        "example_zh": "舊城區的人口密度是全市平均的五倍。",
         "collocations": ["population density", "high-density housing", "urban density"],
         "root": "dens(濃密, 拉丁 densus) + -ity → 擠的程度",
         "synonyms": ["concentration", "crowding level", "compactness"],
@@ -288,6 +323,7 @@ TOPICS_B = [
     {
         "word": "regeneration", "pos": "n.",
         "example": "Urban regeneration turned the derelict docks into a cultural quarter.",
+        "example_zh": "都市再生把廢棄碼頭變成了文化園區。",
         "collocations": ["urban regeneration", "a regeneration scheme", "regeneration projects"],
         "root": "re-(再) + gener(生, 同 generate/genesis/generation) + -ation → 讓地方再生一次",
         "synonyms": ["renewal", "redevelopment", "revitalisation"],
@@ -296,6 +332,7 @@ TOPICS_B = [
     {
         "word": "green space", "pos": "n. phr.",
         "example": "Access to green space measurably improves residents' mental health.",
+        "example_zh": "能接觸綠地對居民心理健康有可測量的改善。",
         "collocations": ["access to green space", "preserve green space", "public green space"],
         "root": "green(綠) + space(空間) → 城市裡留下來的綠地",
         "synonyms": ["parkland", "open space", "recreational area"],
@@ -304,6 +341,7 @@ TOPICS_B = [
     {
         "word": "cost of living", "pos": "n. phr.",
         "example": "The rising cost of living has driven graduates back to their home towns.",
+        "example_zh": "生活成本上升把畢業生趕回了家鄉。",
         "collocations": ["the rising cost of living", "a high cost of living", "the cost of living crisis"],
         "root": "cost(花費) + living(過日子) → 過日子要花的錢",
         "synonyms": ["living expenses", "household costs"],
@@ -312,6 +350,7 @@ TOPICS_B = [
     {
         "word": "relocate", "pos": "v.",
         "example": "Several firms relocated to the suburbs when city rents doubled.",
+        "example_zh": "市區租金翻倍時，好幾家公司搬到了郊區。",
         "collocations": ["relocate to the suburbs", "relocate residents", "relocate the factory"],
         "root": "re-(再) + loc(地方, 同 location/local) + -ate → 換到另一個位置",
         "synonyms": ["move", "resettle", "transfer", "shift"],
@@ -320,6 +359,7 @@ TOPICS_B = [
     {
         "word": "utilities", "pos": "n.",
         "example": "Rent looks cheap until you add utilities and travel costs.",
+        "example_zh": "房租看起來很便宜，直到你加上水電費和交通費。",
         "collocations": ["utility bills", "pay for utilities", "essential utilities"],
         "root": "util(有用, 拉丁 uti 使用, 同 use/utilise) + -ity → 水電瓦斯這類有用的基礎服務",
         "synonyms": ["public services", "water and power", "basic services"],
@@ -330,6 +370,7 @@ TOPICS_B = [
     {
         "word": "surveillance", "pos": "n.",
         "example": "Critics argue that mass surveillance erodes personal privacy.",
+        "example_zh": "批評者認為大規模監控侵蝕了個人隱私。",
         "collocations": ["CCTV surveillance", "under surveillance", "mass surveillance"],
         "root": "sur-(在上面) + veill(看守, 拉丁 vigilare, 同 vigilant/vigil) + -ance → 在上面盯著看",
         "synonyms": ["monitoring", "observation", "watching"],
@@ -338,6 +379,7 @@ TOPICS_B = [
     {
         "word": "deterrent", "pos": "n.",
         "example": "Heavier fines act as a deterrent to dangerous driving.",
+        "example_zh": "更重的罰款對危險駕駛有嚇阻作用。",
         "collocations": ["act as a deterrent", "an effective deterrent", "a strong deterrent"],
         "root": "de-(離開) + terr(恐懼, 同 terror/terrify) + -ent → 讓人因害怕而退開的東西",
         "synonyms": ["disincentive", "discouragement", "check", "restraint"],
@@ -346,6 +388,7 @@ TOPICS_B = [
     {
         "word": "rehabilitation", "pos": "n.",
         "example": "Prisons that focus on rehabilitation report lower reoffending rates.",
+        "example_zh": "著重更生的監獄，再犯率較低。",
         "collocations": ["offender rehabilitation", "a rehabilitation programme", "focus on rehabilitation"],
         "root": "re-(再) + habilit(能力, 同 ability/able) + -ation → 讓能力回到身上",
         "synonyms": ["reform", "reintegration", "retraining"],
@@ -354,6 +397,7 @@ TOPICS_B = [
     {
         "word": "reoffend", "pos": "v.",
         "example": "Young offenders who find work are far less likely to reoffend.",
+        "example_zh": "找到工作的少年犯再犯的機率低得多。",
         "collocations": ["likely to reoffend", "reoffending rates", "stop them reoffending"],
         "root": "re-(再) + offend(冒犯、犯罪) → 再犯一次",
         "synonyms": ["commit further offences", "relapse into crime"],
@@ -362,6 +406,7 @@ TOPICS_B = [
     {
         "word": "custodial sentence", "pos": "n. phr.",
         "example": "First-time offenders rarely receive a custodial sentence for this offence.",
+        "example_zh": "初犯者很少因為這項罪名被判入監服刑。",
         "collocations": ["receive a custodial sentence", "a lengthy custodial sentence", "avoid a custodial sentence"],
         "root": "custod(看守, 同 custody/custodian) + -ial → 要被看管起來的刑罰",
         "synonyms": ["prison sentence", "jail term", "imprisonment"],
@@ -370,6 +415,7 @@ TOPICS_B = [
     {
         "word": "petty crime", "pos": "n. phr.",
         "example": "Better street lighting cut petty crime in the neighbourhood by a third.",
+        "example_zh": "改善路燈讓這一帶的輕微犯罪減少了三分之一。",
         "collocations": ["tackle petty crime", "petty crime rates", "a rise in petty crime"],
         "root": "petty 來自法文 petit「小」→ 輕微的犯罪",
         "synonyms": ["minor offences", "low-level crime", "small-scale crime"],
@@ -378,6 +424,7 @@ TOPICS_B = [
     {
         "word": "vandalism", "pos": "n.",
         "example": "Repairing vandalism costs the council millions every year.",
+        "example_zh": "修復破壞公物每年花掉議會數百萬。",
         "collocations": ["acts of vandalism", "mindless vandalism", "prevent vandalism"],
         "root": "源自洗劫羅馬的日耳曼部族 Vandals（汪達爾人）→ 蓄意破壞",
         "synonyms": ["criminal damage", "defacement", "wilful damage"],
@@ -386,6 +433,7 @@ TOPICS_B = [
     {
         "word": "fraud", "pos": "n.",
         "example": "Online fraud now costs consumers more than street theft does.",
+        "example_zh": "網路詐騙現在造成的消費者損失已經超過街頭竊盜。",
         "collocations": ["commit fraud", "online fraud", "a fraud investigation"],
         "root": "拉丁 fraus「欺騙」→ 用詐術取得財物",
         "synonyms": ["deception", "scam", "swindle", "cheating"],
@@ -394,6 +442,7 @@ TOPICS_B = [
     {
         "word": "burglary", "pos": "n.",
         "example": "Burglary fell steadily after the neighbourhood watch scheme started.",
+        "example_zh": "守望相助計畫開始後，竊盜案穩定下降。",
         "collocations": ["report a burglary", "burglary rates", "a burglary attempt"],
         "root": "burg(城堡、城鎮, 同 borough/burgher) → 闖進人家的屋子偷竊",
         "synonyms": ["break-in", "housebreaking", "robbery"],
@@ -402,6 +451,7 @@ TOPICS_B = [
     {
         "word": "community service", "pos": "n. phr.",
         "example": "He was sentenced to two hundred hours of community service.",
+        "example_zh": "他被判處兩百小時的社區服務。",
         "collocations": ["sentenced to community service", "carry out community service", "community service orders"],
         "root": "community(社區) + service(服務) → 用勞務回饋社區來抵刑",
         "synonyms": ["unpaid work", "a community sentence"],
@@ -410,6 +460,7 @@ TOPICS_B = [
     {
         "word": "parole", "pos": "n.",
         "example": "She was released on parole after serving half her sentence.",
+        "example_zh": "她服刑一半之後獲得假釋出獄。",
         "collocations": ["released on parole", "be granted parole", "a parole board"],
         "root": "法文 parole「話語」→ 以「承諾」（口頭保證）換取提早釋放",
         "synonyms": ["conditional release", "early release"],
@@ -418,6 +469,7 @@ TOPICS_B = [
     {
         "word": "prosecute", "pos": "v.",
         "example": "Companies that dump waste illegally are rarely prosecuted.",
+        "example_zh": "非法傾倒廢棄物的公司很少被起訴。",
         "collocations": ["prosecute offenders", "be prosecuted for", "decide to prosecute"],
         "root": "pro-(向前) + secut(跟隨, 同 sequence/pursue/consecutive) → 一路追訴到底",
         "synonyms": ["take to court", "charge", "bring to trial"],
@@ -426,6 +478,7 @@ TOPICS_B = [
     {
         "word": "juvenile", "pos": "adj.",
         "example": "Juvenile offenders are dealt with in a separate court system.",
+        "example_zh": "少年犯由另一套法院系統處理。",
         "collocations": ["juvenile crime", "juvenile offenders", "a juvenile court"],
         "root": "juven(年輕, 拉丁 juvenis, 同 junior/rejuvenate) + -ile → 年少的",
         "synonyms": ["youth", "underage", "young"],
@@ -434,6 +487,7 @@ TOPICS_B = [
     {
         "word": "corruption", "pos": "n.",
         "example": "Corruption in the licensing system was exposed by a whistleblower.",
+        "example_zh": "發照制度中的貪腐被一名吹哨者揭發。",
         "collocations": ["political corruption", "tackle corruption", "corruption scandals"],
         "root": "cor-(完全) + rupt(破裂, 同 rupture/disrupt/erupt) + -ion → 整個爛掉",
         "synonyms": ["bribery", "dishonesty", "graft", "malpractice"],
@@ -442,6 +496,7 @@ TOPICS_B = [
     {
         "word": "offence", "pos": "n.",
         "example": "Driving without insurance is a criminal offence in most countries.",
+        "example_zh": "在多數國家，無保險駕駛是一項刑事罪。",
         "collocations": ["a criminal offence", "commit an offence", "a minor offence"],
         "root": "of-(朝向) + fend(打, 同 defend/fend off) + -ence → 打到別人 → 冒犯、違法行為",
         "synonyms": ["crime", "violation", "breach", "wrongdoing"],
@@ -450,6 +505,7 @@ TOPICS_B = [
     {
         "word": "victim", "pos": "n.",
         "example": "Support services for victims of crime remain badly underfunded.",
+        "example_zh": "針對犯罪被害人的支援服務長期經費不足。",
         "collocations": ["victims of crime", "support victims", "fall victim to"],
         "root": "拉丁 victima「祭品」→ 被犧牲掉的人",
         "synonyms": ["casualty", "injured party", "sufferer"],
@@ -458,6 +514,7 @@ TOPICS_B = [
     {
         "word": "incarceration", "pos": "n.",
         "example": "Mass incarceration has proved expensive and largely ineffective.",
+        "example_zh": "大規模監禁已證明成本高昂且大致無效。",
         "collocations": ["mass incarceration", "the cost of incarceration", "rates of incarceration"],
         "root": "in-(進入) + carcer(監獄, 拉丁 carcer) + -ation → 關進牢裡",
         "synonyms": ["imprisonment", "jailing", "detention"],
@@ -466,6 +523,7 @@ TOPICS_B = [
     {
         "word": "patrol", "pos": "n.",
         "example": "Regular police patrols reassured residents more than cameras did.",
+        "example_zh": "定期的警察巡邏比監視器更能讓居民安心。",
         "collocations": ["police patrols", "patrol the streets", "step up patrols"],
         "root": "法文 patrouiller「在泥裡踩來踩去」→ 來回走動巡查",
         "synonyms": ["police presence", "round", "watch"],
@@ -474,6 +532,7 @@ TOPICS_B = [
     {
         "word": "law-abiding", "pos": "adj.",
         "example": "Blanket surveillance treats law-abiding citizens as suspects.",
+        "example_zh": "全面監控把守法公民當成嫌疑犯看待。",
         "collocations": ["law-abiding citizens", "a law-abiding society", "otherwise law-abiding"],
         "root": "law(法律) + abide(遵守, 古英語 abidan 停留) → 待在法律範圍裡",
         "synonyms": ["honest", "compliant", "respectable"],
@@ -482,6 +541,7 @@ TOPICS_B = [
     {
         "word": "penalty", "pos": "n.",
         "example": "Stiffer penalties alone have never been shown to reduce crime.",
+        "example_zh": "從來沒有證據顯示光靠加重刑罰就能減少犯罪。",
         "collocations": ["stiff penalties", "impose a penalty", "the maximum penalty"],
         "root": "pen(懲罰, 拉丁 poena, 同 punish/penal/pain) + -alty → 罰則",
         "synonyms": ["punishment", "sanction", "fine"],
@@ -492,6 +552,7 @@ TOPICS_B = [
     {
         "word": "undermine", "pos": "v.",
         "example": "The spread of misinformation undermines public trust in journalism.",
+        "example_zh": "錯誤資訊的擴散削弱了大眾對新聞業的信任。",
         "collocations": ["undermine confidence", "undermine authority", "undermine efforts"],
         "root": "under(下面) + mine(挖礦) → 在底下挖坑 → 動搖根基",
         "synonyms": ["weaken", "erode", "damage", "compromise"],
@@ -500,6 +561,7 @@ TOPICS_B = [
     {
         "word": "impartial", "pos": "adj.",
         "example": "Public broadcasters are expected to remain impartial during elections.",
+        "example_zh": "公共廣播機構在選舉期間應保持中立。",
         "collocations": ["remain impartial", "impartial coverage", "an impartial observer"],
         "root": "im-(不) + partial(偏袒的, part 部分 → 站在某一部分那邊) → 不偏任何一邊",
         "synonyms": ["unbiased", "neutral", "objective", "even-handed"],
@@ -508,6 +570,7 @@ TOPICS_B = [
     {
         "word": "tabloid", "pos": "n.",
         "example": "The story was splashed across every tabloid the following morning.",
+        "example_zh": "隔天早上這則新聞佔滿了每一份小報的版面。",
         "collocations": ["the tabloid press", "tabloid headlines", "a tabloid newspaper"],
         "root": "tablet(小藥片) 的商標名 → 把新聞壓縮成小份、好吞的形式",
         "synonyms": ["popular press", "red-top", "sensational paper"],
@@ -516,6 +579,7 @@ TOPICS_B = [
     {
         "word": "censorship", "pos": "n.",
         "example": "State censorship makes it impossible to verify what really happened.",
+        "example_zh": "國家審查讓人無從查證真正發生了什麼事。",
         "collocations": ["state censorship", "impose censorship", "media censorship"],
         "root": "cens(評定, 羅馬的 censor 監察官負責審查風紀) + -ship → 審查制度",
         "synonyms": ["suppression", "control of information", "blocking"],
@@ -524,6 +588,7 @@ TOPICS_B = [
     {
         "word": "coverage", "pos": "n.",
         "example": "The election received far more coverage online than on television.",
+        "example_zh": "這場選舉在網路上獲得的報導量遠多於電視。",
         "collocations": ["media coverage", "extensive coverage", "biased coverage"],
         "root": "cover(覆蓋) + -age → 報導所「蓋到」的範圍",
         "synonyms": ["reporting", "media attention", "treatment"],
@@ -532,6 +597,7 @@ TOPICS_B = [
     {
         "word": "credibility", "pos": "n.",
         "example": "The paper lost credibility after publishing the story without checking it.",
+        "example_zh": "這家報社未經查證就刊登該報導，因而失去公信力。",
         "collocations": ["lose credibility", "damage credibility", "the credibility of a source"],
         "root": "cred(相信, 同 credit/incredible/creed) + -ibility → 可以被相信的程度",
         "synonyms": ["trustworthiness", "reliability", "believability"],
@@ -540,6 +606,7 @@ TOPICS_B = [
     {
         "word": "sensationalism", "pos": "n.",
         "example": "Competition for clicks has encouraged sensationalism over accuracy.",
+        "example_zh": "爭取點擊的競爭助長了譁眾取寵勝過準確。",
         "collocations": ["media sensationalism", "accused of sensationalism", "tabloid sensationalism"],
         "root": "sens(感覺, 同 sense/sensation) + -ation + -ism → 一味追求刺激感受",
         "synonyms": ["hype", "exaggeration", "scaremongering"],
@@ -548,6 +615,7 @@ TOPICS_B = [
     {
         "word": "propaganda", "pos": "n.",
         "example": "Wartime propaganda was designed to keep morale high at home.",
+        "example_zh": "戰時的宣傳是為了維持後方的士氣。",
         "collocations": ["state propaganda", "spread propaganda", "a propaganda campaign"],
         "root": "拉丁 propagare「繁殖、散播」(同 propagate) → 把某套觀念大量散出去",
         "synonyms": ["political messaging", "indoctrination", "spin"],
@@ -556,6 +624,7 @@ TOPICS_B = [
     {
         "word": "clickbait", "pos": "n.",
         "example": "Headlines written as clickbait rarely deliver what they promise.",
+        "example_zh": "寫成標題黨的標題很少兌現它承諾的內容。",
         "collocations": ["clickbait headlines", "rely on clickbait", "pure clickbait"],
         "root": "click(點擊) + bait(誘餌) → 專門引你上鉤的餌",
         "synonyms": ["sensational headlines", "attention-grabbing content"],
@@ -564,6 +633,7 @@ TOPICS_B = [
     {
         "word": "echo chamber", "pos": "n. phr.",
         "example": "Recommendation systems can trap users in an echo chamber of similar views.",
+        "example_zh": "推薦系統可能把使用者困在觀點雷同的同溫層裡。",
         "collocations": ["an online echo chamber", "trapped in an echo chamber", "create echo chambers"],
         "root": "echo(回音) + chamber(房間) → 只聽得到自己聲音回彈的房間",
         "synonyms": ["filter bubble", "closed information loop"],
@@ -572,6 +642,7 @@ TOPICS_B = [
     {
         "word": "outlet", "pos": "n.",
         "example": "Independent news outlets struggle to compete with social platforms.",
+        "example_zh": "獨立新聞媒體難以與社群平台競爭。",
         "collocations": ["a news outlet", "mainstream outlets", "independent outlets"],
         "root": "out(外) + let(讓出, 同 let) → 讓內容流出來的出口",
         "synonyms": ["media organisation", "publication", "channel"],
@@ -580,6 +651,7 @@ TOPICS_B = [
     {
         "word": "subscription", "pos": "n.",
         "example": "Digital subscriptions now bring in more revenue than print advertising.",
+        "example_zh": "數位訂閱現在帶來的收入已超過紙本廣告。",
         "collocations": ["a digital subscription", "cancel a subscription", "subscription numbers"],
         "root": "sub-(在下) + script(寫, 同 script/describe/manuscript) + -ion → 在文件底下簽名訂閱",
         "synonyms": ["membership", "paid access"],
@@ -588,6 +660,7 @@ TOPICS_B = [
     {
         "word": "viral", "pos": "adj.",
         "example": "The clip went viral before anyone checked whether it was genuine.",
+        "example_zh": "這段影片在任何人查證真偽之前就已經瘋傳。",
         "collocations": ["go viral", "a viral video", "viral marketing"],
         "root": "virus(病毒) + -al → 像病毒一樣一傳十十傳百",
         "synonyms": ["rapidly shared", "widely circulated"],
@@ -596,6 +669,7 @@ TOPICS_B = [
     {
         "word": "influencer", "pos": "n.",
         "example": "Brands now spend more on influencers than on television advertising.",
+        "example_zh": "品牌現在花在網紅上的錢比電視廣告還多。",
         "collocations": ["social media influencers", "influencer marketing", "a beauty influencer"],
         "root": "in-(進入) + flu(流, 同 fluent/fluid/fluctuate) + -ence + -er → 讓想法「流進」別人腦中的人",
         "synonyms": ["content creator", "opinion leader"],
@@ -604,6 +678,7 @@ TOPICS_B = [
     {
         "word": "defamation", "pos": "n.",
         "example": "The politician sued the magazine for defamation and won.",
+        "example_zh": "這位政治人物控告該雜誌誹謗並勝訴。",
         "collocations": ["sue for defamation", "a defamation case", "defamation laws"],
         "root": "de-(去除) + fam(名聲, 同 fame/famous/infamous) + -ation → 把名聲拿掉",
         "synonyms": ["libel", "slander", "character attack"],
@@ -612,6 +687,7 @@ TOPICS_B = [
     {
         "word": "editorial", "pos": "n.",
         "example": "The paper ran an editorial calling for the minister to resign.",
+        "example_zh": "這家報社刊出社論，要求部長辭職。",
         "collocations": ["an editorial line", "editorial independence", "write an editorial"],
         "root": "edit(拿出來發表, 拉丁 edere 產出, 同 edition) + -orial → 代表報社立場的文章",
         "synonyms": ["opinion piece", "leader", "commentary"],
@@ -620,6 +696,7 @@ TOPICS_B = [
     {
         "word": "scrutiny", "pos": "n.",
         "example": "Social media companies are finally coming under serious scrutiny.",
+        "example_zh": "社群媒體公司終於開始受到嚴格的檢視。",
         "collocations": ["public scrutiny", "come under scrutiny", "close scrutiny"],
         "root": "拉丁 scrutari「翻找破爛」(scruta 廢棄物) → 一件一件翻出來查",
         "synonyms": ["close examination", "inspection", "oversight"],
@@ -628,6 +705,7 @@ TOPICS_B = [
     {
         "word": "circulation", "pos": "n.",
         "example": "The magazine's circulation halved within five years of going online.",
+        "example_zh": "這本雜誌轉為線上之後，五年內發行量減半。",
         "collocations": ["falling circulation", "boost circulation", "a circulation of"],
         "root": "circul(圓圈, 同 circle/circuit) + -ation → 一份份流通出去的量",
         "synonyms": ["readership", "distribution", "sales figures"],
@@ -636,6 +714,7 @@ TOPICS_B = [
     {
         "word": "anonymity", "pos": "n.",
         "example": "Online anonymity protects whistleblowers but also shields abusers.",
+        "example_zh": "網路匿名保護了吹哨者，卻也庇護了施暴者。",
         "collocations": ["online anonymity", "protect anonymity", "the anonymity of the internet"],
         "root": "an-(沒有) + onym(名字, 同 synonym/pseudonym/acronym) + -ity → 沒有名字的狀態",
         "synonyms": ["namelessness", "concealed identity"],
@@ -644,6 +723,7 @@ TOPICS_B = [
     {
         "word": "accountability", "pos": "n.",
         "example": "Readers are demanding greater accountability from the platforms they use.",
+        "example_zh": "讀者要求他們使用的平台承擔更多責任。",
         "collocations": ["demand accountability", "media accountability", "public accountability"],
         "root": "account(交代, 原意「計算」) + -ability → 要能交代清楚的責任",
         "synonyms": ["answerability", "responsibility", "transparency"],

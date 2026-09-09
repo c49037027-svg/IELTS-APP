@@ -9,6 +9,7 @@ TASK1 = [
     {
         "word": "soar", "pos": "v.",
         "example": "House prices soared by almost 40 per cent between 2015 and 2020.",
+        "example_zh": "2015 到 2020 年間，房價飆升了將近四成。",
         "collocations": ["soar to a record high", "prices soared", "soaring demand"],
         "root": "古法文 essorer 讓鳥乘風高飛 → 像鳥一樣往上衝",
         "synonyms": ["rocket", "surge", "shoot up", "climb sharply"],
@@ -18,6 +19,7 @@ TASK1 = [
     {
         "word": "surge", "pos": "n.",
         "example": "The chart shows a sharp surge in online orders after 2018.",
+        "example_zh": "圖表顯示 2018 年之後線上訂單急遽激增。",
         "collocations": ["a surge in demand", "a sudden surge", "surge to a peak"],
         "root": "sur-(從下往上) + reg(升起, 同 erect/regent) → 像浪一樣湧上來",
         "synonyms": ["a sharp rise", "a jump", "a leap", "an upswing"],
@@ -26,6 +28,7 @@ TASK1 = [
     {
         "word": "climb", "pos": "v.",
         "example": "Car ownership climbed steadily throughout the twenty-year period.",
+        "example_zh": "這二十年間，汽車持有率穩定攀升。",
         "collocations": ["climb steadily", "climb to a peak", "figures climbed"],
         "root": "古英語 climban 攀爬 → 一階一階往上",
         "synonyms": ["rise", "increase", "go up", "ascend"],
@@ -34,6 +37,7 @@ TASK1 = [
     {
         "word": "escalate", "pos": "v.",
         "example": "Waste production escalated rapidly once the population passed one million.",
+        "example_zh": "人口突破一百萬之後，垃圾產量迅速攀高。",
         "collocations": ["escalate rapidly", "costs escalated", "escalating figures"],
         "root": "escalator(手扶梯) 的動詞化 → 像手扶梯一樣持續往上",
         "synonyms": ["increase sharply", "mount", "intensify", "spiral"],
@@ -42,6 +46,7 @@ TASK1 = [
     {
         "word": "edge up", "pos": "phr v.",
         "example": "Unemployment edged up slightly in the final two years of the period.",
+        "example_zh": "失業率在最後兩年小幅上升。",
         "collocations": ["edge up slightly", "figures edged up", "edge up to"],
         "root": "edge(邊緣) + up → 只往上挪一個邊的距離 → 微幅上升",
         "synonyms": ["rise slightly", "creep up", "inch up"],
@@ -52,6 +57,7 @@ TASK1 = [
     {
         "word": "plummet", "pos": "v.",
         "example": "Newspaper sales plummeted from 12 million to under 4 million copies.",
+        "example_zh": "報紙銷量從一千兩百萬份暴跌到不足四百萬份。",
         "collocations": ["plummet to a low", "sales plummeted", "plummeting numbers"],
         "root": "plumb(鉛錘, 同 plumber 水管工原本用鉛錘測垂直) → 像鉛錘一樣直直落下",
         "synonyms": ["plunge", "nosedive", "drop sharply", "tumble"],
@@ -60,6 +66,7 @@ TASK1 = [
     {
         "word": "plunge", "pos": "v.",
         "example": "Visitor numbers plunged by half after the border closed.",
+        "example_zh": "邊境關閉後，遊客人數驟減一半。",
         "collocations": ["plunge by half", "plunge to a record low", "a dramatic plunge"],
         "root": "plumb(鉛錘) 的另一支 → 整個人跳進水裡 → 猛然下墜",
         "synonyms": ["plummet", "dive", "fall sharply", "slump"],
@@ -68,6 +75,7 @@ TASK1 = [
     {
         "word": "decline", "pos": "n.",
         "example": "There was a steady decline in coal consumption across the whole period.",
+        "example_zh": "整段期間煤炭消耗量呈現穩定下滑。",
         "collocations": ["a steady decline", "a sharp decline", "a decline in numbers"],
         "root": "de-(向下) + clin(傾斜, 同 incline/recline/climate) → 向下傾",
         "synonyms": ["fall", "drop", "decrease", "downturn"],
@@ -77,6 +85,7 @@ TASK1 = [
     {
         "word": "dip", "pos": "v.",
         "example": "Sales dipped briefly in 2012 before recovering the following year.",
+        "example_zh": "銷量在 2012 年短暫下探，隔年隨即回升。",
         "collocations": ["dip slightly", "a slight dip", "dip below"],
         "root": "古英語 dyppan 浸一下 → 短暫沉下去又起來",
         "synonyms": ["fall slightly", "drop briefly", "ease"],
@@ -86,6 +95,7 @@ TASK1 = [
     {
         "word": "slump", "pos": "n.",
         "example": "The graph shows a slump in manufacturing output during the recession.",
+        "example_zh": "圖表顯示製造業產出在經濟衰退期間大幅下滑。",
         "collocations": ["a slump in sales", "an economic slump", "slump to a low"],
         "root": "擬聲字，東西「噗通」塌下去的聲音 → 突然垮掉",
         "synonyms": ["sharp fall", "downturn", "collapse", "plunge"],
@@ -94,6 +104,7 @@ TASK1 = [
     {
         "word": "dwindle", "pos": "v.",
         "example": "Fish stocks dwindled steadily as commercial fishing expanded.",
+        "example_zh": "隨著商業捕撈擴張，漁業資源逐步枯竭。",
         "collocations": ["dwindle steadily", "dwindling numbers", "dwindle to almost nothing"],
         "root": "古英語 dwinan 枯萎 → 一點一點縮小到幾乎沒有",
         "synonyms": ["shrink", "diminish", "decrease gradually", "taper off"],
@@ -104,6 +115,7 @@ TASK1 = [
     {
         "word": "plateau", "pos": "v.",
         "example": "After a sharp rise, the figure plateaued at around 60 per cent.",
+        "example_zh": "急遽上升之後，這個數字在六成左右趨於平緩。",
         "collocations": ["plateau at", "reach a plateau", "plateau after 2010"],
         "root": "法文 plat(平的, 同 plate/plain) → 高原 → 走成平的一段",
         "synonyms": ["level off", "stabilise", "flatten out", "remain steady"],
@@ -113,6 +125,7 @@ TASK1 = [
     {
         "word": "level off", "pos": "phr v.",
         "example": "Energy consumption rose quickly and then levelled off at 90 units.",
+        "example_zh": "能源消耗量快速上升後，在 90 單位持平。",
         "collocations": ["level off at", "begin to level off", "levelling off"],
         "root": "level(水平) + off → 從斜的走成水平",
         "synonyms": ["plateau", "stabilise", "flatten out", "even out"],
@@ -121,6 +134,7 @@ TASK1 = [
     {
         "word": "stabilise", "pos": "v.",
         "example": "Prices stabilised at just under two dollars per litre after 2016.",
+        "example_zh": "2016 年之後，價格穩定在每公升略低於兩美元。",
         "collocations": ["stabilise at", "prices stabilised", "begin to stabilise"],
         "root": "sta(站立, 同 stand/static/stable) + -ise → 站得住不再晃",
         "synonyms": ["level off", "steady", "remain constant", "settle"],
@@ -129,6 +143,7 @@ TASK1 = [
     {
         "word": "fluctuate", "pos": "v.",
         "example": "Between 2005 and 2010, sales fluctuated between 20 and 35 million units.",
+        "example_zh": "2005 到 2010 年間，銷量在兩千萬到三千五百萬台之間起伏。",
         "collocations": ["fluctuate wildly", "fluctuate between", "figures fluctuated"],
         "root": "flu(流動, 同 fluid/influence/fluent) + -ate → 像水一樣起起伏伏",
         "synonyms": ["vary", "oscillate", "swing", "go up and down"],
@@ -138,6 +153,7 @@ TASK1 = [
     {
         "word": "constant", "pos": "adj.",
         "example": "The proportion of rural residents remained constant at 15 per cent.",
+        "example_zh": "農村居民的比例維持在 15% 不變。",
         "collocations": ["remain constant", "a constant rate", "constant throughout"],
         "root": "con-(完全) + sta(站立, 同 stand/stable) → 完全站著不動",
         "synonyms": ["steady", "unchanged", "stable", "uniform"],
@@ -148,6 +164,7 @@ TASK1 = [
     {
         "word": "peak", "pos": "v.",
         "example": "Unemployment peaked at 12 per cent in 2009 before falling steadily.",
+        "example_zh": "失業率在 2009 年達到 12% 的高峰，之後穩定下降。",
         "collocations": ["peak at", "reach a peak", "peak in 2009"],
         "root": "peak 山頂 → 圖上的最高點",
         "synonyms": ["reach a maximum", "culminate", "top out", "hit a high"],
@@ -157,6 +174,7 @@ TASK1 = [
     {
         "word": "trough", "pos": "n.",
         "example": "The graph reaches a trough of just 5,000 visitors in January.",
+        "example_zh": "圖表在一月落到僅五千名遊客的谷底。",
         "collocations": ["reach a trough", "a trough of", "the trough of the cycle"],
         "root": "古英語 trog 食槽 → 凹下去的地方 → 谷底",
         "synonyms": ["low point", "bottom", "minimum", "lowest level"],
@@ -165,6 +183,7 @@ TASK1 = [
     {
         "word": "bottom out", "pos": "phr v.",
         "example": "Car sales bottomed out in 2013 and then began to recover.",
+        "example_zh": "汽車銷量在 2013 年觸底，之後開始回升。",
         "collocations": ["bottom out at", "bottom out in 2013", "finally bottom out"],
         "root": "bottom(底) + out → 走到底了，不會再往下",
         "synonyms": ["reach the lowest point", "hit rock bottom", "stop falling"],
@@ -173,6 +192,7 @@ TASK1 = [
     {
         "word": "rebound", "pos": "v.",
         "example": "Tourism rebounded strongly in the two years after the crisis.",
+        "example_zh": "危機過後兩年，觀光業強勁反彈。",
         "collocations": ["rebound strongly", "a sharp rebound", "rebound to"],
         "root": "re-(回) + bound(彈跳, 同 bounce) → 撞到底再彈回來",
         "synonyms": ["recover", "bounce back", "pick up", "revive"],
@@ -181,6 +201,7 @@ TASK1 = [
     {
         "word": "outstrip", "pos": "v.",
         "example": "Demand for housing outstripped supply throughout the decade.",
+        "example_zh": "整個十年間，住宅需求都超過供給。",
         "collocations": ["outstrip supply", "outstrip growth", "far outstrip"],
         "root": "out-(超過) + strip(奔跑, 舊義) → 跑贏對方",
         "synonyms": ["exceed", "surpass", "overtake", "be greater than"],
@@ -191,6 +212,7 @@ TASK1 = [
     {
         "word": "steadily", "pos": "adv.",
         "example": "The number of graduates rose steadily from 2000 to 2015.",
+        "example_zh": "2000 到 2015 年，畢業生人數穩定成長。",
         "collocations": ["rise steadily", "steadily increase", "grow steadily"],
         "root": "stead(位置, 同 instead/homestead) + -y + -ly → 一直待在同一個節奏",
         "synonyms": ["consistently", "gradually", "progressively", "at a constant rate"],
@@ -199,6 +221,7 @@ TASK1 = [
     {
         "word": "dramatically", "pos": "adv.",
         "example": "Internet use grew dramatically after broadband became affordable.",
+        "example_zh": "寬頻變得負擔得起之後，網路使用量大幅成長。",
         "collocations": ["rise dramatically", "fall dramatically", "change dramatically"],
         "root": "drama(戲劇, 希臘 dran 行動) + -ic + -ally → 像戲劇一樣誇張",
         "synonyms": ["sharply", "markedly", "significantly", "strikingly"],
@@ -207,6 +230,7 @@ TASK1 = [
     {
         "word": "marginally", "pos": "adv.",
         "example": "Spending on transport increased only marginally over the period.",
+        "example_zh": "交通支出在這段期間只有小幅增加。",
         "collocations": ["increase marginally", "marginally higher", "differ marginally"],
         "root": "margin(邊緣, 同 margin 頁邊) + -al + -ly → 只在邊緣動一點點",
         "synonyms": ["slightly", "fractionally", "a little", "minimally"],
@@ -215,6 +239,7 @@ TASK1 = [
     {
         "word": "considerably", "pos": "adv.",
         "example": "Figures for the two cities differ considerably in the second half of the period.",
+        "example_zh": "後半段期間，兩個城市的數字差異相當大。",
         "collocations": ["rise considerably", "considerably higher", "vary considerably"],
         "root": "con-(完全) + sider(星星, 原指觀星占卜 → 仔細考量) + -ably → 值得注意的程度",
         "synonyms": ["significantly", "substantially", "markedly", "greatly"],
@@ -223,6 +248,7 @@ TASK1 = [
     {
         "word": "gradual", "pos": "adj.",
         "example": "The chart shows a gradual shift from coal to renewable sources.",
+        "example_zh": "圖表顯示從煤炭逐步轉向再生能源。",
         "collocations": ["a gradual increase", "a gradual decline", "a gradual shift"],
         "root": "grad(步伐, 同 grade/graduate/progress) + -ual → 一步一步來的",
         "synonyms": ["steady", "progressive", "slow", "incremental"],
@@ -231,6 +257,7 @@ TASK1 = [
     {
         "word": "approximately", "pos": "adv.",
         "example": "Approximately one in five households owned two or more cars.",
+        "example_zh": "大約每五戶就有一戶擁有兩輛以上的車。",
         "collocations": ["approximately half", "approximately 20 per cent", "approximately equal"],
         "root": "ad-(接近) + proxim(最近的, 同 proximity/approach) + -ate + -ly → 靠近某個數",
         "synonyms": ["roughly", "about", "around", "in the region of"],
@@ -241,6 +268,7 @@ TASK1 = [
     {
         "word": "respectively", "pos": "adv.",
         "example": "Spending on housing and transport rose to 30 and 18 per cent respectively.",
+        "example_zh": "住宅與交通支出分別上升到 30% 與 18%。",
         "collocations": ["A and B respectively", "rose to X and Y respectively"],
         "root": "re-(回) + spect(看, 同 inspect/respect/spectator) + -ive + -ly → 各自回頭對應著看",
         "synonyms": ["in that order", "correspondingly"],
@@ -250,6 +278,7 @@ TASK1 = [
     {
         "word": "whereas", "pos": "conj.",
         "example": "Sales in Europe fell, whereas the figure for Asia more than doubled.",
+        "example_zh": "歐洲銷量下滑，而亞洲的數字則成長超過一倍。",
         "collocations": ["X rose whereas Y fell", "whereas the figure for"],
         "root": "where(在何處) + as(如同) → 「相對於某處的情況」→ 對比連接詞",
         "synonyms": ["while", "by contrast", "on the other hand"],
@@ -258,6 +287,7 @@ TASK1 = [
     {
         "word": "overtake", "pos": "v.",
         "example": "Online sales overtook high-street sales for the first time in 2019.",
+        "example_zh": "2019 年線上銷售首度超越實體店面銷售。",
         "collocations": ["overtake sales of", "overtake in 2019", "eventually overtake"],
         "root": "over-(越過) + take → 從後面追上去越過",
         "synonyms": ["surpass", "exceed", "outstrip", "pass"],
@@ -266,6 +296,7 @@ TASK1 = [
     {
         "word": "outnumber", "pos": "v.",
         "example": "Male graduates outnumbered female graduates by roughly two to one.",
+        "example_zh": "男性畢業生人數約以二比一超過女性畢業生。",
         "collocations": ["outnumber by two to one", "far outnumber", "outnumber the rest"],
         "root": "out-(超過) + number → 數量壓過對方",
         "synonyms": ["exceed in number", "be more numerous than", "surpass"],
@@ -274,6 +305,7 @@ TASK1 = [
     {
         "word": "double", "pos": "v.",
         "example": "The number of international students doubled over the twenty-year period.",
+        "example_zh": "這二十年間，國際學生人數成長為兩倍。",
         "collocations": ["double in size", "more than double", "double over the period"],
         "root": "du(二, 同 dual/duo/duet) + -ble → 變成兩份",
         "synonyms": ["increase twofold", "grow by 100 per cent", "multiply by two"],
@@ -282,6 +314,7 @@ TASK1 = [
     {
         "word": "halve", "pos": "v.",
         "example": "Carbon emissions from transport halved between 2010 and 2030.",
+        "example_zh": "2010 到 2030 年，交通產生的碳排放減半。",
         "collocations": ["halve in a decade", "almost halve", "halve the figure"],
         "root": "half 的動詞形 → 切成一半",
         "synonyms": ["fall by half", "be cut in half", "drop 50 per cent"],
@@ -292,6 +325,7 @@ TASK1 = [
     {
         "word": "account for", "pos": "phr v.",
         "example": "Renewable sources accounted for just under a third of total output.",
+        "example_zh": "再生能源佔總產出略低於三分之一。",
         "collocations": ["account for 30 per cent", "account for the majority", "collectively account for"],
         "root": "account(計算, 同 count) + for → 算一算佔了多少",
         "synonyms": ["make up", "constitute", "represent", "comprise"],
@@ -301,6 +335,7 @@ TASK1 = [
     {
         "word": "proportion", "pos": "n.",
         "example": "A large proportion of household waste was sent to landfill.",
+        "example_zh": "家庭垃圾中有很大一部分被送往掩埋場。",
         "collocations": ["a large proportion of", "the proportion of", "in proportion to"],
         "root": "pro-(向前) + portion(份, 同 part/portion) → 分出來的那一份",
         "synonyms": ["share", "percentage", "fraction", "ratio"],
@@ -309,6 +344,7 @@ TASK1 = [
     {
         "word": "figure", "pos": "n.",
         "example": "The figure for private car use rose faster than any other category.",
+        "example_zh": "私人用車的數字成長速度超過其他任何類別。",
         "collocations": ["the figure for", "figures rose", "the corresponding figure"],
         "root": "fig(塑形, 同 figure 形狀/configure) → 呈現出來的形 → 數字",
         "synonyms": ["number", "statistic", "level", "amount"],
@@ -320,6 +356,7 @@ TASK1 = [
     {
         "word": "overall", "pos": "adv.",
         "example": "Overall, the three countries followed very similar trends.",
+        "example_zh": "整體而言，這三個國家的走勢非常相似。",
         "collocations": ["overall, the trend", "the overall figure", "an overall increase"],
         "root": "over(蓋過) + all(全部) → 蓋過全部來看",
         "synonyms": ["in general", "on the whole", "broadly", "taken as a whole"],
@@ -329,6 +366,7 @@ TASK1 = [
     {
         "word": "throughout", "pos": "prep.",
         "example": "Demand for water remained high throughout the period shown.",
+        "example_zh": "整段期間用水需求都維持在高檔。",
         "collocations": ["throughout the period", "throughout the decade", "stable throughout"],
         "root": "through(穿過) + out(到底) → 從頭穿到尾",
         "synonyms": ["for the whole period", "during the entire", "across"],
@@ -337,6 +375,7 @@ TASK1 = [
     {
         "word": "witness", "pos": "v.",
         "example": "The final decade witnessed a rapid expansion in solar capacity.",
+        "example_zh": "最後十年見證了太陽能容量的快速擴張。",
         "collocations": ["the period witnessed", "the city witnessed growth", "witness a rise"],
         "root": "wit(知道, 同 wit/wisdom) + -ness → 親眼見到 → 某段期間「出現了」某變化",
         "synonyms": ["see", "experience", "undergo", "record"],
