@@ -6,6 +6,7 @@ from datetime import date, timedelta
 from typing import Any
 
 from . import repository as repo
+from . import settings
 from .context import AppContext
 from .db import TRACK_RECALL, TRACK_SPELLING, TRACK_SYNONYM
 
@@ -58,6 +59,13 @@ def collect(ctx: AppContext) -> dict[str, Any]:
         "due_active_recall": repo.due_count(
             conn, TRACK_RECALL, today=today, card_type="active"
         ),
+        "new_words_today": repo.new_words_today(conn, today),
+        "new_words_left": repo.new_words_left_today(conn, today),
+        "new_per_day": settings.new_per_day(conn),
+        "due_old_recall": repo.due_old_count(
+            conn, TRACK_RECALL, today=today, card_type="passive",
+            require_any_fields=repo.CONTENT_FIELDS,
+        ),
         "reviews_today": repo.reviews_between(conn, today, today),
         "reviews_week": repo.reviews_between(conn, week_ago, today),
         "new_learned_week": repo.new_cards_learned(conn, week_ago),
@@ -87,6 +95,8 @@ def render(ctx: AppContext, *, full: bool = False) -> None:
         [
             f"今天待複習   認讀 {data['due'][TRACK_RECALL]} ｜ 拼字 {data['due'][TRACK_SPELLING]} "
             f"｜ 同義詞 {data['due'][TRACK_SYNONYM]}",
+            f"今日新字     {data['new_words_today']} / {data['new_per_day']} 個"
+            f"（還可以學 {data['new_words_left']} 個；到期舊字 {data['due_old_recall']} 個另計）",
             f"今日已複習   {data['reviews_today']} 次",
             f"連續學習     {data['streak']} 天（最長 {data['longest_streak']} 天，累計 {data['active_days']} 天）",
         ],

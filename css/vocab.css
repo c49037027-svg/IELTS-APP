@@ -177,6 +177,12 @@
   background: rgba(184, 84, 80, .1); color: var(--error);
   border-radius: 999px; font-size: 12px;
 }
+/* 今天第一次見到的字：標出來，想不起來是正常的 */
+.new-tag {
+  display: inline-block; margin-bottom: 10px; padding: 4px 10px;
+  background: rgba(90, 140, 190, .12); color: var(--primary);
+  border-radius: 999px; font-size: 12px;
+}
 
 /* ---------- 升級 ---------- */
 .promote-row {

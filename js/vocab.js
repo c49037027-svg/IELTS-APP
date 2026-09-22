@@ -176,8 +176,12 @@ const Vocab = (() => {
 
   // ---------------------------------------------------------- 模式 A：通勤複習
   function startReview() {
+    // 一場的份量 = 最多 40 張到期舊字 + 今天還沒認過的新字。
+    // 把新字算進 limit 裡，積了幾天沒練的時候舊卡才不會塞滿整場、
+    // 讓「每天幾個新字」變成空話。
     const items = Store.dueItems('recall', filterOpts({
-      cardType: 'passive', requireContent: true, preferComplete: true, limit: 40
+      cardType: 'passive', requireContent: true, preferComplete: true,
+      limit: 40 + Store.newWordsLeftToday()
     }));
     if (!items.length) {
       showStage(modeHeader('通勤複習') + emptyState('今天沒有到期的卡片了', '過幾小時或明天再回來，排程會自己安排。'));
@@ -191,8 +195,12 @@ const Vocab = (() => {
     const s = session;
     if (s.index >= s.items.length) return finishReview();
     const card = s.items[s.index];
+    // 這張是今天第一次見面就標出來 —— 新字的目標只有「看到認得」，
+    // 想不起來按 Again 很正常，不必因此覺得自己沒學好。
+    const fresh = !Store.everSeen(card.id);
     showStage(modeHeader('通勤複習', `${s.index + 1} / ${s.items.length}`) + `
       <div class="card study-card">
+        ${fresh ? '<div class="new-tag">今天的新字　·　看到認得就好</div>' : ''}
         ${wordHead(card)}
         ${s.revealed ? `<div class="dim-box">${backLines(card)}</div>` : ''}
         ${s.revealed && !card.example ? `<div class="missing-tag">

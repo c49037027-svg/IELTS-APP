@@ -29,6 +29,7 @@ function openSettings() {
   document.getElementById('stat-streak').textContent = state.streak;
   document.getElementById('stat-last').textContent = state.lastStudyDate || '尚未開始';
   document.getElementById('show-zh').checked = Store.showZh();
+  loadDailyNew();
   loadSpeechSettings();
   document.getElementById('settings-modal').classList.add('show');
 }
@@ -37,6 +38,44 @@ function openSettings() {
 function toggleShowZh() {
   Store.setPrefs({ showZh: document.getElementById('show-zh').checked });
   Vocab.refresh();   // 眼前這張卡立刻跟著變，不用退出模式再進來
+}
+
+// ============ 每日新字數 ============
+// 只擋新字，不擋到期的舊字 —— 所以調高不會讓複習量失控，
+// 調高的是「今天認識幾個沒看過的字」，複習量由排程自己決定。
+function loadDailyNew() {
+  const select = document.getElementById('daily-new');
+  if (!select) return;
+  const current = Store.dailyNew();
+  const choices = [...new Set([...Store.DAILY_NEW_CHOICES, current])].sort((a, b) => a - b);
+  select.innerHTML = choices
+    .map(n => `<option value="${n}"${n === current ? ' selected' : ''}>${n} 個／天</option>`)
+    .join('');
+  renderDailyNewStatus();
+}
+
+function renderDailyNewStatus() {
+  const note = document.getElementById('daily-new-status');
+  if (!note) return;
+  const used = Store.newWordsToday();
+  const left = Store.newWordsLeftToday();
+  const old = Store.dueOldCount('recall', { cardType: 'passive', requireContent: true });
+  const stale = note.querySelector('.daily-new-now');
+  if (stale) stale.remove();
+  const line = document.createElement('div');
+  line.className = 'daily-new-now';
+  line.style.marginTop = '8px';
+  line.innerHTML = `今天：新字 <strong>${used} / ${Store.dailyNew()}</strong>`
+    + `（還可以學 ${left} 個）　舊字到期 <strong>${old}</strong> 張`;
+  note.appendChild(line);
+}
+
+function saveDailyNew() {
+  const select = document.getElementById('daily-new');
+  if (!select) return;
+  Store.setPrefs({ dailyNew: Number(select.value) });
+  renderDailyNewStatus();
+  Vocab.refresh();
 }
 
 // ============ 發音設定 ============
@@ -232,13 +271,24 @@ function generateDailyPlan() {
     });
   }
 
-  // 2. 複習中字數過多
-  const dueRecall = Store.dueCount('recall', { cardType: 'passive' });
-  if (dueRecall >= 5) {
+  // 2a. 今天的新字。目標只有「看到認得」—— 拼不出來、講不出同義詞都還早
+  const newLeft = Store.newWordsLeftToday();
+  if (newLeft > 0) {
+    tasks.high.push({
+      icon: '\u2728',
+      text: `\u8a8d\u8b58\u4eca\u5929\u7684 ${newLeft} \u500b\u65b0\u5b57\uff08\u53ea\u6c42\u770b\u5230\u8a8d\u5f97\uff09`,
+      minutes: Math.ceil(newLeft * 0.4),
+      action: { tab: 'vocab', label: '\u53bb\u8a8d\u5b57' }
+    });
+  }
+
+  // 2b. 到期的舊字。數量由排程自己決定，不受每日新字上限影響
+  const dueOld = Store.dueOldCount('recall', { cardType: 'passive', requireContent: true });
+  if (dueOld >= 5) {
     tasks.high.push({
       icon: '\u27f3',
-      text: `\u901a\u52e4\u8907\u7fd2 ${Math.min(dueRecall, 30)} \u5f35\u5230\u671f\u5361\u7247`,
-      minutes: Math.ceil(Math.min(dueRecall, 30) * 0.4),
+      text: `\u8907\u7fd2 ${dueOld} \u500b\u5230\u671f\u7684\u820a\u5b57`,
+      minutes: Math.ceil(Math.min(dueOld, 60) * 0.3),
       action: { tab: 'vocab', label: '\u53bb\u8907\u7fd2' }
     });
   }

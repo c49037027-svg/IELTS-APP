@@ -295,21 +295,43 @@ check('每張卡都有三軌排程', () => {
   ok(r);
 });
 check('新卡今天到期', () => ok(run('Store.dueCount("recall") > 0')));
-check('每天的新卡有上限，不會一次爆 800 張', () => {
+check('每天的新字有上限，不會一次爆 800 張', () => {
   const n = run('Store.dueCount("recall")');
-  eq(n, run('Store.NEW_PER_DAY'), `今日到期 ${n} 張`);
-  eq(run('Store.spellingQueue({}).length'), run('Store.NEW_PER_DAY'));
+  eq(n, run('Store.dailyNew()'), `今日到期 ${n} 張`);
+  eq(run('Store.spellingQueue({}).length'), run('Store.dailyNew()'));
 });
-check('複習過的舊卡不受新卡上限影響', () => {
+check('每日上限數的是「字」不是「軌」', () => {
+  // 同一個字在認讀認過之後，再出現在拼字不該再扣一次額度 ——
+  // 不然設 30 會變成一天 90 個新項目。
   const r = run(`(() => {
-    const before = Store.dueCount('recall');
-    const items = Store.dueItems('recall', { limit: 5 });
-    items.forEach(c => Store.grade(c.id, 'recall', 1));
-    return { before, after: Store.dueCount('recall'),
-             introduced: Store.newIntroducedToday('recall') };
+    const cards = Store.dueItems('recall', { limit: 6 }).slice(0, 3);
+    cards.forEach(c => Store.grade(c.id, 'recall', 3));
+    const spell = Store.spellingQueue({});
+    return {
+      used: Store.newWordsToday(),
+      left: Store.newWordsLeftToday(),
+      reuse: spell.filter(c => cards.some(x => x.id === c.id)).length
+    };
   })()`);
-  eq(r.introduced, 5, '今天放行了 5 張新卡');
-  eq(r.after, r.before - 5, '額度應該扣掉已放行的張數');
+  eq(r.used, 3, '今天認識了 3 個新字');
+  eq(r.left, run('Store.dailyNew()') - 3, '額度應該只扣 3');
+  ok(r.reuse > 0, '認讀認過的字應該可以直接拿去拼字，不用再花額度');
+});
+check('到期的舊字不受新字上限影響', () => {
+  const r = run(`(() => {
+    // 把今天的額度用光，再讓一張舊卡到期 —— 舊卡還是要出得來
+    Store.dueItems('recall', { ignoreDailyLimit: true })
+      .filter(c => !Store.everSeen(c.id))
+      .forEach(c => Store.grade(c.id, 'recall', 3));
+    const old = Store.listCards().filter(c => Store.everSeen(c.id))[0];
+    Store.getSrs(old.id, 'recall').due = Store.today();
+    return {
+      left: Store.newWordsLeftToday(),
+      due: Store.dueItems('recall', {}).some(c => c.id === old.id)
+    };
+  })()`);
+  eq(r.left, 0, '額度應該已經用光');
+  ok(r.due, '額度用光之後，到期的舊字還是要出得來');
 });
 check('評分後今天就不再出現', () => {
   const r = run(`(() => {

@@ -7,9 +7,15 @@ const Store = (() => {
 
   const TRACKS = ['recall', 'spelling', 'synonym'];
 
-  //: 每天最多放幾張「沒學過的新卡」進來。複習到期的舊卡不受限制 ——
+  //: 每天最多放幾個「沒學過的新字」進來，可以在設定裡改。
+  //  複習到期的舊字不受這個上限 —— 上限只擋新字，不擋排程。
   //  沒有這個上限，800 張卡會在第一天全部到期，等於沒有排程。
-  const NEW_PER_DAY = 20;
+  //  算的單位是「字」不是「軌」：同一個字今天在認讀出現過，
+  //  再出現在拼字或同義詞不會再扣一次額度 —— 30 就真的是一天 30 個新字。
+  const DAILY_NEW_DEFAULT = 30;
+  const DAILY_NEW_MIN = 5;
+  const DAILY_NEW_MAX = 60;
+  const DAILY_NEW_CHOICES = [10, 20, 30, 40, 50];
   const TRACK_LABELS = { recall: '認讀', spelling: '拼字', synonym: '同義詞' };
   const CORE_FIELDS = ['example', 'collocations', 'root', 'synonyms'];
   const CORE_LABELS = {
@@ -25,9 +31,10 @@ const Store = (() => {
     Technology: '科技', Health: '健康', Work: '工作'
   };
 
-  // 顯示偏好。中文意思只是「校對用」，不是記憶點 —— 所以它固定排在卡片背面
+  // 使用者偏好。中文意思只是「校對用」，不是記憶點 —— 所以它固定排在卡片背面
   // 最後一行、用小字；showZh 關掉之後全 App 都不再出現中文（純英文思考模式）。
-  const DISPLAY_DEFAULTS = { showZh: true };
+  // dailyNew 是每天要認識幾個新字，唯一會影響排程節奏的設定。
+  const DISPLAY_DEFAULTS = { showZh: true, dailyNew: DAILY_NEW_DEFAULT };
 
   let db = null;
 
@@ -79,13 +86,25 @@ const Store = (() => {
   }
 
   function setPrefs(patch) {
-    db.prefs = { ...getPrefs(), showZh: (patch || {}).showZh === true };
+    const next = { ...getPrefs() };
+    const p = patch || {};
+    if ('showZh' in p) next.showZh = p.showZh === true;
+    if ('dailyNew' in p) next.dailyNew = clampDailyNew(p.dailyNew);
+    db.prefs = next;
     save();
     return getPrefs();
   }
 
+  function clampDailyNew(value) {
+    const n = Math.round(Number(value));
+    if (!Number.isFinite(n)) return DAILY_NEW_DEFAULT;
+    return Math.min(DAILY_NEW_MAX, Math.max(DAILY_NEW_MIN, n));
+  }
+
   /** 現在要不要顯示中文。整個 App 只認這一個判斷。 */
   const showZh = () => getPrefs().showZh === true;
+  /** 今天最多認識幾個新字。整個 App 只認這一個數字。 */
+  const dailyNew = () => clampDailyNew(getPrefs().dailyNew);
   const daysAgo = n => Dates.addDays(today(), -n);
 
   // ---------------------------------------------------------- 卡片
@@ -227,7 +246,6 @@ const Store = (() => {
   }
 
   const isDue = (cardId, track) => getSrs(cardId, track).due <= today();
-  const isNew = (cardId, track) => getSrs(cardId, track).reviews === 0;
 
   //: 今天已經放行了幾張新卡（某張卡在這個 track 的第一次複習發生在今天）
   function newIntroducedToday(track) {
@@ -241,6 +259,38 @@ const Store = (() => {
     let n = 0;
     first.forEach(at => { if (at === day) n += 1; });
     return n;
+  }
+
+  //: 這個字碰過了沒（任何一軌複習過都算）。碰過的就是舊字，不再佔新字額度。
+  const everSeen = cardId => TRACKS.some(t => getSrs(cardId, t).reviews > 0);
+
+  //: 今天第一次碰到的字有幾個 —— 不分軌，同一個字只算一次。
+  //  這樣「每天 30 個新字」數的是字，不是 30×3 個練習項目。
+  function newWordsToday() {
+    const day = today();
+    const first = new Map();
+    db.reviewLog.forEach(r => {
+      const at = r.at.slice(0, 10);
+      if (!first.has(r.cardId) || at < first.get(r.cardId)) first.set(r.cardId, at);
+    });
+    let n = 0;
+    first.forEach(at => { if (at === day) n += 1; });
+    return n;
+  }
+
+  /** 今天還能認識幾個新字（舊字複習不受影響，一律照排程出）。 */
+  const newWordsLeftToday = () => Math.max(0, dailyNew() - newWordsToday());
+
+  //: 各模式共用的放行規則：舊字（今天已經碰過的也算）全部放行，
+  //  完全沒碰過的字才扣額度。額度用完，當天就不再放新字進來。
+  function withinDailyBudget(rows) {
+    let taken = newWordsLeftToday();
+    return rows.filter(card => {
+      if (everSeen(card.id)) return true;
+      if (taken <= 0) return false;
+      taken -= 1;
+      return true;
+    });
   }
 
   function shuffle(list) {
@@ -273,22 +323,45 @@ const Store = (() => {
       return getSrs(a.id, track).due.localeCompare(getSrs(b.id, track).due);
     });
 
-    // 舊卡（複習過的）全部放行；新卡每天有上限，才不會第一天就爆量。
-    if (!opts.ignoreDailyLimit) {
-      const allowance = Math.max(0, NEW_PER_DAY - newIntroducedToday(track));
-      let taken = 0;
-      rows = rows.filter(card => {
-        if (!isNew(card.id, track)) return true;
-        if (taken >= allowance) return false;
-        taken += 1;
-        return true;
-      });
-    }
-    return opts.limit ? rows.slice(0, opts.limit) : rows;
+    // 舊字（碰過的）全部放行；新字每天有上限，才不會第一天就爆量。
+    if (!opts.ignoreDailyLimit) rows = withinDailyBudget(rows);
+    return opts.limit ? takeSession(rows, opts.limit) : rows;
+  }
+
+  //: 切出這一場的份量。總數不超過 limit，但新字至少分得到一半的位置 ——
+  //  直接砍前 N 張的話，積了幾天沒練的時候舊卡會塞滿整場、新字永遠進不來，
+  //  「每天幾個新字」這個設定就等於失效了。
+  //  新字穿插在舊字之間，中途停下來也已經認過幾個新的。
+  function takeSession(rows, limit) {
+    if (rows.length <= limit) return rows;
+    const fresh = [], seen = [];
+    rows.forEach(c => (everSeen(c.id) ? seen : fresh).push(c));
+    // 新字至少拿一半的位置；舊字不夠多的時候剩下的位置也歸新字
+    const freshQuota = Math.min(fresh.length,
+      Math.max(Math.ceil(limit / 2), limit - seen.length));
+    const keptFresh = fresh.slice(0, freshQuota);
+    const keptSeen = seen.slice(0, limit - keptFresh.length);
+    if (!keptFresh.length) return keptSeen;
+    if (!keptSeen.length) return keptFresh;
+    const out = [];
+    const step = keptSeen.length / keptFresh.length;
+    let next = 0, fi = 0;
+    keptSeen.forEach((card, i) => {
+      while (fi < keptFresh.length && i >= next) { out.push(keptFresh[fi++]); next += step; }
+      out.push(card);
+    });
+    while (fi < keptFresh.length) out.push(keptFresh[fi++]);
+    return out;
   }
 
   function dueCount(track, opts = {}) {
     return dueItems(track, { ...opts, limit: 0 }).length;
+  }
+
+  /** 到期的「舊字」有幾個（碰過的字）—— 這一批不受每日新字上限影響。 */
+  function dueOldCount(track, opts = {}) {
+    return dueItems(track, { ...opts, limit: 0, ignoreDailyLimit: true })
+      .filter(c => everSeen(c.id)).length;
   }
 
   // ---------------------------------------------------------- 拼字
@@ -324,9 +397,7 @@ const Store = (() => {
     } else {
       rows = db.cards.filter(c => c.word && isDue(c.id, 'spelling') && hasSpellingClue(c));
     }
-    const spellingAllowance = opts.onlyWrong || opts.ignoreDailyLimit
-      ? Infinity
-      : Math.max(0, NEW_PER_DAY - newIntroducedToday('spelling'));
+    const capped = !(opts.onlyWrong || opts.ignoreDailyLimit);
     if (opts.topic) rows = rows.filter(topicMatcher(opts.topic));
     shuffle(rows);
     // 排序：拼錯的最優先 → 有「挖空例句 + 中文提示」的完整題目 → 其餘按到期日。
@@ -344,15 +415,8 @@ const Store = (() => {
       if (qa !== qb) return qa - qb;
       return getSrs(a.id, 'spelling').due.localeCompare(getSrs(b.id, 'spelling').due);
     });
-    if (spellingAllowance !== Infinity) {
-      let taken = 0;
-      rows = rows.filter(card => {
-        if (!isNew(card.id, 'spelling')) return true;
-        if (taken >= spellingAllowance) return false;
-        taken += 1;
-        return true;
-      });
-    }
+    // 今天的新字額度是全 App 共用的：在通勤複習認過的字，來拼字不會再扣一次。
+    if (capped) rows = withinDailyBudget(rows);
     return opts.limit ? rows.slice(0, opts.limit) : rows;
   }
 
@@ -770,12 +834,14 @@ const Store = (() => {
   }
 
   return {
-    TRACKS, TRACK_LABELS, CORE_FIELDS, CORE_LABELS, CSV_COLUMNS, NEW_PER_DAY,
+    TRACKS, TRACK_LABELS, CORE_FIELDS, CORE_LABELS, CSV_COLUMNS,
+    DAILY_NEW_DEFAULT, DAILY_NEW_MIN, DAILY_NEW_MAX, DAILY_NEW_CHOICES,
+    dailyNew, newWordsToday, newWordsLeftToday, everSeen,
     newIntroducedToday,
     init, save, resetAll, today, daysAgo,
     addCard, updateCard, getCard, findCard, findByWord, listCards, setCardType,
     missingCore, isIncomplete, hasBackContent, cardLabel, cardCount, incompleteCount, completionQueue,
-    getSrs, grade, dueItems, dueCount,
+    getSrs, grade, dueItems, dueCount, dueOldCount,
     recordSpelling, spellingQueue, spellingErrorList, spellingAccuracy, lastSpellingResult,
     hasSpellingClue, spellingSentence, spellingSentenceZh, getPrefs, setPrefs, showZh, findLoosely,
     addProduction, listProductions, setProductionFeedback, productionCandidates, promotionCandidates,

@@ -29,17 +29,20 @@ def run(
     # None = 照設定走（ielts config --zh on/off）；--zh / --no-zh 才覆寫這一次
     if show_zh is None:
         show_zh = settings.show_zh(ctx.conn)
+    # 一場的份量 = 最多 limit 張到期舊字 + 今天還沒認過的新字。
+    # 把新字加進來算，積了幾天沒練的時候舊卡才不會塞滿整場、
+    # 讓「每天幾個新字」變成空話。
     items = repo.due_items(
         ctx.conn,
         TRACK_RECALL,
         today=ctx.today,
-        limit=limit,
+        limit=limit + repo.new_words_left_today(ctx.conn, ctx.today),
         topic=topic,
         category=category,
         card_type=None if include_active else "passive",
         # 背面至少要有東西可看就行。例句還沒自己寫的卡片，背面還有
         # 搭配詞、字根、同義詞、中文 —— 那已經是一張夠用的卡了。
-        require_any_fields=("example_sentence", "collocations", "root_analysis", "synonyms"),
+        require_any_fields=repo.CONTENT_FIELDS,
     )
     summary = SessionSummary(mode="通勤複習", total=len(items))
 

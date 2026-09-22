@@ -302,6 +302,34 @@ with sync_playwright() as p:
     page.locator("#show-zh").check()
     page.wait_for_timeout(150)
     step("中文：可以再打開", page.evaluate("Store.showZh()") is True)
+
+    # --- 每天幾個新字 ---
+    page.select_option("#daily-new", "30")
+    page.wait_for_timeout(200)
+    step("新字上限：設定存得起來", page.evaluate("Store.dailyNew()") == 30)
+    step("新字上限：現況會寫出來",
+         "/ 30" in page.locator("#daily-new-status").inner_text())
+    budget = page.evaluate("""(() => {
+        const used = Store.newWordsToday();
+        const fresh = Store.dueItems('recall', {}).filter(c => !Store.everSeen(c.id));
+        return { used, fresh: fresh.length, left: Store.newWordsLeftToday() };
+    })()""")
+    step("新字上限：今天放行的新字不超過設定值",
+         budget["fresh"] <= budget["left"],
+         f"放行 {budget['fresh']}，額度剩 {budget['left']}")
+    # 把額度調到最低，確認已經碰過的到期舊字還是一張不少地出得來
+    old_check = page.evaluate("""(() => {
+        Store.setPrefs({ dailyNew: 5 });
+        const seen = Store.listCards().filter(c => Store.everSeen(c.id));
+        seen.forEach(c => { Store.getSrs(c.id, 'recall').due = Store.today(); });
+        const out = new Set(Store.dueItems('recall', {}).map(c => c.id));
+        const missing = seen.filter(c => !out.has(c.id)).length;
+        Store.setPrefs({ dailyNew: 30 });
+        return { seen: seen.length, missing };
+    })()""")
+    step("新字上限：額度用完，到期的舊字照樣出得來",
+         old_check["seen"] > 0 and old_check["missing"] == 0,
+         f"{old_check['seen']} 個舊字，漏掉 {old_check['missing']} 個")
     page.locator("#settings-modal .close-btn").click()
     page.wait_for_timeout(200)
     page.locator("#vocab-stage .back-btn").click()

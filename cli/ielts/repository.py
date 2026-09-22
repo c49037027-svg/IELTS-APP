@@ -11,6 +11,7 @@ from datetime import date, timedelta
 from typing import Any, Iterable, Sequence
 
 from . import db as dbmod
+from . import settings
 from . import srs
 from .db import TRACK_RECALL, TRACK_SPELLING, TRACK_SYNONYM
 from .models import (
@@ -24,9 +25,9 @@ from .models import (
     stamp_for,
 )
 
-#: 每天最多放幾張「沒學過的新卡」進來。到期的舊卡不受限制 ——
-#: 沒有這個上限，整份 AWL 會在第一天全部到期，等於沒有排程。
-NEW_PER_DAY = 20
+#: 卡片背面至少要有這幾個欄位的其中一個，不然那張卡複習起來是空的。
+#: 例句還沒自己寫的卡片，背面還有搭配詞、字根、同義詞 —— 那已經夠用了。
+CONTENT_FIELDS = ("example_sentence", "collocations", "root_analysis", "synonyms")
 
 
 def new_introduced_today(
@@ -46,20 +47,89 @@ def new_introduced_today(
     return int(row["n"] or 0)
 
 
+def new_words_today(conn: sqlite3.Connection, today: date | None = None) -> int:
+    """今天第一次碰到的字有幾個 —— 不分軌，同一個字只算一次。
+
+    「每天 N 個新字」數的是字，不是 N×3 個練習項目：同一個字在通勤複習
+    認過之後，再出現在拼字或同義詞不會再扣一次額度。
+    """
+    today = today or date.today()
+    row = conn.execute(
+        """
+        SELECT COUNT(*) AS n FROM (
+            SELECT card_id, MIN(reviewed_at) AS first_seen
+            FROM review_log GROUP BY card_id
+        ) WHERE substr(first_seen, 1, 10) = ?
+        """,
+        (today.isoformat(),),
+    ).fetchone()
+    return int(row["n"] or 0)
+
+
+def new_words_left_today(conn: sqlite3.Connection, today: date | None = None) -> int:
+    """今天還能認識幾個新字。舊字複習不受影響，一律照排程出。"""
+    return max(0, settings.new_per_day(conn) - new_words_today(conn, today))
+
+
+def _ever_seen(conn: sqlite3.Connection) -> set[int]:
+    """碰過的字（任何一軌複習過都算）。碰過的就是舊字，不再佔新字額度。"""
+    rows = conn.execute(
+        "SELECT DISTINCT card_id FROM srs_state WHERE review_count > 0"
+    ).fetchall()
+    return {int(r["card_id"]) for r in rows}
+
+
 def _apply_daily_limit(
     conn: sqlite3.Connection, items: list[ReviewItem], track: str, today: date
 ) -> list[ReviewItem]:
-    """舊卡全放行；新卡受每日上限。"""
-    allowance = max(0, NEW_PER_DAY - new_introduced_today(conn, track, today))
+    """舊字全放行；完全沒碰過的字才扣今天的新字額度。"""
+    allowance = new_words_left_today(conn, today)
+    seen = _ever_seen(conn)
     kept: list[ReviewItem] = []
     taken = 0
     for item in items:
-        if item.state.review_count > 0:
+        if item.card.id in seen:
             kept.append(item)
         elif taken < allowance:
             kept.append(item)
             taken += 1
     return kept
+
+
+def _take_session(
+    conn: sqlite3.Connection, items: list[ReviewItem], limit: int
+) -> list[ReviewItem]:
+    """切出這一場的份量：總數不超過 limit，但新字至少分得到一半的位置。
+
+    直接砍前 N 張的話，積了幾天沒練的時候舊卡會塞滿整場、新字永遠進不來，
+    「每天幾個新字」這個設定就等於失效了。新字穿插在舊字之間，中途停下來
+    也已經認過幾個新的。
+    """
+    limit = max(1, int(limit))
+    if len(items) <= limit:
+        return items
+    seen_ids = _ever_seen(conn)
+    fresh = [i for i in items if i.card.id not in seen_ids]  # 上面已經擋過額度
+    old = [i for i in items if i.card.id in seen_ids]
+    # 新字至少拿一半的位置；舊字不夠多的時候剩下的位置也歸新字
+    fresh = fresh[: min(len(fresh), max(-(-limit // 2), limit - len(old)))]
+    old = old[: limit - len(fresh)]
+    if not fresh:
+        return old
+    if not old:
+        return fresh
+    out: list[ReviewItem] = []
+    step = len(old) / len(fresh)
+    nxt = 0.0
+    fi = 0
+    for index, item in enumerate(old):
+        while fi < len(fresh) and index >= nxt:
+            out.append(fresh[fi])
+            fi += 1
+            nxt += step
+        out.append(item)
+    out.extend(fresh[fi:])
+    return out
 
 
 def _topic_clause(conn: sqlite3.Connection, topic: str) -> tuple[str, str]:
@@ -352,9 +422,10 @@ def due_items(
         data = dict(row)
         state = SrsState.from_row({**data, "card_id": data["id"]})
         items.append(ReviewItem(card=Card.from_row(data), state=state))
-    if not ignore_daily_limit:
-        items = _apply_daily_limit(conn, items, track, today)
-    return items[: max(1, int(limit))]
+    if ignore_daily_limit:
+        return items[: max(1, int(limit))]
+    items = _apply_daily_limit(conn, items, track, today)
+    return _take_session(conn, items, limit)
 
 
 def due_count(
@@ -365,7 +436,7 @@ def due_count(
     card_type: str | None = None,
     require_fields: Sequence[str] = (),
 ) -> int:
-    """今天實際會出幾題（已套用每日新卡上限，跟真的練起來的量一致）。"""
+    """今天實際會出幾題（已套用每日新字上限，跟真的練起來的量一致）。"""
     return len(
         due_items(
             conn,
@@ -376,6 +447,30 @@ def due_count(
             require_fields=require_fields,
         )
     )
+
+
+def due_old_count(
+    conn: sqlite3.Connection,
+    track: str,
+    *,
+    today: date | None = None,
+    card_type: str | None = None,
+    require_fields: Sequence[str] = (),
+    require_any_fields: Sequence[str] = (),
+) -> int:
+    """到期的「舊字」有幾個 —— 這一批不受每日新字上限影響。"""
+    seen = _ever_seen(conn)
+    items = due_items(
+        conn,
+        track,
+        today=today,
+        limit=10_000,
+        card_type=card_type,
+        require_fields=require_fields,
+        require_any_fields=require_any_fields,
+        ignore_daily_limit=True,
+    )
+    return sum(1 for item in items if item.card.id in seen)
 
 
 # ------------------------------------------------------------ 複習紀錄
@@ -506,6 +601,7 @@ def spelling_queue(
         state = SrsState.from_row({**data, "card_id": data["id"]})
         items.append(ReviewItem(card=Card.from_row(data), state=state))
     if not only_wrong:
+        # 今天的新字額度是全 App 共用的：通勤複習認過的字，來拼字不會再扣一次。
         items = _apply_daily_limit(conn, items, TRACK_SPELLING, today)
     return items[: max(1, int(limit))]
 

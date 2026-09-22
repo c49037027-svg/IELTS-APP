@@ -59,10 +59,34 @@ def cmd_config(ctx: AppContext, args: argparse.Namespace) -> int:
     ui = ctx.ui
     if args.zh is not None:
         settings.set_show_zh(ctx.conn, args.zh)
+    if getattr(args, "new_per_day", None) is not None:
+        asked = int(args.new_per_day)
+        saved = settings.set_new_per_day(ctx.conn, asked)
+        if saved != asked:
+            ui.bad(
+                f"每天新字數只收 {settings.NEW_PER_DAY_MIN}–{settings.NEW_PER_DAY_MAX}，"
+                f"已改成 {saved}"
+            )
     show_zh = settings.show_zh(ctx.conn)
+    per_day = settings.new_per_day(ctx.conn)
+    used = repo.new_words_today(ctx.conn, ctx.today)
+    left = repo.new_words_left_today(ctx.conn, ctx.today)
+    due_old = repo.due_old_count(
+        ctx.conn,
+        dbmod.TRACK_RECALL,
+        today=ctx.today,
+        card_type="passive",
+        require_any_fields=repo.CONTENT_FIELDS,
+    )
     ui.blank()
     ui.rule("設定")
     ui.print(f"  中文意思　{'顯示' if show_zh else '隱藏（純英文思考模式）'}")
+    ui.print(f"  每天新字　{per_day} 個（今天已認 {used}，還可以學 {left}）")
+    ui.blank()
+    ui.dim(f"  新字上限只擋新字：今天另外有 {due_old} 個到期的舊字要複習，不受它影響。")
+    ui.dim("  數的單位是「字」不是「題」—— 同一個字在通勤複習認過，")
+    ui.dim("  再出現在拼字或同義詞不會再佔一次額度。")
+    ui.dim("  改：`ielts config --new-per-day 30`。")
     ui.blank()
     if show_zh:
         ui.dim("  中文固定排在卡片背面最後一行 —— 先用英文語境理解，中文只當校對。")
@@ -280,12 +304,17 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--force", action="store_true", help="即使已有資料也重新灌入/更新種子")
     p.set_defaults(func=cmd_init)
 
-    p = sub.add_parser("config", help="看／改設定（目前只有中文意思的開關）")
+    p = sub.add_parser("config", help="看／改設定（中文意思開關、每天幾個新字）")
     grp = p.add_mutually_exclusive_group()
     grp.add_argument("--zh", dest="zh", action="store_true", default=None,
                      help="打開中文意思（排在卡片背面最後）")
     grp.add_argument("--no-zh", dest="zh", action="store_false",
                      help="關掉中文意思，全部純英文")
+    p.add_argument("--new-per-day", dest="new_per_day", type=int, default=None,
+                   metavar="N",
+                   help=f"每天最多認識幾個新字（{settings.NEW_PER_DAY_MIN}–"
+                        f"{settings.NEW_PER_DAY_MAX}，預設 {settings.NEW_PER_DAY_DEFAULT}）；"
+                        "到期的舊字不受影響")
     p.set_defaults(func=cmd_config)
 
     p = sub.add_parser("review", help="模式 A：通勤複習（passive 卡片）")

@@ -5,6 +5,7 @@ from datetime import date, timedelta
 
 from ielts import db as dbmod
 from ielts import repository as repo
+from ielts import settings
 from ielts import srs
 from ielts.db import TRACK_RECALL, TRACK_SPELLING, TRACK_SYNONYM
 from ielts.models import Card, ReviewItem
@@ -154,21 +155,55 @@ class TestScheduling(RepositoryTestCase):
 
 
 class TestDailyNewCardLimit(RepositoryTestCase):
+    def per_day(self) -> int:
+        return settings.new_per_day(self.conn)
+
     def test_new_cards_are_capped_per_day(self):
-        for i in range(repo.NEW_PER_DAY + 15):
+        for i in range(self.per_day() + 15):
             repo.add_card(self.conn, full_card(f"word{i}"), today=TODAY)
         items = repo.due_items(self.conn, TRACK_RECALL, today=TODAY, limit=1000)
-        self.assertEqual(len(items), repo.NEW_PER_DAY)
+        self.assertEqual(len(items), self.per_day())
+
+    def test_the_limit_follows_the_setting(self):
+        """`ielts config --new-per-day 30` 之後，今天就真的放 30 個新字進來。"""
+        for i in range(60):
+            repo.add_card(self.conn, full_card(f"word{i}"), today=TODAY)
+        settings.set_new_per_day(self.conn, 30)
+        items = repo.due_items(self.conn, TRACK_RECALL, today=TODAY, limit=1000)
+        self.assertEqual(len(items), 30)
 
     def test_allowance_shrinks_as_new_cards_are_introduced(self):
-        for i in range(repo.NEW_PER_DAY + 15):
+        for i in range(self.per_day() + 15):
             repo.add_card(self.conn, full_card(f"word{i}"), today=TODAY)
-        for item in repo.due_items(self.conn, TRACK_RECALL, today=TODAY, limit=5):
+        for item in repo.due_items(self.conn, TRACK_RECALL, today=TODAY, limit=5)[:5]:
             repo.grade(self.conn, item, srs.AGAIN, today=TODAY)
-        self.assertEqual(repo.new_introduced_today(self.conn, TRACK_RECALL, TODAY), 5)
+        self.assertEqual(repo.new_words_today(self.conn, TODAY), 5)
         remaining = repo.due_items(self.conn, TRACK_RECALL, today=TODAY, limit=1000)
         new_ones = [i for i in remaining if i.state.review_count == 0]
-        self.assertEqual(len(new_ones), repo.NEW_PER_DAY - 5)
+        self.assertEqual(len(new_ones), self.per_day() - 5)
+
+    def test_the_budget_counts_words_not_tracks(self):
+        """同一個字在認讀認過之後，去拼字不該再扣一次額度。
+
+        不這樣算的話，設「每天 30 個新字」會變成一天 90 個新項目。
+        """
+        for i in range(self.per_day() + 15):
+            repo.add_card(self.conn, full_card(f"word{i}"), today=TODAY)
+        graded = repo.due_items(self.conn, TRACK_RECALL, today=TODAY, limit=1000)[:5]
+        for item in graded:
+            repo.grade(self.conn, item, srs.GOOD, today=TODAY)
+        self.assertEqual(repo.new_words_today(self.conn, TODAY), 5)
+        self.assertEqual(
+            repo.new_words_left_today(self.conn, TODAY), self.per_day() - 5
+        )
+        queue_ids = {
+            item.card.id
+            for item in repo.spelling_queue(self.conn, today=TODAY, limit=1000)
+        }
+        self.assertTrue(
+            queue_ids & {item.card.id for item in graded},
+            "認讀認過的字應該可以直接拿去拼字，不用再花額度",
+        )
 
     def test_due_old_cards_are_never_held_back(self):
         """到期的舊卡不受新卡上限限制，否則複習會越積越多。"""

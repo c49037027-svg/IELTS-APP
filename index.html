@@ -526,6 +526,20 @@
       </div>
 
       <div class="setting-section">
+        <h3>📈 每天幾個新字</h3>
+        <div class="setting-row">
+          <span>每日新字上限</span>
+          <select id="daily-new" onchange="saveDailyNew()"></select>
+        </div>
+        <div class="setting-note" id="daily-new-status">
+          只擋<strong>新字</strong>：到期的舊字複習一律照排程出，不受這個數字影響。<br>
+          算的單位是「字」不是「題」—— 同一個字今天在通勤複習認過，
+          再出現在拼字或同義詞不會再佔一次額度。<br>
+          新字的目標只有「看到認得」，拼得出來、講得出同義詞是後面幾天的事。
+        </div>
+      </div>
+
+      <div class="setting-section">
         <h3>🀄 中文意思</h3>
         <div class="setting-row">
           <span>顯示中文意思</span>
