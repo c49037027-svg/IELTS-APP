@@ -187,42 +187,70 @@ const Vocab = (() => {
       showStage(modeHeader('通勤複習') + emptyState('今天沒有到期的卡片了', '過幾小時或明天再回來，排程會自己安排。'));
       return;
     }
-    session = { mode: 'review', items, index: 0, done: 0, again: 0, revealed: false };
+    // results: 位置 → { rating, before, wasNew }。評過分的卡回頭看時要知道
+    // 當時評了什麼、排程原本長怎樣（改評分要先還原），所以不能只記張數。
+    session = { mode: 'review', items, index: 0, revealed: false, results: {} };
     renderReview();
+  }
+
+  const reviewDone = s => Object.keys(s.results).length;
+  const reviewAgain = s => Object.values(s.results).filter(r => r.rating === SRS.AGAIN).length;
+
+  // 上一張／下一張：評過分的卡回頭看是「已翻開 + 標出當時的評分」，
+  // 沒評過的（跳過的）回頭看還是正面，可以照常翻開評分。
+  function navButtons(s, prevLabel, nextLabel) {
+    return `<div class="nav-row">
+      <button class="nav-btn" onclick="Vocab.prev()" ${s.index <= 0 ? 'disabled' : ''}>‹ ${prevLabel}</button>
+      <button class="nav-btn" onclick="Vocab.next()">${nextLabel} ›</button>
+    </div>`;
+  }
+
+  // 拼字與同義詞共用的「上一題」：只有回頭這一個方向，往前走由各自的
+  // 送出／跳過／下一題負責（往前 = 交卷或跳過，語意不同，不能混成一顆）。
+  function quizNav(s, onPrev, enabled) {
+    return `<div class="nav-row single">
+      <button class="nav-btn" onclick="${onPrev}" ${enabled ? '' : 'disabled'}>‹ 上一題</button>
+    </div>`;
   }
 
   function renderReview() {
     const s = session;
     if (s.index >= s.items.length) return finishReview();
     const card = s.items[s.index];
+    const result = s.results[s.index];          // 這張已經評過分？
+    const shown = s.revealed || !!result;        // 評過的卡回頭看直接翻開
     // 這張是今天第一次見面就標出來 —— 新字的目標只有「看到認得」，
     // 想不起來按 Again 很正常，不必因此覺得自己沒學好。
-    const fresh = !Store.everSeen(card.id);
+    const fresh = result ? result.wasNew : !Store.everSeen(card.id);
+    const rateBtn = (n, label, hint) => `
+      <button class="btn rate-${n}${result && result.rating === n ? ' picked' : ''}"
+        onclick="Vocab.rate(${n})">${label}<span>${hint}</span></button>`;
     showStage(modeHeader('通勤複習', `${s.index + 1} / ${s.items.length}`) + `
       <div class="card study-card">
         ${fresh ? '<div class="new-tag">今天的新字　·　看到認得就好</div>' : ''}
+        ${result ? `<div class="rated-tag">已評：${esc(SRS.RATING_SHORT[result.rating])}　·　點別的可以改</div>` : ''}
         ${wordHead(card)}
-        ${s.revealed ? `<div class="dim-box">${backLines(card)}</div>` : ''}
-        ${s.revealed && !card.example ? `<div class="missing-tag">
+        ${shown ? `<div class="dim-box">${backLines(card)}</div>` : ''}
+        ${shown && !card.example ? `<div class="missing-tag">
           這張還沒有你自己的例句　·　回首頁的「✍️ 寫例句」補一句，會更好記</div>` : ''}
       </div>
-      ${s.revealed ? `
+      ${shown ? `
         <div class="rating-grid">
-          <button class="btn rate-1" onclick="Vocab.rate(1)">Again<span>忘了</span></button>
-          <button class="btn rate-2" onclick="Vocab.rate(2)">Hard<span>吃力</span></button>
-          <button class="btn rate-3" onclick="Vocab.rate(3)">Good<span>想得起來</span></button>
-          <button class="btn rate-4" onclick="Vocab.rate(4)">Easy<span>太簡單</span></button>
+          ${rateBtn(1, 'Again', '忘了')}${rateBtn(2, 'Hard', '吃力')}
+          ${rateBtn(3, 'Good', '想得起來')}${rateBtn(4, 'Easy', '太簡單')}
         </div>
-        <div class="key-hint">鍵盤：1 / 2 / 3 / 4　·　p 念一次</div>`
+        ${navButtons(s, '上一張', '下一張')}
+        <div class="key-hint">鍵盤：1 / 2 / 3 / 4 評分　·　← → 前後翻　·　p 念一次</div>`
       : `
         <button class="btn btn-primary wide-btn" onclick="Vocab.reveal()">看例句與同義詞</button>
-        <button class="btn btn-secondary wide-btn" onclick="Vocab.skip()">跳過這張</button>
-        <div class="key-hint">鍵盤：空白鍵翻面　·　p 念一次</div>`}`);
+        ${navButtons(s, '上一張', '跳過')}
+        <div class="key-hint">鍵盤：空白鍵翻面　·　← → 前後翻　·　p 念一次</div>`}`);
   }
 
   function reveal() {
     if (!session || session.mode !== 'review') return;
     const card = session.items[session.index];
+    if (!card) return;
     session.revealed = true;
     renderReview();
     // 翻面才念，而且只在使用者打開「自動念例句」時。
@@ -230,36 +258,76 @@ const Vocab = (() => {
     Speech.autoSay(card.example || card.word);
   }
 
-  function skip() {
-    if (!session) return;
-    session.index += 1;
-    session.revealed = false;
+  // 前後翻不評分 —— 沒評的卡排程原封不動，還在到期清單裡。
+  function moveReview(delta) {
+    const s = session;
+    if (!s || s.mode !== 'review') return;
+    const target = s.index + delta;
+    if (target < 0 || target > s.items.length) return;
+    Speech.stop();
+    s.index = target;
+    s.revealed = false;
+    renderReview();
+  }
+  const prev = () => moveReview(-1);
+  const next = () => moveReview(1);
+  const skip = next;   // 舊名字，行為相同
+
+  // 從結尾畫面跳回第一張沒評分的
+  function goSkipped() {
+    const s = session;
+    if (!s || s.mode !== 'review') return;
+    const first = s.items.findIndex((_, i) => !s.results[i]);
+    if (first < 0) return;
+    s.index = first;
+    s.revealed = false;
     renderReview();
   }
 
   function rate(rating) {
-    if (!session || session.mode !== 'review' || !session.revealed) return;
-    const card = session.items[session.index];
-    Store.grade(card.id, 'recall', rating);
-    logStudy();
-    session.done += 1;
-    if (rating === SRS.AGAIN) session.again += 1;
-    session.index += 1;
-    session.revealed = false;
+    const s = session;
+    if (!s || s.mode !== 'review' || s.index >= s.items.length) return;
+    const i = s.index;
+    const card = s.items[i];
+    const prior = s.results[i];
+    if (!prior && !s.revealed) return;
+    if (prior) {
+      // 回頭改評分：先把上一次的評分整個還原，再用新的評一次。
+      // 直接再評的話，同一張卡會被記兩次複習、間隔被推進兩步。
+      if (prior.rating !== rating) {
+        Store.undoGrade(card.id, 'recall', prior.before);
+        Store.grade(card.id, 'recall', rating);
+        s.results[i] = { ...prior, rating };
+      }
+    } else {
+      const before = { ...Store.getSrs(card.id, 'recall') };
+      const wasNew = !Store.everSeen(card.id);
+      Store.grade(card.id, 'recall', rating);
+      logStudy();
+      s.results[i] = { rating, before, wasNew };
+    }
+    s.index += 1;
+    s.revealed = false;
     renderReview();
   }
 
   function finishReview() {
     const s = session;
+    const done = reviewDone(s);
+    const again = reviewAgain(s);
+    const skipped = s.items.length - done;
+    // session 留著不清掉：結尾畫面還能回頭翻，離開才在 showHome 清。
     showStage(modeHeader('通勤複習') + `
       <div class="card center-card">
         <div class="big-emoji">✅</div>
-        <div class="empty-title">複習 ${s.done} 張</div>
-        <div class="empty-hint">${s.again ? `其中 ${s.again} 張忘記了，明天會再出現。` : '全部都想得起來，狀態不錯。'}</div>
+        <div class="empty-title">複習 ${done} 張</div>
+        <div class="empty-hint">${again ? `其中 ${again} 張忘記了，明天會再出現。` : done ? '全部都想得起來，狀態不錯。' : ''}
+          ${skipped ? `<br>有 ${skipped} 張跳過沒評分，還留在到期清單裡。` : ''}</div>
+        <button class="btn btn-secondary" onclick="Vocab.prev()">‹ 回上一張看看</button>
+        ${skipped ? `<button class="btn btn-secondary" onclick="Vocab.goSkipped()">回去看跳過的 ${skipped} 張</button>` : ''}
         <button class="btn btn-primary" onclick="Vocab.startReview()">再來一輪</button>
         <button class="btn btn-secondary" onclick="Vocab.showHome()">回單字首頁</button>
       </div>`);
-    session = null;
   }
 
   // ---------------------------------------------------------- 模式 B：拼字練習
@@ -271,13 +339,15 @@ const Vocab = (() => {
         onlyWrong ? '拼字目前沒有欠帳。' : ''));
       return;
     }
-    session = { mode: 'spell', items, index: 0, correct: 0, wrong: 0, phase: 'ask', hinted: false };
+    // answered: 位置 → 當時的回饋畫面。回頭看答過的題是唯讀重播，不會再記一次作答
+    session = { mode: 'spell', items, index: 0, correct: 0, wrong: 0, phase: 'ask', hinted: false, answered: {} };
     renderSpell();
   }
 
   function renderSpell(feedback) {
     const s = session;
     if (s.index >= s.items.length) return finishSpell();
+    if (!feedback && s.phase === 'result') feedback = s.answered[s.index] || '';
     const card = s.items[s.index];
     // 自己寫的例句優先；還沒寫的用參考例句頂著，兩者都會挖空
     const sentence = Store.spellingSentence(card);
@@ -313,8 +383,10 @@ const Vocab = (() => {
           <button class="tool-btn" onclick="Vocab.spellHint()">看提示</button>
           ${Speech.supported() ? `<button class="tool-btn" onclick="Vocab.spellSay()">🔊 聽發音</button>` : ''}
           <button class="tool-btn" onclick="Vocab.spellSkip()">跳過</button>
-        </div>`
-      : `<button class="btn btn-primary wide-btn" onclick="Vocab.nextSpell()">下一題</button>`}`);
+        </div>
+        ${quizNav(s, 'Vocab.prevSpell()', s.index > 0)}`
+      : `<button class="btn btn-primary wide-btn" onclick="Vocab.nextSpell()">下一題</button>
+        ${quizNav(s, 'Vocab.prevSpell()', s.index > 0)}`}`);
 
     const input = el('spell-input');
     if (input) {
@@ -336,13 +408,19 @@ const Vocab = (() => {
     Speech.say(session.items[session.index].word);
   }
 
-  function spellSkip() {
-    if (!session) return;
-    session.index += 1;
-    session.phase = 'ask';
-    session.hinted = false;
+  // 前後翻：答過的題回頭看是唯讀重播；跳過的題回頭看還是可以答。
+  function moveSpell(delta) {
+    const s = session;
+    if (!s || s.mode !== 'spell') return;
+    const target = s.index + delta;
+    if (target < 0 || target > s.items.length) return;
+    s.index = target;
+    s.phase = s.answered[target] ? 'result' : 'ask';
+    s.hinted = false;
     renderSpell();
   }
+  const prevSpell = () => moveSpell(-1);
+  const spellSkip = () => moveSpell(1);
 
   function submitSpell() {
     const s = session;
@@ -379,15 +457,11 @@ const Vocab = (() => {
       </div>`;
     }
     s.phase = 'result';
+    s.answered[s.index] = feedback;
     renderSpell(feedback);
   }
 
-  function nextSpell() {
-    session.index += 1;
-    session.phase = 'ask';
-    session.hinted = false;
-    renderSpell();
-  }
+  const nextSpell = () => moveSpell(1);
 
   function finishSpell() {
     const s = session;
@@ -399,9 +473,9 @@ const Vocab = (() => {
         <div class="empty-title">對 ${s.correct} ／ 錯 ${s.wrong}　正確率 ${pct}%</div>
         ${s.wrong ? '<div class="empty-hint">錯的字已進錯誤清單，回首頁可以馬上再練一輪。</div>' : ''}
         ${s.wrong ? '<button class="btn btn-error" onclick="Vocab.startSpell(true)">立刻重練錯的字</button>' : ''}
+        <button class="btn btn-secondary" onclick="Vocab.prevSpell()">‹ 回上一題看看</button>
         <button class="btn btn-secondary" onclick="Vocab.showHome()">回單字首頁</button>
       </div>`);
-    session = null;
   }
 
   // ---------------------------------------------------------- 同義詞測驗
@@ -412,13 +486,14 @@ const Vocab = (() => {
         '題目只會出有存兩個以上同義詞的卡片。'));
       return;
     }
-    session = { mode: 'syn', items, index: 0, hit: 0, miss: 0, phase: 'ask', target: 2 };
+    session = { mode: 'syn', items, index: 0, hit: 0, miss: 0, phase: 'ask', target: 2, answered: {} };
     renderSyn();
   }
 
   function renderSyn(feedback) {
     const s = session;
     if (s.index >= s.items.length) return finishSyn();
+    if (!feedback && s.phase === 'result') feedback = s.answered[s.index] || '';
     const card = s.items[s.index];
     showStage(modeHeader('同義詞測驗', `${s.index + 1} / ${s.items.length}`) + `
       <div class="card study-card">
@@ -429,8 +504,10 @@ const Vocab = (() => {
         <input class="spell-input" id="syn-input" type="text" autocomplete="off"
           autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="列出 ${s.target} 個以上，用逗號分隔">
         <button class="btn btn-primary wide-btn" onclick="Vocab.submitSyn()">送出</button>
-        <div class="sub-actions"><button class="tool-btn" onclick="Vocab.synSkip()">看答案並跳過</button></div>`
-      : `<button class="btn btn-primary wide-btn" onclick="Vocab.nextSyn()">下一題</button>`}`);
+        <div class="sub-actions"><button class="tool-btn" onclick="Vocab.synSkip()">看答案並跳過</button></div>
+        ${quizNav(s, 'Vocab.prevSyn()', s.index > 0)}`
+      : `<button class="btn btn-primary wide-btn" onclick="Vocab.nextSyn()">下一題</button>
+        ${quizNav(s, 'Vocab.prevSyn()', s.index > 0)}`}`);
     const input = el('syn-input');
     if (input) {
       input.focus();
@@ -441,12 +518,26 @@ const Vocab = (() => {
   function synSkip() {
     const s = session;
     const card = s.items[s.index];
-    s.phase = 'result';
-    renderSyn(`<div class="feedback">
+    const shown = `<div class="feedback">
       <div class="feedback-title">這個字的同義詞</div>
       <div class="feedback-body">${esc(card.synonyms.join(' / '))}</div>
-    </div>`);
+    </div>`;
+    s.phase = 'result';
+    s.answered[s.index] = shown;
+    renderSyn(shown);
   }
+
+  // 前後翻：答過（或看過答案）的題回頭看是唯讀重播，不會再記一次作答
+  function moveSyn(delta) {
+    const s = session;
+    if (!s || s.mode !== 'syn') return;
+    const target = s.index + delta;
+    if (target < 0 || target > s.items.length) return;
+    s.index = target;
+    s.phase = s.answered[target] ? 'result' : 'ask';
+    renderSyn();
+  }
+  const prevSyn = () => moveSyn(-1);
 
   function submitSyn() {
     const s = session;
@@ -470,7 +561,7 @@ const Vocab = (() => {
     if (hit >= s.target) s.hit += 1; else s.miss += 1;
 
     s.phase = 'result';
-    renderSyn(`<div class="feedback ${hit ? 'ok' : 'bad'}">
+    const shownFeedback = `<div class="feedback ${hit ? 'ok' : 'bad'}">
       <div class="feedback-title">${hit ? `✓ 答對 ${hit} / ${card.synonyms.length}` : '✗ 沒有對上卡片裡的同義詞'}</div>
       <div class="feedback-body">
         ${matched.length ? `<div>對上了：<b>${esc(matched.map(m => m.answer).join(', '))}</b></div>` : ''}
@@ -479,14 +570,12 @@ const Vocab = (() => {
           （確定是對的就用「補完卡片」加進去）</div>` : ''}
         <div class="feedback-note">${esc(SRS.RATING_SHORT[rating])} · ${esc(SRS.describeNext(state, Store.today()))}</div>
       </div>
-    </div>`);
+    </div>`;
+    s.answered[s.index] = shownFeedback;
+    renderSyn(shownFeedback);
   }
 
-  function nextSyn() {
-    session.index += 1;
-    session.phase = 'ask';
-    renderSyn();
-  }
+  const nextSyn = () => moveSyn(1);
 
   function finishSyn() {
     const s = session;
@@ -496,9 +585,9 @@ const Vocab = (() => {
         <div class="big-emoji">🔁</div>
         <div class="empty-title">達標 ${s.hit} ／ ${total} 題</div>
         <div class="empty-hint">同義替換是雅思聽力閱讀的核心，這個練久了讀題會快很多。</div>
+        <button class="btn btn-secondary" onclick="Vocab.prevSyn()">‹ 回上一題看看</button>
         <button class="btn btn-secondary" onclick="Vocab.showHome()">回單字首頁</button>
       </div>`);
-    session = null;
   }
 
   // ---------------------------------------------------------- 模式 C：主動輸出
@@ -1020,25 +1109,53 @@ const Vocab = (() => {
     const tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea') return;
     if (session.mode === 'review') {
-      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!session.revealed) reveal(); }
+      const inRange = session.index < session.items.length;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); if (inRange) next(); }
+      else if (!inRange) return;
+      else if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        if (!session.revealed && !session.results[session.index]) reveal();
+      }
       else if (['1', '2', '3', '4'].includes(e.key)) { e.preventDefault(); rate(Number(e.key)); }
-      else if (e.key.toLowerCase() === 's') skip();
+      else if (e.key.toLowerCase() === 's') next();
       else if (e.key.toLowerCase() === 'p') Speech.say(session.items[session.index].word);
     }
+  }
+
+  // 手機：左右滑動前後翻。只在通勤複習開，而且要明顯是橫向滑
+  // （橫向夠長、且遠大於縱向），捲動內容時不會誤觸。
+  function bindSwipe() {
+    let start = null;
+    const box = stage();
+    box.addEventListener('touchstart', e => {
+      const t = e.changedTouches[0];
+      start = { x: t.clientX, y: t.clientY };
+    }, { passive: true });
+    box.addEventListener('touchend', e => {
+      const from = start;
+      start = null;
+      if (!from || !session || session.mode !== 'review') return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - from.x, dy = t.clientY - from.y;
+      if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2) return;
+      if (dx > 0) prev(); else if (session.index < session.items.length) next();
+    }, { passive: true });
   }
 
   function init() {
     Store.init();
     Speech.init();
     document.addEventListener('keydown', onKey);
+    bindSwipe();
     showHome();
   }
 
   return {
     init, showHome, setTopic, renderHome, refresh,
-    startReview, reveal, skip, rate,
-    startSpell, submitSpell, nextSpell, spellHint, spellSay, spellSkip,
-    startSyn, submitSyn, nextSyn, synSkip,
+    startReview, reveal, skip, prev, next, goSkipped, rate,
+    startSpell, submitSpell, nextSpell, prevSpell, spellHint, spellSay, spellSkip,
+    startSyn, submitSyn, nextSyn, prevSyn, synSkip,
     startProduce, submitProduce, nextProduce, produceSkip, showProductions,
     showPromote, showPromoteLoose, confirmPromote,
     startComplete, saveComplete, skipComplete, showExampleRef,

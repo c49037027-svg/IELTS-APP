@@ -245,6 +245,20 @@ const Store = (() => {
     return next;
   }
 
+  //: 還原一次評分：排程狀態回到評分之前，並把那一筆複習紀錄拿掉。
+  //  「回上一張改評分」要用 —— 只是再評一次的話，同一張卡會被記兩次複習、
+  //  間隔被推進兩步。before 是評分前 getSrs 拿到的那份狀態（要自己先複製）。
+  //  拿掉紀錄也讓「今天認識了幾個新字」跟著回復，改完再評一次才會算對。
+  function undoGrade(cardId, track, before) {
+    const id = Number(cardId);
+    for (let i = db.reviewLog.length - 1; i >= 0; i--) {
+      const r = db.reviewLog[i];
+      if (r.cardId === id && r.track === track) { db.reviewLog.splice(i, 1); break; }
+    }
+    db.srs[srsKey(cardId, track)] = { ...before };
+    save();
+  }
+
   const isDue = (cardId, track) => getSrs(cardId, track).due <= today();
 
   //: 今天已經放行了幾張新卡（某張卡在這個 track 的第一次複習發生在今天）
@@ -841,7 +855,7 @@ const Store = (() => {
     init, save, resetAll, today, daysAgo,
     addCard, updateCard, getCard, findCard, findByWord, listCards, setCardType,
     missingCore, isIncomplete, hasBackContent, cardLabel, cardCount, incompleteCount, completionQueue,
-    getSrs, grade, dueItems, dueCount, dueOldCount,
+    getSrs, grade, undoGrade, dueItems, dueCount, dueOldCount,
     recordSpelling, spellingQueue, spellingErrorList, spellingAccuracy, lastSpellingResult,
     hasSpellingClue, spellingSentence, spellingSentenceZh, getPrefs, setPrefs, showZh, findLoosely,
     addProduction, listProductions, setProductionFeedback, productionCandidates, promotionCandidates,

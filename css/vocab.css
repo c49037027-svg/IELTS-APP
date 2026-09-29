@@ -127,6 +127,24 @@
 .rate-3 { background: var(--success); }
 .rate-4 { background: var(--accent); }
 
+/* ---------- 前後翻 ---------- */
+.nav-row { display: flex; gap: 8px; margin-top: 10px; }
+.nav-row.single .nav-btn { flex: 0 0 auto; min-width: 110px; }
+.nav-btn {
+  flex: 1; background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px; font-size: 14px; color: var(--text);
+  cursor: pointer; font-family: inherit;
+}
+.nav-btn:active:not(:disabled) { background: var(--bg); }
+.nav-btn:disabled { opacity: .35; cursor: default; }
+/* 回頭看已評分的卡：標出當時評的那一顆，其餘壓淡，點哪顆就改成哪個 */
+.rating-grid .btn.picked { outline: 3px solid var(--text); outline-offset: 2px; }
+.rated-tag {
+  display: inline-block; margin: 0 6px 10px 0; padding: 4px 10px;
+  background: rgba(120, 120, 120, .12); color: var(--text-light);
+  border-radius: 999px; font-size: 12px;
+}
+
 /* ---------- 輸入 ---------- */
 .spell-input, .sentence-input {
   width: 100%; padding: 14px; font-size: 17px; font-family: inherit;

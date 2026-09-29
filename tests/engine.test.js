@@ -295,6 +295,32 @@ check('每張卡都有三軌排程', () => {
   ok(r);
 });
 check('新卡今天到期', () => ok(run('Store.dueCount("recall") > 0')));
+check('還原評分：排程與複習紀錄都回到評分之前', () => {
+  // 回上一張改評分要用。只是「再評一次」的話，同一張卡會被記兩次複習。
+  const r = run(`(() => {
+    const card = Store.dueItems('recall', { limit: 1 })[0];
+    const before = { ...Store.getSrs(card.id, 'recall') };
+    const logBefore = Store.newWordsToday();
+    Store.grade(card.id, 'recall', 4);
+    const afterFirst = { ...Store.getSrs(card.id, 'recall') };
+    const newAfterGrade = Store.newWordsToday();
+    Store.undoGrade(card.id, 'recall', before);
+    const restored = Store.getSrs(card.id, 'recall');
+    const newAfterUndo = Store.newWordsToday();
+    Store.grade(card.id, 'recall', 1);
+    const regraded = Store.getSrs(card.id, 'recall');
+    const out = { before, afterFirst, restored: { ...restored }, logBefore, newAfterGrade, newAfterUndo,
+                  regraded: { ...regraded }, reviews: Store.getSrs(card.id, 'recall').reviews };
+    Store.undoGrade(card.id, 'recall', before);   // 收尾：不動到後面測試看到的額度
+    return out;
+  })()`);
+  eq(r.restored, r.before, '還原後排程應該跟評分前一模一樣');
+  ok(r.afterFirst.interval > r.before.interval, '第一次評 Easy 應該把間隔推遠');
+  eq(r.newAfterGrade, r.logBefore + 1, '評完認識了一個新字');
+  eq(r.newAfterUndo, r.logBefore, '還原後新字額度也要跟著回來');
+  eq(r.reviews, r.before.reviews + 1, '改評之後只能算一次複習，不是兩次');
+  eq(r.regraded.lapses, r.before.lapses + 1, '改成 Again 之後應該記一次 lapse');
+});
 check('每天的新字有上限，不會一次爆 800 張', () => {
   const n = run('Store.dueCount("recall")');
   eq(n, run('Store.dailyNew()'), `今日到期 ${n} 張`);

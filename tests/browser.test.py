@@ -117,6 +117,103 @@ with sync_playwright() as p:
     page.locator("#vocab-stage .back-btn").click()
     page.wait_for_timeout(200)
 
+    # --- 前後翻：通勤複習 ---
+    page.locator(".mode-card", has_text="通勤複習").click()
+    page.wait_for_timeout(200)
+    word = lambda: page.locator(".card-word").inner_text()
+    word_a = word()
+    step("前後翻：第一張的「上一張」是灰的",
+         page.get_by_role("button", name="‹ 上一張").is_disabled())
+    page.get_by_text("看例句與同義詞").click()
+    page.wait_for_timeout(150)
+    card_a = page.evaluate(f"Store.findByWord({word_a!r}).id")
+    page.locator(".rate-3").click()
+    page.wait_for_timeout(150)
+    word_b = word()
+    step("前後翻：評完換下一張", word_b != word_a)
+
+    page.get_by_role("button", name="上一張").click()
+    page.wait_for_timeout(150)
+    step("前後翻：按上一張回到剛評過的字", word() == word_a, f"{word()} == {word_a}")
+    step("前後翻：評過的卡回頭看直接翻開", page.locator(".dim-box").count() == 1)
+    step("前後翻：標出當時評的分數",
+         "已評：Good" in page.locator(".rated-tag").inner_text()
+         and page.locator(".rate-3.picked").count() == 1)
+
+    before_reviews = page.evaluate(f"Store.getSrs({card_a}, 'recall').reviews")
+    page.locator(".rate-1").click()   # 改成 Again
+    page.wait_for_timeout(150)
+    after = page.evaluate(f"""(() => {{
+        const s = Store.getSrs({card_a}, 'recall');
+        return {{ reviews: s.reviews, lapses: s.lapses, due: s.due, today: Store.today() }};
+    }})()""")
+    step("前後翻：改評分只算一次複習，不會重複記",
+         after["reviews"] == before_reviews, f"{before_reviews} → {after['reviews']}")
+    step("前後翻：改成 Again 之後排到明天並記 lapse",
+         after["lapses"] >= 1 and after["due"] > after["today"], str(after))
+    step("前後翻：改完評分繼續往下一張", word() == word_b)
+
+    page.keyboard.press("ArrowLeft")
+    page.wait_for_timeout(150)
+    step("前後翻：← 鍵回上一張", word() == word_a)
+    page.keyboard.press("ArrowRight")
+    page.wait_for_timeout(150)
+    step("前後翻：→ 鍵往下一張", word() == word_b)
+
+    # 跳過不評分：回頭還是正面，而且排程沒被動到
+    card_b = page.evaluate(f"Store.findByWord({word_b!r}).id")
+    b_reviews = page.evaluate(f"Store.getSrs({card_b}, 'recall').reviews")
+    page.get_by_role("button", name="跳過").click()
+    page.wait_for_timeout(150)
+    word_c = word()
+    page.get_by_role("button", name="上一張").click()
+    page.wait_for_timeout(150)
+    step("前後翻：跳過的卡回頭看還是正面", word() == word_b and page.locator(".dim-box").count() == 0)
+    step("前後翻：跳過不會動到排程",
+         page.evaluate(f"Store.getSrs({card_b}, 'recall').reviews") == b_reviews)
+
+    swipe = """([dx, dy]) => {
+        const box = document.getElementById('vocab-stage');
+        const mk = (type, x, y) => box.dispatchEvent(new TouchEvent(type, {
+            bubbles: true,
+            changedTouches: [new Touch({ identifier: 1, target: box, clientX: x, clientY: y })] }));
+        mk('touchstart', 200, 300); mk('touchend', 200 + dx, 300 + dy);
+    }"""
+    page.evaluate(swipe, [90, 5])       # 往右滑 = 上一張
+    page.wait_for_timeout(150)
+    step("前後翻：往右滑回上一張", word() == word_a)
+    page.evaluate(swipe, [-90, 5])      # 往左滑 = 下一張
+    page.wait_for_timeout(150)
+    step("前後翻：往左滑到下一張", word() == word_b)
+    page.evaluate(swipe, [10, -120])    # 直向捲動不能誤觸
+    page.evaluate(swipe, [-60, 5])      # 滑太短也不算
+    page.wait_for_timeout(150)
+    step("前後翻：直向滑與短滑不會誤翻", word() == word_b)
+
+    # 一路往後翻到結尾：跳過的要能回頭
+    for _ in range(200):
+        if page.locator(".empty-title").count():
+            break
+        page.keyboard.press("ArrowRight")
+    page.wait_for_timeout(150)
+    step("前後翻：翻到結尾看得到總結", "複習" in page.locator(".empty-title").inner_text())
+    step("前後翻：結尾畫面提示有跳過的",
+         page.get_by_role("button", name="回去看跳過的").count() == 1)
+    page.get_by_role("button", name="回去看跳過的").click()
+    page.wait_for_timeout(150)
+    step("前後翻：從結尾跳回第一張沒評的（是正面）",
+         page.locator(".card-word").count() == 1 and page.locator(".dim-box").count() == 0
+         and page.locator(".rated-tag").count() == 0)
+    for _ in range(200):
+        if page.locator(".empty-title").count():
+            break
+        page.keyboard.press("ArrowRight")
+    page.get_by_role("button", name="回上一張看看").click()
+    page.wait_for_timeout(150)
+    step("前後翻：從結尾回得到最後一張", page.locator(".card-word").count() == 1)
+    page.locator("#vocab-stage .back-btn").click()
+    page.wait_for_timeout(200)
+
     # --- 模式 B：拼字練習 ---
     page.locator(".mode-card", has_text="拼字練習").click()
     page.wait_for_timeout(200)
@@ -160,6 +257,59 @@ with sync_playwright() as p:
     page.wait_for_timeout(200)
     fb = page.locator(".feedback").inner_text()
     step("同義詞：答錯會列出正解", "還有" in fb, fb.replace("\n", " ")[:70])
+    page.locator("#vocab-stage .back-btn").click()
+    page.wait_for_timeout(200)
+
+    # --- 前後翻：拼字與同義詞 ---
+    page.locator(".mode-card", has_text="拼字練習").click()
+    page.wait_for_timeout(200)
+    q1 = page.locator(".dim-box").inner_text()
+    step("前後翻：拼字第一題的「上一題」是灰的",
+         page.get_by_role("button", name="‹ 上一題").is_disabled())
+    page.locator("#spell-input").fill("zzzwrong")
+    page.get_by_role("button", name="送出", exact=True).click()
+    page.wait_for_timeout(150)
+    attempts = page.evaluate("Store.spellingErrorList(100).reduce((n, r) => n + r.total, 0)")
+    page.get_by_role("button", name="下一題").click()
+    page.wait_for_timeout(150)
+    page.get_by_role("button", name="‹ 上一題").click()
+    page.wait_for_timeout(150)
+    step("前後翻：拼字回到上一題", page.locator(".dim-box").inner_text() == q1)
+    step("前後翻：答過的拼字題是唯讀重播（有回饋、沒有輸入框）",
+         page.locator(".feedback.bad").count() == 1 and page.locator("#spell-input").count() == 0)
+    step("前後翻：重播不會再記一次作答",
+         page.evaluate("Store.spellingErrorList(100).reduce((n, r) => n + r.total, 0)") == attempts)
+    page.get_by_role("button", name="下一題").click()
+    page.wait_for_timeout(150)
+    q2 = page.locator(".dim-box").inner_text()
+    page.get_by_role("button", name="跳過", exact=True).click()   # 第 2 題跳過
+    page.wait_for_timeout(150)
+    page.get_by_role("button", name="‹ 上一題").click()
+    page.wait_for_timeout(150)
+    step("前後翻：跳過的拼字題回頭還可以作答",
+         page.locator(".dim-box").inner_text() == q2 and page.locator("#spell-input").count() == 1)
+    page.locator("#vocab-stage .back-btn").click()
+    page.wait_for_timeout(200)
+
+    page.locator(".mode-card", has_text="同義詞測驗").click()
+    page.wait_for_timeout(200)
+    syn_word = page.locator(".card-word").inner_text()
+    step("前後翻：同義詞第一題的「上一題」是灰的",
+         page.get_by_role("button", name="‹ 上一題").is_disabled())
+    page.locator("#syn-input").fill("banana, apple")
+    page.get_by_role("button", name="送出", exact=True).click()
+    page.wait_for_timeout(150)
+    syn_id = page.evaluate(f"Store.findByWord({syn_word!r}).id")
+    syn_reviews = page.evaluate(f"Store.getSrs({syn_id}, 'synonym').reviews")
+    page.get_by_role("button", name="下一題").click()
+    page.wait_for_timeout(150)
+    page.get_by_role("button", name="‹ 上一題").click()
+    page.wait_for_timeout(150)
+    step("前後翻：同義詞回到上一題並重播結果",
+         page.locator(".card-word").inner_text() == syn_word
+         and page.locator(".feedback").count() == 1 and page.locator("#syn-input").count() == 0)
+    step("前後翻：同義詞重播不會再評一次分",
+         page.evaluate(f"Store.getSrs({syn_id}, 'synonym').reviews") == syn_reviews)
     page.locator("#vocab-stage .back-btn").click()
     page.wait_for_timeout(200)
 
