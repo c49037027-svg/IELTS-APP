@@ -258,3 +258,40 @@
 @media (min-width: 640px) {
   .rating-grid { grid-template-columns: repeat(4, 1fr); }
 }
+
+/* ---------- 手抄（iPad + Apple Pencil） ---------- */
+/* 手寫板要寬：iPad 橫向時把主欄放寬，格子才有地方寫 */
+body.copy-mode main { max-width: 1000px; }
+.seg {
+  display: flex; border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; margin-bottom: 12px; background: var(--card);
+}
+.seg button {
+  flex: 1; padding: 11px 8px; font-size: 14px; border: none; background: transparent;
+  color: var(--text); font-family: inherit; cursor: pointer;
+}
+.seg button + button { border-left: 1px solid var(--border); }
+.seg button.on { background: var(--primary); color: #fff; font-weight: 600; }
+.copy-card { padding-bottom: 12px; }
+.copy-ref .copy-zh, .copy-ref .card-meta { margin-top: 2px; }
+.copy-zh { font-size: 13px; color: var(--text-light); }
+.copy-ex { margin-top: 10px; font-size: 16px; line-height: 1.6; }
+.copy-coll { margin-top: 8px; font-size: 13px; color: var(--text-light); }
+.copy-tip { margin-top: 8px; font-size: 12px; color: var(--text-light); }
+.copy-hidden { font-size: 28px; font-weight: 700; letter-spacing: 6px; color: var(--text-light); }
+.copy-count { margin-top: 10px; font-size: 12px; color: var(--text-light); }
+.pad-wrap {
+  margin-top: 4px; background: #fffdf8; border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+}
+/* 書寫時不要捲動、選字、跳長按選單 —— Pencil 一落筆整個畫面都不該動 */
+.pad-wrap canvas {
+  display: block; touch-action: none; -webkit-user-select: none; user-select: none;
+  -webkit-touch-callout: none; cursor: crosshair;
+}
+.pad-tools { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+.pad-tools .tool-btn { flex: 0 0 auto; min-width: 96px; }
+.pad-tools .tool-btn:disabled { opacity: .35; }
+.finger-toggle { margin-left: auto; font-size: 13px; color: var(--text-light); display: flex; gap: 6px; align-items: center; }
+.pad-status { margin-top: 8px; font-size: 12px; color: var(--text-light); min-height: 16px; }
+.btn:disabled { opacity: .45; }

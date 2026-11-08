@@ -56,7 +56,7 @@ with sync_playwright() as p:
     # --- 首頁 ---
     step("首頁載入", page.locator("#vocab-home .today-card").count() == 1)
     modes = page.locator(".mode-card").all_text_contents()
-    step("五種模式都在", len(modes) == 5, " / ".join(m.split("\n")[0].strip() for m in modes)[:80])
+    step("六種模式都在", len(modes) == 6, " / ".join(m.split("\n")[0].strip() for m in modes)[:80])
     due_recall = page.locator(".today-num b").first.inner_text()
     step("今日待複習有數字", due_recall.isdigit() and int(due_recall) > 0, f"認讀 {due_recall}")
     page.screenshot(path=f"{OUT}/shot-home.png", full_page=True)
@@ -528,6 +528,118 @@ with sync_playwright() as p:
     page.get_by_text("看例句與同義詞").click()
     page.wait_for_timeout(200)
     step("發音：開了自動念，翻面就出聲", len(page.evaluate("window.__spoken")) == 1)
+
+    # --- 手抄單字（iPad） ---
+    ipad = browser.new_context(viewport={"width": 1024, "height": 768}, has_touch=True)
+    pad_page = ipad.new_page()
+    pad_page.on("console", lambda m: errors.append(f"console.{m.type}: {m.text}") if m.type == "error" else None)
+    pad_page.on("pageerror", lambda e: errors.append(f"pageerror: {e}"))
+    pad_page.goto(BASE, wait_until="networkidle")
+    pad_page.wait_for_timeout(400)
+    pad_page.locator(".mode-card", has_text="手抄單字").click()
+    pad_page.wait_for_timeout(300)
+    step("手抄：打開手寫板", pad_page.locator("#pad").count() == 1)
+    step("手抄：iPad 橫向把主欄放寬",
+         pad_page.evaluate("document.querySelector('main').getBoundingClientRect().width") > 800)
+    canvas_w = pad_page.evaluate("document.getElementById('pad').getBoundingClientRect().width")
+    step("手抄：畫布撐滿主欄", canvas_w > 800, f"{canvas_w:.0f}px")
+    step("手抄：沒寫字之前「寫好了」是灰的",
+         pad_page.locator("#copy-done").is_disabled())
+    word_a = pad_page.locator(".card-word").inner_text()
+    srs_before = pad_page.evaluate("JSON.stringify([Store.listCards().map(c => [Store.getSrs(c.id, 'recall'), Store.getSrs(c.id, 'spelling')])])")
+
+    ink = """() => { const c = document.getElementById('pad');
+        const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+        // 橫線與描紅底字都是半透明灰；筆跡是不透明深色，只數接近全黑的點
+        let n = 0; for (let i = 0; i < d.length; i += 4) if (d[i + 3] > 200 && d[i] < 90) n++;
+        return n; }"""
+    base_ink = pad_page.evaluate(ink)
+    # 用 pointer 事件模擬指標：pen / touch / mouse 的行為差異才測得到
+    send = """([type, kind, x, y, id]) => {
+        const c = document.getElementById('pad'), r = c.getBoundingClientRect();
+        c.dispatchEvent(new PointerEvent(kind, { pointerType: type, pointerId: id, bubbles: true,
+            clientX: r.left + x, clientY: r.top + y, pressure: kind === 'pointerup' ? 0 : 0.6,
+            isPrimary: true, buttons: kind === 'pointerup' ? 0 : 1 }));
+    }"""
+    def stroke(kind, pid, x0=60, y0=70, n=12):
+        pad_page.evaluate(send, [kind, "pointerdown", x0, y0, pid])
+        for i in range(1, n):
+            pad_page.evaluate(send, [kind, "pointermove", x0 + i * 14, y0 + (i % 3) * 6, pid])
+        pad_page.evaluate(send, [kind, "pointerup", x0 + n * 14, y0, pid])
+
+    stroke("pen", 11)
+    step("手抄：Apple Pencil 寫得出筆跡", pad_page.evaluate(ink) > base_ink + 200,
+         f"{base_ink} → {pad_page.evaluate(ink)}")
+    step("手抄：寫了字之後「寫好了」亮起來", not pad_page.locator("#copy-done").is_disabled())
+
+    before_touch = pad_page.evaluate(ink)
+    stroke("touch", 22, y0=200)
+    step("手抄：偵測到 Pencil 之後，手掌（手指）碰到不留筆跡",
+         pad_page.evaluate(ink) == before_touch)
+    step("手抄：畫面有說明防手掌誤觸", "Apple Pencil" in pad_page.locator("#pad-status").inner_text())
+    pad_page.locator("#finger-ok").check()
+    stroke("touch", 23, y0=200)
+    step("手抄：打開「手指也能寫」就寫得出來", pad_page.evaluate(ink) > before_touch + 100)
+
+    pad_page.locator("#copy-undo").click()
+    pad_page.wait_for_timeout(100)
+    step("手抄：復原只拿掉最後一筆（前一筆還在）",
+         base_ink + 100 < pad_page.evaluate(ink) <= before_touch + 5)
+    pad_page.get_by_role("button", name="清除重寫").click()
+    pad_page.wait_for_timeout(100)
+    step("手抄：清除之後筆跡全沒了", pad_page.evaluate(ink) == base_ink)
+
+    # 描紅：底字出現在格子裡（不是深色筆跡，所以另外數半透明灰）
+    stroke("pen", 31)
+    pad_page.get_by_role("button", name="描紅").click()
+    pad_page.wait_for_timeout(200)
+    step("手抄：切換寫法不會弄丟已經寫的筆跡", pad_page.evaluate(ink) > base_ink + 200)
+    pad_page.get_by_role("button", name="抄寫").click()
+    pad_page.wait_for_timeout(200)
+
+    # 前後翻：寫好了 → 下一個 → 回上一個，筆跡還在
+    copies_before = pad_page.evaluate(f"Store.copyCount(Store.findByWord({word_a!r}).id)")
+    pad_page.locator("#copy-done").click()
+    pad_page.wait_for_timeout(250)
+    word_b = pad_page.locator(".card-word").inner_text()
+    step("手抄：寫好了換下一個字", word_b != word_a)
+    step("手抄：抄過的字記一遍",
+         pad_page.evaluate(f"Store.copyCount(Store.findByWord({word_a!r}).id)") == copies_before + 1)
+    step("手抄：新的一個字是空白的格子", pad_page.evaluate(ink) == base_ink)
+    pad_page.get_by_role("button", name="上一個").click()
+    pad_page.wait_for_timeout(250)
+    step("手抄：回上一個，筆跡還在", pad_page.locator(".card-word").inner_text() == word_a
+         and pad_page.evaluate(ink) > base_ink + 200)
+    stroke("pen", 41, y0=190)   # 回頭補寫
+    pad_page.locator("#copy-done").click()
+    pad_page.wait_for_timeout(250)
+    step("手抄：回頭再按「寫好了」不會重複記次數",
+         pad_page.evaluate(f"Store.copyCount(Store.findByWord({word_a!r}).id)") == copies_before + 1)
+
+    # 默寫：字蓋起來，寫完才能翻開
+    pad_page.get_by_role("button", name="默寫").click()
+    pad_page.wait_for_timeout(250)
+    word_c = pad_page.evaluate(f"Store.findByWord({word_b!r}).word")
+    step("手抄：默寫時單字被蓋起來", pad_page.locator(".card-word").count() == 0
+         and "？？？" in pad_page.locator(".copy-ref").inner_text())
+    step("手抄：默寫時例句裡的字也挖空",
+         word_b not in pad_page.locator(".copy-ex").inner_text().lower()
+         if pad_page.locator(".copy-ex").count() else True)
+    stroke("pen", 51)
+    pad_page.get_by_role("button", name="翻開核對").click()
+    pad_page.wait_for_timeout(250)
+    step("手抄：翻開之後看得到答案", word_b in pad_page.locator(".feedback").inner_text())
+    step("手抄：默寫翻開後筆跡還在", pad_page.evaluate(ink) > base_ink + 200)
+
+    # 手抄不動排程：整場抄下來，認讀與拼字兩軌的排程一個字都沒變
+    step("手抄：只記次數、不動排程", pad_page.evaluate("JSON.stringify([Store.listCards().map(c => [Store.getSrs(c.id, 'recall'), Store.getSrs(c.id, 'spelling')])])") == srs_before)
+
+    # 離開手抄：主欄寬度還原、監聽器放掉
+    pad_page.locator("#vocab-stage .back-btn").click()
+    pad_page.wait_for_timeout(250)
+    step("手抄：回首頁之後主欄寬度恢復",
+         pad_page.evaluate("document.querySelector('main').getBoundingClientRect().width") <= 721)
+    ipad.close()
 
     browser.close()
 

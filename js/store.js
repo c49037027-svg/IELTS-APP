@@ -49,6 +49,7 @@ const Store = (() => {
       spelling: [],     // { cardId, input, correct, at }
       productions: [],  // { id, cardId, topic, prompt, sentence, at, feedback }
       prefs: { ...DISPLAY_DEFAULTS },
+      copies: {},       // cardId -> 手抄過幾遍（只記次數，筆跡不存）
       seeded: false
     };
   }
@@ -280,16 +281,53 @@ const Store = (() => {
 
   //: 今天第一次碰到的字有幾個 —— 不分軌，同一個字只算一次。
   //  這樣「每天 30 個新字」數的是字，不是 30×3 個練習項目。
-  function newWordsToday() {
+  function wordsFirstSeenToday() {
     const day = today();
     const first = new Map();
     db.reviewLog.forEach(r => {
       const at = r.at.slice(0, 10);
       if (!first.has(r.cardId) || at < first.get(r.cardId)) first.set(r.cardId, at);
     });
-    let n = 0;
-    first.forEach(at => { if (at === day) n += 1; });
-    return n;
+    const ids = [];
+    first.forEach((at, id) => { if (at === day) ids.push(id); });
+    return ids;
+  }
+
+  const newWordsToday = () => wordsFirstSeenToday().length;
+
+  // ---------------------------------------------------------- 手抄
+  const copyCount = cardId => Number((db.copies || {})[cardId]) || 0;
+
+  function recordCopy(cardId) {
+    if (!db.copies) db.copies = {};
+    db.copies[cardId] = copyCount(cardId) + 1;
+    save();
+    return db.copies[cardId];
+  }
+
+  //: 手抄清單：最值得用手寫加強的字排前面 ——
+  //  ① 拼字拼錯過的（手寫是最直接的補救）② 今天剛認識的新字 ③ 其餘到期的字。
+  //  同一個字只出現一次；抄得越少的越前面（同一類裡）。
+  function handwritingQueue(opts = {}) {
+    const limit = opts.limit || 20;
+    const matches = opts.topic ? topicMatcher(opts.topic) : () => true;
+    const byId = id => getCard(id);
+    const seen = new Set();
+    const out = [];
+    const add = card => {
+      if (!card || !card.word || seen.has(card.id) || !matches(card)) return;
+      seen.add(card.id);
+      out.push(card);
+    };
+    const fewestCopiesFirst = list => list.slice().sort((a, b) => copyCount(a.id) - copyCount(b.id));
+
+    fewestCopiesFirst(db.cards.filter(c => lastSpellingResult(c.id) === false)).forEach(add);
+    fewestCopiesFirst(wordsFirstSeenToday().map(byId).filter(Boolean)).forEach(add);
+    if (out.length < limit) {
+      dueItems('recall', { cardType: 'passive', requireContent: true, limit: limit * 2,
+        topic: opts.topic }).forEach(add);
+    }
+    return out.slice(0, limit);
   }
 
   /** 今天還能認識幾個新字（舊字複習不受影響，一律照排程出）。 */
@@ -851,6 +889,7 @@ const Store = (() => {
     TRACKS, TRACK_LABELS, CORE_FIELDS, CORE_LABELS, CSV_COLUMNS,
     DAILY_NEW_DEFAULT, DAILY_NEW_MIN, DAILY_NEW_MAX, DAILY_NEW_CHOICES,
     dailyNew, newWordsToday, newWordsLeftToday, everSeen,
+    copyCount, recordCopy, handwritingQueue,
     newIntroducedToday,
     init, save, resetAll, today, daysAgo,
     addCard, updateCard, getCard, findCard, findByWord, listCards, setCardType,

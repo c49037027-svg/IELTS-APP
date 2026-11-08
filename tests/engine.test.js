@@ -682,5 +682,40 @@ check('支援語音時會呼叫 speak，並帶上挑好的語音與語速', () =
   ok(!html.includes('<script'), '不該混進標籤');
 });
 
+console.log('--- 手抄 ---');
+check('手抄清單：拼錯過的字排最前面，同一個字不重複', () => {
+  const r = run(`(() => {
+    const wrong = Store.findByWord('plagiarism');
+    Store.recordSpelling(wrong.id, 'plagarism', false);
+    const queue = Store.handwritingQueue({ limit: 10 });
+    const ids = queue.map(c => c.id);
+    return { first: queue[0].word, unique: new Set(ids).size === ids.length, n: queue.length };
+  })()`);
+  eq(r.first, 'plagiarism', '拼錯的字要排第一個');
+  ok(r.unique, '同一個字只能出現一次');
+  ok(r.n > 1 && r.n <= 10, `清單長度 \${r.n}`);
+});
+check('手抄清單：沒有拼錯也沒有新字時，退回到期的字', () => {
+  const n = run('Store.handwritingQueue({ limit: 5 }).length');
+  ok(n > 0, '清單不能是空的');
+});
+check('手抄次數：累計、持久、不影響排程', () => {
+  const r = run(`(() => {
+    const c = Store.findByWord('abandon');
+    const srsBefore = JSON.stringify(Store.getSrs(c.id, 'recall'));
+    const a = Store.copyCount(c.id);
+    Store.recordCopy(c.id); Store.recordCopy(c.id);
+    return { a, b: Store.copyCount(c.id), same: srsBefore === JSON.stringify(Store.getSrs(c.id, 'recall')),
+             saved: JSON.parse(localStorage.getItem('ielts-vocab-v2')).copies[c.id] };
+  })()`);
+  eq(r.b, r.a + 2, '抄兩遍就是 +2');
+  ok(r.same, '手抄不該動認讀排程');
+  eq(r.saved, r.b, '次數要寫進 localStorage');
+});
+check('手抄清單：套用主題篩選', () => {
+  const topics = run(`Store.handwritingQueue({ limit: 20, topic: '環境' }).map(c => c.topic)`);
+  ok(topics.every(x => x === '環境'), `混進別的主題：\${[...new Set(topics)]}`);
+});
+
 console.log(`\n通過 ${passed} 項，失敗 ${failed} 項`);
 process.exit(failed ? 1 : 0);

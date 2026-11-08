@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ielts-v13';
+const CACHE_NAME = 'ielts-v14';
 const ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const ASSETS = [
   './js/srs.js',
   './js/textutil.js',
   './js/speech.js',
+  './js/handwriting.js',
   './js/cards.js',
   './js/legacy-words.js',
   './js/store.js',
