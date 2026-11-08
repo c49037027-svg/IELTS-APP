@@ -261,7 +261,15 @@
 
 /* ---------- 手抄（iPad + Apple Pencil） ---------- */
 /* 手寫板要寬：iPad 橫向時把主欄放寬，格子才有地方寫 */
-body.copy-mode main { max-width: 1000px; }
+body.copy-mode main { max-width: 1100px; }
+/* 橫放：左邊是這個字的四欄（釘在上面不跟著捲），右邊是格子；直放就上下疊 */
+.copy-split { display: block; }
+@media (min-width: 900px) {
+  .copy-split { display: grid; grid-template-columns: 300px 1fr; gap: 16px; align-items: start; }
+  .copy-left { position: sticky; top: 12px; }
+}
+.copy-sec { display: flex; gap: 12px; margin-top: 10px; font-size: 15px; line-height: 1.6; text-align: left; }
+.copy-sec .dim-key { flex: 0 0 38px; }
 .seg {
   display: flex; border: 1px solid var(--border); border-radius: 10px;
   overflow: hidden; margin-bottom: 12px; background: var(--card);
@@ -273,16 +281,22 @@ body.copy-mode main { max-width: 1000px; }
 .seg button + button { border-left: 1px solid var(--border); }
 .seg button.on { background: var(--primary); color: #fff; font-weight: 600; }
 .copy-card { padding-bottom: 12px; }
-.copy-ref .copy-zh, .copy-ref .card-meta { margin-top: 2px; }
-.copy-zh { font-size: 13px; color: var(--text-light); }
-.copy-ex { margin-top: 10px; font-size: 16px; line-height: 1.6; }
-.copy-coll { margin-top: 8px; font-size: 13px; color: var(--text-light); }
 .copy-tip { margin-top: 8px; font-size: 12px; color: var(--text-light); }
 .copy-hidden { font-size: 28px; font-weight: 700; letter-spacing: 6px; color: var(--text-light); }
 .copy-count { margin-top: 10px; font-size: 12px; color: var(--text-light); }
 .pad-wrap {
   margin-top: 4px; background: #fffdf8; border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
+  border-radius: 12px; overflow: hidden; display: flex; align-items: stretch;
+}
+.pad-box { flex: 1; min-width: 0; }
+/* 格子本身要擋掉所有觸控捲動（不然 Pencil 一落筆整頁就跟著動），
+   所以另外留一條窄的「捲動條」：手指在上面上下滑，頁面照常捲 */
+.pad-scroll {
+  flex: 0 0 36px; touch-action: pan-y; -webkit-user-select: none; user-select: none;
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; font-size: 12px; letter-spacing: 2px; color: var(--text-light);
+  background: repeating-linear-gradient(0deg, rgba(120,100,85,.06) 0 8px, rgba(120,100,85,.12) 8px 9px);
+  border-left: 1px solid var(--border);
 }
 /* 書寫時不要捲動、選字、跳長按選單 —— Pencil 一落筆整個畫面都不該動 */
 .pad-wrap canvas {
@@ -295,3 +309,18 @@ body.copy-mode main { max-width: 1000px; }
 .finger-toggle { margin-left: auto; font-size: 13px; color: var(--text-light); display: flex; gap: 6px; align-items: center; }
 .pad-status { margin-top: 8px; font-size: 12px; color: var(--text-light); min-height: 16px; }
 .btn:disabled { opacity: .45; }
+
+/* ---------- 手抄本清單與表單 ---------- */
+.note-list { display: flex; flex-direction: column; gap: 8px; }
+.note-row { display: flex; gap: 8px; align-items: stretch; }
+.note-row .tool-btn { flex: 0 0 auto; min-width: 0; padding: 0 14px; }
+.note-main {
+  flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; text-align: left;
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 14px; cursor: pointer; font-family: inherit; color: var(--text);
+}
+.note-main:active { background: var(--bg); }
+.note-word { font-size: 17px; font-weight: 700; color: var(--primary); }
+.note-meaning { font-size: 13px; color: var(--text-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.note-meta { font-size: 11px; color: var(--text-light); }
+.form-error { color: var(--error); font-size: 13px; min-height: 18px; margin-top: 4px; }

@@ -682,39 +682,73 @@ check('支援語音時會呼叫 speak，並帶上挑好的語音與語速', () =
   ok(!html.includes('<script'), '不該混進標籤');
 });
 
-console.log('--- 手抄 ---');
-check('手抄清單：拼錯過的字排最前面，同一個字不重複', () => {
-  const r = run(`(() => {
-    const wrong = Store.findByWord('plagiarism');
-    Store.recordSpelling(wrong.id, 'plagarism', false);
-    const queue = Store.handwritingQueue({ limit: 10 });
-    const ids = queue.map(c => c.id);
-    return { first: queue[0].word, unique: new Set(ids).size === ids.length, n: queue.length };
+console.log('--- 手抄本 ---');
+check('手抄本：新增生詞，四個欄位都存得起來', () => {
+  const n = run(`(() => {
+    const note = Store.addNote({ word: 'ubiquitous', meaning: '無所不在的',
+      example: 'Smartphones are ubiquitous in modern cities.', synonyms: 'omnipresent, widespread; pervasive' });
+    return JSON.parse(JSON.stringify(note));
   })()`);
-  eq(r.first, 'plagiarism', '拼錯的字要排第一個');
-  ok(r.unique, '同一個字只能出現一次');
-  ok(r.n > 1 && r.n <= 10, `清單長度 \${r.n}`);
+  eq(n.word, 'ubiquitous');
+  eq(n.meaning, '無所不在的');
+  eq(n.example, 'Smartphones are ubiquitous in modern cities.');
+  eq(n.synonyms, ['omnipresent', 'widespread', 'pervasive'], '逗號、分號都要能切開同義詞');
+  eq(n.copies, 0);
 });
-check('手抄清單：沒有拼錯也沒有新字時，退回到期的字', () => {
-  const n = run('Store.handwritingQueue({ limit: 5 }).length');
-  ok(n > 0, '清單不能是空的');
+check('手抄本：只有單字也能存，其餘欄位留白', () => {
+  const n = run(`JSON.parse(JSON.stringify(Store.addNote({ word: 'lucid' })))`);
+  eq([n.meaning, n.example, n.synonyms], ['', '', []]);
 });
-check('手抄次數：累計、持久、不影響排程', () => {
+check('手抄本：沒填單字、或同一個字重複新增都會擋下', () => {
+  let msg = '';
+  try { run(`Store.addNote({ word: '  ', meaning: 'x' })`); } catch (e) { msg = e.message; }
+  ok(msg.includes('單字'), `沒填單字的訊息：${msg}`);
+  msg = '';
+  try { run(`Store.addNote({ word: 'UBIQUITOUS' })`); } catch (e) { msg = e.message; }
+  ok(msg.includes('已經在'), `大小寫不同也算重複：${msg}`);
+});
+check('手抄本：新的排在上面；編輯與刪除', () => {
   const r = run(`(() => {
-    const c = Store.findByWord('abandon');
-    const srsBefore = JSON.stringify(Store.getSrs(c.id, 'recall'));
-    const a = Store.copyCount(c.id);
-    Store.recordCopy(c.id); Store.recordCopy(c.id);
-    return { a, b: Store.copyCount(c.id), same: srsBefore === JSON.stringify(Store.getSrs(c.id, 'recall')),
-             saved: JSON.parse(localStorage.getItem('ielts-vocab-v2')).copies[c.id] };
+    const order = Store.listNotes().map(n => n.word);
+    const id = Store.listNotes().find(n => n.word === 'lucid').id;
+    Store.updateNote(id, { meaning: '清楚易懂的', synonyms: ['clear', 'coherent'] });
+    const edited = JSON.parse(JSON.stringify(Store.getNote(id)));
+    let clash = '';
+    try { Store.updateNote(id, { word: 'ubiquitous' }); } catch (e) { clash = e.message; }
+    const gone = Store.deleteNote(id);
+    return { order, edited, clash, gone, after: Store.listNotes().map(n => n.word) };
   })()`);
-  eq(r.b, r.a + 2, '抄兩遍就是 +2');
-  ok(r.same, '手抄不該動認讀排程');
-  eq(r.saved, r.b, '次數要寫進 localStorage');
+  eq(r.order, ['lucid', 'ubiquitous'], '後加的在上面');
+  eq([r.edited.meaning, r.edited.synonyms, r.edited.word], ['清楚易懂的', ['clear', 'coherent'], 'lucid']);
+  ok(r.clash.includes('已經在'), '改名撞到別的字要擋下');
+  eq(r.gone, true);
+  eq(r.after, ['ubiquitous']);
 });
-check('手抄清單：套用主題篩選', () => {
-  const topics = run(`Store.handwritingQueue({ limit: 20, topic: '環境' }).map(c => c.topic)`);
-  ok(topics.every(x => x === '環境'), `混進別的主題：\${[...new Set(topics)]}`);
+check('手抄本：抄一遍記一次，寫進 localStorage，不動單字庫', () => {
+  const r = run(`(() => {
+    const note = Store.listNotes()[0];
+    const cards = Store.cardCount();
+    const srs = JSON.stringify(Store.listCards().slice(0, 30).map(c => Store.getSrs(c.id, 'recall')));
+    Store.recordNoteCopy(note.id); Store.recordNoteCopy(note.id);
+    const saved = JSON.parse(localStorage.getItem('ielts-vocab-v2')).notebook.find(n => n.id === note.id);
+    return { copies: Store.getNote(note.id).copies, saved: saved.copies, stamped: !!saved.lastCopiedAt,
+             cardsSame: cards === Store.cardCount(),
+             srsSame: srs === JSON.stringify(Store.listCards().slice(0, 30).map(c => Store.getSrs(c.id, 'recall'))) };
+  })()`);
+  eq(r.copies, 2);
+  eq(r.saved, 2, '次數要寫進 localStorage');
+  ok(r.stamped, '要記下最後抄寫時間');
+  ok(r.cardsSame && r.srsSame, '手抄本不該動單字庫與排程');
+});
+check('手抄本：匯出 CSV，逗號與換行不會打壞欄位', () => {
+  const csv = run(`(() => {
+    Store.addNote({ word: 'tricky', meaning: '複雜的, 棘手的', example: 'A "tricky" case,\\nreally.', synonyms: 'hard; awkward' });
+    return Store.exportNotebookCSV();
+  })()`);
+  ok(csv.startsWith('﻿word,meaning,example,synonyms,copies'), '要有 BOM 與標題列');
+  ok(csv.includes('"複雜的, 棘手的"'), '含逗號的欄位要加引號');
+  ok(csv.includes('"A ""tricky"" case,\nreally."'), '引號要跳脫、換行要留在引號裡');
+  ok(csv.includes('hard; awkward'));
 });
 
 console.log(`\n通過 ${passed} 項，失敗 ${failed} 項`);

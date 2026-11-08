@@ -49,7 +49,8 @@ const Store = (() => {
       spelling: [],     // { cardId, input, correct, at }
       productions: [],  // { id, cardId, topic, prompt, sentence, at, feedback }
       prefs: { ...DISPLAY_DEFAULTS },
-      copies: {},       // cardId -> 手抄過幾遍（只記次數，筆跡不存）
+      notebook: [],     // 手抄本：自己的生詞 { id, word, meaning, example, synonyms, copies, ... }
+      nextNoteId: 1,
       seeded: false
     };
   }
@@ -281,53 +282,91 @@ const Store = (() => {
 
   //: 今天第一次碰到的字有幾個 —— 不分軌，同一個字只算一次。
   //  這樣「每天 30 個新字」數的是字，不是 30×3 個練習項目。
-  function wordsFirstSeenToday() {
+  function newWordsToday() {
     const day = today();
     const first = new Map();
     db.reviewLog.forEach(r => {
       const at = r.at.slice(0, 10);
       if (!first.has(r.cardId) || at < first.get(r.cardId)) first.set(r.cardId, at);
     });
-    const ids = [];
-    first.forEach((at, id) => { if (at === day) ids.push(id); });
-    return ids;
+    let n = 0;
+    first.forEach(at => { if (at === day) n += 1; });
+    return n;
   }
 
-  const newWordsToday = () => wordsFirstSeenToday().length;
+  // ---------------------------------------------------------- 手抄本
+  // 自己遇到的生詞：單字／解釋／例句／同義詞。跟單字庫（SEED + 匯入的卡片）是
+  // 兩個獨立的東西 —— 這裡是「拿來手抄」的筆記，不進複習排程，也不動任何卡片。
+  // 只記每個字抄過幾遍；筆跡不存（存成圖片會很快塞滿 localStorage）。
+  const noteList = v => (Array.isArray(v) ? v : String(v || '').split(/[;|、,，]/))
+    .map(s => String(s).trim()).filter(Boolean);
 
-  // ---------------------------------------------------------- 手抄
-  const copyCount = cardId => Number((db.copies || {})[cardId]) || 0;
-
-  function recordCopy(cardId) {
-    if (!db.copies) db.copies = {};
-    db.copies[cardId] = copyCount(cardId) + 1;
-    save();
-    return db.copies[cardId];
-  }
-
-  //: 手抄清單：最值得用手寫加強的字排前面 ——
-  //  ① 拼字拼錯過的（手寫是最直接的補救）② 今天剛認識的新字 ③ 其餘到期的字。
-  //  同一個字只出現一次；抄得越少的越前面（同一類裡）。
-  function handwritingQueue(opts = {}) {
-    const limit = opts.limit || 20;
-    const matches = opts.topic ? topicMatcher(opts.topic) : () => true;
-    const byId = id => getCard(id);
-    const seen = new Set();
-    const out = [];
-    const add = card => {
-      if (!card || !card.word || seen.has(card.id) || !matches(card)) return;
-      seen.add(card.id);
-      out.push(card);
+  function normaliseNote(input) {
+    return {
+      id: input.id || 0,
+      word: String(input.word || '').trim(),
+      meaning: String(input.meaning || '').trim(),
+      example: String(input.example || '').trim(),
+      synonyms: noteList(input.synonyms),
+      copies: Math.max(0, Number(input.copies) || 0),
+      createdAt: input.createdAt || Dates.nowISO(),
+      lastCopiedAt: input.lastCopiedAt || ''
     };
-    const fewestCopiesFirst = list => list.slice().sort((a, b) => copyCount(a.id) - copyCount(b.id));
+  }
 
-    fewestCopiesFirst(db.cards.filter(c => lastSpellingResult(c.id) === false)).forEach(add);
-    fewestCopiesFirst(wordsFirstSeenToday().map(byId).filter(Boolean)).forEach(add);
-    if (out.length < limit) {
-      dueItems('recall', { cardType: 'passive', requireContent: true, limit: limit * 2,
-        topic: opts.topic }).forEach(add);
+  const sameWord = (a, b) => String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+  const getNote = id => (db.notebook || []).find(n => n.id === Number(id)) || null;
+
+  /** 新的在上面：剛遇到的生詞最該先抄。 */
+  const listNotes = () => (db.notebook || []).slice().sort((a, b) => b.id - a.id);
+
+  function addNote(input) {
+    const note = normaliseNote(input);
+    if (!note.word) throw new Error('請填單字');
+    if (db.notebook.some(n => sameWord(n.word, note.word))) {
+      throw new Error(`「${note.word}」已經在手抄本裡了`);
     }
-    return out.slice(0, limit);
+    note.id = db.nextNoteId++;
+    db.notebook.push(note);
+    save();
+    return note;
+  }
+
+  function updateNote(id, fields) {
+    const note = getNote(id);
+    if (!note) throw new Error('找不到這個生詞');
+    const next = normaliseNote({ ...note, ...fields, id: note.id });
+    if (!next.word) throw new Error('請填單字');
+    if (db.notebook.some(n => n.id !== note.id && sameWord(n.word, next.word))) {
+      throw new Error(`「${next.word}」已經在手抄本裡了`);
+    }
+    Object.assign(note, next);
+    save();
+    return note;
+  }
+
+  function deleteNote(id) {
+    const before = db.notebook.length;
+    db.notebook = db.notebook.filter(n => n.id !== Number(id));
+    if (db.notebook.length !== before) save();
+    return before !== db.notebook.length;
+  }
+
+  function recordNoteCopy(id) {
+    const note = getNote(id);
+    if (!note) return 0;
+    note.copies += 1;
+    note.lastCopiedAt = Dates.nowISO();
+    save();
+    return note.copies;
+  }
+
+  function exportNotebookCSV() {
+    const cell = v => (/[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v));
+    const head = ['word', 'meaning', 'example', 'synonyms', 'copies'];
+    const rows = listNotes().reverse().map(n =>
+      [n.word, n.meaning, n.example, n.synonyms.join('; '), n.copies].map(cell).join(','));
+    return '\ufeff' + [head.join(','), ...rows].join('\n');
   }
 
   /** 今天還能認識幾個新字（舊字複習不受影響，一律照排程出）。 */
@@ -889,7 +928,7 @@ const Store = (() => {
     TRACKS, TRACK_LABELS, CORE_FIELDS, CORE_LABELS, CSV_COLUMNS,
     DAILY_NEW_DEFAULT, DAILY_NEW_MIN, DAILY_NEW_MAX, DAILY_NEW_CHOICES,
     dailyNew, newWordsToday, newWordsLeftToday, everSeen,
-    copyCount, recordCopy, handwritingQueue,
+    getNote, listNotes, addNote, updateNote, deleteNote, recordNoteCopy, exportNotebookCSV,
     newIntroducedToday,
     init, save, resetAll, today, daysAgo,
     addCard, updateCard, getCard, findCard, findByWord, listCards, setCardType,

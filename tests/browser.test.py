@@ -529,32 +529,96 @@ with sync_playwright() as p:
     page.wait_for_timeout(200)
     step("發音：開了自動念，翻面就出聲", len(page.evaluate("window.__spoken")) == 1)
 
-    # --- 手抄單字（iPad） ---
-    ipad = browser.new_context(viewport={"width": 1024, "height": 768}, has_touch=True)
+    # --- 手抄本（iPad） ---
+    ipad = browser.new_context(viewport={"width": 1024, "height": 768}, has_touch=True, accept_downloads=True)
     pad_page = ipad.new_page()
     pad_page.on("console", lambda m: errors.append(f"console.{m.type}: {m.text}") if m.type == "error" else None)
     pad_page.on("pageerror", lambda e: errors.append(f"pageerror: {e}"))
     pad_page.goto(BASE, wait_until="networkidle")
     pad_page.wait_for_timeout(400)
+    snap = "JSON.stringify([Store.cardCount(), Store.listCards().map(c => [Store.getSrs(c.id, 'recall'), Store.getSrs(c.id, 'spelling')])])"
+    deck_before = pad_page.evaluate(snap)
+
     pad_page.locator(".mode-card", has_text="手抄單字").click()
+    pad_page.wait_for_timeout(250)
+    step("手抄本：一開始是空的，教你先新增生詞",
+         "手抄本還是空的" in pad_page.locator("#vocab-stage").inner_text()
+         and pad_page.get_by_role("button", name="開始手抄").count() == 0)
+
+    # 新增生詞：四個欄位
+    pad_page.get_by_role("button", name="＋ 新增生詞").click()
+    pad_page.wait_for_timeout(200)
+    step("手抄本：表單有單字／解釋／例句／同義詞四欄",
+         all(pad_page.locator(f"#{i}").count() == 1 for i in ("nb-word", "nb-meaning", "nb-example", "nb-syn")))
+    pad_page.get_by_role("button", name="存起來", exact=True).click()
+    step("手抄本：沒填單字會擋下", "請填單字" in pad_page.locator("#nb-error").inner_text())
+    pad_page.fill("#nb-word", "lucid")
+    pad_page.fill("#nb-meaning", "清楚易懂的")
+    pad_page.get_by_role("button", name="存起來，再加一個").click()
+    pad_page.wait_for_timeout(200)
+    step("手抄本：存起來再加一個，表單清空", pad_page.input_value("#nb-word") == "")
+    pad_page.fill("#nb-word", "ubiquitous")
+    pad_page.fill("#nb-meaning", "無所不在的")
+    pad_page.fill("#nb-example", "Smartphones are ubiquitous in modern cities.")
+    pad_page.fill("#nb-syn", "omnipresent, widespread; pervasive")
+    pad_page.get_by_role("button", name="存起來", exact=True).click()
+    pad_page.wait_for_timeout(200)
+    rows = pad_page.locator(".note-row .note-word").all_text_contents()
+    step("手抄本：存好的字列在清單裡，新的在上面", rows == ["ubiquitous", "lucid"], str(rows))
+
+    pad_page.get_by_role("button", name="＋ 新增生詞").click()
+    pad_page.fill("#nb-word", "Ubiquitous")
+    pad_page.get_by_role("button", name="存起來", exact=True).click()
+    step("手抄本：同一個字（大小寫不同也算）不能重複新增",
+         "已經在" in pad_page.locator("#nb-error").inner_text())
+    pad_page.get_by_role("button", name="取消").click()
+    pad_page.wait_for_timeout(200)
+
+    # 編輯
+    pad_page.locator(".note-row", has_text="lucid").get_by_role("button", name="編輯").click()
+    pad_page.wait_for_timeout(200)
+    step("手抄本：編輯時帶入原本的內容", pad_page.input_value("#nb-meaning") == "清楚易懂的")
+    pad_page.fill("#nb-meaning", "清楚易懂的、明白的")
+    pad_page.get_by_role("button", name="存起來", exact=True).click()
+    pad_page.wait_for_timeout(200)
+    step("手抄本：編輯存得起來",
+         pad_page.evaluate("Store.listNotes().find(n => n.word === 'lucid').meaning") == "清楚易懂的、明白的")
+
+    # 從 ubiquitous 開始抄（四欄俱全） —— 一頁四個區塊
+    pad_page.locator(".note-row", has_text="lucid").locator(".note-main").click()
     pad_page.wait_for_timeout(300)
-    step("手抄：打開手寫板", pad_page.locator("#pad").count() == 1)
-    step("手抄：iPad 橫向把主欄放寬",
-         pad_page.evaluate("document.querySelector('main').getBoundingClientRect().width") > 800)
+    step("手抄：點清單裡的字，就從那個字開始抄", pad_page.locator(".card-word").inner_text() == "lucid")
+    pad_page.get_by_role("button", name="‹ 上一個").click()
+    pad_page.wait_for_timeout(250)
+    step("手抄：打開手寫板，可以往前翻到第一個字",
+         pad_page.locator("#pad").count() == 1 and pad_page.locator(".card-word").inner_text() == "ubiquitous")
+    ref = pad_page.locator(".copy-ref").inner_text()
+    step("手抄：旁邊列出這個字的解釋、例句、同義詞",
+         "無所不在的" in ref and "Smartphones are" in ref and "omnipresent" in ref)
+    step("手抄：iPad 橫向：參考欄在左、格子在右",
+         pad_page.evaluate("""(() => { const a = document.querySelector('.copy-left').getBoundingClientRect();
+            const b = document.querySelector('.copy-right').getBoundingClientRect();
+            return a.right <= b.left + 1 && Math.abs(a.top - b.top) < 4; })()"""))
+    full_h = pad_page.evaluate("document.getElementById('pad').getBoundingClientRect().height")
     canvas_w = pad_page.evaluate("document.getElementById('pad').getBoundingClientRect().width")
-    step("手抄：畫布撐滿主欄", canvas_w > 800, f"{canvas_w:.0f}px")
-    step("手抄：沒寫字之前「寫好了」是灰的",
-         pad_page.locator("#copy-done").is_disabled())
+    step("手抄：格子擋掉觸控捲動，旁邊另有可以用手指捲頁的窄條",
+         pad_page.evaluate("""(() => {
+            const cv = getComputedStyle(document.getElementById('pad')).touchAction;
+            const st = getComputedStyle(document.querySelector('.pad-scroll')).touchAction;
+            const box = document.getElementById('pad').getBoundingClientRect();
+            const strip = document.querySelector('.pad-scroll').getBoundingClientRect();
+            return cv === 'none' && st === 'pan-y' && strip.left >= box.right - 1 && strip.height >= box.height - 2;
+         })()"""))
+    step("手抄：iPad 橫向把主欄放寬", pad_page.evaluate("document.querySelector('main').getBoundingClientRect().width") > 900)
+    step("手抄：沒寫字之前「寫好了」是灰的", pad_page.locator("#copy-done").is_disabled())
     word_a = pad_page.locator(".card-word").inner_text()
-    srs_before = pad_page.evaluate("JSON.stringify([Store.listCards().map(c => [Store.getSrs(c.id, 'recall'), Store.getSrs(c.id, 'spelling')])])")
 
     ink = """() => { const c = document.getElementById('pad');
         const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
-        // 橫線與描紅底字都是半透明灰；筆跡是不透明深色，只數接近全黑的點
+        // 橫線、標籤列與描紅底字都是半透明；筆跡是不透明深色，只數接近全黑的點
         let n = 0; for (let i = 0; i < d.length; i += 4) if (d[i + 3] > 200 && d[i] < 90) n++;
         return n; }"""
     base_ink = pad_page.evaluate(ink)
-    # 用 pointer 事件模擬指標：pen / touch / mouse 的行為差異才測得到
     send = """([type, kind, x, y, id]) => {
         const c = document.getElementById('pad'), r = c.getBoundingClientRect();
         c.dispatchEvent(new PointerEvent(kind, { pointerType: type, pointerId: id, bubbles: true,
@@ -574,13 +638,11 @@ with sync_playwright() as p:
 
     before_touch = pad_page.evaluate(ink)
     stroke("touch", 22, y0=200)
-    step("手抄：偵測到 Pencil 之後，手掌（手指）碰到不留筆跡",
-         pad_page.evaluate(ink) == before_touch)
+    step("手抄：偵測到 Pencil 之後，手掌（手指）碰到不留筆跡", pad_page.evaluate(ink) == before_touch)
     step("手抄：畫面有說明防手掌誤觸", "Apple Pencil" in pad_page.locator("#pad-status").inner_text())
     pad_page.locator("#finger-ok").check()
     stroke("touch", 23, y0=200)
     step("手抄：打開「手指也能寫」就寫得出來", pad_page.evaluate(ink) > before_touch + 100)
-
     pad_page.locator("#copy-undo").click()
     pad_page.wait_for_timeout(100)
     step("手抄：復原只拿掉最後一筆（前一筆還在）",
@@ -589,56 +651,81 @@ with sync_playwright() as p:
     pad_page.wait_for_timeout(100)
     step("手抄：清除之後筆跡全沒了", pad_page.evaluate(ink) == base_ink)
 
-    # 描紅：底字出現在格子裡（不是深色筆跡，所以另外數半透明灰）
+    # 描紅 / 抄寫切換不會弄丟筆跡，也不會讓格子跑位
     stroke("pen", 31)
     pad_page.get_by_role("button", name="描紅").click()
     pad_page.wait_for_timeout(200)
     step("手抄：切換寫法不會弄丟已經寫的筆跡", pad_page.evaluate(ink) > base_ink + 200)
+    step("手抄：切換寫法版面不變（筆跡才不會跑位）",
+         pad_page.evaluate("document.getElementById('pad').getBoundingClientRect().height") == full_h)
     pad_page.get_by_role("button", name="抄寫").click()
     pad_page.wait_for_timeout(200)
 
-    # 前後翻：寫好了 → 下一個 → 回上一個，筆跡還在
-    copies_before = pad_page.evaluate(f"Store.copyCount(Store.findByWord({word_a!r}).id)")
+    # 寫好了 → 下一個 → 回上一個，筆跡還在
+    copies_before = pad_page.evaluate(f"Store.listNotes().find(n => n.word === {word_a!r}).copies")
     pad_page.locator("#copy-done").click()
     pad_page.wait_for_timeout(250)
     word_b = pad_page.locator(".card-word").inner_text()
-    step("手抄：寫好了換下一個字", word_b != word_a)
+    step("手抄：寫好了換下一個字", word_b != word_a, f"{word_a} → {word_b}")
     step("手抄：抄過的字記一遍",
-         pad_page.evaluate(f"Store.copyCount(Store.findByWord({word_a!r}).id)") == copies_before + 1)
+         pad_page.evaluate(f"Store.listNotes().find(n => n.word === {word_a!r}).copies") == copies_before + 1)
+    step("手抄：只有單字與解釋的字，格子比較短（沒填的欄位不出現）",
+         pad_page.evaluate("document.getElementById('pad').getBoundingClientRect().height") < full_h)
     step("手抄：新的一個字是空白的格子", pad_page.evaluate(ink) == base_ink)
     pad_page.get_by_role("button", name="上一個").click()
     pad_page.wait_for_timeout(250)
-    step("手抄：回上一個，筆跡還在", pad_page.locator(".card-word").inner_text() == word_a
-         and pad_page.evaluate(ink) > base_ink + 200)
-    stroke("pen", 41, y0=190)   # 回頭補寫
+    step("手抄：回上一個，筆跡還在",
+         pad_page.locator(".card-word").inner_text() == word_a and pad_page.evaluate(ink) > base_ink + 200)
+    stroke("pen", 41, y0=190)
     pad_page.locator("#copy-done").click()
     pad_page.wait_for_timeout(250)
     step("手抄：回頭再按「寫好了」不會重複記次數",
-         pad_page.evaluate(f"Store.copyCount(Store.findByWord({word_a!r}).id)") == copies_before + 1)
+         pad_page.evaluate(f"Store.listNotes().find(n => n.word === {word_a!r}).copies") == copies_before + 1)
 
-    # 默寫：字蓋起來，寫完才能翻開
+    # 默寫：只給解釋與發音，例句、同義詞、單字都蓋起來
+    pad_page.get_by_role("button", name="‹ 上一個").click()
+    pad_page.wait_for_timeout(250)
     pad_page.get_by_role("button", name="默寫").click()
     pad_page.wait_for_timeout(250)
-    word_c = pad_page.evaluate(f"Store.findByWord({word_b!r}).word")
-    step("手抄：默寫時單字被蓋起來", pad_page.locator(".card-word").count() == 0
-         and "？？？" in pad_page.locator(".copy-ref").inner_text())
-    step("手抄：默寫時例句裡的字也挖空",
-         word_b not in pad_page.locator(".copy-ex").inner_text().lower()
-         if pad_page.locator(".copy-ex").count() else True)
+    cue = pad_page.locator(".copy-ref").inner_text()
+    step("手抄：默寫時單字被蓋起來", pad_page.locator(".card-word").count() == 0 and "？？？" in cue)
+    step("手抄：默寫只給解釋，不給例句與同義詞",
+         "無所不在的" in cue and "Smartphones are" not in cue and "omnipresent" not in cue)
     stroke("pen", 51)
     pad_page.get_by_role("button", name="翻開核對").click()
     pad_page.wait_for_timeout(250)
-    step("手抄：翻開之後看得到答案", word_b in pad_page.locator(".feedback").inner_text())
+    step("手抄：翻開之後看得到答案",
+         "ubiquitous" in pad_page.locator(".copy-ref").inner_text() and "omnipresent" in pad_page.locator(".copy-ref").inner_text())
     step("手抄：默寫翻開後筆跡還在", pad_page.evaluate(ink) > base_ink + 200)
 
-    # 手抄不動排程：整場抄下來，認讀與拼字兩軌的排程一個字都沒變
-    step("手抄：只記次數、不動排程", pad_page.evaluate("JSON.stringify([Store.listCards().map(c => [Store.getSrs(c.id, 'recall'), Store.getSrs(c.id, 'spelling')])])") == srs_before)
+    step("手抄：手抄本不動單字庫與排程", pad_page.evaluate(snap) == deck_before)
 
-    # 離開手抄：主欄寬度還原、監聽器放掉
-    pad_page.locator("#vocab-stage .back-btn").click()
+    # 抄完一輪 → 總結
+    for _ in range(10):
+        if pad_page.locator(".empty-title").count():
+            break
+        pad_page.get_by_role("button", name="跳過").click()
+        pad_page.wait_for_timeout(150)
+    step("手抄：翻到結尾看得到總結", "手抄了" in pad_page.locator(".empty-title").inner_text())
+    pad_page.get_by_role("button", name="回手抄本").click()
     pad_page.wait_for_timeout(250)
-    step("手抄：回首頁之後主欄寬度恢復",
+    step("手抄：回手抄本，清單上看得到抄過幾遍",
+         "抄過 1 遍" in pad_page.locator(".note-row", has_text="ubiquitous").inner_text())
+    step("手抄本：回清單之後主欄寬度恢復",
          pad_page.evaluate("document.querySelector('main').getBoundingClientRect().width") <= 721)
+
+    # 匯出與刪除
+    with pad_page.expect_download() as dl:
+        pad_page.get_by_role("button", name="匯出手抄本").click()
+    path = dl.value.path()
+    csv_text = open(path, encoding="utf-8").read()
+    step("手抄本：匯出 CSV 有四欄與抄寫次數",
+         "word,meaning,example,synonyms,copies" in csv_text and "omnipresent; widespread; pervasive" in csv_text)
+    pad_page.once("dialog", lambda d: d.accept())
+    pad_page.locator(".note-row", has_text="lucid").get_by_role("button", name="刪除").click()
+    pad_page.wait_for_timeout(250)
+    step("手抄本：刪除之後清單少一個",
+         pad_page.locator(".note-row .note-word").all_text_contents() == ["ubiquitous"])
     ipad.close()
 
     browser.close()

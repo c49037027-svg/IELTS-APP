@@ -117,7 +117,7 @@ const Vocab = (() => {
         ${modeCard('✍️', '拼字練習', '例句挖空 + 中文提示，打出完整拼字', dueSpell, 'Vocab.startSpell()')}
         ${modeCard('🔁', '同義詞測驗', '列出 2 個以上同義詞，練同義替換', dueSyn, 'Vocab.startSyn()')}
         ${modeCard('🗣️', '主動輸出', '用 active 字 + 雅思話題造句', types.active, 'Vocab.startProduce()')}
-        ${modeCard('🖊️', '手抄單字', 'iPad + Apple Pencil：抄一遍、描紅、蓋住默寫', null, 'Vocab.startCopy()')}
+        ${modeCard('🖊️', '手抄單字', '自己的生詞：單字／解釋／例句／同義詞，iPad 手寫抄', null, 'Vocab.startCopy()')}
         ${modeCard('🧩', '寫例句', '搭配／字根／同義詞都備好了，例句自己寫', incomplete, 'Vocab.startComplete()')}
       </div>
 
@@ -1107,58 +1107,168 @@ const Vocab = (() => {
       '﻿' + Store.CSV_COLUMNS.join(',') + '\n' + sample.map(cell).join(','), 'text/csv');
   }
 
-  // ---------------------------------------------------------- 手抄（iPad + Apple Pencil）
-  // 拼字是最容易出錯的一項，而手寫是最直接的補救：眼睛看、手寫、嘴巴念，
-  // 三條路一起進腦子。三種寫法由淺到深 ——
-  //   抄寫：字在上面，照著抄      描紅：每行底下印淡淡的字，沿著寫
-  //   默寫：字蓋起來，只給例句挖空 + 發音，寫完再翻開核對
-  // 手抄只記「抄過幾遍」，不動排程也不進錯誤清單 —— 手寫沒辦法自動批改，
-  // 自己對照的結果不該去改 SM-2 的間隔。筆跡不存（存圖會塞爆 localStorage）。
+  // ---------------------------------------------------------- 手抄本（iPad + Apple Pencil）
+  // 自己遇到的生詞，一個字一頁，四欄：單字／解釋／例句／同義詞。
+  // 先把生詞輸入到手抄本，再拿 Apple Pencil 在橫線格子裡一欄一欄抄 ——
+  // 眼睛看、手寫、嘴巴念，三條路一起進腦子。三種寫法由淺到深：
+  //   抄寫：這個字的四欄在旁邊，照著抄      描紅：每一行印淡淡的字，沿著寫
+  //   默寫：只給解釋與發音，字蓋起來，寫完再翻開核對
+  // 手抄本跟單字庫是兩個獨立的東西：不進複習排程、不動任何卡片，只記抄過幾遍。
+  // 筆跡不存（存成圖片會很快塞滿 localStorage），只在這一輪裡保留。
   const COPY_MODES = [['copy', '抄寫'], ['trace', '描紅'], ['dictate', '默寫']];
+  let editingNote = null;   // 表單正在編輯哪個生詞（null = 新增）
 
   function disposePad() {
     if (session && session.pad) { session.pad.destroy(); session.pad = null; }
     document.body.classList.remove('copy-mode');
   }
 
+  // ---- 手抄本清單
   function startCopy() {
-    const items = Store.handwritingQueue(filterOpts({ limit: 20 }));
-    if (!items.length) {
-      showStage(modeHeader('手抄單字') + emptyState('今天沒有要抄的字',
-        '拼錯過的字和今天剛認識的新字會排在這裡。先去通勤複習認幾個字再回來。'));
+    session = null;
+    editingNote = null;
+    const notes = Store.listNotes();
+    showStage(modeHeader('手抄單字', `${notes.length} 個生詞`) + `
+      <button class="btn btn-primary wide-btn" onclick="Vocab.showNoteForm()">＋ 新增生詞</button>
+      ${notes.length ? `
+        <button class="btn btn-secondary wide-btn" onclick="Vocab.startNote()">開始手抄（${notes.length} 個）</button>
+        <div class="section-subtitle">我的生詞　·　點一個字就從它開始抄</div>
+        <div class="note-list">${notes.map(n => `
+          <div class="note-row">
+            <button class="note-main" onclick="Vocab.startNote(${n.id})">
+              <span class="note-word">${esc(n.word)}</span>
+              <span class="note-meaning">${esc(n.meaning || '（還沒填解釋）')}</span>
+              <span class="note-meta">${n.copies ? `抄過 ${n.copies} 遍` : '還沒抄過'}</span>
+            </button>
+            <button class="tool-btn" onclick="Vocab.showNoteForm(${n.id})">編輯</button>
+            <button class="tool-btn" onclick="Vocab.removeNote(${n.id})">刪除</button>
+          </div>`).join('')}</div>
+        <div class="tool-row">
+          <button class="tool-btn" onclick="Vocab.downloadNotebook()">📥 匯出手抄本</button>
+        </div>
+        <div class="hint-text" style="margin-top:10px;">
+          生詞存在這台裝置的瀏覽器裡。iPad 請用 Safari「加入主畫面」再使用，並定期匯出備份 ——
+          Safari 對沒加到主畫面的網站，一陣子沒開會清掉它存的資料。</div>`
+      : `
+        <div class="card center-card">
+          <div class="big-emoji">🖊️</div>
+          <div class="empty-title">手抄本還是空的</div>
+          <div class="empty-hint">遇到的生詞先在這裡存下來：單字、解釋、例句、同義詞，
+            然後用 Apple Pencil 一欄一欄手抄。</div>
+        </div>`}`);
+  }
+
+  // ---- 新增／編輯表單
+  function showNoteForm(id) {
+    session = null;
+    const note = id ? Store.getNote(id) : null;
+    editingNote = note ? note.id : null;
+    const v = key => esc(note ? (Array.isArray(note[key]) ? note[key].join(', ') : note[key]) : '');
+    showStage(modeHeader(note ? '編輯生詞' : '新增生詞') + `
+      <div class="card">
+        <div class="complete-field">
+          <label>單字</label>
+          <input id="nb-word" type="text" autocomplete="off" autocapitalize="off" autocorrect="off"
+            spellcheck="false" placeholder="例如 ubiquitous" value="${v('word')}">
+        </div>
+        <div class="complete-field">
+          <label>解釋</label>
+          <textarea id="nb-meaning" rows="2" placeholder="中文或英文都可以：無所不在的 / existing everywhere">${v('meaning')}</textarea>
+        </div>
+        <div class="complete-field">
+          <label>例句</label>
+          <textarea id="nb-example" rows="3" placeholder="Smartphones are ubiquitous in modern cities.">${v('example')}</textarea>
+        </div>
+        <div class="complete-field">
+          <label>同義詞</label>
+          <input id="nb-syn" type="text" autocomplete="off" autocapitalize="off" autocorrect="off"
+            spellcheck="false" placeholder="用逗號或分號分隔：omnipresent, widespread, pervasive" value="${v('synonyms')}">
+        </div>
+        <div class="form-error" id="nb-error"></div>
+        <div class="hint-text">只有單字是必填；其他欄位留白的話，手抄時那一欄就不出現。</div>
+      </div>
+      <button class="btn btn-primary wide-btn" onclick="Vocab.saveNote(false)">存起來</button>
+      ${note ? '' : `<button class="btn btn-secondary wide-btn" onclick="Vocab.saveNote(true)">存起來，再加一個</button>`}
+      <button class="btn btn-secondary wide-btn" onclick="Vocab.startCopy()">取消</button>`);
+    const word = el('nb-word');
+    if (word && !note) word.focus();
+  }
+
+  function saveNote(another) {
+    const fields = {
+      word: el('nb-word').value,
+      meaning: el('nb-meaning').value,
+      example: el('nb-example').value,
+      synonyms: el('nb-syn').value
+    };
+    try {
+      if (editingNote) Store.updateNote(editingNote, fields);
+      else Store.addNote(fields);
+    } catch (e) {
+      el('nb-error').textContent = e.message;
       return;
     }
+    if (another) showNoteForm(); else startCopy();
+  }
+
+  function removeNote(id) {
+    const note = Store.getNote(id);
+    if (!note) return;
+    if (!confirm(`刪除「${note.word}」？刪掉就找不回來了。`)) return;
+    Store.deleteNote(id);
+    startCopy();
+  }
+
+  function downloadNotebook() {
+    download('ielts-notebook.csv', Store.exportNotebookCSV(), 'text/csv');
+  }
+
+  // ---- 手抄
+  // 從某個字開始（沒指定就從第一個）；整本手抄本排成一輪
+  function startNote(id) {
+    const items = Store.listNotes();
+    if (!items.length) { startCopy(); return; }
+    const first = id ? Math.max(0, items.findIndex(n => n.id === Number(id))) : 0;
     session = {
-      mode: 'copy', items, index: 0, padMode: 'copy', revealed: false,
+      mode: 'copy', items, index: first, padMode: 'copy', revealed: false,
       strokes: {}, done: {}, pad: null, padIndex: -1, fingerOk: false
     };
     renderCopy();
   }
 
-  // 切換寫法、換字都會重畫整頁，重畫前先把這一張的筆跡收起來，回來時還在
+  // 切換寫法、換字都會重畫整頁，重畫前先把這一頁的筆跡收起來，回來時還在
   function saveCopyStrokes() {
     const s = session;
     if (s && s.pad && s.padIndex >= 0) s.strokes[s.padIndex] = s.pad.getStrokes().slice();
   }
 
-  function copyReference(card, hide) {
-    const sentence = Store.spellingSentence(card);
-    const zh = Store.showZh() && card.zh ? esc(card.zh) : '';
-    if (hide) {
-      // 默寫：跟拼字練習一樣的線索 —— 挖空例句、詞性、中文，再加一顆發音
-      const masked = sentence ? TextUtil.maskSentence(sentence, card.word) : null;
+  // 一頁四欄：沒填的欄位整欄不出現。版面在三種寫法之間固定不變，
+  // 這樣切換寫法時已經寫的筆跡不會跑位。
+  function noteSections(note) {
+    const out = [{ label: '單字', text: note.word }];
+    if (note.meaning) out.push({ label: '解釋', text: note.meaning });
+    if (note.example) out.push({ label: '例句', text: note.example });
+    if (note.synonyms.length) out.push({ label: '同義詞', text: note.synonyms.join(', ') });
+    return out;
+  }
+
+  function noteReference(note, hidden) {
+    const speaker = Speech.button(note.word);
+    if (hidden) {
+      // 默寫：只給解釋與發音（雅思聽力本來就是聽到什麼要拼出什麼）
       return `<div class="copy-ref">
-        <div class="word-line"><span class="copy-hidden">？？？</span>${Speech.button(card.word)}</div>
-        <div class="card-meta">${esc(card.pos || '')}${zh ? ` · ${zh}` : ''}</div>
-        ${masked && masked.hits ? `<div class="copy-ex">${esc(masked.text)}</div>` : ''}
-        <div class="copy-tip">先聽發音、看例句挖空，把這個字默寫出來</div>
+        <div class="word-line"><span class="copy-hidden">？？？</span>${speaker}</div>
+        ${note.meaning ? `<div class="copy-sec"><span class="dim-key">解釋</span><span>${esc(note.meaning)}</span></div>` : ''}
+        <div class="copy-tip">聽發音、看解釋，把這個字默寫出來</div>
       </div>`;
     }
     return `<div class="copy-ref">
-      ${wordHead(card)}
-      ${zh ? `<div class="copy-zh">${zh}</div>` : ''}
-      ${sentence ? `<div class="copy-ex">${esc(TextUtil.highlightTarget(sentence, card.word))}${Speech.button(sentence)}</div>` : ''}
-      ${card.collocations.length ? `<div class="copy-coll">搭配　${esc(card.collocations.join(' · '))}</div>` : ''}
+      <div class="word-line"><span class="card-word">${esc(note.word)}</span>${speaker}</div>
+      ${note.meaning ? `<div class="copy-sec"><span class="dim-key">解釋</span><span>${esc(note.meaning)}</span></div>` : ''}
+      ${note.example ? `<div class="copy-sec"><span class="dim-key">例句</span><span>${
+        esc(TextUtil.highlightTarget(note.example, note.word))}${Speech.button(note.example)}</span></div>` : ''}
+      ${note.synonyms.length ? `<div class="copy-sec"><span class="dim-key">同義</span><span>${
+        esc(note.synonyms.join(' / '))}</span></div>` : ''}
     </div>`;
   }
 
@@ -1166,47 +1276,51 @@ const Vocab = (() => {
     const s = session;
     saveCopyStrokes();
     if (s.index >= s.items.length) return finishCopy();
-    const card = s.items[s.index];
+    const note = Store.getNote(s.items[s.index].id) || s.items[s.index];
     const dictate = s.padMode === 'dictate';
     const hidden = dictate && !s.revealed;
     const wide = window.innerWidth >= 700;
-    const rows = wide ? 5 : 6;
-    const rowHeight = wide ? 104 : 88;
-    const times = Store.copyCount(card.id);
 
     showStage(modeHeader('手抄單字', `${s.index + 1} / ${s.items.length}`) + `
       <div class="seg" role="tablist">
         ${COPY_MODES.map(([key, label]) =>
           `<button class="${s.padMode === key ? 'on' : ''}" onclick="Vocab.copyMode('${key}')">${label}</button>`).join('')}
       </div>
-      <div class="card study-card copy-card">
-        ${copyReference(card, hidden)}
-        <div class="copy-count">${times ? `這個字已經抄過 ${times} 遍` : '還沒抄過這個字'}${s.done[s.index] ? '　·　本次已完成' : ''}</div>
-      </div>
-      <div class="pad-wrap"><canvas id="pad" aria-label="手寫區"></canvas></div>
-      <div class="pad-tools">
-        <button class="tool-btn" id="copy-undo" onclick="Vocab.copyUndo()">↶ 復原</button>
-        <button class="tool-btn" onclick="Vocab.copyClear()">清除重寫</button>
-        <label class="finger-toggle"><input type="checkbox" id="finger-ok" ${s.fingerOk ? 'checked' : ''}
-          onchange="Vocab.copyFinger(this.checked)"> 手指也能寫</label>
-      </div>
-      <div class="pad-status" id="pad-status"></div>
-      ${hidden
-        ? `<button class="btn btn-primary wide-btn" onclick="Vocab.copyReveal()">寫好了，翻開核對</button>`
-        : `<button class="btn btn-primary wide-btn" id="copy-done" onclick="Vocab.copyDone()" disabled>
-             ✓ 寫好了，下一個</button>`}
-      ${dictate && s.revealed ? `<div class="feedback"><div class="feedback-title">核對一下</div>
-        <div class="feedback-body"><b>${esc(card.word)}</b>${Speech.button(card.word)}
-          ${Store.spellingSentence(card) ? `<div class="copy-ex">${esc(Store.spellingSentence(card))}</div>` : ''}
-          <div class="feedback-note">寫錯的字母圈起來，再抄一遍。</div></div></div>` : ''}
-      <div class="nav-row">
-        <button class="nav-btn" onclick="Vocab.copyPrev()" ${s.index <= 0 ? 'disabled' : ''}>‹ 上一個</button>
-        <button class="nav-btn" onclick="Vocab.copyNext()">跳過 ›</button>
+      <div class="copy-split">
+        <div class="copy-left">
+          <div class="card study-card copy-card">
+            ${noteReference(note, hidden)}
+            <div class="copy-count">${note.copies ? `這個字已經抄過 ${note.copies} 遍` : '還沒抄過這個字'}${s.done[s.index] ? '　·　本次已完成' : ''}</div>
+          </div>
+        </div>
+        <div class="copy-right">
+          <div class="pad-wrap">
+            <div class="pad-box"><canvas id="pad" aria-label="手寫區"></canvas></div>
+            <div class="pad-scroll" aria-label="手指在這一條上下滑可以捲動頁面">↕ 滑這裡捲頁</div>
+          </div>
+          <div class="pad-tools">
+            <button class="tool-btn" id="copy-undo" onclick="Vocab.copyUndo()">↶ 復原</button>
+            <button class="tool-btn" onclick="Vocab.copyClear()">清除重寫</button>
+            <label class="finger-toggle"><input type="checkbox" id="finger-ok" ${s.fingerOk ? 'checked' : ''}
+              onchange="Vocab.copyFinger(this.checked)"> 手指也能寫</label>
+          </div>
+          <div class="pad-status" id="pad-status"></div>
+          ${hidden
+            ? `<button class="btn btn-primary wide-btn" onclick="Vocab.copyReveal()">寫好了，翻開核對</button>`
+            : `<button class="btn btn-primary wide-btn" id="copy-done" onclick="Vocab.copyDone()" disabled>
+                 ✓ 寫好了，下一個</button>`}
+          ${dictate && s.revealed ? `<div class="feedback"><div class="feedback-note">核對一下：寫錯的字母圈起來，再抄一遍。</div></div>` : ''}
+          <div class="nav-row">
+            <button class="nav-btn" onclick="Vocab.copyPrev()" ${s.index <= 0 ? 'disabled' : ''}>‹ 上一個</button>
+            <button class="nav-btn" onclick="Vocab.copyNext()">跳過 ›</button>
+          </div>
+        </div>
       </div>`);
     document.body.classList.add('copy-mode');
 
     s.pad = Handwriting.createPad(el('pad'), {
-      rows, rowHeight, guide: s.padMode === 'trace' ? card.word : '', onChange: syncCopyUi
+      sections: noteSections(note), rowHeight: wide ? 100 : 88,
+      trace: s.padMode === 'trace', onChange: syncCopyUi
     });
     s.padIndex = s.index;
     s.pad.allowFinger(s.fingerOk);
@@ -1258,7 +1372,7 @@ const Vocab = (() => {
     if (!s.pad.hasInk() || (s.padMode === 'dictate' && !s.revealed)) return;
     // 回頭再按「寫好了」不重複記次數
     if (!s.done[s.index]) {
-      s.done[s.index] = Store.recordCopy(s.items[s.index].id);
+      s.done[s.index] = Store.recordNoteCopy(s.items[s.index].id);
       logStudy();
     }
     s.index += 1;
@@ -1288,8 +1402,8 @@ const Vocab = (() => {
         <div class="empty-hint">${n < s.items.length ? `有 ${s.items.length - n} 個跳過沒抄。` : '全部抄完了。'}
           抄完的字睡前再默寫一次，記得最牢。</div>
         <button class="btn btn-secondary" onclick="Vocab.copyPrev()">‹ 回上一個看看</button>
-        <button class="btn btn-primary" onclick="Vocab.startCopy()">再來一輪</button>
-        <button class="btn btn-secondary" onclick="Vocab.showHome()">回單字首頁</button>
+        <button class="btn btn-primary" onclick="Vocab.startNote()">再抄一輪</button>
+        <button class="btn btn-secondary" onclick="Vocab.startCopy()">回手抄本</button>
       </div>`);
   }
 
@@ -1344,7 +1458,8 @@ const Vocab = (() => {
   return {
     init, showHome, setTopic, renderHome, refresh,
     startReview, reveal, skip, prev, next, goSkipped, rate,
-    startCopy, copyMode, copyUndo, copyClear, copyFinger, copyReveal, copyDone, copyPrev, copyNext,
+    startCopy, showNoteForm, saveNote, removeNote, downloadNotebook, startNote,
+    copyMode, copyUndo, copyClear, copyFinger, copyReveal, copyDone, copyPrev, copyNext,
     startSpell, submitSpell, nextSpell, prevSpell, spellHint, spellSay, spellSkip,
     startSyn, submitSyn, nextSyn, prevSyn, synSkip,
     startProduce, submitProduce, nextProduce, produceSkip, showProductions,

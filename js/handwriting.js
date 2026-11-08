@@ -1,5 +1,9 @@
-// 手寫板：給 iPad + Apple Pencil 手抄單字用的畫布。
-// 只管「畫」—— 筆跡、橫線、描紅底字、復原；抄哪個字、抄幾遍由 js/vocab.js 決定。
+// 手寫板：給 iPad + Apple Pencil 手抄生詞用的畫布。
+// 只管「畫」—— 欄位區塊、橫線、描紅底字、筆跡、復原；抄哪個字由 js/vocab.js 決定。
+//
+// 一頁 = 一個生詞，分成幾個欄位區塊（單字／解釋／例句／同義詞）：
+// 每個區塊有一條標籤列，下面是幾行橫線；行數依那一欄的字數決定，
+// 例句長就多給幾行，單字只要一行。
 //
 // 設計重點
 // - Pointer Events：Apple Pencil 在 Safari 是 pointerType = 'pen'，有壓力值；
@@ -9,67 +13,88 @@
 // - 筆跡存成向量（點陣列），不是點陣圖：旋轉 iPad、視窗縮放、換 devicePixelRatio
 //   都能整張重畫，不會糊掉；復原也只是拿掉最後一筆再重畫。
 const Handwriting = (() => {
-  const ROW_COLORS = {
+  const COLORS = {
     base: 'rgba(120, 100, 85, .55)',   // 基線：寫字貼著它
     mid: 'rgba(120, 100, 85, .22)',    // x 高度線（虛線）
     top: 'rgba(120, 100, 85, .12)',    // 上緣線
-    trace: 'rgba(120, 100, 85, .22)',  // 描紅用的底字
+    trace: 'rgba(120, 100, 85, .24)',  // 描紅用的底字
+    label: 'rgba(120, 100, 85, .85)',
+    strip: 'rgba(120, 100, 85, .07)',
     ink: '#2f2a26'
   };
   // iPad 內建的手寫風字體在前；沒有的系統退回 cursive。離線時不能靠網路字體。
   const TRACE_FONT = '"Bradley Hand", "Segoe Print", "Noteworthy", "Comic Sans MS", cursive';
+  const LABEL_H = 28;       // 每個區塊頂端的標籤列
+  const MAX_ROWS = 6;       // 一個欄位最多給幾行（再長就抄前面那幾行）
+
+  // 手掌與 Pencil 是不同的指標、可能落在同一頁的不同位置，所以「偵測到 Pencil 了」
+  // 是整個 App 共用的狀態，不是單一畫布的。
+  let penSeen = false;
+
+  // 把一段文字依寬度切成幾行：英文照單字斷，中文每個字都可以斷
+  const TOKEN = /[⺀-鿿＀-￯]|[^\s⺀-鿿＀-￯]+|\s+/g;
+  function wrapLines(ctx, text, maxWidth) {
+    const tokens = String(text || '').match(TOKEN) || [];
+    const lines = [];
+    let line = '';
+    tokens.forEach(tok => {
+      const next = line + tok;
+      if (line && ctx.measureText(next).width > maxWidth && tok.trim()) {
+        lines.push(line.trim());
+        line = tok.trim() ? tok : '';
+      } else {
+        line = next;
+      }
+    });
+    if (line.trim()) lines.push(line.trim());
+    return lines;
+  }
 
   function createPad(canvas, opts = {}) {
-    const rows = opts.rows || 6;
+    const sections = (opts.sections || []).filter(s => s && s.label);
     const rowHeight = opts.rowHeight || 96;
     const ctx = canvas.getContext('2d');
     let strokes = [];
     let current = null;            // 正在寫的那一筆
-    let guide = opts.guide || '';  // 描紅底字（空字串 = 不描）
-    let penSeen = false;
+    let trace = !!opts.trace;      // 描紅：每一行印淡淡的底字
     let fingerOk = false;          // true = 就算有 Pencil 手指也能寫
     let width = 0;
+    let height = 0;
+    let bands = [];
     const onChange = opts.onChange || (() => {});
 
-    const height = rows * rowHeight;
+    const traceFont = () => `${Math.round(rowHeight * 0.5)}px ${TRACE_FONT}`;
+
+    // 版面：每個區塊 = 標籤列 + 若干行。行數看文字在這個寬度下要折幾行。
+    function layout() {
+      ctx.font = traceFont();
+      let y = 0;
+      bands = sections.map(sec => {
+        const lines = wrapLines(ctx, sec.text, width - 32);
+        const rows = Math.min(MAX_ROWS, Math.max(sec.minRows || 1, lines.length));
+        const band = { label: sec.label, text: sec.text, lines, rows, y, height: LABEL_H + rows * rowHeight };
+        y += band.height;
+        return band;
+      });
+      height = Math.max(rowHeight, y);
+    }
 
     function resize() {
       const dpr = window.devicePixelRatio || 1;
-      width = Math.max(240, Math.round(canvas.parentElement.clientWidth || canvas.clientWidth || 600));
+      const next = Math.max(240, Math.round(canvas.parentElement.clientWidth || canvas.clientWidth || 600));
+      // 寬度變了（旋轉 iPad）：筆跡的 x 跟著等比例縮放，才不會偏出格子
+      if (width && next !== width) {
+        const k = next / width;
+        strokes.forEach(s => s.pts.forEach(p => { p[0] *= k; }));
+      }
+      width = next;
+      layout();
       canvas.style.width = width + 'px';
       canvas.style.height = height + 'px';
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       render();
-    }
-
-    function drawRuledLines() {
-      for (let r = 0; r < rows; r++) {
-        const y0 = r * rowHeight;
-        const base = y0 + rowHeight * 0.72;
-        const mid = y0 + rowHeight * 0.42;
-        const top = y0 + rowHeight * 0.14;
-        ctx.lineWidth = 1;
-        ctx.setLineDash([]);
-        ctx.strokeStyle = ROW_COLORS.top;
-        line(0, top, width, top);
-        ctx.setLineDash([6, 6]);
-        ctx.strokeStyle = ROW_COLORS.mid;
-        line(0, mid, width, mid);
-        ctx.setLineDash([]);
-        ctx.strokeStyle = ROW_COLORS.base;
-        ctx.lineWidth = 1.5;
-        line(0, base, width, base);
-        // 描紅：每一行都淡淡印一個字，沿著它寫
-        if (guide) {
-          ctx.fillStyle = ROW_COLORS.trace;
-          ctx.font = `${Math.round(rowHeight * 0.58)}px ${TRACE_FONT}`;
-          ctx.textBaseline = 'alphabetic';
-          ctx.fillText(guide, 16, base - 2, width - 32);
-        }
-      }
-      ctx.setLineDash([]);
     }
 
     function line(x1, y1, x2, y2) {
@@ -79,11 +104,47 @@ const Handwriting = (() => {
       ctx.stroke();
     }
 
+    function drawBands() {
+      bands.forEach(band => {
+        // 標籤列
+        ctx.fillStyle = COLORS.strip;
+        ctx.fillRect(0, band.y, width, LABEL_H);
+        ctx.fillStyle = COLORS.label;
+        ctx.font = '600 13px system-ui, -apple-system, "PingFang TC", sans-serif';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(band.label, 14, band.y + LABEL_H / 2 + 1);
+
+        for (let r = 0; r < band.rows; r++) {
+          const y0 = band.y + LABEL_H + r * rowHeight;
+          const base = y0 + rowHeight * 0.74;
+          ctx.lineWidth = 1;
+          ctx.setLineDash([]);
+          ctx.strokeStyle = COLORS.top;
+          line(0, y0 + rowHeight * 0.14, width, y0 + rowHeight * 0.14);
+          ctx.setLineDash([6, 6]);
+          ctx.strokeStyle = COLORS.mid;
+          line(0, y0 + rowHeight * 0.44, width, y0 + rowHeight * 0.44);
+          ctx.setLineDash([]);
+          ctx.strokeStyle = COLORS.base;
+          ctx.lineWidth = 1.5;
+          line(0, base, width, base);
+          // 描紅：這一欄的字依序印在每一行上，沿著它寫
+          if (trace && band.lines[r]) {
+            ctx.fillStyle = COLORS.trace;
+            ctx.font = traceFont();
+            ctx.textBaseline = 'alphabetic';
+            ctx.fillText(band.lines[r], 16, base - 2, width - 32);
+          }
+        }
+      });
+      ctx.setLineDash([]);
+    }
+
     // 筆壓：Pencil 用實際壓力；滑鼠與手指沒有壓力，固定中等粗細
     const widthFor = p => 1.2 + 2.6 * (p > 0 ? p : 0.5);
 
     function drawSegment(a, b) {
-      ctx.strokeStyle = ROW_COLORS.ink;
+      ctx.strokeStyle = COLORS.ink;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.lineWidth = widthFor((a[2] + b[2]) / 2);
@@ -96,7 +157,7 @@ const Handwriting = (() => {
     function drawStroke(stroke) {
       const pts = stroke.pts;
       if (pts.length === 1) {   // 點一下 = 一個點（i 的點、句號）
-        ctx.fillStyle = ROW_COLORS.ink;
+        ctx.fillStyle = COLORS.ink;
         ctx.beginPath();
         ctx.arc(pts[0][0], pts[0][1], widthFor(pts[0][2]) / 2, 0, Math.PI * 2);
         ctx.fill();
@@ -107,7 +168,7 @@ const Handwriting = (() => {
 
     function render() {
       ctx.clearRect(0, 0, width, height);
-      drawRuledLines();
+      drawBands();
       strokes.forEach(drawStroke);
       if (current) drawStroke(current);
     }
@@ -173,19 +234,22 @@ const Handwriting = (() => {
     return {
       get strokeCount() { return strokes.length; },
       get penDetected() { return penSeen; },
+      get height() { return height; },
+      /** 版面：每個區塊的標籤、行數與位置（測試與除錯用） */
+      get bands() { return bands.map(b => ({ label: b.label, rows: b.rows, y: b.y, height: b.height })); },
       getStrokes: () => strokes,
       setStrokes(list) { strokes = list || []; current = null; render(); onChange(strokes.length); },
       undo() { if (strokes.length) { strokes.pop(); render(); onChange(strokes.length); } },
       clear() { strokes = []; current = null; render(); onChange(0); },
-      setGuide(text) { guide = text || ''; render(); },
+      setTrace(on) { trace = !!on; render(); },
       allowFinger(on) { fingerOk = !!on; },
       isFingerAllowed: () => fingerOk,
-      /** 畫布上有沒有任何筆跡（測試與「寫好了」的判斷用） */
+      /** 畫布上有沒有任何筆跡（「寫好了」要不要亮起來） */
       hasInk: () => strokes.length > 0 || !!current,
       resize,
       destroy() { window.removeEventListener('resize', resize); }
     };
   }
 
-  return { createPad };
+  return { createPad, wrapLines };
 })();
