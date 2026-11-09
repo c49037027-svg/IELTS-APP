@@ -158,16 +158,40 @@ const Vocab = (() => {
   // 中文永遠排最後而且是小字，因為它只是「校對用」，不是記憶點 ——
   // 先從英文語境理解，看完四個維度之後才用中文確認自己有沒有想歪。
   // Store.showZh() 關掉之後整張卡完全沒有中文（純英文思考模式）。
+  // 手抄本的筆跡：該欄有手寫就用手寫（自己的字比打出來的更好記）
+  function inkSvg(card, field) {
+    const ink = card.noteId ? Store.getInk(card.noteId) : null;
+    const f = ink && ink.fields && ink.fields[field];
+    return f ? Ink.toSvg(f.s) : '';
+  }
+
   function backLines(card) {
     const rows = [];
-    if (card.example) {
+    const own = !!card.fromNote;   // 從手抄本建出來的卡：手寫取代打字
+    const exInk = own ? inkSvg(card, 'example') : '';
+    if (exInk) {
+      rows.push(['例句', exInk + Speech.button(card.example || card.word), ' ink-row']);
+    } else if (card.example) {
       rows.push(['例句', esc(TextUtil.highlightTarget(card.example, card.word)) + Speech.button(card.example), '']);
     }
     if (card.collocations.length) rows.push(['搭配', esc(card.collocations.join(' · ')), '']);
     if (card.root) rows.push(['字根', esc(card.root), '']);
-    if (card.synonyms.length) rows.push(['同義', esc(card.synonyms.join(' / ')), '']);
+    const synInk = own ? inkSvg(card, 'synonyms') : '';
+    if (synInk) rows.push(['同義', synInk, ' ink-row']);
+    else if (card.synonyms.length) rows.push(['同義', esc(card.synonyms.join(' / ')), '']);
     if (card.notes) rows.push(['筆記', esc(card.notes), '']);
-    if (Store.showZh() && card.zh) rows.push(['中文', esc(card.zh), ' zh-row']);
+    // 單字庫原本就有的字，另外掛了手抄本的筆記：筆記接在後面，不取代原本的內容
+    if (card.noteId && !own) {
+      const note = Store.getNote(card.noteId);
+      const mine = ['meaning', 'example', 'synonyms'].map(k => inkSvg(card, k)).filter(Boolean).join('');
+      const typed = note ? [note.meaning, note.example, note.synonyms.join(' / ')].filter(Boolean) : [];
+      if (mine || typed.length) {
+        rows.push(['我的筆記', mine + typed.map(x => `<div>${esc(x)}</div>`).join(''), ' ink-row']);
+      }
+    }
+    const meaningInk = own ? inkSvg(card, 'meaning') : '';
+    if (meaningInk) rows.push(['解釋', meaningInk, ' ink-row zh-row']);
+    else if (Store.showZh() && card.zh) rows.push(['中文', esc(card.zh), ' zh-row']);
     // 句譯只跟著上面那一句例句走。沒顯示例句就不顯示句譯 ——
     // 翻譯配錯句子比沒有翻譯更糟，會把錯的語意記進去。
     if (Store.showZh() && card.example && card.exampleZh) {
@@ -235,7 +259,7 @@ const Vocab = (() => {
         ${result ? `<div class="rated-tag">已評：${esc(SRS.RATING_SHORT[result.rating])}　·　點別的可以改</div>` : ''}
         ${wordHead(card)}
         ${shown ? `<div class="dim-box">${backLines(card)}</div>` : ''}
-        ${shown && !card.example ? `<div class="missing-tag">
+        ${shown && !card.example && !card.fromNote ? `<div class="missing-tag">
           這張還沒有你自己的例句　·　回首頁的「✍️ 寫例句」補一句，會更好記</div>` : ''}
       </div>
       ${shown ? `
@@ -365,6 +389,9 @@ const Vocab = (() => {
       rows.push(['句譯', esc(sentenceZh)]);
     }
     if (Store.showZh() && card.zh) rows.push(['中文', esc(card.zh)]);
+    // 手抄本的字：手寫的解釋當線索（例句的筆跡不能挖空，會洩題，所以不給）
+    const meaningInk = card.fromNote ? inkSvg(card, 'meaning') : '';
+    if (meaningInk) rows.push(['解釋', meaningInk]);
     if (card.pos) rows.push(['詞性', esc(card.pos)]);
     if (card.collocations.length) rows.push(['搭配', esc(TextUtil.maskAll(card.collocations, card.word).join(' · '))]);
     if (card.root) rows.push(['字根', esc(TextUtil.maskSentence(card.root, card.word).text)]);
@@ -1125,6 +1152,7 @@ const Vocab = (() => {
 
   // ---- 手抄本清單
   function startCopy() {
+    disposePad();   // 從表單或手抄頁回來：先放掉畫布，再清 session
     session = null;
     editingNote = null;
     const notes = Store.listNotes();
@@ -1137,14 +1165,15 @@ const Vocab = (() => {
           <div class="note-row">
             <button class="note-main" onclick="Vocab.startNote(${n.id})">
               <span class="note-word">${esc(n.word)}</span>
-              <span class="note-meaning">${esc(n.meaning || '（還沒填解釋）')}</span>
-              <span class="note-meta">${n.copies ? `抄過 ${n.copies} 遍` : '還沒抄過'}</span>
+              <span class="note-meaning">${esc(n.meaning || (Store.hasInk(n.id) ? '✎ 手寫筆記' : '（只有單字）'))}</span>
+              <span class="note-meta">${n.copies ? `抄過 ${n.copies} 遍` : '還沒抄過'}　·　🚇 已排進通勤複習</span>
             </button>
             <button class="tool-btn" onclick="Vocab.showNoteForm(${n.id})">編輯</button>
             <button class="tool-btn" onclick="Vocab.removeNote(${n.id})">刪除</button>
           </div>`).join('')}</div>
         <div class="tool-row">
-          <button class="tool-btn" onclick="Vocab.downloadNotebook()">📥 匯出手抄本</button>
+          <button class="tool-btn" onclick="Vocab.downloadNotebook()">📥 匯出文字（CSV）</button>
+          <button class="tool-btn" onclick="Vocab.downloadNotebookInk()">📥 匯出含筆跡（JSON）</button>
         </div>
         <div class="hint-text" style="margin-top:10px;">
           生詞存在這台裝置的瀏覽器裡。iPad 請用 Safari「加入主畫面」再使用，並定期匯出備份 ——
@@ -1159,68 +1188,112 @@ const Vocab = (() => {
   }
 
   // ---- 新增／編輯表單
+  // 單字打字（發音、拼字題要用文字）；解釋、例句、同義詞直接用 Apple Pencil 寫在格子裡，
+  // 筆跡原樣存下來，之後在通勤複習顯示的就是你自己的字。
+  // 想打字也可以（選填）：打的字會成為搜尋、匯出與拼字題的依據。
   function showNoteForm(id) {
+    disposePad();
     session = null;
     const note = id ? Store.getNote(id) : null;
     editingNote = note ? note.id : null;
     const v = key => esc(note ? (Array.isArray(note[key]) ? note[key].join(', ') : note[key]) : '');
+    const wide = window.innerWidth >= 700;
+    const typedOpen = note && (note.meaning || note.example || note.synonyms.length) ? 'open' : '';
     showStage(modeHeader(note ? '編輯生詞' : '新增生詞') + `
       <div class="card">
         <div class="complete-field">
           <label>單字</label>
           <input id="nb-word" type="text" autocomplete="off" autocapitalize="off" autocorrect="off"
             spellcheck="false" placeholder="例如 ubiquitous" value="${v('word')}">
+          <div class="hint-text" style="margin:6px 0 0;">iPad：用 Apple Pencil 直接在這一欄上寫字，
+            iPadOS 會自動轉成文字（Scribble）。單字要有文字，才有發音和拼字題。</div>
         </div>
+      </div>
+      <div class="section-subtitle">用 Apple Pencil 寫在格子裡　·　解釋、例句、同義詞</div>
+      <div class="pad-wrap">
+        <div class="pad-box"><canvas id="pad" aria-label="手寫區"></canvas></div>
+        <div class="pad-scroll" aria-label="手指在這一條上下滑可以捲動頁面">滑這裡捲頁</div>
+      </div>
+      <div class="pad-tools">
+        <button class="tool-btn" id="copy-undo" onclick="Vocab.copyUndo()">↶ 復原</button>
+        <button class="tool-btn" onclick="Vocab.copyClear()">清除重寫</button>
+        <label class="finger-toggle"><input type="checkbox" id="finger-ok"
+          onchange="Vocab.copyFinger(this.checked)"> 手指也能寫</label>
+      </div>
+      <div class="pad-status" id="pad-status"></div>
+      <details class="typed-fields" ${typedOpen}>
+        <summary>⌨ 也可以用打字（選填）</summary>
         <div class="complete-field">
           <label>解釋</label>
-          <textarea id="nb-meaning" rows="2" placeholder="中文或英文都可以：無所不在的 / existing everywhere">${v('meaning')}</textarea>
+          <textarea id="nb-meaning" rows="2" placeholder="中文或英文都可以">${v('meaning')}</textarea>
         </div>
         <div class="complete-field">
           <label>例句</label>
-          <textarea id="nb-example" rows="3" placeholder="Smartphones are ubiquitous in modern cities.">${v('example')}</textarea>
+          <textarea id="nb-example" rows="2" placeholder="Smartphones are ubiquitous in modern cities.">${v('example')}</textarea>
         </div>
         <div class="complete-field">
           <label>同義詞</label>
           <input id="nb-syn" type="text" autocomplete="off" autocapitalize="off" autocorrect="off"
-            spellcheck="false" placeholder="用逗號或分號分隔：omnipresent, widespread, pervasive" value="${v('synonyms')}">
+            spellcheck="false" placeholder="用逗號或分號分隔" value="${v('synonyms')}">
         </div>
-        <div class="form-error" id="nb-error"></div>
-        <div class="hint-text">只有單字是必填；其他欄位留白的話，手抄時那一欄就不出現。</div>
-      </div>
+      </details>
+      <div class="form-error" id="nb-error"></div>
+      <div class="hint-text">只有單字是必填。存起來之後，這個字會自動排進通勤複習，複習時背面顯示你自己的筆跡
+        —— 不過至少要寫一點解釋、例句或同義詞，背面才有東西可以看。</div>
       <button class="btn btn-primary wide-btn" onclick="Vocab.saveNote(false)">存起來</button>
       ${note ? '' : `<button class="btn btn-secondary wide-btn" onclick="Vocab.saveNote(true)">存起來，再加一個</button>`}
       <button class="btn btn-secondary wide-btn" onclick="Vocab.startCopy()">取消</button>`);
+
+    session = { mode: 'noteform', pad: null, fingerOk: false };
+    session.pad = Handwriting.createPad(el('pad'), {
+      sections: [
+        { key: 'meaning', label: '解釋', rows: 2 },
+        { key: 'example', label: '例句', rows: 4 },
+        { key: 'synonyms', label: '同義詞', rows: 2 }
+      ],
+      rowHeight: wide ? 96 : 84, onChange: syncCopyUi
+    });
+    if (note) session.pad.importInk(Store.getInk(note.id));
+    syncCopyUi();
     const word = el('nb-word');
     if (word && !note) word.focus();
   }
 
   function saveNote(another) {
+    const s = session;
+    if (!s || s.mode !== 'noteform' || !s.pad) return;
     const fields = {
       word: el('nb-word').value,
       meaning: el('nb-meaning').value,
       example: el('nb-example').value,
       synonyms: el('nb-syn').value
     };
+    let note;
     try {
-      if (editingNote) Store.updateNote(editingNote, fields);
-      else Store.addNote(fields);
+      note = editingNote ? Store.updateNote(editingNote, fields) : Store.addNote(fields);
     } catch (e) {
-      el('nb-error').textContent = e.message;
+      el('nb-error').textContent = e.message;   // 留在這一頁，寫好的筆跡不會丟
       return;
     }
+    Store.setInk(note.id, s.pad.exportInk());
     if (another) showNoteForm(); else startCopy();
   }
 
   function removeNote(id) {
     const note = Store.getNote(id);
     if (!note) return;
-    if (!confirm(`刪除「${note.word}」？刪掉就找不回來了。`)) return;
+    if (!confirm(`刪除「${note.word}」？它的筆跡，和排在通勤複習裡的卡片，都會一起刪掉，找不回來。`)) return;
     Store.deleteNote(id);
     startCopy();
   }
 
   function downloadNotebook() {
     download('ielts-notebook.csv', Store.exportNotebookCSV(), 'text/csv');
+  }
+
+  // CSV 帶不走手寫筆跡，所以另外一份 JSON（要換 iPad、或怕 Safari 清資料時用）
+  function downloadNotebookInk() {
+    download('ielts-notebook-ink.json', Store.exportNotebookJSON(), 'application/json');
   }
 
   // ---- 手抄
@@ -1244,11 +1317,18 @@ const Vocab = (() => {
 
   // 一頁四欄：沒填的欄位整欄不出現。版面在三種寫法之間固定不變，
   // 這樣切換寫法時已經寫的筆跡不會跑位。
+  const FIELD_LABELS = { meaning: '解釋', example: '例句', synonyms: '同義詞' };
+
+  // 每一欄：有手寫就用手寫（描紅時把你自己的筆跡淡淡印出來），沒有才用打的字
   function noteSections(note) {
-    const out = [{ label: '單字', text: note.word }];
-    if (note.meaning) out.push({ label: '解釋', text: note.meaning });
-    if (note.example) out.push({ label: '例句', text: note.example });
-    if (note.synonyms.length) out.push({ label: '同義詞', text: note.synonyms.join(', ') });
+    const ink = Store.getInk(note.id);
+    const out = [{ key: 'word', label: '單字', text: note.word }];
+    ['meaning', 'example', 'synonyms'].forEach(key => {
+      const typed = key === 'synonyms' ? note.synonyms.join(', ') : note[key];
+      const f = ink && ink.fields && ink.fields[key];
+      if (f) out.push({ key, label: FIELD_LABELS[key], rows: f.rows, guideInk: { w: ink.w, s: f.s } });
+      else if (typed) out.push({ key, label: FIELD_LABELS[key], text: typed });
+    });
     return out;
   }
 
@@ -1258,17 +1338,27 @@ const Vocab = (() => {
       // 默寫：只給解釋與發音（雅思聽力本來就是聽到什麼要拼出什麼）
       return `<div class="copy-ref">
         <div class="word-line"><span class="copy-hidden">？？？</span>${speaker}</div>
-        ${note.meaning ? `<div class="copy-sec"><span class="dim-key">解釋</span><span>${esc(note.meaning)}</span></div>` : ''}
+        ${(() => {
+          const ink = Store.getInk(note.id);
+          const m = ink && ink.fields && ink.fields.meaning ? Ink.toSvg(ink.fields.meaning.s) : '';
+          return m || note.meaning
+            ? `<div class="copy-sec"><span class="dim-key">解釋</span><span>${m || esc(note.meaning)}</span></div>` : '';
+        })()}
         <div class="copy-tip">聽發音、看解釋，把這個字默寫出來</div>
       </div>`;
     }
+    const ink = Store.getInk(note.id);
+    const field = key => ink && ink.fields && ink.fields[key] ? Ink.toSvg(ink.fields[key].s) : '';
+    const meaning = field('meaning'), example = field('example'), syn = field('synonyms');
     return `<div class="copy-ref">
       <div class="word-line"><span class="card-word">${esc(note.word)}</span>${speaker}</div>
-      ${note.meaning ? `<div class="copy-sec"><span class="dim-key">解釋</span><span>${esc(note.meaning)}</span></div>` : ''}
-      ${note.example ? `<div class="copy-sec"><span class="dim-key">例句</span><span>${
-        esc(TextUtil.highlightTarget(note.example, note.word))}${Speech.button(note.example)}</span></div>` : ''}
-      ${note.synonyms.length ? `<div class="copy-sec"><span class="dim-key">同義</span><span>${
-        esc(note.synonyms.join(' / '))}</span></div>` : ''}
+      ${meaning || note.meaning ? `<div class="copy-sec"><span class="dim-key">解釋</span><span>${
+        meaning || esc(note.meaning)}</span></div>` : ''}
+      ${example || note.example ? `<div class="copy-sec"><span class="dim-key">例句</span><span>${
+        example || esc(TextUtil.highlightTarget(note.example, note.word))}${
+        Speech.button(note.example || note.word)}</span></div>` : ''}
+      ${syn || note.synonyms.length ? `<div class="copy-sec"><span class="dim-key">同義</span><span>${
+        syn || esc(note.synonyms.join(' / '))}</span></div>` : ''}
     </div>`;
   }
 
@@ -1296,7 +1386,7 @@ const Vocab = (() => {
         <div class="copy-right">
           <div class="pad-wrap">
             <div class="pad-box"><canvas id="pad" aria-label="手寫區"></canvas></div>
-            <div class="pad-scroll" aria-label="手指在這一條上下滑可以捲動頁面">↕ 滑這裡捲頁</div>
+            <div class="pad-scroll" aria-label="手指在這一條上下滑可以捲動頁面">滑這裡捲頁</div>
           </div>
           <div class="pad-tools">
             <button class="tool-btn" id="copy-undo" onclick="Vocab.copyUndo()">↶ 復原</button>
@@ -1329,7 +1419,7 @@ const Vocab = (() => {
 
   function syncCopyUi() {
     const s = session;
-    if (!s || s.mode !== 'copy' || !s.pad) return;
+    if (!s || !s.pad || (s.mode !== 'copy' && s.mode !== 'noteform')) return;
     const done = el('copy-done');
     if (done) done.disabled = !s.pad.hasInk();
     const undo = el('copy-undo');
@@ -1346,7 +1436,7 @@ const Vocab = (() => {
   const copyClear = () => { if (session && session.pad) session.pad.clear(); };
 
   function copyFinger(on) {
-    if (!session || session.mode !== 'copy') return;
+    if (!session || !session.pad) return;
     session.fingerOk = !!on;
     if (session.pad) session.pad.allowFinger(on);
     syncCopyUi();
@@ -1458,7 +1548,7 @@ const Vocab = (() => {
   return {
     init, showHome, setTopic, renderHome, refresh,
     startReview, reveal, skip, prev, next, goSkipped, rate,
-    startCopy, showNoteForm, saveNote, removeNote, downloadNotebook, startNote,
+    startCopy, showNoteForm, saveNote, removeNote, downloadNotebook, downloadNotebookInk, startNote,
     copyMode, copyUndo, copyClear, copyFinger, copyReveal, copyDone, copyPrev, copyNext,
     startSpell, submitSpell, nextSpell, prevSpell, spellHint, spellSay, spellSkip,
     startSyn, submitSyn, nextSyn, prevSyn, synSkip,

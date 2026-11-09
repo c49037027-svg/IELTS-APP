@@ -324,3 +324,10 @@ body.copy-mode main { max-width: 1100px; }
 .note-meaning { font-size: 13px; color: var(--text-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .note-meta { font-size: 11px; color: var(--text-light); }
 .form-error { color: var(--error); font-size: 13px; min-height: 18px; margin-top: 4px; }
+
+/* ---------- 手寫筆記（複習卡、拼字題、手抄頁上顯示你自己的筆跡） ---------- */
+.ink-svg { display: block; width: 100%; max-width: 560px; height: auto; color: var(--text); }
+.dim-row .dim-val { min-width: 0; }
+.ink-row .dim-val svg + svg, .ink-row .dim-val svg + div, .ink-row .dim-val div + svg { margin-top: 6px; }
+.typed-fields { margin-top: 12px; }
+.typed-fields summary { cursor: pointer; font-size: 13px; color: var(--text-light); padding: 8px 0; }

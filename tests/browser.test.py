@@ -548,8 +548,11 @@ with sync_playwright() as p:
     # 新增生詞：四個欄位
     pad_page.get_by_role("button", name="＋ 新增生詞").click()
     pad_page.wait_for_timeout(200)
-    step("手抄本：表單有單字／解釋／例句／同義詞四欄",
-         all(pad_page.locator(f"#{i}").count() == 1 for i in ("nb-word", "nb-meaning", "nb-example", "nb-syn")))
+    step("手抄本：表單有單字欄、手寫格子，打字欄收在選填裡",
+         pad_page.locator("#nb-word").count() == 1 and pad_page.locator("#pad").count() == 1
+         and not pad_page.locator("#nb-meaning").is_visible()
+         and all(pad_page.locator(f"#{i}").count() == 1 for i in ("nb-meaning", "nb-example", "nb-syn")))
+    pad_page.locator("summary", has_text="打字").click()
     pad_page.get_by_role("button", name="存起來", exact=True).click()
     step("手抄本：沒填單字會擋下", "請填單字" in pad_page.locator("#nb-error").inner_text())
     pad_page.fill("#nb-word", "lucid")
@@ -557,14 +560,44 @@ with sync_playwright() as p:
     pad_page.get_by_role("button", name="存起來，再加一個").click()
     pad_page.wait_for_timeout(200)
     step("手抄本：存起來再加一個，表單清空", pad_page.input_value("#nb-word") == "")
+    pad_page.locator("summary", has_text="打字").click()
     pad_page.fill("#nb-word", "ubiquitous")
     pad_page.fill("#nb-meaning", "無所不在的")
     pad_page.fill("#nb-example", "Smartphones are ubiquitous in modern cities.")
     pad_page.fill("#nb-syn", "omnipresent, widespread; pervasive")
-    pad_page.get_by_role("button", name="存起來", exact=True).click()
+    pad_page.get_by_role("button", name="存起來，再加一個").click()
     pad_page.wait_for_timeout(200)
+
+    # 第三個字：解釋與例句用 Apple Pencil 寫在格子裡，只有單字是打的
+    pad_page.fill("#nb-word", "ephemeral")
+    send0 = """([type, kind, x, y, id]) => {
+        const c = document.getElementById('pad'), r = c.getBoundingClientRect();
+        c.dispatchEvent(new PointerEvent(kind, { pointerType: type, pointerId: id, bubbles: true,
+            clientX: r.left + x, clientY: r.top + y, pressure: kind === 'pointerup' ? 0 : 0.6,
+            isPrimary: true, buttons: kind === 'pointerup' ? 0 : 1 }));
+    }"""
+    def write0(y0, pid, n=14):
+        pad_page.evaluate(send0, ["pen", "pointerdown", 40, y0, pid])
+        for i in range(1, n):
+            pad_page.evaluate(send0, ["pen", "pointermove", 40 + i * 22, y0 + (i % 4) * 9, pid])
+        pad_page.evaluate(send0, ["pen", "pointerup", 40 + n * 22, y0, pid])
+    write0(70, 71)     # 解釋那一欄
+    write0(300, 72)    # 例句那一欄
+    form_ink = pad_page.evaluate("""() => { const c = document.getElementById('pad');
+        const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+        let n = 0; for (let i = 0; i < d.length; i += 4) if (d[i + 3] > 200 && d[i] < 90) n++; return n; }""")
+    step("手抄本：手寫格子在表單裡寫得出筆跡", form_ink > 300, f"{form_ink} 個深色點")
+    pad_page.get_by_role("button", name="存起來", exact=True).click()
+    pad_page.wait_for_timeout(250)
     rows = pad_page.locator(".note-row .note-word").all_text_contents()
-    step("手抄本：存好的字列在清單裡，新的在上面", rows == ["ubiquitous", "lucid"], str(rows))
+    step("手抄本：存好的字列在清單裡，新的在上面", rows == ["ephemeral", "ubiquitous", "lucid"], str(rows))
+    step("手抄本：手寫的解釋與例句各自存成一欄",
+         pad_page.evaluate("Store.inkFieldNames(Store.listNotes()[0].id).join()") == "meaning,example")
+    step("手抄本：清單上標出手寫筆記，並標明已排進通勤複習",
+         "✎ 手寫筆記" in pad_page.locator(".note-row", has_text="ephemeral").inner_text()
+         and pad_page.locator(".note-row", has_text="已排進通勤複習").count() == 3)
+    ink_bytes = pad_page.evaluate("(localStorage.getItem('ielts-ink-v1') || '').length")
+    step("手抄本：筆跡壓縮後很小", 0 < ink_bytes < 4000, f"{ink_bytes} 字元")
 
     pad_page.get_by_role("button", name="＋ 新增生詞").click()
     pad_page.fill("#nb-word", "Ubiquitous")
@@ -574,15 +607,65 @@ with sync_playwright() as p:
     pad_page.get_by_role("button", name="取消").click()
     pad_page.wait_for_timeout(200)
 
+    # 手抄本的字自動排進通勤複習，背面顯示你自己的筆跡
+    pad_page.locator("#vocab-stage .back-btn").click()
+    pad_page.wait_for_timeout(250)
+    pad_page.locator('.topic-btn[data-topic="我的生詞"]').click()
+    pad_page.wait_for_timeout(250)
+    pad_page.locator(".mode-card", has_text="通勤複習").click()
+    pad_page.wait_for_timeout(250)
+    seen = {}
+    for _ in range(3):
+        if pad_page.locator(".card-word").count() == 0:
+            break
+        w = pad_page.locator(".card-word").inner_text()
+        pad_page.get_by_text("看例句與同義詞").click()
+        pad_page.wait_for_timeout(200)
+        seen[w] = {"svg": pad_page.locator(".dim-box svg.ink-svg").count(),
+                   "text": pad_page.locator(".dim-box").inner_text(),
+                   "speaker": pad_page.locator(".word-line .speak-btn").count()}
+        pad_page.locator(".rate-3").click()
+        pad_page.wait_for_timeout(200)
+    step("手抄本：三個字都排進通勤複習", set(seen) == {"ephemeral", "ubiquitous", "lucid"}, str(sorted(seen)))
+    step("手抄本：複習背面顯示你自己的筆跡（解釋與例句）",
+         seen.get("ephemeral", {}).get("svg", 0) >= 2, str(seen.get("ephemeral", {}).get("svg")))
+    step("手抄本：打字的生詞照樣顯示文字", "Smartphones are" in seen.get("ubiquitous", {}).get("text", "")
+         and "清楚易懂的" in seen.get("lucid", {}).get("text", ""))
+    step("手抄本：複習時單字有發音按鈕", all(v["speaker"] == 1 for v in seen.values()) and bool(seen))
+    step("手抄本：手寫的字不會顯示「還沒有你自己的例句」",
+         "還沒有你自己的例句" not in seen.get("ephemeral", {}).get("text", ""))
+
+    pad_page.locator("#vocab-stage .back-btn").click()
+    pad_page.wait_for_timeout(250)
+    pad_page.locator(".mode-card", has_text="拼字練習").click()
+    pad_page.wait_for_timeout(250)
+    svg_clue = 0
+    for _ in range(3):
+        if pad_page.locator("#spell-input").count() == 0:
+            break
+        svg_clue += pad_page.locator(".dim-box svg.ink-svg").count()
+        pad_page.get_by_role("button", name="跳過", exact=True).click()
+        pad_page.wait_for_timeout(150)
+    step("手抄本：拼字題用手寫的解釋當線索", svg_clue >= 1, f"{svg_clue}")
+    pad_page.locator("#vocab-stage .back-btn").click()
+    pad_page.wait_for_timeout(250)
+    pad_page.locator(".mode-card", has_text="手抄單字").click()
+    pad_page.wait_for_timeout(250)
+
     # 編輯
     pad_page.locator(".note-row", has_text="lucid").get_by_role("button", name="編輯").click()
     pad_page.wait_for_timeout(200)
-    step("手抄本：編輯時帶入原本的內容", pad_page.input_value("#nb-meaning") == "清楚易懂的")
+    step("手抄本：編輯時帶入原本的內容（打字欄自動展開）",
+         pad_page.input_value("#nb-meaning") == "清楚易懂的" and pad_page.locator("#nb-meaning").is_visible())
     pad_page.fill("#nb-meaning", "清楚易懂的、明白的")
     pad_page.get_by_role("button", name="存起來", exact=True).click()
     pad_page.wait_for_timeout(200)
     step("手抄本：編輯存得起來",
          pad_page.evaluate("Store.listNotes().find(n => n.word === 'lucid').meaning") == "清楚易懂的、明白的")
+
+    deck_before = pad_page.evaluate(snap)   # 手抄只該動手抄本，不該動單字庫與排程
+
+    deck_before = pad_page.evaluate(snap)   # 手抄只該動手抄本，不該動單字庫與排程
 
     # 從 ubiquitous 開始抄（四欄俱全） —— 一頁四個區塊
     pad_page.locator(".note-row", has_text="lucid").locator(".note-main").click()
@@ -716,16 +799,32 @@ with sync_playwright() as p:
 
     # 匯出與刪除
     with pad_page.expect_download() as dl:
-        pad_page.get_by_role("button", name="匯出手抄本").click()
-    path = dl.value.path()
-    csv_text = open(path, encoding="utf-8").read()
-    step("手抄本：匯出 CSV 有四欄與抄寫次數",
-         "word,meaning,example,synonyms,copies" in csv_text and "omnipresent; widespread; pervasive" in csv_text)
+        pad_page.get_by_role("button", name="匯出文字").click()
+    csv_text = open(dl.value.path(), encoding="utf-8").read()
+    step("手抄本：匯出 CSV 有欄位、抄寫次數與哪些欄是手寫",
+         "word,meaning,example,synonyms,copies,handwritten" in csv_text
+         and "omnipresent; widespread; pervasive" in csv_text and "meaning; example" in csv_text)
+    with pad_page.expect_download() as dl2:
+        pad_page.get_by_role("button", name="匯出含筆跡").click()
+    import json as _json
+    backup = _json.loads(open(dl2.value.path(), encoding="utf-8").read())
+    eph = next(n for n in backup["notes"] if n["word"] == "ephemeral")
+    step("手抄本：匯出 JSON 帶得走手寫筆跡",
+         backup["app"] == "ielts-notebook" and set(eph["ink"]["fields"]) == {"meaning", "example"})
+
+    cards_before_delete = pad_page.evaluate("Store.cardCount()")
     pad_page.once("dialog", lambda d: d.accept())
     pad_page.locator(".note-row", has_text="lucid").get_by_role("button", name="刪除").click()
     pad_page.wait_for_timeout(250)
     step("手抄本：刪除之後清單少一個",
-         pad_page.locator(".note-row .note-word").all_text_contents() == ["ubiquitous"])
+         pad_page.locator(".note-row .note-word").all_text_contents() == ["ephemeral", "ubiquitous"])
+    step("手抄本：刪除生詞連它在複習裡的卡片一起刪",
+         pad_page.evaluate("Store.cardCount()") == cards_before_delete - 1)
+    pad_page.once("dialog", lambda d: d.accept())
+    pad_page.locator(".note-row", has_text="ephemeral").get_by_role("button", name="刪除").click()
+    pad_page.wait_for_timeout(250)
+    step("手抄本：刪除手寫的生詞，筆跡也一起清掉",
+         pad_page.evaluate("Object.keys(JSON.parse(localStorage.getItem('ielts-ink-v1') || '{}')).length") == 0)
     ipad.close()
 
     browser.close()

@@ -12,7 +12,7 @@ const localStorage = {
 };
 
 const ctx = vm.createContext({ localStorage, console, alert: () => {} });
-['js/srs.js', 'js/textutil.js', 'js/cards.js', 'js/legacy-words.js', 'js/store.js']
+['js/srs.js', 'js/textutil.js', 'js/ink.js', 'js/cards.js', 'js/legacy-words.js', 'js/store.js']
   .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f }));
 
 let passed = 0, failed = 0;
@@ -489,7 +489,7 @@ check('舊的 known / learning 會換算成認讀進度', () => {
   };
   ls.setItem('ielts-state', JSON.stringify({ vocab: { analyze: { status: 'known' }, approach: { status: 'learning' } } }));
   const c2 = vm.createContext({ localStorage: ls, console, alert: () => {} });
-  ['js/srs.js', 'js/textutil.js', 'js/cards.js', 'js/legacy-words.js', 'js/store.js']
+  ['js/srs.js', 'js/textutil.js', 'js/ink.js', 'js/cards.js', 'js/legacy-words.js', 'js/store.js']
     .forEach(f => vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), c2, { filename: f }));
   vm.runInContext('Store.init()', c2);
   const known = vm.runInContext('Store.getSrs(Store.findLoosely("analyze").id,"recall")', c2);
@@ -682,6 +682,61 @@ check('支援語音時會呼叫 speak，並帶上挑好的語音與語速', () =
   ok(!html.includes('<script'), '不該混進標籤');
 });
 
+console.log('--- 手寫筆跡 ---');
+const InkApi = run('Ink');
+// 模擬一筆 Pencil 的軌跡：每 1.2px 取一個點、帶一點手抖
+const fakeStroke = (x0, y0, n = 50, seed = 3) => {
+  let r = seed; const rnd = () => (r = (r * 16807) % 2147483647) / 2147483647;
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const a = i / (n - 1) * Math.PI * 1.6;
+    pts.push([x0 + Math.sin(a) * 10 + i * 0.4 + (rnd() - .5) * .6, y0 + Math.cos(a * 1.3) * 16 + (rnd() - .5) * .6, 0.3 + rnd() * .5]);
+  }
+  return { pts };
+};
+check('筆跡壓縮：還原後跟原本的線差不到 1px，而且小很多', () => {
+  const strokes = Array.from({ length: 40 }, (_, i) => fakeStroke(40 + (i % 20) * 34, 60 + Math.floor(i / 20) * 100, 50, i + 1));
+  const packed = InkApi.compress(strokes);
+  const back = InkApi.expand(packed);
+  eq(back.length, 40, '筆數要一樣');
+  // 每個原始點到還原後折線的距離都要小於 1px
+  let worst = 0;
+  strokes.forEach((s, i) => s.pts.forEach(p => {
+    let best = Infinity;
+    const q = back[i].pts;
+    for (let j = 1; j < q.length; j++) {
+      const [ax, ay] = q[j - 1], [bx, by] = q[j];
+      const dx = bx - ax, dy = by - ay, l2 = dx * dx + dy * dy || 1;
+      const u = Math.max(0, Math.min(1, ((p[0] - ax) * dx + (p[1] - ay) * dy) / l2));
+      best = Math.min(best, Math.hypot(p[0] - (ax + u * dx), p[1] - (ay + u * dy)));
+    }
+    worst = Math.max(worst, best);
+  }));
+  ok(worst < 1.6, `最大誤差 ${worst.toFixed(2)}px（含取整數的 0.5px）`);
+  const raw = JSON.stringify(strokes).length, small = JSON.stringify(packed).length;
+  ok(small < raw / 15, `壓縮後 ${small} 字元，原本 ${raw}，至少要小 15 倍`);
+});
+check('筆跡壓縮：單點（i 的點、句號）與空筆畫都安全', () => {
+  const packed = InkApi.compress([{ pts: [[10.4, 20.6, 0.5]] }, { pts: [] }]);
+  eq(packed.length, 1, '空筆畫要丟掉');
+  eq(InkApi.expand(packed)[0].pts, [[10, 21]]);
+  ok(InkApi.toSvg(packed).includes('<path'), '單點也要畫得出來');
+  eq(InkApi.toSvg([]), '', '沒有筆跡就沒有 SVG');
+});
+check('筆跡轉 SVG：只裁出有字的範圍，不留整欄空白', () => {
+  const packed = InkApi.compress([{ pts: [[500, 300, .5], [560, 310, .5], [620, 300, .5]] }]);
+  const vb = InkApi.toSvg(packed).match(/viewBox="([^"]+)"/)[1].split(' ').map(Number);
+  ok(vb[0] > 400 && vb[1] > 250, `viewBox 沒有裁到筆跡附近：${vb}`);
+  ok(vb[2] < 200 && vb[3] < 60, `viewBox 太大：${vb}`);
+  const svg = InkApi.toSvg(packed);
+  const maxW = Number(svg.match(/max-width:(\d+)px/)[1]);
+  ok(maxW > 0 && maxW < vb[2], `短短的字不該被放大：最大寬度 ${maxW}px，原本 ${vb[2]}px`);
+});
+check('筆跡轉 SVG：不會夾帶任何可執行的內容', () => {
+  const svg = InkApi.toSvg(InkApi.compress([{ pts: [[1, 1, .5], [9, 9, .5]] }]));
+  ok(!/script|onload|onerror|javascript:/i.test(svg), svg);
+});
+
 console.log('--- 手抄本 ---');
 check('手抄本：新增生詞，四個欄位都存得起來', () => {
   const n = run(`(() => {
@@ -749,6 +804,114 @@ check('手抄本：匯出 CSV，逗號與換行不會打壞欄位', () => {
   ok(csv.includes('"複雜的, 棘手的"'), '含逗號的欄位要加引號');
   ok(csv.includes('"A ""tricky"" case,\nreally."'), '引號要跳脫、換行要留在引號裡');
   ok(csv.includes('hard; awkward'));
+});
+
+
+check('手抄本：新增生詞會自動在單字庫建一張卡，排進通勤複習', () => {
+  const r = run(`(() => {
+    const before = Store.cardCount();
+    const note = Store.addNote({ word: 'serendipity', meaning: '意外的發現' });
+    const card = Store.getCard(note.cardId);
+    const inReview = Store.dueItems('recall', { cardType: 'passive', requireContent: true, ignoreDailyLimit: true })
+      .some(c => c.id === card.id);
+    return { added: Store.cardCount() - before, fromNote: card.fromNote, noteId: card.noteId === note.id,
+             cat: card.category, topic: card.topic, inReview, incomplete: Store.isIncomplete(card) };
+  })()`);
+  eq(r.added, 1, '應該多一張卡');
+  ok(r.fromNote && r.noteId, '卡片要記得它是從哪個生詞來的');
+  eq([r.cat, r.topic], ['手抄本', '我的生詞']);
+  ok(r.inReview, '要排進通勤複習');
+  ok(!r.incomplete, '手抄本的卡沒有搭配詞／字根是設計如此，不能算「待補完」');
+});
+check('手抄本：只有手寫、沒有打字的生詞也進得了複習與拼字', () => {
+  const r = run(`(() => {
+    const note = Store.addNote({ word: 'inkonly' });
+    const card = Store.getCard(note.cardId);
+    const emptyBack = Store.hasBackContent(card);
+    const packed = Ink.compress([{ pts: [[10, 10, .5], [60, 14, .5], [110, 10, .5]] }]);
+    Store.setInk(note.id, { w: 900, rowHeight: 96, fields: { meaning: { rows: 2, s: packed } } });
+    const inReview = Store.dueItems('recall', { cardType: 'passive', requireContent: true, ignoreDailyLimit: true })
+      .some(c => c.id === card.id);
+    const spelling = Store.spellingQueue({ ignoreDailyLimit: true }).some(c => c.id === card.id);
+    return { emptyBack, hasInk: Store.hasInk(note.id), inReview, spelling,
+             fields: Store.inkFieldNames(note.id) };
+  })()`);
+  eq(r.emptyBack, false, '還沒寫任何東西時背面是空的，不該進複習');
+  ok(r.hasInk && r.fields.join() === 'meaning');
+  ok(r.inReview, '有手寫之後背面有內容，要進複習');
+  ok(r.spelling, '手寫的解釋可以當拼字題的線索');
+});
+check('手抄本：筆跡存在自己的 key，不會塞進單字庫、也不會因為評分被重寫', () => {
+  const r = run(`(() => {
+    const note = Store.listNotes().find(n => n.word === 'inkonly');
+    const dbRaw = localStorage.getItem('ielts-vocab-v2');
+    const inkRaw = localStorage.getItem('ielts-ink-v1');
+    return { dbHasInk: dbRaw.includes('"fields"'), inkSaved: !!inkRaw && inkRaw.includes('"meaning"'),
+             id: note.id };
+  })()`);
+  ok(!r.dbHasInk, '單字庫的 JSON 裡不該有筆跡');
+  ok(r.inkSaved, '筆跡要寫進 ielts-ink-v1');
+});
+check('手抄本：單字庫原本就有的字，不另外建卡，只把筆記掛上去', () => {
+  const r = run(`(() => {
+    const deck = Store.findByWord('establish');
+    const before = Store.cardCount();
+    const note = Store.addNote({ word: 'Establish', meaning: '建立' });
+    return { same: Store.cardCount() === before, linked: note.cardId === deck.id,
+             back: Store.getCard(deck.id).noteId === note.id, notFromNote: !Store.getCard(deck.id).fromNote };
+  })()`);
+  ok(r.same, '不能重複建卡（複習會出現兩張同一個字）');
+  ok(r.linked && r.back, '筆記要掛在原本那張卡上');
+  ok(r.notFromNote, '原本的卡不能被標成手抄本建的');
+});
+check('手抄本：改單字撞到單字庫裡別張卡會擋下；改解釋會同步到卡片', () => {
+  const r = run(`(() => {
+    const note = Store.listNotes().find(n => n.word === 'serendipity');
+    let clash = '';
+    try { Store.updateNote(note.id, { word: 'mitigate' }); } catch (e) { clash = e.message; }
+    Store.updateNote(note.id, { meaning: '意外發現的幸運', example: 'It was pure serendipity.' });
+    const card = Store.getCard(note.cardId);
+    return { clash, zh: card.zh, ex: card.example };
+  })()`);
+  ok(r.clash.includes('單字庫'), `撞到單字庫的訊息：${r.clash}`);
+  eq([r.zh, r.ex], ['意外發現的幸運', 'It was pure serendipity.']);
+});
+check('手抄本：刪除生詞，連對應的卡片、筆跡、複習紀錄一起清掉；掛上去的原卡只拿掉筆記', () => {
+  const r = run(`(() => {
+    const note = Store.listNotes().find(n => n.word === 'inkonly');
+    const cid = note.cardId;
+    Store.grade(cid, 'recall', 3);   // 複習過，留下紀錄
+    const cardsBefore = Store.cardCount();
+    Store.deleteNote(note.id);
+    const deck = Store.findByWord('establish');
+    const linked = Store.listNotes().find(n => n.word.toLowerCase() === 'establish');
+    Store.deleteNote(linked.id);
+    return { gone: !Store.getCard(cid), count: cardsBefore - Store.cardCount(),
+             inkGone: !Store.hasInk(note.id), noLog: !JSON.parse(localStorage.getItem('ielts-vocab-v2'))
+               .reviewLog.some(l => l.cardId === cid),
+             deckKept: !!Store.getCard(deck.id), unlinked: Store.getCard(deck.id).noteId === 0 };
+  })()`);
+  ok(r.gone && r.count === 1, '從手抄本建的卡要一起刪（只刪一張）');
+  ok(r.inkGone, '筆跡也要刪');
+  ok(r.noLog, '複習紀錄不能留著指向不存在的卡');
+  ok(r.deckKept && r.unlinked, '單字庫原本的卡要留著，只拿掉掛上去的筆記');
+});
+check('手抄本：升級時，先前沒有卡片的生詞會被補上卡片', () => {
+  const r = run(`(() => {
+    const note = Store.addNote({ word: 'legacyword' });
+    Store.removeCard(note.cardId); note.cardId = 0;      // 模擬舊版資料：生詞沒有對應的卡
+    const before = Store.cardCount();
+    Store.init();                                           // 升級流程
+    const after = Store.cardCount();
+    return { added: after - before, card: !!Store.getCard(Store.getNote(note.id).cardId) };
+  })()`);
+  eq(r.added, 1, 'init 之後應該補上一張卡');
+  ok(r.card);
+});
+check('手抄本：匯出 JSON 帶著筆跡，可以拿來備份', () => {
+  const j = JSON.parse(run('Store.exportNotebookJSON()'));
+  eq(j.app, 'ielts-notebook');
+  ok(Array.isArray(j.notes) && j.notes.length > 0);
 });
 
 console.log(`\n通過 ${passed} 項，失敗 ${failed} 項`);

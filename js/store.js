@@ -134,6 +134,10 @@ const Store = (() => {
       zh: String(input.zh || '').trim(),
       phonetic: String(input.phonetic || '').trim(),
       notes: String(input.notes || '').trim(),
+      // 手抄本的生詞排進複習時會有一張對應的卡片：noteId 指回手抄本，
+      // fromNote = 這張卡是從手抄本建出來的（不是單字庫原本就有的）
+      noteId: Number(input.noteId) || 0,
+      fromNote: !!input.fromNote,
       createdAt: input.createdAt || Dates.nowISO()
     };
   }
@@ -145,9 +149,14 @@ const Store = (() => {
     });
   }
 
-  const isIncomplete = card => missingCore(card).length > 0;
+  // 手抄本建出來的卡只有使用者自己寫的幾欄（沒有搭配詞、字根），那是設計如此，
+  // 不是「缺」—— 不然它們會一直卡在「寫例句」清單裡，叫使用者去補不存在的資料。
+  const isIncomplete = card => !card.fromNote && missingCore(card).length > 0;
   const hasBackContent = card =>
-    !!(card.example || card.collocations.length || card.root || card.synonyms.length);
+    !!(card.example || card.collocations.length || card.root || card.synonyms.length
+      || hasInk(card)
+      // 手抄本的字，使用者自己打的解釋就是背面（單字庫的卡，zh 只是校對用的最後一行，不算）
+      || (card.fromNote && card.zh));
   const cardLabel = card => (card.pos ? `${card.word} (${card.pos})` : card.word);
 
   function addCard(input) {
@@ -294,10 +303,57 @@ const Store = (() => {
     return n;
   }
 
+  // ---------------------------------------------------------- 手寫筆跡
+  // 筆跡放在自己的 localStorage key，不跟單字庫混在一起：單字庫每評一次分就整包重寫，
+  // 要是筆跡也在裡面，每按一次 Good 都得把幾百 KB 的筆跡重新序列化一遍。
+  // 筆跡只在存／刪生詞時才寫。格式見 js/ink.js（壓縮過，一頁約 10KB）。
+  const INK_KEY = 'ielts-ink-v1';
+  let inkStore = null;   // { [noteId]: { w, rowHeight, fields: { key: { rows, s } } } }
+
+  function loadInk() {
+    if (inkStore) return inkStore;
+    try {
+      const raw = localStorage.getItem(INK_KEY);
+      inkStore = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      console.warn('[store] 筆跡讀取失敗，先當成沒有', e);
+      inkStore = {};
+    }
+    return inkStore;
+  }
+
+  function saveInk() {
+    try {
+      localStorage.setItem(INK_KEY, JSON.stringify(inkStore));
+      return true;
+    } catch (e) {
+      console.error('[store] 筆跡寫入失敗', e);
+      alert('筆跡存不下：瀏覽器空間可能已滿。建議先用「匯出手抄本」備份，再刪掉一些舊生詞。');
+      return false;
+    }
+  }
+
+  const getInk = noteId => loadInk()[noteId] || null;
+  const inkFieldNames = noteId => Object.keys((getInk(noteId) || {}).fields || {});
+
+  /** 這個生詞（或它的卡片）有沒有手寫的筆跡 —— 不解壓，只看有沒有。 */
+  const hasInk = cardOrNoteId => {
+    const id = typeof cardOrNoteId === 'object' ? cardOrNoteId.noteId : cardOrNoteId;
+    return !!id && inkFieldNames(id).length > 0;
+  };
+  const hasInkField = (card, field) => !!card.noteId && inkFieldNames(card.noteId).includes(field);
+
+  function setInk(noteId, ink) {
+    const store = loadInk();
+    if (ink && ink.fields && Object.keys(ink.fields).length) store[noteId] = ink;
+    else delete store[noteId];
+    return saveInk();
+  }
+
   // ---------------------------------------------------------- 手抄本
-  // 自己遇到的生詞：單字／解釋／例句／同義詞。跟單字庫（SEED + 匯入的卡片）是
-  // 兩個獨立的東西 —— 這裡是「拿來手抄」的筆記，不進複習排程，也不動任何卡片。
-  // 只記每個字抄過幾遍；筆跡不存（存成圖片會很快塞滿 localStorage）。
+  // 自己遇到的生詞：單字（打字）＋ 解釋／例句／同義詞（用 Apple Pencil 手寫，也可以另外打字）。
+  // 存進手抄本的字會自動在單字庫裡建一張卡，排進通勤複習；複習時背面顯示你自己的筆跡。
+  // 如果那個字單字庫本來就有，就不另外建卡，只把筆跡掛到原本那張卡上（不會重複出題）。
   const noteList = v => (Array.isArray(v) ? v : String(v || '').split(/[;|、,，]/))
     .map(s => String(s).trim()).filter(Boolean);
 
@@ -308,6 +364,7 @@ const Store = (() => {
       meaning: String(input.meaning || '').trim(),
       example: String(input.example || '').trim(),
       synonyms: noteList(input.synonyms),
+      cardId: Number(input.cardId) || 0,
       copies: Math.max(0, Number(input.copies) || 0),
       createdAt: input.createdAt || Dates.nowISO(),
       lastCopiedAt: input.lastCopiedAt || ''
@@ -320,6 +377,51 @@ const Store = (() => {
   /** 新的在上面：剛遇到的生詞最該先抄。 */
   const listNotes = () => (db.notebook || []).slice().sort((a, b) => b.id - a.id);
 
+  /** 這個生詞有沒有任何內容（打字或手寫）在單字以外的欄位。 */
+  const noteHasDetail = note =>
+    !!(note.meaning || note.example || note.synonyms.length || hasInk(note.id));
+
+  // 把手抄本的生詞接到單字庫：
+  //  ・已經有對應的卡：同步（只改「從手抄本建出來」的卡，單字庫原本的卡不動）
+  //  ・單字庫本來就有這個字：掛上去，不重複建卡
+  //  ・都沒有：建一張新卡，排進複習
+  function syncNoteCard(note) {
+    let card = note.cardId ? getCard(note.cardId) : null;
+    if (card && card.fromNote) {
+      card.word = note.word;
+      card.zh = note.meaning;
+      card.example = note.example;
+      card.synonyms = note.synonyms.slice();
+      return card;
+    }
+    if (!card) {
+      card = findByWord(note.word);
+      if (card && !card.noteId) {   // 單字庫已有這個字：把筆記掛上去
+        card.noteId = note.id;
+        note.cardId = card.id;
+        return card;
+      }
+      if (card) return card;        // 已經掛了別的筆記：不重複掛
+      card = addCard({
+        word: note.word, zh: note.meaning, example: note.example, synonyms: note.synonyms,
+        category: '手抄本', topic: '我的生詞', cardType: 'passive',
+        noteId: note.id, fromNote: true
+      });
+      note.cardId = card.id;
+    }
+    return card;
+  }
+
+  /** 刪掉一張卡，連它的排程與紀錄一起清掉（不然統計會算到不存在的卡）。 */
+  function removeCard(id) {
+    const cid = Number(id);
+    db.cards = db.cards.filter(c => c.id !== cid);
+    TRACKS.forEach(tr => { delete db.srs[srsKey(cid, tr)]; });
+    db.reviewLog = db.reviewLog.filter(r => r.cardId !== cid);
+    db.spelling = db.spelling.filter(r => r.cardId !== cid);
+    db.productions = db.productions.filter(p => p.cardId !== cid);
+  }
+
   function addNote(input) {
     const note = normaliseNote(input);
     if (!note.word) throw new Error('請填單字');
@@ -328,6 +430,7 @@ const Store = (() => {
     }
     note.id = db.nextNoteId++;
     db.notebook.push(note);
+    syncNoteCard(note);
     save();
     return note;
   }
@@ -340,16 +443,41 @@ const Store = (() => {
     if (db.notebook.some(n => n.id !== note.id && sameWord(n.word, next.word))) {
       throw new Error(`「${next.word}」已經在手抄本裡了`);
     }
+    // 改單字：不能撞到單字庫裡別張卡，不然複習會出現兩張同一個字
+    const own = note.cardId ? getCard(note.cardId) : null;
+    const clash = findByWord(next.word);
+    if (clash && (!own || clash.id !== own.id)) {
+      throw new Error(`「${next.word}」單字庫裡已經有了`);
+    }
     Object.assign(note, next);
+    syncNoteCard(note);
     save();
     return note;
   }
 
   function deleteNote(id) {
-    const before = db.notebook.length;
-    db.notebook = db.notebook.filter(n => n.id !== Number(id));
-    if (db.notebook.length !== before) save();
-    return before !== db.notebook.length;
+    const note = getNote(id);
+    if (!note) return false;
+    const card = note.cardId ? getCard(note.cardId) : null;
+    if (card) {
+      if (card.fromNote) removeCard(card.id);   // 從手抄本建的卡：跟著一起刪
+      else card.noteId = 0;                     // 單字庫原本的卡：只拿掉掛上去的筆記
+    }
+    db.notebook = db.notebook.filter(n => n.id !== note.id);
+    setInk(note.id, null);
+    save();
+    return true;
+  }
+
+  // 手抄本是後來才加進複習的：升級時把還沒有卡片的舊生詞補上
+  function ensureNoteCards() {
+    let changed = false;
+    (db.notebook || []).forEach(note => {
+      const before = note.cardId;
+      syncNoteCard(note);
+      if (note.cardId !== before) changed = true;
+    });
+    return changed;
   }
 
   function recordNoteCopy(id) {
@@ -363,10 +491,23 @@ const Store = (() => {
 
   function exportNotebookCSV() {
     const cell = v => (/[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v));
-    const head = ['word', 'meaning', 'example', 'synonyms', 'copies'];
+    const head = ['word', 'meaning', 'example', 'synonyms', 'copies', 'handwritten'];
     const rows = listNotes().reverse().map(n =>
-      [n.word, n.meaning, n.example, n.synonyms.join('; '), n.copies].map(cell).join(','));
-    return '\ufeff' + [head.join(','), ...rows].join('\n');
+      [n.word, n.meaning, n.example, n.synonyms.join('; '), n.copies,
+        inkFieldNames(n.id).join('; ')].map(cell).join(','));
+    return '﻿' + [head.join(','), ...rows].join('\n');
+  }
+
+  /**
+   * 手寫筆跡的備份：CSV 帶不走筆跡，所以另外匯出一份 JSON（壓縮過）。
+   * 要換 iPad 或怕 Safari 清資料時用。
+   */
+  function exportNotebookJSON() {
+    const notes = listNotes().reverse().map(n => ({
+      word: n.word, meaning: n.meaning, example: n.example, synonyms: n.synonyms,
+      copies: n.copies, ink: getInk(n.id) || undefined
+    }));
+    return JSON.stringify({ app: 'ielts-notebook', version: 1, notes });
   }
 
   /** 今天還能認識幾個新字（舊字複習不受影響，一律照排程出）。 */
@@ -477,8 +618,9 @@ const Store = (() => {
   // 句譯要跟著上面那一句走 —— 拿參考例句的翻譯去配自己寫的句子會誤導。
   const spellingSentenceZh = card =>
     (card.example ? card.exampleZh : card.exampleRefZh) || '';
+  // 手寫的解釋也算線索（不能挖空，但解釋裡通常不會有那個字）
   const hasSpellingClue = card =>
-    !!(spellingSentence(card) || card.notes || (showZh() && card.zh));
+    !!(spellingSentence(card) || card.notes || (showZh() && card.zh) || hasInkField(card, 'meaning'));
 
   // onlyWrong 不看到期日：今天剛拼錯的字，當下就要能再練一次。
   function spellingQueue(opts = {}) {
@@ -915,6 +1057,7 @@ const Store = (() => {
       console.log(`[store] 初始化：種子 ${SEED_CARDS.length} 字、舊資料新增 ${legacy.added} 字`
         + `、補進既有卡片 ${legacy.merged} 字、轉換進度 ${migrated} 筆`);
     }
+    if (ensureNoteCards()) save();
     db.cards.forEach(c => ensureSrs(c.id));
     return db;
   }
@@ -929,6 +1072,7 @@ const Store = (() => {
     DAILY_NEW_DEFAULT, DAILY_NEW_MIN, DAILY_NEW_MAX, DAILY_NEW_CHOICES,
     dailyNew, newWordsToday, newWordsLeftToday, everSeen,
     getNote, listNotes, addNote, updateNote, deleteNote, recordNoteCopy, exportNotebookCSV,
+    exportNotebookJSON, getInk, setInk, hasInk, hasInkField, inkFieldNames, noteHasDetail, removeCard,
     newIntroducedToday,
     init, save, resetAll, today, daysAgo,
     addCard, updateCard, getCard, findCard, findByWord, listCards, setCardType,

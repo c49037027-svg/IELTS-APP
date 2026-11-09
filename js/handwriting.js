@@ -1,9 +1,10 @@
 // 手寫板：給 iPad + Apple Pencil 手抄生詞用的畫布。
 // 只管「畫」—— 欄位區塊、橫線、描紅底字、筆跡、復原；抄哪個字由 js/vocab.js 決定。
 //
-// 一頁 = 一個生詞，分成幾個欄位區塊（單字／解釋／例句／同義詞）：
-// 每個區塊有一條標籤列，下面是幾行橫線；行數依那一欄的字數決定，
-// 例句長就多給幾行，單字只要一行。
+// 一頁 = 一個生詞，分成幾個欄位區塊（解釋／例句／同義詞…）：
+// 每個區塊有一條標籤列，下面是幾行橫線。行數可以指定（rows），
+// 也可以給一段文字（text）讓它依長短自己折行、決定要幾行。
+// 筆跡可以匯出成壓縮格式存起來（js/ink.js），之後再匯入、或拿來當描紅的底。
 //
 // 設計重點
 // - Pointer Events：Apple Pencil 在 Safari 是 pointerType = 'pen'，有壓力值；
@@ -70,9 +71,12 @@ const Handwriting = (() => {
       ctx.font = traceFont();
       let y = 0;
       bands = sections.map(sec => {
-        const lines = wrapLines(ctx, sec.text, width - 32);
-        const rows = Math.min(MAX_ROWS, Math.max(sec.minRows || 1, lines.length));
-        const band = { label: sec.label, text: sec.text, lines, rows, y, height: LABEL_H + rows * rowHeight };
+        const lines = sec.text ? wrapLines(ctx, sec.text, width - 32) : [];
+        const rows = sec.rows
+          ? sec.rows
+          : Math.min(MAX_ROWS, Math.max(sec.minRows || 1, lines.length));
+        const band = { key: sec.key || sec.label, label: sec.label, text: sec.text, lines, rows, y,
+          guideInk: sec.guideInk || null, height: LABEL_H + rows * rowHeight };
         y += band.height;
         return band;
       });
@@ -128,7 +132,7 @@ const Handwriting = (() => {
           ctx.strokeStyle = COLORS.base;
           ctx.lineWidth = 1.5;
           line(0, base, width, base);
-          // 描紅：這一欄的字依序印在每一行上，沿著它寫
+          // 描紅（文字）：這一欄的字依序印在每一行上，沿著它寫
           if (trace && band.lines[r]) {
             ctx.fillStyle = COLORS.trace;
             ctx.font = traceFont();
@@ -138,6 +142,30 @@ const Handwriting = (() => {
         }
       });
       ctx.setLineDash([]);
+      // 描紅（筆跡）：這一欄原本是手寫的，就把當時的筆跡淡淡印出來讓你沿著描
+      if (trace) bands.forEach(drawGuideInk);
+    }
+
+    function drawGuideInk(band) {
+      if (!band.guideInk || !band.guideInk.s) return;
+      // 寫的時候的寬度跟現在不同（iPad 轉向）就等比例縮放，最多縮小不放大
+      const k = Math.min(1, width / (band.guideInk.w || width));
+      ctx.save();
+      ctx.globalAlpha = 0.28;
+      ctx.strokeStyle = COLORS.ink;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      Ink.expand(band.guideInk.s).forEach(({ k: pressure, pts }) => {
+        ctx.lineWidth = Ink.widthFor(pressure);
+        ctx.beginPath();
+        pts.forEach(([x, y], i) => {
+          const px = x * k, py = band.y + LABEL_H + y * k;
+          if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py);
+        });
+        if (pts.length === 1) ctx.lineTo(pts[0][0] * k + .01, band.y + LABEL_H + pts[0][1] * k);
+        ctx.stroke();
+      });
+      ctx.restore();
     }
 
     // 筆壓：Pencil 用實際壓力；滑鼠與手指沒有壓力，固定中等粗細
@@ -236,7 +264,38 @@ const Handwriting = (() => {
       get penDetected() { return penSeen; },
       get height() { return height; },
       /** 版面：每個區塊的標籤、行數與位置（測試與除錯用） */
-      get bands() { return bands.map(b => ({ label: b.label, rows: b.rows, y: b.y, height: b.height })); },
+      get bands() { return bands.map(b => ({ key: b.key, label: b.label, rows: b.rows, y: b.y, height: b.height })); },
+      /**
+       * 把筆跡依欄位拆開、壓縮：{ w, rowHeight, fields: { key: { rows, s: 壓縮筆畫 } } }。
+       * 座標改成「欄位內部」的座標（扣掉欄位頂端），之後換版面也對得上。
+       * 沒寫任何字的欄位不會出現在結果裡。
+       */
+      exportInk() {
+        const fields = {};
+        bands.forEach(band => {
+          const top = band.y + LABEL_H;
+          const mine = strokes.filter(s => {
+            const cy = s.pts.reduce((a, p) => a + p[1], 0) / s.pts.length;   // 以筆畫中心落在哪一欄為準
+            return cy >= band.y && cy < band.y + band.height;
+          }).map(s => ({ pts: s.pts.map(p => [p[0], p[1] - top, p[2]]) }));
+          if (mine.length) fields[band.key] = { rows: band.rows, s: Ink.compress(mine) };
+        });
+        return { w: width, rowHeight, fields };
+      },
+      /** exportInk 的反向：把存起來的筆跡放回對應的欄位（寬度不同就等比例縮放）。 */
+      importInk(ink) {
+        if (!ink || !ink.fields) return;
+        const k = ink.w ? Math.min(1, width / ink.w) : 1;
+        const restored = [];
+        bands.forEach(band => {
+          const f = ink.fields[band.key];
+          if (f) restored.push(...Ink.toPadStrokes(f.s, 0, band.y + LABEL_H, k));
+        });
+        strokes = restored;
+        current = null;
+        render();
+        onChange(strokes.length);
+      },
       getStrokes: () => strokes,
       setStrokes(list) { strokes = list || []; current = null; render(); onChange(strokes.length); },
       undo() { if (strokes.length) { strokes.pop(); render(); onChange(strokes.length); } },
